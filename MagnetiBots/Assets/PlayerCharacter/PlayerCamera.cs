@@ -9,7 +9,7 @@ namespace Player
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            player = GameObject.Find("Player Stand-in");
+            player = GameObject.FindFirstObjectByType<Player.Controller>().gameObject;
             offset = transform.position - player.transform.position;
         }
         private void Update()
