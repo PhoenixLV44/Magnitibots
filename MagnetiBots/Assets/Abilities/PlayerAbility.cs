@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +23,7 @@ namespace Player.Abilities
         }
         public virtual void GetInputs()
         {
-            if (activateInput.)
+            if (activateInput.IsPressed())
             {
                 Activate();
             }
@@ -31,12 +32,10 @@ namespace Player.Abilities
             {
                 Charge();
             }
-            
-            if (chargeInput.)
+            else if (fireInput.IsPressed())
             {
                 Fire();
             }
-            
         }
     }
 }

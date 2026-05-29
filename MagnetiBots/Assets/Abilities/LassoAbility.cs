@@ -15,25 +15,25 @@ namespace Player.Abilities
 
         public override void Activate()
         {
-            base.Activate();
+            //base.Activate();
+            Debug.Log("Activating Lasso Ability");
         }
 
         public override void Charge()
         {
-            base.Charge();
+            //base.Charge();
+            Debug.Log("Charging Lasso Ability");
         }
 
         public override void Fire()
         {
-            base.Fire();
+            //base.Fire();
+            Debug.Log("Firing Lasso Ability");
         }
 
-        public override void GetInputs()
+        private void Update()
         {
-            if (activateInput.IsPressed())
-            {
-                Activate();
-            }
+            GetInputs();
         }
     }
 }
