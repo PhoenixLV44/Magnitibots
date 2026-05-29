@@ -5,6 +5,6 @@ namespace Player
 {
     public class GroundedState : PlayerState
     {
-        //public PlayerGroundedSuperState(PlayerAbility pc, string animationName, PlayerStateMachine stateMachine) : base(pc, animationName, stateMachine) { }
+        public GroundedState(Player.Controller pc, PlayerStateMachine stateMachine, Animator animationController, string animationname) : base(pc,stateMachine, animationController, animationname) { }
     }
 }
