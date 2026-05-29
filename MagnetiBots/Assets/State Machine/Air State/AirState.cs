@@ -1,16 +1,7 @@
+using Player;
 using UnityEngine;
 
-public class AirState : MonoBehaviour
+public class AirState : PlayerState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public AirState(Player.Controller pc, PlayerStateMachine stateMachine, Animator animationController, string animationName) : base(pc, stateMachine, animationController, animationName) { }
 }

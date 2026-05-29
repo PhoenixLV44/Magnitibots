@@ -5,7 +5,7 @@ namespace Player
 {
     public class PlayerState
     {
-        protected Player.PlayerAbility player; //might need to change later
+        protected Player.Controller player;
         protected Player.PlayerStateMachine stateMachine;
         protected Animator animationController;
         protected string animationName;
@@ -14,7 +14,7 @@ namespace Player
         protected bool isAnimationFinished;
         protected float startTime;
 
-        public PlayerState(Player.PlayerAbility _player, PlayerStateMachine _stateMachine, Animator _animationController, string _animationName)
+        public PlayerState(Player.Controller _player, PlayerStateMachine _stateMachine, Animator _animationController, string _animationName)
         {
             player = _player;
             stateMachine = _stateMachine;
