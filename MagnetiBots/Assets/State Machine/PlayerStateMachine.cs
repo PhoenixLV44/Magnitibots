@@ -1,25 +1,25 @@
 using UnityEngine;
 
-namespace Player
+namespace Player.States
 {
     public class PlayerStateMachine
     {
-        public PlayerState currentState { get { return currentState; } private set { currentState = value; } }
+        public PlayerState CurrentState { get { return CurrentState; } private set { CurrentState = value; } }
 
-        public void InitializeStateMachine(Player.PlayerState initialState)
+        public void InitializeStateMachine(PlayerState initialState)
         {
-            currentState = initialState;
+            CurrentState = initialState;
 
-            currentState.EnterState();
+            CurrentState.EnterState();
         }
 
         public void ChangeState(PlayerState newState)
         {
-            currentState.ExitState();
+            CurrentState.ExitState();
             
-            currentState = newState;
+            CurrentState = newState;
 
-            currentState.EnterState();
+            CurrentState.EnterState();
         }
     }
 }

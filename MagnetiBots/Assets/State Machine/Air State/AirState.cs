@@ -1,4 +1,4 @@
-using Player;
+using Player.States;
 using UnityEngine;
 
 public class AirState : PlayerState

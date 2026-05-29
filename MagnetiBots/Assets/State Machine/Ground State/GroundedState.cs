@@ -1,10 +1,7 @@
 using UnityEngine;
-using Player;
+using Player.States;
 
-namespace Player
+public class GroundedState : PlayerState
 {
-    public class GroundedState : PlayerState
-    {
-        public GroundedState(Player.Controller pc, PlayerStateMachine stateMachine, Animator animationController, string animationname) : base(pc,stateMachine, animationController, animationname) { }
-    }
+    public GroundedState(Player.Controller pc, PlayerStateMachine stateMachine, Animator animationController, string animationname) : base(pc,stateMachine, animationController, animationname) { }
 }
