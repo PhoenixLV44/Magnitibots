@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Player
+{
     public class PlayerAbility : MonoBehaviour
     {
 
@@ -16,3 +18,4 @@ using UnityEngine;
             throw new System.NotImplementedException();
         }
     }
+}
