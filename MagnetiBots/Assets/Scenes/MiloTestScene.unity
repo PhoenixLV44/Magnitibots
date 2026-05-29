@@ -633,8 +633,8 @@ GameObject:
   - component: {fileID: 1917051482}
   - component: {fileID: 1917051481}
   - component: {fileID: 1917051480}
-  - component: {fileID: 1917051478}
   - component: {fileID: 1917051484}
+  - component: {fileID: 1917051485}
   m_Layer: 0
   m_Name: Player Stand-in
   m_TagString: Untagged
@@ -642,20 +642,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1917051478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917051477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98e1d9f034821649a5bb44763041523, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player.Movement
-  moveSpeed: 1
-  rb: {fileID: 0}
 --- !u!136 &1917051480
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -779,6 +765,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &1917051485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917051477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95893a6563273cd4d8076d6b47420edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.Controller
+  moveSpeed: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

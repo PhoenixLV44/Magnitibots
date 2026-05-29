@@ -44,6 +44,7 @@ namespace Player
         public Vector3[] GetInput()
         {
             Vector3 movedir = new Vector3(move.ReadValue<Vector2>().x, 0, move.ReadValue<Vector2>().y);
+            //movedir = movedir * Quaternion.Euler(Camera.main)
             Vector3 lookdir = new Vector3(look.ReadValue<Vector2>().x/Screen.currentResolution.width-0.5f, 0, look.ReadValue<Vector2>().y/Screen.currentResolution.height-0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
