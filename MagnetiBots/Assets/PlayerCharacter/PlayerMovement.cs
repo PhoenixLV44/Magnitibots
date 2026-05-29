@@ -6,7 +6,7 @@ namespace Player
 {
     public class Movement : MonoBehaviour
     {
-        public float moveSpeed;
+        public float moveSpeed = 1f;
         public Rigidbody rb;
         Vector3[] submitted;
         InputAction move;
@@ -56,7 +56,7 @@ namespace Player
         }
         public void Look(Vector3[] input)
         {
-            Debug.Log(input[1]);
+            //Debug.Log(input[1]);
             rb.rotation = Quaternion.LookRotation(input[1], Vector3.up);
         }
         public void Jump()

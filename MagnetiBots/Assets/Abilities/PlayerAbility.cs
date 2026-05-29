@@ -1,21 +1,41 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Player
+namespace Player.Abilities
 {
     public class PlayerAbility : MonoBehaviour
     {
+        protected InputAction activateInput;
+        protected InputAction chargeInput;
+        protected InputAction fireInput;
+        public virtual void Activate()
+        {
+            throw new System.NotImplementedException();
+        }
+        public virtual void Charge()
+        {
+            throw new System.NotImplementedException();
+        }
+        public virtual void Fire()
+        {
+            throw new System.NotImplementedException();
+        }
+        public virtual void GetInputs()
+        {
+            if (activateInput.IsPressed())
+            {
+                Activate();
+            }
 
-        void Activate()
-        {
-            throw new System.NotImplementedException();
-        }
-        void Charge()
-        {
-            throw new System.NotImplementedException();
-        }
-        void Fire()
-        {
-            throw new System.NotImplementedException();
+            if (chargeInput.IsPressed())
+            {
+                Charge();
+            }
+            else if (fireInput.IsPressed())
+            {
+                Fire();
+            }
         }
     }
 }

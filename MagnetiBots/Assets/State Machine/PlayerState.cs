@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Player;
-namespace Player
+using Player.States;
+namespace Player.States
 {
     public class PlayerState
     {
         protected Player.Controller player;
-        protected Player.PlayerStateMachine stateMachine;
+        protected Player.States.PlayerStateMachine stateMachine;
         protected Animator animationController;
         protected string animationName;
 
