@@ -9,6 +9,7 @@ namespace Player
         public float moveSpeed = 1f;
         public Rigidbody rb;
         Vector3[] submitted;
+        public Vector3[] Submitted { get { return submitted; } }
         InputAction move;
         InputAction look;
         InputAction jump;
@@ -37,7 +38,7 @@ namespace Player
 
                 if (move.IsPressed())
                 {
-                    Move(submitted);
+                    //Move(submitted);
                 }
             }
         }

@@ -3,10 +3,11 @@ using System.Collections;
 using Player.States;
 namespace Player.States
 {
-    public class PlayerState
+    public abstract class PlayerState
     {
         protected Player.Controller player;
         protected Player.States.PlayerStateMachine stateMachine;
+        protected PlayerStateManager stateManager;
         protected Animator animationController;
         protected string animationName;
 
@@ -14,25 +15,26 @@ namespace Player.States
         protected bool isAnimationFinished;
         protected float startTime;
 
-        public PlayerState(Player.Controller _player, PlayerStateMachine _stateMachine, Animator _animationController, string _animationName)
+        public PlayerState(Player.Controller _player, PlayerStateMachine _stateMachine, PlayerStateManager _stateManager)
         {
             player = _player;
             stateMachine = _stateMachine;
-            animationController = _animationController;
-            animationName = _animationName;
+            stateManager = _stateManager;
+            //animationController = _animationController;
+            //animationName = _animationName;
         }
         public virtual void EnterState()
         {
-            isAnimationFinished = false;
+            //isAnimationFinished = false;
             isExitingState = false;
             startTime = Time.time;
-            animationController.SetBool(animationName, true);
+            //animationController.SetBool(animationName, true);
         }
         public virtual void ExitState()
         {
             isExitingState = true;
-            if (!isAnimationFinished) isAnimationFinished = true;
-            animationController.SetBool(animationName, false);
+            //if (!isAnimationFinished) isAnimationFinished = true;
+            //animationController.SetBool(animationName, false);
         }
         public virtual void LogicUpdate()
         {
