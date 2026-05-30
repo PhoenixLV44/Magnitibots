@@ -4,16 +4,14 @@ namespace Ability
 {
     public class NoAbilityState : State
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public NoAbilityState(Player.Controller playerController, StateMachine stateMachine, StateManager stateManager) : base(playerController, stateMachine, stateManager) { }
+        public override void EnterState()
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            base.EnterState();
+            if (ability == null)
+            {
+                ability = player.LassoAbility;
+            }
         }
     }
 }
