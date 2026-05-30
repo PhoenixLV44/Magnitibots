@@ -8,6 +8,8 @@ public abstract class GroundedState : PlayerState
 
     protected Vector2 moveInput;
     protected bool isGrounded;
+    protected bool chargeInput;
+    protected bool fireInput;
 
     public override void LogicUpdate()
     {

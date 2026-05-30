@@ -1,6 +1,7 @@
 using Player.States;
 using Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementState : GroundedState
 {
@@ -18,6 +19,12 @@ public class MovementState : GroundedState
     public override void TransitionChecks()
     {
         base.TransitionChecks();
+        
+        chargeInput = InputSystem.actions.FindAction("Charge").IsPressed();
+        
+        if(chargeInput)
+            stateMachine.ChangeState(stateManager.ChargeState);
+
         if(moveInput == Vector2.zero)
             stateMachine.ChangeState(stateManager.IdleState);
     }
@@ -25,7 +32,6 @@ public class MovementState : GroundedState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        Debug.Log(stateManager.PlayerMovement.Submitted[0]);
         stateManager.PlayerMovement.Move(stateManager.PlayerMovement.Submitted);
     }
 }

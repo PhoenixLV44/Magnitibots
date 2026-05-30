@@ -5,7 +5,7 @@ namespace Player
 {
     public class Movement : MonoBehaviour
     {
-        public float moveSpeed = 1f;
+        public float moveSpeed = 10f;
         public Rigidbody rb;
         Vector3[] _submitted;
         public Vector3[] Submitted { get { return _submitted; } }

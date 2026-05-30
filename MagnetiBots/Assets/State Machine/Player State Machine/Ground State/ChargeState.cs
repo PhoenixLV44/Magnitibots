@@ -1,5 +1,6 @@
 using Player.States;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ChargeState : GroundedState
 {
@@ -14,5 +15,12 @@ public class ChargeState : GroundedState
     {
         base.TransitionChecks();
         
+        chargeInput = InputSystem.actions.FindAction("Charge").IsPressed();
+        
+        fireInput = InputSystem.actions.FindAction("Fire").IsPressed();
+        
+        if(!chargeInput || fireInput)
+            stateMachine.ChangeState(stateManager.IdleState);
+
     }
 }
