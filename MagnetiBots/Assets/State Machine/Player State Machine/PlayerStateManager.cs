@@ -8,7 +8,9 @@ namespace Player.States
     public class PlayerStateManager : MonoBehaviour
     {
         private  Player.Controller _playerController;
+        public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
         private Player.Movement _playerMovement;
+        public Player.Movement PlayerMovement {get {return _playerMovement;} set {_playerMovement = value;} }
         private PlayerStateMachine _playerStateMachine;
     
         //private GroundedState _groundedState;
@@ -19,16 +21,11 @@ namespace Player.States
         private ChargeState _chargeState;
         public ChargeState ChargeState {get {return _chargeState;} }
 
-        public PlayerStateManager(Player.Controller playerController, Player.Movement playerMovement) // add any other player scripts when necessary
-        {
-            _playerController = playerController;
-            _playerMovement = playerMovement;
-        }
+
 
         private void Awake()
         {
             _playerStateMachine = new PlayerStateMachine();
-            //_groundedState = new GroundedState(_playerController, _playerStateMachine);
             _idleState = new IdleState(_playerController, _playerStateMachine, this);
             _movementState = new MovementState(_playerController, _playerStateMachine, this);
             _chargeState = new ChargeState(_playerController, _playerStateMachine, this);

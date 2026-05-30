@@ -1,4 +1,5 @@
 using Player.States;
+using Player;
 using UnityEngine;
 
 public class MovementState : GroundedState
@@ -24,6 +25,7 @@ public class MovementState : GroundedState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        stateMachine.
+        Debug.Log(stateManager.PlayerMovement.Submitted[0]);
+        stateManager.PlayerMovement.Move(stateManager.PlayerMovement.Submitted);
     }
 }
