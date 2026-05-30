@@ -7,7 +7,7 @@ namespace Ability
         protected Player.Controller player;
         
         protected Parent ability;
-        
+
         protected StateMachine stateMachine;
         protected StateManager stateManager;
         
@@ -18,11 +18,12 @@ namespace Ability
         protected bool isAnimationFinished;
         protected float startTime;
 
-        public State(Player.Controller _player, StateMachine _stateMachine, StateManager _stateManager)
+        public State(Player.Controller _player, StateMachine _stateMachine, StateManager _stateManager, Parent _ability)
         {
             player = _player;
             stateMachine = _stateMachine;
             stateManager = _stateManager;
+            ability = _ability;
         }
         public virtual void EnterState()
         {
@@ -39,7 +40,7 @@ namespace Ability
         }
         public virtual void LogicUpdate()
         {
-            TransitionChecks();
+
         }
         public virtual void PhysicsUpdate()
         {

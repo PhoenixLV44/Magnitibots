@@ -1,19 +1,30 @@
 using Player.States;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Ability
 {
     public class LassoState : State
     {
-        public LassoState(Player.Controller playerController, StateMachine stateMachine, StateManager stateManager) : base(playerController, stateMachine, stateManager) { }
+        public LassoState(Player.Controller player, StateMachine stateMachine, StateManager stateManager, Lasso ability) : base(player, stateMachine, stateManager,  ability) { }
         public override void EnterState()
         {
             base.EnterState();
-            if (ability == null)
+            Debug.Log("Entered Lasso State");
+        }
+
+        public override void TransitionChecks()
+        {
+            base.TransitionChecks();
+            if (InputSystem.actions.FindAction("Activate Smash").IsPressed())
             {
-                ability = player.LassoAbility;
+                stateMachine.ChangeState(stateManager.SmashState);
+            }
+            if (InputSystem.actions.FindAction("Activate Propeller").IsPressed())
+            {
+                stateMachine.ChangeState(stateManager.SmashState);
             }
         }
-    }  
+    }
 }
 

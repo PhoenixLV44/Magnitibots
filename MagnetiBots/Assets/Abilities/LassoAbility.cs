@@ -33,7 +33,7 @@ namespace Ability
 
         private void Update()
         {
-            GetInputs();
+            //GetInputs();
         }
     }
 }

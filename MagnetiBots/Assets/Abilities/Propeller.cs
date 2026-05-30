@@ -3,11 +3,11 @@ using UnityEngine.InputSystem;
 
 namespace Ability
 {
-    public class Smash : Parent
+    public class Propeller : Parent
     {
         private void Start()
         {
-            activateInput = InputSystem.actions.FindAction("ActivateSmash");
+            activateInput = InputSystem.actions.FindAction("ActivatePropeller");
             chargeInput = InputSystem.actions.FindAction("Charge");
             fireInput = InputSystem.actions.FindAction("Fire");
         }
@@ -26,5 +26,5 @@ namespace Ability
         {
             base.Fire();
         }
-    }   
+    }
 }
