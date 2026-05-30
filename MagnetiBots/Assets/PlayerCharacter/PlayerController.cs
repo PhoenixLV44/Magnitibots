@@ -1,5 +1,4 @@
 using UnityEngine;
-using Player.Abilities;
 using Player.States;
 
 namespace Player
@@ -7,16 +6,25 @@ namespace Player
     public class Controller : MonoBehaviour
     {
         Player.Movement _movement;
-        Player.States.PlayerStateManager _playerStateMachine;
-        LassoAbility _lassoAbility;
+        
+        Player.States.PlayerStateManager _playerStateManager;
+        Ability.StateManager  _abilityStateManager;
+        
+        Ability.Lasso _lassoAbility;
+        public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
-            _playerStateMachine = gameObject.AddComponent<PlayerStateManager>();
-            _playerStateMachine.PlayerController = this;
-            _playerStateMachine.PlayerMovement = _movement;
+            
+            _playerStateManager = gameObject.AddComponent<PlayerStateManager>();
+            
+            _playerStateManager.PlayerController = this;
+            _playerStateManager.PlayerMovement = _movement;
+            
+            _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
+            _abilityStateManager.PlayerController = this;
             //_lassoAbility = gameObject.AddComponent<LassoAbility>();
         }
 

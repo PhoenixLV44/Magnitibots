@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player.Abilities
+namespace Ability
 {
-    public class PlayerAbility : MonoBehaviour
+    public class Parent : MonoBehaviour
     {
         protected InputAction activateInput;
         protected InputAction chargeInput;

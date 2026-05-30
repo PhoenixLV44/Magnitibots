@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player.Abilities
+namespace Ability
 {
-    public class LassoAbility : PlayerAbility
+    public class Lasso : Parent
     {
         private void Start()
         {
