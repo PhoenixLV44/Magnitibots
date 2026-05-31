@@ -18,6 +18,7 @@ namespace Ability
         private float _rotateLassoSpeed = 5f;
         
         private GameObject _lassoLoop;
+        Camera cam;
         
         [SerializeField] private LayerMask _layerMask;
         private void Start()
@@ -32,6 +33,7 @@ namespace Ability
             _lassoLoop.GetComponent<SphereCollider>().enabled = false;
             _lassoLoop.SetActive(false);
             _lassoLoop.name = "Lasso Loop";
+            cam = Camera.main;
         }
 
         private void OnEnable()
@@ -106,19 +108,55 @@ namespace Ability
             distanceVector.y = 0;
             float distance = distanceVector.magnitude;
 
-            if (distance <= _baseRange * _maxPowerLevel && direction != Vector2.zero)
+            if (distance <= _baseRange * _maxPowerLevel)
             {
                 _lassoLoop.transform.rotation = Quaternion.identity;
-                _lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z + (direction.y * _moveLassoSpeed * Time.deltaTime));
+                //_lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z + (direction.y * _moveLassoSpeed * Time.deltaTime));
+                _lassoLoop.transform.position = GetMouseWorldPosition();
             }
+            /*
             else if (distance > _baseRange * _maxPowerLevel && direction.y < 0)
             {
                 _lassoLoop.transform.rotation = Quaternion.identity;
                 _lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z + (direction.y * _moveLassoSpeed * Time.deltaTime));
-            }
+            }*/
 
         }
+        
+        void OnGUI()
+        {
+            Vector3 point = new Vector3();
+            Event   currentEvent = Event.current;
+            Vector2 mousePos = new Vector2();
 
+            // Get the mouse position from Event.
+            // Note that the y position from Event is inverted.
+            mousePos.x = currentEvent.mousePosition.x;
+            mousePos.y = cam.pixelHeight - currentEvent.mousePosition.y;
+
+            point = cam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, cam.nearClipPlane));
+
+            GUILayout.BeginArea(new Rect(20, 20, 250, 120));
+            GUILayout.Label("Screen pixels: " + cam.pixelWidth + ":" + cam.pixelHeight);
+            GUILayout.Label("Mouse position: " + mousePos);
+            GUILayout.Label("World position: " + point.ToString("F3"));
+            GUILayout.EndArea();
+        }
+
+        Vector3 GetMouseWorldPosition()
+        {
+            Vector3 point = new Vector3();
+            Event   currentEvent = Event.current;
+            Vector2 mousePos = new Vector2();
+
+            // Get the mouse position from Event.
+            // Note that the y position from Event is inverted.
+            mousePos.x = currentEvent.mousePosition.x;
+            mousePos.y = cam.pixelHeight - currentEvent.mousePosition.y;
+
+            point = cam.ScreenToWorldPoint(new Vector3(mousePos.x, cam.nearClipPlane, mousePos.y));
+            return point;
+        }
         public void UnhookLasso()
         {
             GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;

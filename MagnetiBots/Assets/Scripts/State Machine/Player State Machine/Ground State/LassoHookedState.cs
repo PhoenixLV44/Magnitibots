@@ -28,7 +28,7 @@ public class LassoHooked : PlayerState
 
     public override void PhysicsUpdate()
     {
-        _lassoAbility.MoveLassoTarget(moveInput);
+        //_lassoAbility.MoveLassoTarget(moveInput);
     }
     public override void TransitionChecks()
     {
