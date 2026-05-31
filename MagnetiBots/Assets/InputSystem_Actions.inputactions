@@ -998,12 +998,12 @@
             "actions": [
                 {
                     "name": "Charge",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "61574ff6-55b9-4e9f-83b2-7e7b1d3677a4",
-                    "expectedControlType": "",
+                    "expectedControlType": "Integer",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Fire",

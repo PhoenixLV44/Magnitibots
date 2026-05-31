@@ -16,9 +16,6 @@ public class IdleState : GroundedState
         base.TransitionChecks();
         
         if(InputSystem.actions.FindAction("Charge").IsPressed())
-            chargeInput = true;
-        
-        if(chargeInput)
             stateMachine.ChangeState(stateManager.ChargeState);
         
         if(moveInput != Vector2.zero)

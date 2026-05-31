@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,13 +10,25 @@ namespace Ability
         protected InputAction activateInput;
         protected InputAction chargeInput;
         protected InputAction fireInput;
+        
+        protected bool isCharging;
+        public bool IsCharging {get => isCharging; set => isCharging = value;}
+
+        private void Start()
+        {
+            StartCoroutine(Charge());
+        }
+
         public virtual void Activate()
         {
             throw new System.NotImplementedException();
         }
-        public virtual void Charge()
+        public virtual IEnumerator Charge()
         {
-            throw new System.NotImplementedException();
+            while (isCharging)
+            {
+                yield return null;
+            }
         }
         public virtual void Fire()
         {

@@ -13,6 +13,12 @@ namespace Ability
             Debug.Log("Entered Lasso State");
         }
 
+        public override void ExitState()
+        {
+            ability.StopAllCoroutines();
+            Debug.Log("Exited Lasso State");
+        }
+
         public override void TransitionChecks()
         {
             base.TransitionChecks();

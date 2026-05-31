@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,9 +18,12 @@ namespace Ability
             base.Activate();
         }
 
-        public override void Charge()
+        public override IEnumerator Charge()
         {
-            base.Charge();
+            while (isCharging)
+            {
+                yield return null;
+            }
         }
 
         public override void Fire()

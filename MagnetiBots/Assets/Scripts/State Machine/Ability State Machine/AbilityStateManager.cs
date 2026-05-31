@@ -9,6 +9,7 @@ namespace Ability
         public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
         
         private StateMachine _stateMachine;
+        public StateMachine StateMachine { get => _stateMachine;  }
         
         [SerializeField] private LassoState _lassoState;
         public LassoState LassoState {get {return _lassoState;} }
