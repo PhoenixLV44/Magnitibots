@@ -108,10 +108,8 @@ namespace Ability
 
             if (distance < _baseRange * _maxPowerLevel && direction != Vector2.zero)
             {
-                _lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z);
-                var rotation = transform.rotation;
-                rotation.y = rotation.y + direction.x * _rotateLassoSpeed * Time.deltaTime;
-                transform.rotation = rotation;
+                _lassoLoop.transform.rotation = Quaternion.identity;
+                _lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z + (direction.y * _moveLassoSpeed * Time.deltaTime));
             }
 
         }
