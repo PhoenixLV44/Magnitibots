@@ -6,10 +6,20 @@ using UnityEngine.InputSystem;
 public class MovementState : GroundedState
 {
     public MovementState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    
+    private Ability.StateManager _abilityManager;
+    private Ability.Parent _currentAbility;
 
     public override void EnterState()
     {
         Debug.Log("Entering Movement State");
+        if (!_abilityManager)
+        {
+            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
+        }
+
+        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        _currentAbility.IsCharging = true;
     }
     public override void ExitState()
     {
@@ -20,18 +30,28 @@ public class MovementState : GroundedState
     {
         base.TransitionChecks();
         
-        chargeInput = InputSystem.actions.FindAction("Charge").IsPressed();
-        
-        if(chargeInput)
+        if(InputSystem.actions.FindAction("Charge").IsPressed())
             stateMachine.ChangeState(stateManager.ChargeState);
 
         if(moveInput == Vector2.zero)
             stateMachine.ChangeState(stateManager.IdleState);
+        
+        if (InputSystem.actions.FindAction("Fire").IsPressed())
+        {
+            _currentAbility.Fire();
+            stateMachine.ChangeState(stateManager.IdleState);
+        }
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        stateManager.PlayerMovement.Move(stateManager.PlayerMovement.Submitted);
+        stateManager.PlayerMovement.Move(stateManager.PlayerMovement.Submitted[0]);
     }
 }

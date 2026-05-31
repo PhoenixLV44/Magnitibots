@@ -23,6 +23,9 @@ namespace Player
         Ability.StateManager  _abilityStateManager;
             #endregion
             
+        private bool _lassoHooked = false;
+        public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
+            
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();

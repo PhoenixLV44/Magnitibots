@@ -16,6 +16,7 @@ namespace Ability
         public override void ExitState()
         {
             ability.StopAllCoroutines();
+            ability.enabled = false;
             Debug.Log("Exited Lasso State");
         }
 
