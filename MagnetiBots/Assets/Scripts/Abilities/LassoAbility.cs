@@ -106,7 +106,12 @@ namespace Ability
             distanceVector.y = 0;
             float distance = distanceVector.magnitude;
 
-            if (distance < _baseRange * _maxPowerLevel && direction != Vector2.zero)
+            if (distance <= _baseRange * _maxPowerLevel && direction != Vector2.zero)
+            {
+                _lassoLoop.transform.rotation = Quaternion.identity;
+                _lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z + (direction.y * _moveLassoSpeed * Time.deltaTime));
+            }
+            else if (distance > _baseRange * _maxPowerLevel && direction.y < 0)
             {
                 _lassoLoop.transform.rotation = Quaternion.identity;
                 _lassoLoop.transform.position = new Vector3(lassoTargetPosition.x + (direction.x * _moveLassoSpeed * Time.deltaTime), lassoTargetPosition.y, lassoTargetPosition.z + (direction.y * _moveLassoSpeed * Time.deltaTime));
