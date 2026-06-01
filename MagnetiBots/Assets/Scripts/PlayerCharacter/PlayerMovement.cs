@@ -6,6 +6,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public float moveSpeed = 10f;
+        public float jumpForce = 10f;
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;
@@ -53,7 +54,7 @@ namespace Player
         }
         public void Jump()
         {
-            throw new System.NotImplementedException();
+            rb.AddForce(Vector3.up * jumpForce);
         }
     }
 }

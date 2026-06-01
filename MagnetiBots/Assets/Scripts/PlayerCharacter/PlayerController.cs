@@ -6,6 +6,10 @@ namespace Player
     public class Controller : MonoBehaviour
     {
         Player.Movement _movement;
+        #region Movement Variables
+        public float _movementSpeed;
+        public float _jumpForce;
+        #endregion
 
         #region Abilities
         [SerializeField] Ability.Lasso _lassoAbility;
@@ -26,6 +30,8 @@ namespace Player
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
+            _movement.moveSpeed = _movementSpeed;
+            _movement.jumpForce = _jumpForce;
             Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.Camera>().gameObject.transform.rotation.eulerAngles.y,0);
             _movement.adjustedMovement = _cameraAdjust;
             /*
