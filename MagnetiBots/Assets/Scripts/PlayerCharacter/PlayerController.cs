@@ -26,6 +26,8 @@ namespace Player
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
+            Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.Camera>().gameObject.transform.rotation.eulerAngles.y,0);
+            _movement.adjustedMovement = _cameraAdjust;
             /*
             _lassoAbility = gameObject.AddComponent<Ability.Lasso>();
             _smashAbility = gameObject.AddComponent<Ability.Smash>();
