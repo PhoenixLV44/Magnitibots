@@ -6,6 +6,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public float moveSpeed = 10f;
+        public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;
         public Vector3[] Submitted { get { return _submitted; } }
@@ -28,6 +29,9 @@ namespace Player
         public Vector3[] GetInput()
         {
             Vector3 movedir = new Vector3(_move.ReadValue<Vector2>().x, 0, _move.ReadValue<Vector2>().y);
+
+            movedir = adjustedMovement * movedir;
+
             Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.currentResolution.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.currentResolution.height-0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
