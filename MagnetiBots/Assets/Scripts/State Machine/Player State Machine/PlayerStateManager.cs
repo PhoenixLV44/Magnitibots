@@ -12,6 +12,7 @@ namespace Player.States
         private Player.Movement _playerMovement;
         public Player.Movement PlayerMovement {get {return _playerMovement;} set {_playerMovement = value;} }
         private PlayerStateMachine _playerStateMachine;
+        public PlayerStateMachine PlayerStateMachine {get {return _playerStateMachine;} }
     
         //States for when the player is on the ground
         private IdleState _idleState;

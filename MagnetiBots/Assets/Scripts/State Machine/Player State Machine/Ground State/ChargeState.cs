@@ -37,12 +37,11 @@ public class ChargeState : GroundedState
         }
         if (!InputSystem.actions.FindAction("Charge").IsPressed() )
         {
+            _currentAbility.Fire();
             stateMachine.ChangeState(stateManager.IdleState);
         }
         if (InputSystem.actions.FindAction("Fire").IsPressed())
         {
-            _currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
         }
     }
 

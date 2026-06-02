@@ -1018,9 +1018,9 @@
             "actions": [
                 {
                     "name": "Charge",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "61574ff6-55b9-4e9f-83b2-7e7b1d3677a4",
-                    "expectedControlType": "Integer",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -1065,17 +1065,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "13628c5b-5654-4b79-a55e-2a8d0aef1c0b",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Charge",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4df4d14b-5a99-439a-ac05-742e45d913a2",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -1115,6 +1104,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Activate Propeller",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db661961-c579-4ef9-8e95-40d01dfeabbf",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Charge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

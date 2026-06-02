@@ -12,18 +12,17 @@ public class MovementState : GroundedState
 
     public override void EnterState()
     {
-        Debug.Log("Entering Movement State");
+        //Debug.Log("Entering Movement State");
         if (!_abilityManager)
         {
             _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        _currentAbility.IsCharging = true;
     }
     public override void ExitState()
     {
-        Debug.Log("Exiting Movement State");
+        //Debug.Log("Exiting Movement State");
     }
 
     public override void TransitionChecks()

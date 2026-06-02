@@ -26,6 +26,11 @@ public class LassoHooked : PlayerState
         stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
         _lassoAbility.MoveLassoTarget();
+
+        if (InputSystem.actions.FindAction("Charge").IsPressed())
+        {
+            _lassoAbility.UnhookLasso();
+        }
     }
 
     public override void PhysicsUpdate()
@@ -34,10 +39,8 @@ public class LassoHooked : PlayerState
     }
     public override void TransitionChecks()
     {
-        if (InputSystem.actions.FindAction("Interact").IsPressed())
+        if (!player.LassoHooked)
         {
-            _lassoAbility.UnhookLasso();
-            player.LassoHooked = false;
             stateMachine.ChangeState(stateManager.IdleState);
         }
     }

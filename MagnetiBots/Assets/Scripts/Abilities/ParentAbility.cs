@@ -13,6 +13,9 @@ namespace Ability
         
         protected bool isCharging;
         public bool IsCharging {get => isCharging; set => isCharging = value;}
+        
+        protected int _currentPowerLevel = 1;
+        public int CurrentPowerLevel => _currentPowerLevel;
 
         private void Start()
         {

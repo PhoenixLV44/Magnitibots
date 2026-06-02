@@ -38,11 +38,12 @@ namespace Player
             _targetCursor = gameObject.AddComponent<TargetingCursor>();
             
             _playerStateManager = gameObject.AddComponent<PlayerStateManager>();
+            _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
             
             _playerStateManager.PlayerController = this;
+            
             _playerStateManager.PlayerMovement = _movement;
             
-            _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
             _abilityStateManager.PlayerController = this;
 
         }
@@ -51,6 +52,15 @@ namespace Player
         void Update()
         {
 
+        }
+        private void OnGUI()
+        {
+            GUI.skin.label.fontSize = 20;
+            GUILayout.BeginArea(new Rect(20, 20, 1000, 500));
+            GUILayout.Label("Player State: "  + _playerStateManager.PlayerStateMachine.CurrentState.ToString());
+            GUILayout.Label("Current Ability: " + _abilityStateManager.StateMachine.CurrentState.ToString());
+            GUILayout.Label("Charge Level: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel);
+            GUILayout.EndArea();
         }
     }
 }

@@ -12,32 +12,34 @@ namespace Ability
         private float _baseRange = 5f;
         private int _basePowerLevel = 1;
         private int _maxPowerLevel = 5;
-        private int _currentPowerLevel = 1;
-        
-        private float _moveLassoSpeed = 15f;
-        private float _rotateLassoSpeed = 5f;
+    
         
         private GameObject _lassoLoop;
-
         public GameObject LassoLoop => _lassoLoop;
+        
+        private GameObject _rangeIndicator;
 
         private LayerMask _layerMask;
         
         private TargetingCursor _targetCursor;
+        
+        Player.Controller _controller;
         private void Start()
         {
             activateInput = InputSystem.actions.FindAction("ActivateLasso");
             chargeInput = InputSystem.actions.FindAction("Charge");
-            fireInput = InputSystem.actions.FindAction("Fire");
             
             _layerMask = LayerMask.GetMask("LassoTarget");
             
-            _lassoLoop = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform.position, Quaternion.identity, transform);
+            _lassoLoop = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform.position, Quaternion.identity);
             _lassoLoop.GetComponent<SphereCollider>().enabled = false;
             _lassoLoop.SetActive(false);
+            _lassoLoop.transform.SetParent(transform);
             _lassoLoop.name = "Lasso Loop";
             
             _targetCursor = GetComponent<TargetingCursor>();
+            
+            _controller = GetComponent<Player.Controller>();
         }
 
         private void OnEnable()
@@ -66,10 +68,10 @@ namespace Ability
                 if (isCharging && _currentPowerLevel < _maxPowerLevel)
                 {
                     yield return new WaitForSeconds(chargeTimer);
-                    Debug.Log("Current Charge: " + _currentPowerLevel);
+                    //Debug.Log("Current Charge: " + _currentPowerLevel);
                     _currentPowerLevel++;
                 }
-                else if(!isCharging &&  _currentPowerLevel != _basePowerLevel)
+                else if(!isCharging && _currentPowerLevel != _basePowerLevel)
                 {
                     _currentPowerLevel = _basePowerLevel;
                 }
@@ -79,13 +81,11 @@ namespace Ability
 
         public override void Fire()
         {
-            if (isCharging)
-            {
-                isCharging = false;
-            }
+            isCharging = false;
             RaycastHit hitInfo;
             Vector3 hitPoint;
             Vector3 castPoint = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            
             if (Physics.SphereCast(castPoint, 0.5f, transform.forward, out hitInfo, _baseRange * _currentPowerLevel, _layerMask))
             {
                 Debug.Log("GOT AN OBJECT");
@@ -98,7 +98,7 @@ namespace Ability
                 
                 hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
                 
-                gameObject.GetComponent<Player.Controller>().LassoHooked = true;
+                _controller.LassoHooked = true;
             }
             else
             {
@@ -129,6 +129,8 @@ namespace Ability
         {
             GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
             loopedObject.transform.parent = null;
+            
+            _controller.LassoHooked = false;
             
             _targetCursor.DeactivateCursor();
             _lassoLoop.SetActive(false);
