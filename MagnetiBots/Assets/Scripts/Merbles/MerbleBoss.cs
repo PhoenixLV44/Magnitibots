@@ -5,14 +5,26 @@ namespace Merbles
 {
     public class Boss : MonoBehaviour
     {
-        [SerializeField] private GameObject merblePrefab;
-        [SerializeField] private int defaultCapacity;
-        [SerializeField] private int maxSize;
-        public ObjectPool<GameObject> _merbles;
-        private void Awake()
+        Merbles.Collector collector;
+        
+        public int currentMerbles = 0;
+
+        public GameObject merblePrefab;
+
+        public ObjectPool<GameObject> Merbles { get { return _merbles; } private set { _merbles = value; } }
+        private ObjectPool<GameObject> _merbles;
+        public int defaultCapacity;
+        public int maxSize;
+
+        private void Start()
         {
+            
             merblePrefab.GetComponent<Merble>().myBoss = this;
-            _merbles = new ObjectPool<GameObject>(
+
+            collector = gameObject.AddComponent<Collector>();
+            collector.boss = this;
+
+            Merbles = new ObjectPool<GameObject>(
                 createFunc: OnCreateMerble,
                 actionOnGet: OnGetMerble,
                 actionOnRelease: OnReleaseMerble,
@@ -28,15 +40,22 @@ namespace Merbles
         }
         private void OnGetMerble(GameObject merble)
         {
-
+            merble.SetActive(true);
         }
         private void OnReleaseMerble(GameObject merble)
         {
-
+            merble.SetActive(false);
         }
         private void OnDestroyMerble(GameObject merble)
         {
             Destroy(merble);
+        }
+        public void RepopulateMerbles()
+        {
+            for (int i = 0; i < currentMerbles; i++)
+            {
+                _merbles.Get();
+            }
         }
     }
 }

@@ -7,11 +7,12 @@ namespace Player
     {
         Player.Movement _movement;
         #region Movement Variables
-        public float _movementSpeed;
-        public float _jumpForce;
+        [SerializeField] float _movementSpeed;
+        [SerializeField] float _jumpForce;
         #endregion
 
         Merbles.Boss _merbleBoss;
+        [SerializeField] GameObject _merblePrefab;
 
         #region Abilities
         [SerializeField] Ability.Lasso _lassoAbility;
@@ -40,6 +41,9 @@ namespace Player
             _movement.adjustedMovement = _cameraAdjust;
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
+            _merbleBoss.merblePrefab = _merblePrefab;
+            _merbleBoss.defaultCapacity = 0;
+            _merbleBoss.maxSize = 10;
 
             /*
             _lassoAbility = gameObject.AddComponent<Ability.Lasso>();
