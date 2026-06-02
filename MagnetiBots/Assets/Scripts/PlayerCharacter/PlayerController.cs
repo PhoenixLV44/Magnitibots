@@ -1,5 +1,6 @@
 using UnityEngine;
 using Player.States;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -63,7 +64,14 @@ namespace Player
         // Update is called once per frame
         void Update()
         {
-
+            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            {
+                _merbleBoss.ChargeMerble();
+            }
+            if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
+            {
+                _merbleBoss.FireMerbles();
+            }
         }
     }
 }

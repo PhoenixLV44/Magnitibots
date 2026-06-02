@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -12,6 +13,8 @@ namespace Merbles
         
         public bool Sentience { get { return _isAlive; }  set { _isAlive = value; } }
         private bool _isAlive = false;
+        public bool Charging { get { return _isCharging; } private set {  _isCharging = value; } }
+        private bool _isCharging = false;
 
         private void Awake()
         {
@@ -21,6 +24,8 @@ namespace Merbles
         public void SetPool(ObjectPool<GameObject> pool)
         {
             _merblePool = pool;
+            Charging = false;
+            myBoss.merbleList.Add(this);
             Sentience = true;
             tag = "Merble";
             _agent.enabled = true;
@@ -35,7 +40,7 @@ namespace Merbles
         }
         private void Update()
         {
-            if (_isAlive)
+            if (_isAlive && !_isCharging)
             {
                 if (Vector3.Distance(transform.position, myBoss.transform.position) > 5f)
                 {
@@ -48,9 +53,17 @@ namespace Merbles
                 }
             }
         }
-        public void Charge(Transform target)
+        public void StartCharge(Vector3 target)
         {
-            _agent.destination = target.position;
+            StartCoroutine(Charge(target));
+        }
+        IEnumerator Charge(Vector3 target)
+        {
+            Debug.Log("Arrgh!");
+            _isCharging = true;
+            _agent.destination = target;
+            yield return new WaitUntil(() => Vector3.Distance(transform.position, target) < 0.5f);
+            _merblePool.Release(gameObject);
         }
     }
 }

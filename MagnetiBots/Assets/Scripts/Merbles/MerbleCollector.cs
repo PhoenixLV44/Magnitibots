@@ -10,10 +10,10 @@ namespace Merbles
         {
             if (other.gameObject.CompareTag("MerbleCollect"))
             {
-                Debug.Log("ding");
                 Merble hitMerble = other.gameObject.GetComponent<Merble>();
                 hitMerble.myBoss = boss;
                 hitMerble.SetPool(boss.Merbles);
+                boss.currentMerbles++;
             }
         }
     }

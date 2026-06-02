@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,6 +9,7 @@ namespace Merbles
         Merbles.Collector collector;
         
         public int currentMerbles = 0;
+        public List<Merble> merbleList;
 
         public GameObject merblePrefab;
 
@@ -18,7 +20,7 @@ namespace Merbles
 
         private void Start()
         {
-            
+            merbleList = new List<Merble>();
             merblePrefab.GetComponent<Merble>().myBoss = this;
 
             collector = gameObject.AddComponent<Collector>();
@@ -36,7 +38,10 @@ namespace Merbles
         }
         private GameObject OnCreateMerble()
         {
-            return Instantiate(merblePrefab);
+            GameObject merble = Instantiate(merblePrefab);
+            merbleList.Add(merble.GetComponent<Merble>());
+            currentMerbles++;
+            return merble;
         }
         private void OnGetMerble(GameObject merble)
         {
@@ -48,11 +53,27 @@ namespace Merbles
         }
         private void OnDestroyMerble(GameObject merble)
         {
+            merbleList.Remove(merble.GetComponent<Merble>());
             Destroy(merble);
         }
-        public void RepopulateMerbles()
+        public void ChargeMerble()
         {
-            for (int i = 0; i < currentMerbles; i++)
+            for (int i = 0; i < merbleList.Count; i++)
+            {
+                if (merbleList[i] != null) continue;
+                if(!merbleList[i].Charging)
+                {
+                    Debug.Log(i + "Ding");
+                    merbleList[i].StartCharge(transform.position + (transform.forward*2));
+                    break;
+                }
+                
+            }
+            
+        }
+        public void FireMerbles()
+        {
+            for (int i = 0; i < _merbles.CountInactive; i++)
             {
                 _merbles.Get();
             }
