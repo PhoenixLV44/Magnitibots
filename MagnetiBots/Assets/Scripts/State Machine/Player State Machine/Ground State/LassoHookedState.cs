@@ -24,6 +24,8 @@ public class LassoHooked : PlayerState
         moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
         
         stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+
+        _lassoAbility.MoveLassoTarget();
     }
 
     public override void PhysicsUpdate()

@@ -7,15 +7,18 @@ namespace Player
     {
         Player.Movement _movement;
 
-        #region Abilities
-        [SerializeField] Ability.Lasso _lassoAbility;
+        #region Scripts
+        private Ability.Lasso _lassoAbility;
         public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
         
-        [SerializeField] Ability.Smash _smashAbility;
+        private Ability.Smash _smashAbility;
         public Ability.Smash SmashAbility { get { return _smashAbility; } }
         
-        [SerializeField] Ability.Propeller _propellerAbility;
+        private Ability.Propeller _propellerAbility;
         public Ability.Propeller PropellerAbility { get { return _propellerAbility; } }
+        
+        private TargetingCursor _targetCursor;
+        public TargetingCursor TargetCursor { get { return _targetCursor; } }
             #endregion
 
         #region States
@@ -31,11 +34,9 @@ namespace Player
             _movement = gameObject.AddComponent<Player.Movement>();
             Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.Camera>().gameObject.transform.rotation.eulerAngles.y,0);
             _movement.adjustedMovement = _cameraAdjust;
-            /*
-            _lassoAbility = gameObject.AddComponent<Ability.Lasso>();
-            _smashAbility = gameObject.AddComponent<Ability.Smash>();
-            _propellerAbility = gameObject.AddComponent<Ability.Propeller>();
-            */
+
+            _targetCursor = gameObject.AddComponent<TargetingCursor>();
+            
             _playerStateManager = gameObject.AddComponent<PlayerStateManager>();
             
             _playerStateManager.PlayerController = this;
@@ -43,7 +44,7 @@ namespace Player
             
             _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
             _abilityStateManager.PlayerController = this;
-            
+
         }
 
         // Update is called once per frame
