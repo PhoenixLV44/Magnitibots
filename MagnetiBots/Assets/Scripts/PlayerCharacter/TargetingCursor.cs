@@ -27,8 +27,8 @@ public class TargetingCursor : MonoBehaviour
     public void DeactivateCursor()
     {
         _targetCursor.transform.position = transform.position;
-        _targetCursor.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
+        _targetCursor.SetActive(false);
     }
 
     public Vector3 MoveCursor()

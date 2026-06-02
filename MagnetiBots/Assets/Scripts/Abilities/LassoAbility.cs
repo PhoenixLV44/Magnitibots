@@ -67,6 +67,7 @@ namespace Ability
             {
                 if (isCharging && _currentPowerLevel < _maxPowerLevel)
                 {
+                    _controller.RangeIndicator.ChangeRangeSize((_baseRange * _currentPowerLevel) * 2);
                     yield return new WaitForSeconds(chargeTimer);
                     //Debug.Log("Current Charge: " + _currentPowerLevel);
                     _currentPowerLevel++;
@@ -99,9 +100,12 @@ namespace Ability
                 hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
                 
                 _controller.LassoHooked = true;
+                
+                _controller.RangeIndicator.ChangeRangeSize((_baseRange * _maxPowerLevel) * 2);
             }
             else
             {
+                _controller.RangeIndicator.DisableRangeIndicator();
                 Debug.Log("MISS");
             }
         }

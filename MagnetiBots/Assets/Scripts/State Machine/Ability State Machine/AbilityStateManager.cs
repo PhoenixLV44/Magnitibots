@@ -25,6 +25,10 @@ namespace Ability
         {
             if(_playerController == null) _playerController = gameObject.GetComponent<Player.Controller>();
             _stateMachine = new StateMachine();
+
+        }
+        private void Start()
+        {
             _lassoState = new LassoState(_playerController, _stateMachine, this, gameObject.AddComponent<Lasso>());
             _smashState = new SmashState(_playerController, _stateMachine, this, gameObject.AddComponent<Smash>());
             _propellerState = new PropellerState(_playerController, _stateMachine, this,  gameObject.AddComponent<Propeller>());
@@ -34,11 +38,7 @@ namespace Ability
             _smashState.Ability.enabled = false;
             _propellerState.Ability.enabled = false;
             _noAbilityState.Ability.enabled = false;
-        }
-
-        private void Start()
-        {
-            _stateMachine.InitializeStateMachine(_noAbilityState);
+            _stateMachine.InitializeStateMachine(_lassoState);
         }
 
         private void Update()

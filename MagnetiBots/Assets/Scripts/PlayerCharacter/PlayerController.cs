@@ -28,6 +28,9 @@ namespace Player
             
         private bool _lassoHooked = false;
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
+        
+        private RangeIndicator _rangeIndicator;
+        public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
             
         void Start()
         {
@@ -45,6 +48,8 @@ namespace Player
             _playerStateManager.PlayerMovement = _movement;
             
             _abilityStateManager.PlayerController = this;
+            
+            _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
 
         }
 
