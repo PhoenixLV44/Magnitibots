@@ -9,6 +9,7 @@ namespace Ability
         public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
         
         private StateMachine _stateMachine;
+        public StateMachine StateMachine { get => _stateMachine;  }
         
         [SerializeField] private LassoState _lassoState;
         public LassoState LassoState {get {return _lassoState;} }
@@ -24,15 +25,20 @@ namespace Ability
         {
             if(_playerController == null) _playerController = gameObject.GetComponent<Player.Controller>();
             _stateMachine = new StateMachine();
+
+        }
+        private void Start()
+        {
             _lassoState = new LassoState(_playerController, _stateMachine, this, gameObject.AddComponent<Lasso>());
             _smashState = new SmashState(_playerController, _stateMachine, this, gameObject.AddComponent<Smash>());
             _propellerState = new PropellerState(_playerController, _stateMachine, this,  gameObject.AddComponent<Propeller>());
             _noAbilityState = new NoAbilityState(_playerController, _stateMachine, this, gameObject.AddComponent<Parent>());
-        }
-
-        private void Start()
-        {
-            _stateMachine.InitializeStateMachine(_noAbilityState);
+            
+            _lassoState.Ability.enabled = false;
+            _smashState.Ability.enabled = false;
+            _propellerState.Ability.enabled = false;
+            _noAbilityState.Ability.enabled = false;
+            _stateMachine.InitializeStateMachine(_lassoState);
         }
 
         private void Update()

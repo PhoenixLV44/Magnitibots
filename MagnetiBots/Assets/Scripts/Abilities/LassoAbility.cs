@@ -1,16 +1,56 @@
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.Shapes;
 
 namespace Ability
 {
     public class Lasso : Parent
     {
+        private float _baseRange = 5f;
+        private int _basePowerLevel = 1;
+        private int _maxPowerLevel = 5;
+    
+        
+        private GameObject _lassoLoop;
+        public GameObject LassoLoop => _lassoLoop;
+        
+        private GameObject _rangeIndicator;
+
+        private LayerMask _layerMask;
+        
+        private TargetingCursor _targetCursor;
+        
+        Player.Controller _controller;
         private void Start()
         {
             activateInput = InputSystem.actions.FindAction("ActivateLasso");
             chargeInput = InputSystem.actions.FindAction("Charge");
-            fireInput = InputSystem.actions.FindAction("Fire");
+            
+            _layerMask = LayerMask.GetMask("LassoTarget");
+            
+            _lassoLoop = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform.position, Quaternion.identity);
+            _lassoLoop.GetComponent<SphereCollider>().enabled = false;
+            _lassoLoop.SetActive(false);
+            _lassoLoop.transform.SetParent(transform);
+            _lassoLoop.name = "Lasso Loop";
+            
+            _targetCursor = GetComponent<TargetingCursor>();
+            
+            _controller = GetComponent<Player.Controller>();
+        }
+
+        private void OnEnable()
+        {
+            StartCoroutine(Charge());
+        }
+
+        private void OnDisable()
+        {
+            Debug.Log("Disabling Lasso Ability");
+            StopCoroutine(Charge());
         }
 
         public override void Activate()
@@ -19,21 +59,85 @@ namespace Ability
             Debug.Log("Activating Lasso Ability");
         }
 
-        public override void Charge()
+        public override IEnumerator Charge()
         {
-            //base.Charge();
-            Debug.Log("Charging Lasso Ability");
+            Debug.Log("Start Lasso Charge");
+            float chargeTimer = 0.5f;
+            while (true)
+            {
+                if (isCharging && _currentPowerLevel < _maxPowerLevel)
+                {
+                    _controller.RangeIndicator.ChangeRangeSize((_baseRange * _currentPowerLevel) * 2);
+                    yield return new WaitForSeconds(chargeTimer);
+                    //Debug.Log("Current Charge: " + _currentPowerLevel);
+                    _currentPowerLevel++;
+                }
+                else if(!isCharging && _currentPowerLevel != _basePowerLevel)
+                {
+                    _currentPowerLevel = _basePowerLevel;
+                }
+                yield return null;
+            }
         }
 
         public override void Fire()
         {
-            //base.Fire();
-            Debug.Log("Firing Lasso Ability");
+            isCharging = false;
+            RaycastHit hitInfo;
+            Vector3 hitPoint;
+            Vector3 castPoint = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            
+            if (Physics.SphereCast(castPoint, 0.5f, transform.forward, out hitInfo, _baseRange * _currentPowerLevel, _layerMask))
+            {
+                Debug.Log("GOT AN OBJECT");
+                hitPoint = hitInfo.point;
+                
+                _lassoLoop.transform.position = hitPoint;
+                _lassoLoop.SetActive(true);
+                
+                _targetCursor.ActivateCursor(_lassoLoop.transform.position);
+                
+                hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
+                
+                _controller.LassoHooked = true;
+                
+                _controller.RangeIndicator.ChangeRangeSize((_baseRange * _maxPowerLevel) * 2);
+            }
+            else
+            {
+                _controller.RangeIndicator.DisableRangeIndicator();
+                Debug.Log("MISS");
+            }
         }
 
-        private void Update()
+        public void MoveLassoTarget(/*Vector2 direction*/)
         {
-            //GetInputs();
+            Vector3 currentPosition = transform.position;
+            Vector3 lassoTargetPosition = _lassoLoop.transform.position;
+            
+            Vector3 distanceVector = lassoTargetPosition - currentPosition;
+            distanceVector.y = 0;
+            float distance = distanceVector.magnitude;
+
+            if (distance <= _baseRange * _maxPowerLevel)
+            {
+                _lassoLoop.transform.rotation = Quaternion.identity;
+                
+                _lassoLoop.transform.position = _targetCursor.MoveCursor();
+            }
+
+
+        }
+        
+        public void UnhookLasso()
+        {
+            GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
+            loopedObject.transform.parent = null;
+            
+            _controller.LassoHooked = false;
+            
+            _targetCursor.DeactivateCursor();
+            _lassoLoop.SetActive(false);
         }
     }
 }
