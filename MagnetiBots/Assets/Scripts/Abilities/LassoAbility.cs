@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder.Shapes;
 
 namespace Ability
 {
@@ -11,7 +8,7 @@ namespace Ability
     {
         private float _baseRange = 5f;
         private int _basePowerLevel = 1;
-        private int _maxPowerLevel = 5;
+        private int _maxPowerLevel = 3;
     
         
         private GameObject _lassoLoop;
@@ -78,6 +75,7 @@ namespace Ability
                 }
                 yield return null;
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         public override void Fire()
@@ -106,6 +104,7 @@ namespace Ability
             else
             {
                 _controller.RangeIndicator.DisableRangeIndicator();
+                Cursor.lockState =  CursorLockMode.Confined;
                 Debug.Log("MISS");
             }
         }
@@ -119,14 +118,48 @@ namespace Ability
             distanceVector.y = 0;
             float distance = distanceVector.magnitude;
 
-            if (distance <= _baseRange * _maxPowerLevel)
+            if (distance < _baseRange * _maxPowerLevel)
             {
                 _lassoLoop.transform.rotation = Quaternion.identity;
-                
+
                 _lassoLoop.transform.position = _targetCursor.MoveCursor();
             }
+            else if (distance >= _baseRange * _maxPowerLevel)
+            {
+                float checkXAxis = distanceVector.x - currentPosition.x;
+                float checkZAxis = distanceVector.z - currentPosition.z;
 
-
+                Vector3 cursorDelta = _targetCursor.GetCursorDelta();
+                float cursorDeltaPolarity = cursorDelta.x * cursorDelta.z;
+                if (checkXAxis > 0 && checkZAxis > 0)
+                {
+                    if (cursorDeltaPolarity < 0)
+                    {
+                        _lassoLoop.transform.position = _targetCursor.MoveCursor();
+                    }
+                }
+                else if (checkXAxis < 0 && checkZAxis < 0)
+                {
+                    if (cursorDeltaPolarity > 0)
+                    {
+                        _lassoLoop.transform.position = _targetCursor.MoveCursor();
+                    }
+                }
+                else if (checkXAxis > 0 && checkZAxis < 0)
+                {
+                    if (cursorDelta.x <= 0 && cursorDelta.z < 0)
+                    {
+                        _lassoLoop.transform.position = _targetCursor.MoveCursor();
+                    }
+                }
+                else if (checkXAxis < 0 && checkZAxis > 0)
+                {
+                    if (cursorDelta.x > 0 && cursorDelta.z <= 0)
+                    {
+                        _lassoLoop.transform.position = _targetCursor.MoveCursor();
+                    }
+                }
+            }
         }
         
         public void UnhookLasso()

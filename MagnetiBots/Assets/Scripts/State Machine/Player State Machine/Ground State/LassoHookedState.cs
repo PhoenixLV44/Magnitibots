@@ -16,6 +16,7 @@ public class LassoHooked : PlayerState
         {
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
+        player.Movement.moveSpeed = player.Movement.moveSpeed / 2;
     }
     
     public override void LogicUpdate()
@@ -26,6 +27,8 @@ public class LassoHooked : PlayerState
         stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
         _lassoAbility.MoveLassoTarget();
+        
+        player.Movement.Move(moveInput);
 
         if (InputSystem.actions.FindAction("Charge").IsPressed())
         {
