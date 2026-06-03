@@ -7,6 +7,8 @@ namespace Player
     {
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
+        private float _defaultMoveSpeed = 10f;
+        public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;
@@ -25,10 +27,6 @@ namespace Player
         private void Update()
         {
             _submitted = GetInput();
-            if (_look.IsPressed())
-            {
-                Look(_submitted);
-            }
         }
 
         public Vector3[] GetInput()
@@ -57,14 +55,22 @@ namespace Player
 
             return returnable;
         }
-        public void Move(Vector3[] input) //Called in MovementState
+        /// <summary>
+        /// Called in MovementState and LoopedHookState
+        /// Call with Submitted[0]
+        /// </summary>
+        public void Move(Vector3 input)
         {
-            rb.MovePosition(rb.transform.position + input[0] * (moveSpeed * Time.deltaTime));
+            rb.MovePosition(rb.transform.position + input * (moveSpeed * Time.deltaTime));
         }
-        public void Look(Vector3[] input)
+        /// <summary>
+        /// Called in every player state currently implemented
+        /// Called with Submitted[0]
+        /// </summary>
+        public void Look(Vector3 input)
         {
             //Debug.Log(input[1]);
-            rb.rotation = Quaternion.LookRotation(input[1], Vector3.up);
+            rb.rotation = Quaternion.LookRotation(input, Vector3.up);
         }
         public void Jump()
         {

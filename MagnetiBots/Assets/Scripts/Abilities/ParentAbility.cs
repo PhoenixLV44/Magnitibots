@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,13 +10,38 @@ namespace Ability
         protected InputAction activateInput;
         protected InputAction chargeInput;
         protected InputAction fireInput;
+        
+        protected bool isCharging;
+        public bool IsCharging {get => isCharging; set => isCharging = value;}
+        
+        protected int currentPowerLevel = 1;
+        protected int basePowerLevel = 1;
+        protected float baseRange;
+        protected int maxPowerLevel;
+        public int CurrentPowerLevel => currentPowerLevel;
+        
+        protected Player.Controller controller;
+        protected IEnumerator chargeCoroutine;
+        protected TargetingCursor targetCursor;
+        protected RangeIndicator rangeIndicator;
+        
+        protected GameObject aimingGuide;
+
+        private void Start()
+        {
+            InitializeAbility();
+        }
+
         public virtual void Activate()
         {
             throw new System.NotImplementedException();
         }
-        public virtual void Charge()
+        public virtual IEnumerator Charge()
         {
-            throw new System.NotImplementedException();
+            while (isCharging)
+            {
+                yield return null;
+            }
         }
         public virtual void Fire()
         {
@@ -36,6 +62,46 @@ namespace Ability
             {
                 Fire();
             }
+        }
+        public void StartCharging()
+        {
+            Debug.Log("Starting charging");
+            if (chargeCoroutine != null)
+            {
+                aimingGuide.SetActive(true);
+                StartCoroutine(chargeCoroutine);
+            }
+            else
+            {
+                chargeCoroutine = Charge();
+                aimingGuide.SetActive(true);
+                StartCoroutine(chargeCoroutine);
+            }
+        }
+
+        public void StopCharging()
+        {
+            if (chargeCoroutine != null)
+            {
+                Debug.Log("Stopping charging");
+                aimingGuide.SetActive(false);
+                currentPowerLevel = basePowerLevel;
+                StopCoroutine(chargeCoroutine);
+            }
+        }
+
+        public virtual void InitializeAbility()
+        {
+            targetCursor = GetComponent<TargetingCursor>();
+            
+            controller = GetComponent<Player.Controller>();
+            
+            rangeIndicator = GetComponent<RangeIndicator>();
+            
+            chargeCoroutine = Charge();
+            
+            aimingGuide = transform.GetChild(3).gameObject;
+            aimingGuide.SetActive(false);
         }
     }
 }

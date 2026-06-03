@@ -7,6 +7,7 @@ namespace Ability
         protected Player.Controller player;
         
         protected Parent ability;
+        public Parent Ability{get => ability;}
 
         protected StateMachine stateMachine;
         protected StateManager stateManager;
@@ -30,11 +31,15 @@ namespace Ability
             //isAnimationFinished = false;
             isExitingState = false;
             startTime = Time.time;
+            ability.enabled = true;
+            ability.IsCharging = false;
             //animationController.SetBool(animationName, true);
         }
         public virtual void ExitState()
         {
             isExitingState = true;
+            ability.IsCharging = false;
+            ability.enabled = false;
             //if (!isAnimationFinished) isAnimationFinished = true;
             //animationController.SetBool(animationName, false);
         }
