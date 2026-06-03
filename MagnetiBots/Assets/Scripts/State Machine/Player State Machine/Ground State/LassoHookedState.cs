@@ -16,7 +16,7 @@ public class LassoHooked : PlayerState
         {
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
-        player.Movement.moveSpeed = player.Movement.moveSpeed / 2;
+        player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
     }
     
     public override void LogicUpdate()
