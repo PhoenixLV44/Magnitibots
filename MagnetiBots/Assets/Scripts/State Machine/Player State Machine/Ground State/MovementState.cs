@@ -17,8 +17,8 @@ public class MovementState : GroundedState
         {
             _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
         }
-
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        player.Movement.moveSpeed = player.Movement.DefaultMoveSpeed;
     }
     public override void ExitState()
     {

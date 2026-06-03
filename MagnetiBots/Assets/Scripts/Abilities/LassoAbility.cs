@@ -1,31 +1,20 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder.Shapes;
 
 namespace Ability
 {
     public class Lasso : Parent
     {
-        private float _baseRange = 5f;
-        private int _basePowerLevel = 1;
-        private int _maxPowerLevel = 5;
-    
-        
         private GameObject _lassoLoop;
         public GameObject LassoLoop => _lassoLoop;
-        
-        private GameObject _rangeIndicator;
 
         private LayerMask _layerMask;
         
-        private TargetingCursor _targetCursor;
         
-        Player.Controller _controller;
         private void Start()
         {
+            InitializeAbility();
             activateInput = InputSystem.actions.FindAction("ActivateLasso");
             chargeInput = InputSystem.actions.FindAction("Charge");
             
@@ -37,20 +26,6 @@ namespace Ability
             _lassoLoop.transform.SetParent(transform);
             _lassoLoop.name = "Lasso Loop";
             
-            _targetCursor = GetComponent<TargetingCursor>();
-            
-            _controller = GetComponent<Player.Controller>();
-        }
-
-        private void OnEnable()
-        {
-            StartCoroutine(Charge());
-        }
-
-        private void OnDisable()
-        {
-            Debug.Log("Disabling Lasso Ability");
-            StopCoroutine(Charge());
         }
 
         public override void Activate()
@@ -61,23 +36,20 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            Debug.Log("Start Lasso Charge");
+            //Debug.Log("Start Lasso Charge");
+            currentPowerLevel = basePowerLevel;
             float chargeTimer = 0.5f;
+            rangeIndicator.DisableRangeIndicator();
             while (true)
             {
-                if (isCharging && _currentPowerLevel < _maxPowerLevel)
-                {
-                    _controller.RangeIndicator.ChangeRangeSize((_baseRange * _currentPowerLevel) * 2);
-                    yield return new WaitForSeconds(chargeTimer);
-                    //Debug.Log("Current Charge: " + _currentPowerLevel);
-                    _currentPowerLevel++;
-                }
-                else if(!isCharging && _currentPowerLevel != _basePowerLevel)
-                {
-                    _currentPowerLevel = _basePowerLevel;
-                }
-                yield return null;
+                rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel)* 2);
+
+                yield return new WaitForSecondsRealtime(chargeTimer);
+
+                if(currentPowerLevel < maxPowerLevel)
+                    currentPowerLevel++;
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         public override void Fire()
@@ -87,26 +59,30 @@ namespace Ability
             Vector3 hitPoint;
             Vector3 castPoint = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             
-            if (Physics.SphereCast(castPoint, 0.5f, transform.forward, out hitInfo, _baseRange * _currentPowerLevel, _layerMask))
+            if (Physics.SphereCast(castPoint, 0.5f, transform.forward, out hitInfo, baseRange * currentPowerLevel, _layerMask))
             {
                 Debug.Log("GOT AN OBJECT");
                 hitPoint = hitInfo.point;
+                hitPoint.y = transform.position.y;
                 
                 _lassoLoop.transform.position = hitPoint;
                 _lassoLoop.SetActive(true);
                 
-                _targetCursor.ActivateCursor(_lassoLoop.transform.position);
+                targetCursor.ActivateCursor(_lassoLoop.transform.position);
                 
                 hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
+
+                hitInfo.collider.gameObject.transform.localPosition = Vector3.zero;
                 
-                _controller.LassoHooked = true;
+                controller.LassoHooked = true;
                 
-                _controller.RangeIndicator.ChangeRangeSize((_baseRange * _maxPowerLevel) * 2);
+                controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
             }
             else
             {
-                _controller.RangeIndicator.DisableRangeIndicator();
-                Debug.Log("MISS");
+                controller.RangeIndicator.DisableRangeIndicator();
+                Cursor.lockState =  CursorLockMode.Confined;
+                //Debug.Log("MISS");
             }
         }
 
@@ -119,14 +95,48 @@ namespace Ability
             distanceVector.y = 0;
             float distance = distanceVector.magnitude;
 
-            if (distance <= _baseRange * _maxPowerLevel)
+            if (distance < baseRange * maxPowerLevel)
             {
                 _lassoLoop.transform.rotation = Quaternion.identity;
-                
-                _lassoLoop.transform.position = _targetCursor.MoveCursor();
+
+                _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
             }
+            else if (distance >= baseRange * maxPowerLevel)
+            {
+                float checkXAxis = distanceVector.x - currentPosition.x;
+                float checkZAxis = distanceVector.z - currentPosition.z;
 
-
+                Vector3 cursorDelta = targetCursor.GetCursorDelta();
+                float cursorDeltaPolarity = cursorDelta.x * cursorDelta.z;
+                if (checkXAxis > 0 && checkZAxis > 0)
+                {
+                    if (cursorDeltaPolarity < 0)
+                    {
+                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
+                    }
+                }
+                else if (checkXAxis < 0 && checkZAxis < 0)
+                {
+                    if (cursorDeltaPolarity > 0)
+                    {
+                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
+                    }
+                }
+                else if (checkXAxis > 0 && checkZAxis < 0)
+                {
+                    if (cursorDelta.x <= 0 && cursorDelta.z < 0)
+                    {
+                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
+                    }
+                }
+                else if (checkXAxis < 0 && checkZAxis > 0)
+                {
+                    if (cursorDelta.x > 0 && cursorDelta.z <= 0)
+                    {
+                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
+                    }
+                }
+            }
         }
         
         public void UnhookLasso()
@@ -134,10 +144,18 @@ namespace Ability
             GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
             loopedObject.transform.parent = null;
             
-            _controller.LassoHooked = false;
+            controller.LassoHooked = false;
             
-            _targetCursor.DeactivateCursor();
+            targetCursor.DeactivateCursor();
             _lassoLoop.SetActive(false);
+        }
+
+        public override void InitializeAbility()
+        {
+            base.InitializeAbility();
+            baseRange = 5f;
+            basePowerLevel = 1;
+            maxPowerLevel = 3;
         }
     }
 }

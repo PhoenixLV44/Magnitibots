@@ -6,6 +6,7 @@ namespace Player
     public class Controller : MonoBehaviour
     {
         Player.Movement _movement;
+        public Movement Movement { get { return _movement; } }
 
         #region Scripts
         private Ability.Lasso _lassoAbility;

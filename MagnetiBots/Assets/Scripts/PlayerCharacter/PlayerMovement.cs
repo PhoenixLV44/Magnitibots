@@ -6,6 +6,8 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public float moveSpeed = 10f;
+        private float _defaultMoveSpeed = 10f;
+        public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;

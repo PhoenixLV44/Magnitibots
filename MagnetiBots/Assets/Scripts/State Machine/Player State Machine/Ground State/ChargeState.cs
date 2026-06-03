@@ -19,11 +19,12 @@ public class ChargeState : GroundedState
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        _currentAbility.IsCharging = true;
+        _currentAbility.StartCharging();
     }
 
     public override void ExitState()
     {
+        _currentAbility.StopCharging();
         _currentAbility.IsCharging = false;
     }
 
