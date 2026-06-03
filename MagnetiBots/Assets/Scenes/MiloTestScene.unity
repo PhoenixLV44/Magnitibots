@@ -994,12 +994,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller
   _movementSpeed: 15
-  _jumpForce: 5
+  _jumpForce: 15
   _merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
   _merbleFollowType: Snake
-  _lassoAbility: {fileID: 0}
-  _smashAbility: {fileID: 0}
-  _propellerAbility: {fileID: 0}
 --- !u!1 &1942988658
 GameObject:
   m_ObjectHideFlags: 0

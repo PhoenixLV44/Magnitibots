@@ -39,7 +39,6 @@ namespace Player
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(_look.ReadValue<Vector2>().x, _look.ReadValue<Vector2>().y,50)), out hit, 50))
             {
-                Debug.Log(hit.collider.gameObject);
                 if (hit.collider)
                 {
                     lookdir = new Vector3(hit.point.x,transform.position.y,hit.point.z) - transform.position;
@@ -65,7 +64,7 @@ namespace Player
         }
         /// <summary>
         /// Called in every player state currently implemented
-        /// Called with Submitted[0]
+        /// Called with Submitted[1]
         /// </summary>
         public void Look(Vector3 input)
         {
