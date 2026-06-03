@@ -119,6 +119,67 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &344011114
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_Name
+      value: Merble Stand-In (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743572093774569444, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: myBoss
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
 --- !u!1 &795175479
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +307,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &851218916
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_Name
+      value: Merble Stand-In (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743572093774569444, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: myBoss
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
 --- !u!1 &1058545804
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,9 +380,10 @@ GameObject:
   - component: {fileID: 1058545807}
   - component: {fileID: 1058545806}
   - component: {fileID: 1058545805}
+  - component: {fileID: 1058545809}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Land
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -354,11 +477,104 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.1875, y: -0, z: -0.82721}
-  m_LocalScale: {x: 7.0988, y: 7.0988, z: 7.0988}
+  m_LocalScale: {x: 24.91821, y: 24.91821, z: 24.91821}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1058545809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058545804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 55
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 2cf0edfd9b35cc34b9cc1da0ab21c752, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!1001 &1166611306
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_Name
+      value: Merble Stand-In (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743572093774569444, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: myBoss
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
 --- !u!1 &1484520745
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +737,7 @@ GameObject:
   - component: {fileID: 1507995803}
   - component: {fileID: 1507995802}
   - component: {fileID: 1507995801}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -635,7 +851,7 @@ GameObject:
   - component: {fileID: 1917051480}
   - component: {fileID: 1917051484}
   - component: {fileID: 1917051485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Stand-in
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +993,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95893a6563273cd4d8076d6b47420edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller
-  moveSpeed: 1
+  _movementSpeed: 15
+  _jumpForce: 15
+  _merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+  _merbleFollowType: Snake
 --- !u!1 &1942988658
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,6 +1109,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2727488673178531980
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_Name
+      value: Merble Stand-In
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743572093774569444, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: myBoss
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.5942
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -899,3 +1179,7 @@ SceneRoots:
   - {fileID: 1058545808}
   - {fileID: 1917051483}
   - {fileID: 1942988662}
+  - {fileID: 2727488673178531980}
+  - {fileID: 344011114}
+  - {fileID: 851218916}
+  - {fileID: 1166611306}

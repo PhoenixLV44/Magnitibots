@@ -6,6 +6,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public float moveSpeed = 10f;
+        public float jumpForce = 10f;
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -34,7 +35,20 @@ namespace Player
 
             movedir = adjustedMovement * movedir;
 
-            Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.currentResolution.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.currentResolution.height-0.5f);
+            Vector3 lookdir = Vector3.zero;
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(_look.ReadValue<Vector2>().x, _look.ReadValue<Vector2>().y,50)), out hit, 50))
+            {
+                if (hit.collider)
+                {
+                    lookdir = new Vector3(hit.point.x,transform.position.y,hit.point.z) - transform.position;
+                }
+                else
+                {
+                    lookdir = new Vector3(_look.ReadValue<Vector2>().x / Screen.currentResolution.width - 0.5f, 0, _look.ReadValue<Vector2>().y / Screen.currentResolution.height - 0.5f);
+                }
+            }
+            
 
             Vector3[] returnable = { movedir, lookdir };
 
@@ -50,7 +64,7 @@ namespace Player
         }
         /// <summary>
         /// Called in every player state currently implemented
-        /// Called with Submitted[0]
+        /// Called with Submitted[1]
         /// </summary>
         public void Look(Vector3 input)
         {
@@ -59,7 +73,7 @@ namespace Player
         }
         public void Jump()
         {
-            throw new System.NotImplementedException();
+            rb.AddForce(Vector3.up * jumpForce);
         }
     }
 }
