@@ -12,6 +12,8 @@ namespace Merbles
         public List<Merble> merbleList;
 
         public GameObject merblePrefab;
+        public string MerbleFollowType {get {return _merbleFollowType;} set { _merbleFollowType = value; } }
+        private string _merbleFollowType;
 
         public ObjectPool<GameObject> Merbles { get { return _merbles; } private set { _merbles = value; } }
         private ObjectPool<GameObject> _merbles;
@@ -40,11 +42,14 @@ namespace Merbles
         {
             GameObject merble = Instantiate(merblePrefab);
             merbleList.Add(merble.GetComponent<Merble>());
+            merble.GetComponent<Merble>().SetPool(Merbles);
+            merble.GetComponent<Merble>().SetFollowType(MerbleFollowType);
             currentMerbles++;
             return merble;
         }
         private void OnGetMerble(GameObject merble)
         {
+            merble.GetComponent<Merble>().SetPool(Merbles);
             merble.SetActive(true);
         }
         private void OnReleaseMerble(GameObject merble)
@@ -60,12 +65,14 @@ namespace Merbles
         {
             for (int i = 0; i < merbleList.Count; i++)
             {
-                if (merbleList[i] != null) continue;
-                if(!merbleList[i].Charging)
+                if (merbleList[i] != null)
                 {
-                    Debug.Log(i + "Ding");
-                    merbleList[i].StartCharge(transform.position + (transform.forward*2));
-                    break;
+                    if (!merbleList[i].Charging)
+                    {
+                        
+                        merbleList[i].StartCharge(Vector3.zero);
+                        break;
+                    }
                 }
                 
             }
@@ -73,7 +80,7 @@ namespace Merbles
         }
         public void FireMerbles()
         {
-            for (int i = 0; i < _merbles.CountInactive; i++)
+            for (int i = 0; i < _merbles.CountInactive+1; i++)
             {
                 _merbles.Get();
             }

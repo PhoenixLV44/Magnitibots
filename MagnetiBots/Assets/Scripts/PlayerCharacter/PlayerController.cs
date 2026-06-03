@@ -14,6 +14,7 @@ namespace Player
 
         Merbles.Boss _merbleBoss;
         [SerializeField] GameObject _merblePrefab;
+        [SerializeField] string _merbleFollowType;
 
         #region Abilities
         [SerializeField] Ability.Lasso _lassoAbility;
@@ -38,10 +39,11 @@ namespace Player
             _movement.moveSpeed = _movementSpeed;
             _movement.jumpForce = _jumpForce;
 
-            Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.Camera>().gameObject.transform.rotation.eulerAngles.y,0);
+            Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.PCamera>().gameObject.transform.rotation.eulerAngles.y,0);
             _movement.adjustedMovement = _cameraAdjust;
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
+            _merbleBoss.MerbleFollowType = _merbleFollowType;
             _merbleBoss.merblePrefab = _merblePrefab;
             _merbleBoss.defaultCapacity = 0;
             _merbleBoss.maxSize = 10;
@@ -64,11 +66,11 @@ namespace Player
         // Update is called once per frame
         void Update()
         {
-            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
                 _merbleBoss.ChargeMerble();
             }
-            if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
+            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
             {
                 _merbleBoss.FireMerbles();
             }
