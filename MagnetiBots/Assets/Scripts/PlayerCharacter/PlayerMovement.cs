@@ -34,7 +34,7 @@ namespace Player
 
             movedir = adjustedMovement * movedir;
 
-            Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.currentResolution.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.currentResolution.height-0.5f);
+            Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.height-0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
 

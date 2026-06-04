@@ -24,15 +24,26 @@ public class LassoHooked : PlayerState
         base.LogicUpdate();
         moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
         
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
-
-        _lassoAbility.MoveLassoTarget();
         
-        player.Movement.Move(moveInput);
-
-        if (InputSystem.actions.FindAction("Charge").IsPressed())
+        if(_lassoAbility.Lever == null)
         {
-            _lassoAbility.UnhookLasso();
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+
+            _lassoAbility.MoveLassoTarget();
+
+            player.Movement.Move(moveInput);
+
+            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            {
+                _lassoAbility.UnhookLasso();
+            }
+        }
+        else
+        {
+            if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
+            {
+                _lassoAbility.PullLever();
+            }
         }
     }
 

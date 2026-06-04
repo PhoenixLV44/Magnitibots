@@ -1,3 +1,4 @@
+using Interactable;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,7 +11,9 @@ namespace Ability
         public GameObject LassoLoop => _lassoLoop;
 
         private LayerMask _layerMask;
-        
+
+        private Interactable.Lever lever;
+        public Interactable.Lever Lever => lever;
         
         private void Start()
         {
@@ -18,13 +21,7 @@ namespace Ability
             activateInput = InputSystem.actions.FindAction("ActivateLasso");
             chargeInput = InputSystem.actions.FindAction("Charge");
             
-            _layerMask = LayerMask.GetMask("LassoTarget");
-            
-            _lassoLoop = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform.position, Quaternion.identity);
-            _lassoLoop.GetComponent<SphereCollider>().enabled = false;
-            _lassoLoop.SetActive(false);
-            _lassoLoop.transform.SetParent(transform);
-            _lassoLoop.name = "Lasso Loop";
+           
             
         }
 
@@ -67,22 +64,29 @@ namespace Ability
                 
                 _lassoLoop.transform.position = hitPoint;
                 _lassoLoop.SetActive(true);
-                
-                targetCursor.ActivateCursor(_lassoLoop.transform.position);
-                
-                hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
 
-                hitInfo.collider.gameObject.transform.localPosition = Vector3.zero;
-                
-                controller.LassoHooked = true;
-                
-                controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
+                if (hitInfo.collider.CompareTag("Lever"))
+                {
+                    lever = hitInfo.collider.GetComponent<Lever>();
+                }
+                else
+                {
+                    targetCursor.ActivateCursor(_lassoLoop.transform.position);
+
+                    hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
+
+                    hitInfo.collider.gameObject.transform.localPosition = Vector3.zero;
+
+
+                    controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
+                }
+                    controller.LassoHooked = true;
             }
             else
             {
                 controller.RangeIndicator.DisableRangeIndicator();
                 Cursor.lockState =  CursorLockMode.Confined;
-                //Debug.Log("MISS");
+                Debug.Log("MISS");
             }
         }
 
@@ -156,6 +160,15 @@ namespace Ability
             baseRange = 5f;
             basePowerLevel = 1;
             maxPowerLevel = 3;
+            _lassoLoop = transform.GetChild(4).gameObject;
+            _lassoLoop.SetActive(false);
+        }
+
+        public void PullLever()
+        {
+            lever.ActivateObject();
+            lever = null;
+            UnhookLasso();
         }
     }
 }
