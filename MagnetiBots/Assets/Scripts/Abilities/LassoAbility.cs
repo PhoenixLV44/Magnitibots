@@ -68,6 +68,7 @@ namespace Ability
                 if (hitInfo.collider.CompareTag("Lever"))
                 {
                     lever = hitInfo.collider.GetComponent<Lever>();
+                    controller.RangeIndicator.DisableRangeIndicator();
                 }
                 else
                 {
@@ -77,15 +78,14 @@ namespace Ability
 
                     hitInfo.collider.gameObject.transform.localPosition = Vector3.zero;
 
-
                     controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
-                }
                     controller.LassoHooked = true;
+                }
             }
             else
             {
                 controller.RangeIndicator.DisableRangeIndicator();
-                Cursor.lockState =  CursorLockMode.Confined;
+                Cursor.lockState =  CursorLockMode.None;
                 Debug.Log("MISS");
             }
         }
@@ -148,10 +148,11 @@ namespace Ability
             GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
             loopedObject.transform.parent = null;
             
+            _lassoLoop.SetActive(false);
+            targetCursor.DeactivateCursor();
+
             controller.LassoHooked = false;
             
-            targetCursor.DeactivateCursor();
-            _lassoLoop.SetActive(false);
         }
 
         public override void InitializeAbility()
@@ -162,6 +163,7 @@ namespace Ability
             maxPowerLevel = 3;
             _lassoLoop = transform.GetChild(4).gameObject;
             _lassoLoop.SetActive(false);
+            _layerMask = LayerMask.GetMask("LassoTarget");
         }
 
         public void PullLever()
