@@ -128,7 +128,7 @@ namespace Merbles
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
-            yield return new WaitUntil(() => Vector3.Distance(transform.position, target) < 1f);
+            yield return new WaitUntil(() => _agent.remainingDistance < 0.25f);
             _merblePool.Release(gameObject);
         }
     }

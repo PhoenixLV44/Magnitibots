@@ -1,6 +1,7 @@
 using UnityEngine;
 using Player.States;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 namespace Player
 {
@@ -81,14 +82,24 @@ namespace Player
         // Update is called once per frame
         void Update()
         {
-            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            if (InputSystem.actions.FindAction("Charge").triggered)
             {
-                _merbleBoss.ChargeMerble();
+                InvokeRepeating("ChannelingMerbles", 0, 1f);
             }
             if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
             {
+                CancelInvoke();
                 _merbleBoss.FireMerbles();
             }
+
+        }
+        IEnumerator ChannelingMerbles()
+        {
+            if (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
+            {
+                _merbleBoss.ChargeMerble(Vector3.zero);
+            }
+            return null;
         }
     }
 }

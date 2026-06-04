@@ -9,6 +9,7 @@ namespace Merbles
         Merbles.Collector collector;
         
         public int currentMerbles = 0;
+        public int chargedMerbles = 0;
         public List<Merble> merbleList;
 
         public GameObject merblePrefab;
@@ -61,7 +62,7 @@ namespace Merbles
             merbleList.Remove(merble.GetComponent<Merble>());
             Destroy(merble);
         }
-        public void ChargeMerble()
+        public void ChargeMerble(Vector3 target)
         {
             for (int i = 0; i < merbleList.Count; i++)
             {
@@ -70,7 +71,8 @@ namespace Merbles
                     if (!merbleList[i].Charging)
                     {
                         
-                        merbleList[i].StartCharge(Vector3.zero);
+                        merbleList[i].StartCharge(target);
+                        chargedMerbles++;
                         break;
                     }
                 }
@@ -80,10 +82,11 @@ namespace Merbles
         }
         public void FireMerbles()
         {
-            for (int i = 0; i < _merbles.CountInactive+1; i++)
+            for (int i = 0; i < chargedMerbles; i++)
             {
                 _merbles.Get();
             }
+            chargedMerbles = 0;
         }
     }
 }
