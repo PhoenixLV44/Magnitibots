@@ -36,7 +36,7 @@ public class ChargeState : GroundedState
         {
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
-        if (!InputSystem.actions.FindAction("Charge").IsPressed() )
+        if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
             _currentAbility.Fire();
             stateMachine.ChangeState(stateManager.IdleState);

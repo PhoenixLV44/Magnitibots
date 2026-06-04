@@ -20,11 +20,12 @@ namespace Ability
             
             _layerMask = LayerMask.GetMask("LassoTarget");
             
-            _lassoLoop = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform.position, Quaternion.identity);
+            /*_lassoLoop = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), transform.position, Quaternion.identity);
             _lassoLoop.GetComponent<SphereCollider>().enabled = false;
-            _lassoLoop.SetActive(false);
             _lassoLoop.transform.SetParent(transform);
-            _lassoLoop.name = "Lasso Loop";
+            _lassoLoop.name = "Lasso Loop";*/
+            _lassoLoop = transform.GetChild(4).gameObject;
+            _lassoLoop.SetActive(false);
             
         }
 
@@ -81,7 +82,7 @@ namespace Ability
             else
             {
                 controller.RangeIndicator.DisableRangeIndicator();
-                Cursor.lockState =  CursorLockMode.Confined;
+                Cursor.lockState =  CursorLockMode.None;
                 //Debug.Log("MISS");
             }
         }

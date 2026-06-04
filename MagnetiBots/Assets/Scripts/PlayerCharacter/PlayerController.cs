@@ -90,14 +90,5 @@ namespace Player
                 _merbleBoss.FireMerbles();
             }
         }
-        private void OnGUI()
-        {
-            GUI.skin.label.fontSize = 20;
-            GUILayout.BeginArea(new Rect(20, 20, 1000, 500));
-            GUILayout.Label("Player State: "  + _playerStateManager.PlayerStateMachine.CurrentState.ToString());
-            GUILayout.Label("Current Ability: " + _abilityStateManager.StateMachine.CurrentState.ToString());
-            GUILayout.Label("Charge Level: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel);
-            GUILayout.EndArea();
-        }
     }
 }

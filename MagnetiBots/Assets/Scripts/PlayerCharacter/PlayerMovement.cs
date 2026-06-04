@@ -51,6 +51,10 @@ namespace Player
             
 
             Vector3[] returnable = { movedir, lookdir };
+            if (InputSystem.actions.FindAction("Jump").IsPressed())
+            {
+                Jump();
+            }
 
             return returnable;
         }
@@ -73,6 +77,7 @@ namespace Player
         }
         public void Jump()
         {
+            Debug.Log("Jump");
             rb.AddForce(Vector3.up * jumpForce);
         }
     }
