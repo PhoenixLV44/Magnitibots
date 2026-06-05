@@ -19,6 +19,7 @@ public class MovementState : GroundedState
         }
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
         player.Movement.moveSpeed = player.Movement.DefaultMoveSpeed;
+        Cursor.lockState = CursorLockMode.None;
     }
     public override void ExitState()
     {
