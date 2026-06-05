@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,7 +40,7 @@ namespace Player
             movedir = adjustedMovement * movedir;
 
             Vector3 lookdir = Vector3.zero;
-            RaycastHit hit;
+            /*RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(_look.ReadValue<Vector2>().x, _look.ReadValue<Vector2>().y,50)), out hit, 50))
             {
                 if (hit.collider)
@@ -48,10 +49,10 @@ namespace Player
                     lookdir.y = 0;
                 }
                 else
-                {
-                    lookdir = new Vector3(_look.ReadValue<Vector2>().x / Screen.currentResolution.width - 0.5f, 0, _look.ReadValue<Vector2>().y / Screen.currentResolution.height - 0.5f);
-                }
-            }
+                {*/
+                    lookdir = new Vector3(_look.ReadValue<Vector2>().x / Screen.width - 0.5f, 0, _look.ReadValue<Vector2>().y / Screen.height - 0.5f);
+               /* }
+            }*/
             
 
             Vector3[] returnable = { movedir, lookdir };

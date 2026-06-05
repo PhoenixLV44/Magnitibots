@@ -617,10 +617,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Merble Stand-In (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 2743572093774569444, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
-      propertyPath: myBoss
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.5
@@ -1296,13 +1292,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2076090692}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.37248456, w: 0.9280384}
-  m_LocalPosition: {x: -0, y: 3.35, z: -2.02222}
+  m_LocalRotation: {x: 0, y: 0, z: -0.3724856, w: 0.928038}
+  m_LocalPosition: {x: -15.48, y: 3.35, z: -2.02222}
   m_LocalScale: {x: 0.46318537, y: 14.802183, z: 6.9082}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 43.738}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -43.738}
 --- !u!1001 &2727488673178531980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1315,13 +1311,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Merble Stand-In
       objectReference: {fileID: 0}
-    - target: {fileID: 2743572093774569444, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
-      propertyPath: myBoss
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3821673620712416676, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
-      propertyPath: m_Speed
-      value: 10
+      propertyPath: m_StoppingDistance
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5454614823398514666, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
       propertyPath: m_LocalPosition.x

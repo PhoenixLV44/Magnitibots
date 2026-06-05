@@ -84,22 +84,25 @@ namespace Player
         {
             if (InputSystem.actions.FindAction("Charge").triggered)
             {
-                InvokeRepeating("ChannelingMerbles", 0, 1f);
+                StartCoroutine(ChannelingMerbles(Vector3.zero));
             }
-            if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
-            {
-                CancelInvoke();
-                _merbleBoss.FireMerbles();
-            }
+            
 
         }
-        IEnumerator ChannelingMerbles()
+        IEnumerator ChannelingMerbles(Vector3 target)
         {
-            if (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
+            while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
-                _merbleBoss.ChargeMerble(Vector3.zero);
+                if (!InputSystem.actions.FindAction("Charge").IsPressed())
+                {
+                    _merbleBoss.FireMerbles();
+                    break;
+                }
+                _merbleBoss.ChargeMerble(target);
+                yield return new WaitForSeconds(1);
             }
-            return null;
+            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
+            _merbleBoss.FireMerbles();
         }
     }
 }

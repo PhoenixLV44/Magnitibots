@@ -9,6 +9,7 @@ namespace Merbles
         Merbles.Collector collector;
         
         public int currentMerbles = 0;
+        public int chargingMerbles = 0;
         public int chargedMerbles = 0;
         public List<Merble> merbleList;
 
@@ -70,9 +71,8 @@ namespace Merbles
                 {
                     if (!merbleList[i].Charging)
                     {
-                        
                         merbleList[i].StartCharge(target);
-                        chargedMerbles++;
+                        chargingMerbles++;
                         break;
                     }
                 }
@@ -82,6 +82,11 @@ namespace Merbles
         }
         public void FireMerbles()
         {
+            for (int i = 0; i < chargingMerbles; i++)
+            {
+                merbleList[i].StopCharging();
+            }
+            chargingMerbles = 0;
             for (int i = 0; i < chargedMerbles; i++)
             {
                 _merbles.Get();
