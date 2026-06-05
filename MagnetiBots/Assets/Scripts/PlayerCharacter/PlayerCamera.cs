@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class Camera : MonoBehaviour
+    public class PCamera : MonoBehaviour
     {
         GameObject player;
         Vector3 offset;

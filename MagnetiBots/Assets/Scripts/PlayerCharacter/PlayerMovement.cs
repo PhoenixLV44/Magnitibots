@@ -6,6 +6,7 @@ namespace Player
     public class Movement : MonoBehaviour
     {
         public float moveSpeed = 10f;
+        public float jumpForce = 10f;
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -37,6 +38,10 @@ namespace Player
             Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.height-0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
+            if (InputSystem.actions.FindAction("Jump").IsPressed())
+            {
+                Jump();
+            }
 
             return returnable;
         }
@@ -50,7 +55,7 @@ namespace Player
         }
         /// <summary>
         /// Called in every player state currently implemented
-        /// Called with Submitted[0]
+        /// Called with Submitted[1]
         /// </summary>
         public void Look(Vector3 input)
         {
@@ -59,7 +64,8 @@ namespace Player
         }
         public void Jump()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Jump");
+            rb.AddForce(Vector3.up * jumpForce);
         }
     }
 }
