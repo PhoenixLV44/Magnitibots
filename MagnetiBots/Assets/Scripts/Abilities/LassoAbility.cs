@@ -20,15 +20,12 @@ namespace Ability
             InitializeAbility();
             activateInput = InputSystem.actions.FindAction("ActivateLasso");
             chargeInput = InputSystem.actions.FindAction("Charge");
-            
-           
-            
         }
 
         public override void Activate()
         {
             //base.Activate();
-            Debug.Log("Activating Lasso Ability");
+            //Debug.Log("Activating Lasso Ability");
         }
 
         public override IEnumerator Charge()
@@ -86,7 +83,7 @@ namespace Ability
             else
             {
                 controller.RangeIndicator.DisableRangeIndicator();
-                Cursor.lockState =  CursorLockMode.None;
+                //Cursor.lockState =  CursorLockMode.None;
                 Debug.Log("MISS");
             }
         }
@@ -156,7 +153,7 @@ namespace Ability
 
             targetCursor.DeactivateCursor();
 
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
 
             controller.LassoHooked = false;
         }
