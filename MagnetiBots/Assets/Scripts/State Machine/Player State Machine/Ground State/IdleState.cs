@@ -18,6 +18,7 @@ public class IdleState : GroundedState
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public override void TransitionChecks()

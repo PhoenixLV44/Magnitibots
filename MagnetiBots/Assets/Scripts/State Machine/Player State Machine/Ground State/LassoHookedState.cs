@@ -17,6 +17,7 @@ public class LassoHooked : PlayerState
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
         player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     public override void LogicUpdate()
@@ -24,13 +25,24 @@ public class LassoHooked : PlayerState
         base.LogicUpdate();
         moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
         
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
-
-        _lassoAbility.MoveLassoTarget();
         
-        player.Movement.Move(moveInput);
+        if(_lassoAbility.Lever == null)
+        {
+            Debug.Log("No Lever");
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
-        if (InputSystem.actions.FindAction("Charge").IsPressed())
+            _lassoAbility.MoveLassoTarget();
+
+            player.Movement.Move(moveInput);
+        }
+        else
+        {
+            if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
+            {
+                _lassoAbility.PullLever();
+            }
+        }
+        if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
         {
             _lassoAbility.UnhookLasso();
         }
