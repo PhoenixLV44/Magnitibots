@@ -1,3 +1,4 @@
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,8 +6,10 @@ namespace Player
 {
     public class Movement : MonoBehaviour
     {
+        public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
+        float velocityCap=30f;
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -20,6 +23,7 @@ namespace Player
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
@@ -51,7 +55,12 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            rb.MovePosition(rb.transform.position + input * (moveSpeed * Time.deltaTime));
+            
+            if(rb.linearVelocity.magnitude < velocityCap)
+            {
+                rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
+                
+            }
         }
         /// <summary>
         /// Called in every player state currently implemented
@@ -60,7 +69,7 @@ namespace Player
         public void Look(Vector3 input)
         {
             //Debug.Log(input[1]);
-            rb.rotation = Quaternion.LookRotation(input, Vector3.up);
+            model.rotation = Quaternion.LookRotation(input, Vector3.up);
         }
         public void Jump()
         {
