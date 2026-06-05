@@ -91,6 +91,7 @@ namespace Player
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())

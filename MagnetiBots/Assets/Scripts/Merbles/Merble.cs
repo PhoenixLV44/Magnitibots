@@ -80,16 +80,7 @@ namespace Merbles
                         break;
                     default:
                     case FollowTypes.Loose:
-                        if (Vector3.Distance(transform.position, myBoss.transform.position) > 2f)
-                        {
-                            _agent.isStopped = false;
-                            _agent.destination = myBoss.transform.position;
-                        }
-                        else
-                        {
-                            _agent.isStopped = true;
-                            _agent.velocity = Vector3.zero;
-                        }
+                        
                         break;
                 }
                 
@@ -139,7 +130,7 @@ namespace Merbles
             }
             else if (index != -1)
             {
-                if (Vector3.Distance(transform.position, myBoss.merbleList[index - 1].transform.position) > 0.5+_agent.speed/5)
+                if (Vector3.Distance(transform.position, myBoss.merbleList[index - 1].transform.position) > 1+_agent.speed/5)
                 {
                     _agent.isStopped = false;
                     _agent.destination = myBoss.merbleList[index - 1].transform.position;
@@ -151,5 +142,26 @@ namespace Merbles
                 }
             }
         }
+        public void LooseMovement()
+        {
+            NavMeshHit hit;
+
+            if (!_agent.Raycast(myBoss.transform.position, out hit))
+            {
+                if (Vector3.Distance(transform.position, myBoss.transform.position) > 2f)
+                {
+                    _agent.isStopped = false;
+                    _agent.destination = myBoss.transform.position;
+                }
+                else
+                {
+                    _agent.isStopped = true;
+                    _agent.velocity = Vector3.zero;
+                }
+            }
+            else
+            {
+
+            }
     }
 }
