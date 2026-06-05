@@ -27,16 +27,12 @@ public class LassoHooked : PlayerState
         
         if(_lassoAbility.Lever == null)
         {
+            Debug.Log("No Lever");
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
             _lassoAbility.MoveLassoTarget();
 
             player.Movement.Move(moveInput);
-
-            if (InputSystem.actions.FindAction("Charge").IsPressed())
-            {
-                _lassoAbility.UnhookLasso();
-            }
         }
         else
         {
@@ -44,6 +40,10 @@ public class LassoHooked : PlayerState
             {
                 _lassoAbility.PullLever();
             }
+        }
+        if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
+        {
+            _lassoAbility.UnhookLasso();
         }
     }
 

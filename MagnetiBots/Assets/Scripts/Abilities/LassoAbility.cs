@@ -69,6 +69,7 @@ namespace Ability
                 {
                     lever = hitInfo.collider.GetComponent<Lever>();
                     controller.RangeIndicator.DisableRangeIndicator();
+                    controller.LassoHooked = true;
                 }
                 else
                 {
@@ -145,14 +146,19 @@ namespace Ability
         
         public void UnhookLasso()
         {
-            GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
-            loopedObject.transform.parent = null;
+            if (_lassoLoop.transform.childCount > 0)
+            {
+                GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
+                loopedObject.transform.parent = null;
+            }
             
             _lassoLoop.SetActive(false);
+
             targetCursor.DeactivateCursor();
 
+            Cursor.lockState = CursorLockMode.None;
+
             controller.LassoHooked = false;
-            
         }
 
         public override void InitializeAbility()
