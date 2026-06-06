@@ -100,7 +100,7 @@ namespace Ability
             
             chargeCoroutine = Charge();
             
-            aimingGuide = transform.GetChild(3).gameObject;
+            aimingGuide = transform.GetChild(0).transform.GetChild(1).gameObject;
             aimingGuide.SetActive(false);
         }
     }

@@ -4,6 +4,8 @@ namespace Interactable
 {
     public class InteractableObject : MonoBehaviour
     {
+        protected bool activated = false;
+        public bool canBeDeactivated;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -18,6 +20,11 @@ namespace Interactable
         public virtual void ActivateObject()
         {
 
+        }
+
+        public virtual void DeactivateObject()
+        {
+            
         }
     }
 }

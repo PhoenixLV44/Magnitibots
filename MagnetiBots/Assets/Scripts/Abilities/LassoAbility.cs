@@ -164,7 +164,7 @@ namespace Ability
             baseRange = 5f;
             basePowerLevel = 1;
             maxPowerLevel = 3;
-            _lassoLoop = transform.GetChild(4).gameObject;
+            _lassoLoop = transform.Find("Lasso Loop").gameObject;
             _lassoLoop.SetActive(false);
             _layerMask = LayerMask.GetMask("LassoTarget");
         }

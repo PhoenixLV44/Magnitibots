@@ -44,7 +44,15 @@ public class IdleState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        if (stateManager.PlayerMovement != null)
+        {
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+            //Debug.LogError("NOT NULL");
+        }
+        else
+        {
+            Debug.LogError("No State Manager found!");
+        }
 
         if (InputSystem.actions.FindAction("Fire").IsPressed())
         {

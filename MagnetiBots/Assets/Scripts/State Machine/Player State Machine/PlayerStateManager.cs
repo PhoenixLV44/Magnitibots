@@ -9,7 +9,7 @@ namespace Player.States
     {
         private  Player.Controller _playerController;
         public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
-        private Player.Movement _playerMovement;
+        [SerializeField]private Player.Movement _playerMovement;
         public Player.Movement PlayerMovement {get {return _playerMovement;} set {_playerMovement = value;} }
         private PlayerStateMachine _playerStateMachine;
         public PlayerStateMachine PlayerStateMachine {get {return _playerStateMachine;} }

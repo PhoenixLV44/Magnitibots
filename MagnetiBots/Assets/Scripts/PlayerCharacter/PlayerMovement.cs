@@ -55,7 +55,6 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            
             if(rb.linearVelocity.magnitude < velocityCap)
             {
                 rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
