@@ -23,6 +23,7 @@ namespace Ability
         protected Player.Controller controller;
         protected IEnumerator chargeCoroutine;
         protected TargetingCursor targetCursor;
+        protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         
         protected GameObject aimingGuide;
@@ -93,6 +94,7 @@ namespace Ability
         public virtual void InitializeAbility()
         {
             targetCursor = GetComponent<TargetingCursor>();
+            targetCursorObject = targetCursor.gameObject;
             
             controller = GetComponent<Player.Controller>();
             

@@ -15,9 +15,13 @@ public class IdleState : GroundedState
         if (!_abilityManager)
         {
             _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
+            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        }
+        else
+        {
+            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
         }
 
-        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
         Cursor.lockState = CursorLockMode.None;
     }
 
