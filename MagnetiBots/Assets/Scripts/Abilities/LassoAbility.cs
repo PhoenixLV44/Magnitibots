@@ -53,7 +53,9 @@ namespace Ability
             Vector3 hitPoint;
             Vector3 castPoint = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             
-            if (Physics.SphereCast(castPoint, 0.5f, transform.forward, out hitInfo, baseRange * currentPowerLevel, _layerMask))
+            GameObject playerModel = transform.Find("PlayerModel").gameObject;
+            
+            if (Physics.SphereCast(castPoint, 0.5f, playerModel.transform.forward, out hitInfo, baseRange * currentPowerLevel, _layerMask))
             {
                 //Debug.Log("GOT AN OBJECT");
                 hitPoint = hitInfo.point;
@@ -90,7 +92,7 @@ namespace Ability
 
         public void MoveLassoTarget(/*Vector2 direction*/)
         {
-           targetCursor.MoveObjectToCursor(_lassoLoop);
+            targetCursor.MoveObjectToCursor(_lassoLoop);
             //Vector3 currentPosition = _lassoLoop.transform.position;
             //Vector3 lassoTargetPosition = targetCursor.MoveCursor();
             //lassoTargetPosition.y = currentPosition.y;
@@ -116,7 +118,7 @@ namespace Ability
             controller.LassoHooked = false;
         }
 
-        public override void InitializeAbility()
+        protected override void InitializeAbility()
         {
             base.InitializeAbility();
             baseRange = 5f;

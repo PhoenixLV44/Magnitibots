@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -59,7 +58,7 @@ namespace Ability
 
             if (chargeInput.IsPressed())
             {
-                Charge();
+                //Charge();
             }
             else if (fireInput.IsPressed())
             {
@@ -68,7 +67,7 @@ namespace Ability
         }
         public void StartCharging()
         {
-            Debug.Log("Starting charging");
+            //Debug.Log("Starting charging");
             if (chargeCoroutine != null)
             {
                 aimingGuide.SetActive(true);
@@ -86,14 +85,14 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
-                Debug.Log("Stopping charging");
+                //Debug.Log("Stopping charging");
                 aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 StopCoroutine(chargeCoroutine);
             }
         }
 
-        public virtual void InitializeAbility()
+        protected virtual void InitializeAbility()
         {
             targetCursor = GetComponent<TargetingCursor>();
             targetCursorObject = targetCursor.gameObject;

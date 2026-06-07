@@ -19,6 +19,8 @@ namespace Player
         InputAction _move;
         InputAction _look;
         InputAction _jump;
+        
+        private Player.Controller _controller;
 
         private void Start()
         {
@@ -27,6 +29,7 @@ namespace Player
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
+            _controller = GetComponent<Player.Controller>();
         }
         private void Update()
         {
@@ -68,7 +71,22 @@ namespace Player
         public void Look(Vector3 input)
         {
             //Debug.Log(input[1]);
-            model.rotation = Quaternion.LookRotation(input, Vector3.up);
+
+            Player.StateManager playerStateManager = _controller.PlayerStateManager;
+            Player.StateMachine playerStateMachine = playerStateManager.StateMachine;
+            Ability.StateManager abilityStateManager = _controller.AbilityStateManager;
+            Ability.StateMachine abilityStateMachine = abilityStateManager.StateMachine;
+
+            if (playerStateMachine.CurrentState == playerStateManager.LassoHookedState ||(abilityStateMachine.CurrentState == abilityStateManager.SmashState && playerStateMachine.CurrentState == playerStateManager.ChargeState))
+            {
+                Vector3 lookTarget = _controller.TargetCursor.transform.position;
+                lookTarget.y = transform.position.y;
+                model.LookAt(lookTarget);
+            }
+            else
+            {
+                model.rotation = Quaternion.LookRotation(input, Vector3.up);
+            }
         }
         public void Jump()
         {

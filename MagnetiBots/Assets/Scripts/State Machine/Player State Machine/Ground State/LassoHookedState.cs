@@ -1,10 +1,9 @@
 using UnityEngine;
-using Player.States;
 using UnityEngine.InputSystem;
 
-public class LassoHooked : PlayerState
+public class LassoHooked : GroundedState
 {
-    public LassoHooked(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
 
     protected Vector2 moveInput;
     private Ability.Lasso _lassoAbility;
@@ -28,7 +27,7 @@ public class LassoHooked : PlayerState
         
         if(_lassoAbility.Lever == null)
         {
-            Debug.Log("No Lever");
+            //Debug.Log("No Lever");
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
             _lassoAbility.MoveLassoTarget();

@@ -1,7 +1,6 @@
-using Player.States;
 using UnityEngine;
 
-public class AirState : PlayerState
+public class AirState : Player.State
 {
-    public AirState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public AirState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
 }

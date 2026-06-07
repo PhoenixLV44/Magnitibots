@@ -1,4 +1,3 @@
-using Player.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
@@ -6,7 +5,7 @@ using System.Collections;
 public class TestGUI : MonoBehaviour
 {
     [SerializeField] private Player.Controller _playerController;
-    [SerializeField] private PlayerStateManager _playerStateManager;
+    [SerializeField] private Player.StateManager _playerStateManager;
     [SerializeField] private Ability.StateManager _abilityStateManager;
 
     private void Start()
@@ -27,7 +26,7 @@ public class TestGUI : MonoBehaviour
 
                 if (_playerStateManager == null)
                 {
-                    _playerStateManager = _playerController.gameObject.GetComponent<PlayerStateManager>();
+                    _playerStateManager = _playerController.gameObject.GetComponent<Player.StateManager>();
                 }
 
                 if (_abilityStateManager == null)
@@ -56,7 +55,7 @@ public class TestGUI : MonoBehaviour
 
         GUILayout.BeginArea(new Rect(20, 20, 1000, 500));
         {
-            GUILayout.Label("Player State: " + _playerStateManager.PlayerStateMachine.CurrentState.ToString());
+            GUILayout.Label("Player State: " + _playerStateManager.StateMachine.CurrentState.ToString());
             GUILayout.Label("Current Ability: " + _abilityStateManager.StateMachine.CurrentState.ToString());
             GUILayout.Label("Charge Level: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel);
         }

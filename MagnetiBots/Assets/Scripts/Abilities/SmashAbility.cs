@@ -33,7 +33,7 @@ namespace Ability
             //base.Fire();
         }
 
-        public override void InitializeAbility()
+        protected override void InitializeAbility()
         {
             base.InitializeAbility();
             _smashObjectPrefab = Resources.Load<GameObject>("Prefabs/SmashPrefab");

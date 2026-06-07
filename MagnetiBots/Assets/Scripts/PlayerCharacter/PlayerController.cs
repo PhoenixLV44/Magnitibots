@@ -1,5 +1,4 @@
 using UnityEngine;
-using Player.States;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Ability.Object;
@@ -34,8 +33,10 @@ namespace Player
             #endregion
 
         #region States
-        Player.States.PlayerStateManager _playerStateManager;
+        private Player.StateManager _playerStateManager;
+        public Player.StateManager PlayerStateManager => _playerStateManager; 
         Ability.StateManager  _abilityStateManager;
+        public Ability.StateManager AbilityStateManager => _abilityStateManager;
             #endregion
             
         private bool _lassoHooked = false;
@@ -67,7 +68,7 @@ namespace Player
             */
             _targetCursor = gameObject.AddComponent<TargetingCursor>();
             
-            _playerStateManager = gameObject.AddComponent<PlayerStateManager>();
+            _playerStateManager = gameObject.AddComponent<Player.StateManager>();
             _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
             
             _playerStateManager.PlayerController = this;

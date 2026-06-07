@@ -1,10 +1,9 @@
-using Player.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class IdleState : GroundedState
 {
-    public IdleState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public IdleState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
     
     private Ability.StateManager _abilityManager;
     private Ability.Parent _currentAbility;
