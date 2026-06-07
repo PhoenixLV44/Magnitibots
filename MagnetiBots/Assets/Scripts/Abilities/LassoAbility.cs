@@ -34,6 +34,7 @@ namespace Ability
             currentPowerLevel = basePowerLevel;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
+            aimingGuide.SetActive(true);
             while (true)
             {
                 rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel)* 2);

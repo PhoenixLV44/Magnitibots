@@ -49,45 +49,28 @@ namespace Ability
         {
             throw new System.NotImplementedException();
         }
-        public virtual void GetInputs()
-        {
-            if (activateInput.IsPressed())
-            {
-                Activate();
-            }
-
-            if (chargeInput.IsPressed())
-            {
-                //Charge();
-            }
-            else if (fireInput.IsPressed())
-            {
-                Fire();
-            }
-        }
-        public void StartCharging()
+        public virtual void StartCharging()
         {
             //Debug.Log("Starting charging");
             if (chargeCoroutine != null)
             {
-                aimingGuide.SetActive(true);
                 StartCoroutine(chargeCoroutine);
             }
             else
             {
                 chargeCoroutine = Charge();
-                aimingGuide.SetActive(true);
                 StartCoroutine(chargeCoroutine);
             }
         }
 
-        public void StopCharging()
+        public virtual void StopCharging()
         {
             if (chargeCoroutine != null)
             {
                 //Debug.Log("Stopping charging");
                 aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
+                rangeIndicator.DisableRangeIndicator();
                 StopCoroutine(chargeCoroutine);
             }
         }

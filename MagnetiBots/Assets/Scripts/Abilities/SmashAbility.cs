@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,10 +10,11 @@ namespace Ability
     {
         private GameObject _smashObjectPrefab;
         private GameObject _smashBall;
-        private SmashObject _smashObjectScript;
+        private SmashBall _smashObjectScript;
         private void Start()
         {
             InitializeAbility();
+            
         }
 
         public override void Activate()
@@ -22,10 +24,42 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            while (isCharging)
+            rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
+            float chargeTimer = 1f;
+            while (true)
             {
-                yield return null;
+                if (!_smashBall.activeSelf)
+                {
+                    _smashBall.SetActive(true);
+                    yield return new WaitForSeconds(0.5f);
+                }
+                else
+                {
+                    currentPowerLevel++;
+                }
+
             }
+        }
+        
+        private void Update()
+        {
+            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            {
+                targetCursor.MoveCursor();
+                targetCursor.MoveObjectToCursor(_smashBall);
+            }
+        }
+
+        public override void StartCharging()
+        {
+            base.StartCharging();
+            targetCursor.ActivateCursor(transform.position);
+        }
+
+        public override void StopCharging()
+        {
+            base.StopCharging();
+            targetCursor.DeactivateCursor();
         }
 
         public override void Fire()
@@ -36,9 +70,10 @@ namespace Ability
         protected override void InitializeAbility()
         {
             base.InitializeAbility();
-            _smashObjectPrefab = Resources.Load<GameObject>("Prefabs/SmashPrefab");
-            _smashBall = Instantiate(_smashObjectPrefab);
-            _smashObjectScript = _smashBall.GetComponent<SmashObject>();
+            _smashObjectPrefab = Resources.Load<GameObject>("Prefabs/SmashBallPrefab");
+            _smashBall = Instantiate(_smashObjectPrefab, transform.position, transform.rotation, transform);
+            _smashBall.SetActive(false);
+            _smashObjectScript = _smashBall.GetComponent<SmashBall>();
         }
     }   
 }
