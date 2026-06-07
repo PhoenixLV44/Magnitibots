@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Ability.Object;
 
 namespace Ability
 {
@@ -19,6 +20,7 @@ namespace Ability
         protected float baseRange;
         protected int maxPowerLevel;
         public int CurrentPowerLevel => currentPowerLevel;
+        protected float heightOffset;
         
         protected Player.Controller controller;
         protected IEnumerator chargeCoroutine;

@@ -55,7 +55,7 @@ namespace Ability
             
             if (Physics.SphereCast(castPoint, 0.5f, transform.forward, out hitInfo, baseRange * currentPowerLevel, _layerMask))
             {
-                Debug.Log("GOT AN OBJECT");
+                //Debug.Log("GOT AN OBJECT");
                 hitPoint = hitInfo.point;
                 hitPoint.y = transform.position.y;
                 
@@ -84,61 +84,19 @@ namespace Ability
             {
                 controller.RangeIndicator.DisableRangeIndicator();
                 //Cursor.lockState =  CursorLockMode.None;
-                Debug.Log("MISS");
+                //Debug.Log("MISS");
             }
         }
 
         public void MoveLassoTarget(/*Vector2 direction*/)
         {
-            Vector3 currentPosition = transform.position;
-            Vector3 lassoTargetPosition = _lassoLoop.transform.position;
+           targetCursor.MoveObjectToCursor(_lassoLoop);
+            //Vector3 currentPosition = _lassoLoop.transform.position;
+            //Vector3 lassoTargetPosition = targetCursor.MoveCursor();
+            //lassoTargetPosition.y = currentPosition.y;
             
-            Vector3 distanceVector = lassoTargetPosition - currentPosition;
-            distanceVector.y = 0;
-            float distance = distanceVector.magnitude;
-
-            if (distance < baseRange * maxPowerLevel)
-            {
-                _lassoLoop.transform.rotation = Quaternion.identity;
-
-                _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
-            }
-            else if (distance >= baseRange * maxPowerLevel)
-            {
-                float checkXAxis = distanceVector.x - currentPosition.x;
-                float checkZAxis = distanceVector.z - currentPosition.z;
-
-                Vector3 cursorDelta = targetCursor.GetCursorDelta();
-                float cursorDeltaPolarity = cursorDelta.x * cursorDelta.z;
-                if (checkXAxis > 0 && checkZAxis > 0)
-                {
-                    if (cursorDeltaPolarity < 0)
-                    {
-                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
-                    }
-                }
-                else if (checkXAxis < 0 && checkZAxis < 0)
-                {
-                    if (cursorDeltaPolarity > 0)
-                    {
-                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
-                    }
-                }
-                else if (checkXAxis > 0 && checkZAxis < 0)
-                {
-                    if (cursorDelta.x <= 0 && cursorDelta.z < 0)
-                    {
-                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
-                    }
-                }
-                else if (checkXAxis < 0 && checkZAxis > 0)
-                {
-                    if (cursorDelta.x > 0 && cursorDelta.z <= 0)
-                    {
-                        _lassoLoop.transform.position = new Vector3(targetCursor.MoveCursor().x, _lassoLoop.transform.position.y, targetCursor.MoveCursor().z);
-                    }
-                }
-            }
+            //_lassoLoop.transform.position = Vector3.Lerp(currentPosition, lassoTargetPosition, Time.deltaTime);
+            
         }
         
         public void UnhookLasso()

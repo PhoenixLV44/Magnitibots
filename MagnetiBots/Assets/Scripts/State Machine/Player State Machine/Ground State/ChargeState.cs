@@ -12,7 +12,7 @@ public class ChargeState : GroundedState
 
     public override void EnterState()
     {
-        Debug.Log("Entering Charge State");
+        //Debug.Log("Entering Charge State");
         if (!_abilityManager)
         {
             _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
