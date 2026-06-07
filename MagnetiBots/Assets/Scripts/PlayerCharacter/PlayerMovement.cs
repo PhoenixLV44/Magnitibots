@@ -9,7 +9,7 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float velocityCap=30f;
+        float _velocityCap=30f;
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -58,10 +58,9 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            if(rb.linearVelocity.magnitude < velocityCap)
+            if(rb.linearVelocity.magnitude < _velocityCap)
             {
                 rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
-                
             }
         }
         /// <summary>

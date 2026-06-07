@@ -9,13 +9,13 @@ namespace Player
     {
         Player.Movement _movement;
         #region Movement Variables
-        [SerializeField] float _movementSpeed;
-        [SerializeField] float _jumpForce;
+        [SerializeField] float movementSpeed;
+        [SerializeField] float jumpForce;
         #endregion
 
         Merbles.Boss _merbleBoss;
-        [SerializeField] GameObject _merblePrefab;
-        [SerializeField] string _merbleFollowType;
+        [SerializeField] GameObject merblePrefab;
+        [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
 
         #region Scripts
@@ -52,15 +52,15 @@ namespace Player
         {
             _movement = gameObject.AddComponent<Player.Movement>();
 
-            _movement.moveSpeed = _movementSpeed;
-            _movement.jumpForce = _jumpForce;
+            _movement.moveSpeed = movementSpeed;
+            _movement.jumpForce = jumpForce;
 
             Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.PCamera>().gameObject.transform.rotation.eulerAngles.y,0);
             _movement.adjustedMovement = _cameraAdjust;
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
-            _merbleBoss.MerbleFollowType = _merbleFollowType;
-            _merbleBoss.merblePrefab = _merblePrefab;
+            _merbleBoss.MerbleFollowType = merbleFollowType;
+            _merbleBoss.merblePrefab = merblePrefab;
             _merbleBoss.defaultCapacity = 0;
             _merbleBoss.maxSize = 10;
             

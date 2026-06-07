@@ -51,6 +51,7 @@ namespace Ability
             isCharging = false;
             RaycastHit hitInfo;
             Vector3 hitPoint;
+            
             Vector3 castPoint = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
             
             GameObject playerModel = transform.Find("PlayerModel").gameObject;

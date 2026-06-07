@@ -59,16 +59,16 @@ namespace Ability.Object
             Vector3 playerPosition = transform.position;
             
             Vector3 cursorPosition = _targetCursor.transform.position;
-            cursorPosition.y = playerPosition.y;
+            playerPosition.y = cursorPosition.y;
             
             float distance = Vector3.Distance(playerPosition, cursorPosition);
             
             float range = _rangeIndicator.CurrentRange;
-            //Debug.Log("Distance: " + distance + " | Range: " + range);
             
             if (distance > range)
             {
-                Debug.LogError("CURSOR OUT OF BOUNDS");
+                _targetCursor.transform.position =
+                    Vector3.MoveTowards(cursorPosition, playerPosition, distance - range);
             }
         }
 

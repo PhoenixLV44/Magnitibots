@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 public class LassoHooked : GroundedState
 {
     public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
-
-    protected Vector2 moveInput;
+    
     private Ability.Lasso _lassoAbility;
     
     public override void EnterState()
@@ -23,7 +22,6 @@ public class LassoHooked : GroundedState
     {
         base.LogicUpdate();
         moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
-        
         
         if(_lassoAbility.Lever == null)
         {
