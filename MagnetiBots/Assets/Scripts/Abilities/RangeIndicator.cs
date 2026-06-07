@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class RangeIndicator : MonoBehaviour
 {
-    [SerializeField]GameObject _rangeIndicator;
+    GameObject _rangeIndicator;
     Renderer _rangeIndicatorRenderer;
-    private float _currentRange;
+    [SerializeField] private float _currentRange;
     public float CurrentRange => _currentRange;
     private float _maxRange;
 
@@ -17,15 +17,15 @@ public class RangeIndicator : MonoBehaviour
         _rangeIndicator.SetActive(false);
     }
 
-    public void ChangeRangeSize(float radius)
+    public void ChangeRangeSize(float circumference)
     {
         if (!_rangeIndicator.activeSelf)
         {
             _rangeIndicator.SetActive(true);
         } 
         //Debug.Log("Radius: " + radius);
-        _rangeIndicator.transform.localScale = new Vector3(radius, 0.1f, radius);
-        _currentRange = radius;
+        _rangeIndicator.transform.localScale = new Vector3(circumference, 0.1f, circumference);
+        _currentRange = circumference / 2;
     }
 
     public void DisableRangeIndicator()

@@ -28,8 +28,11 @@ namespace Player
         private Ability.Propeller _propellerAbility;
         public Ability.Propeller PropellerAbility { get { return _propellerAbility; } }
         
-        private TargetingCursor _targetCursor;
-        public TargetingCursor TargetCursor { get { return _targetCursor; } }
+        private TargetingCursor _targetCursorScript;
+        public TargetingCursor TargetCursorScript { get { return _targetCursorScript; } }
+        
+        private GameObject _targetCursorObject;
+        public GameObject TargetCursorObject => _targetCursorObject;
             #endregion
 
         #region States
@@ -60,13 +63,8 @@ namespace Player
             _merbleBoss.merblePrefab = _merblePrefab;
             _merbleBoss.defaultCapacity = 0;
             _merbleBoss.maxSize = 10;
-
-            /*
-            _lassoAbility = gameObject.AddComponent<Ability.Lasso>();
-            _smashAbility = gameObject.AddComponent<Ability.Smash>();
-            _propellerAbility = gameObject.AddComponent<Ability.Propeller>();
-            */
-            _targetCursor = gameObject.AddComponent<TargetingCursor>();
+            
+            _targetCursorScript = gameObject.AddComponent<TargetingCursor>();
             
             _playerStateManager = gameObject.AddComponent<Player.StateManager>();
             _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
@@ -78,6 +76,8 @@ namespace Player
             _abilityStateManager.PlayerController = this;
             
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
+            
+            _targetCursorObject = transform.Find("Target Cursor").gameObject;
 
         }
 

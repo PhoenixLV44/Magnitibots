@@ -71,15 +71,10 @@ namespace Player
         public void Look(Vector3 input)
         {
             //Debug.Log(input[1]);
-
-            Player.StateManager playerStateManager = _controller.PlayerStateManager;
-            Player.StateMachine playerStateMachine = playerStateManager.StateMachine;
-            Ability.StateManager abilityStateManager = _controller.AbilityStateManager;
-            Ability.StateMachine abilityStateMachine = abilityStateManager.StateMachine;
-
-            if (playerStateMachine.CurrentState == playerStateManager.LassoHookedState ||(abilityStateMachine.CurrentState == abilityStateManager.SmashState && playerStateMachine.CurrentState == playerStateManager.ChargeState))
+            
+            if(_controller.TargetCursorObject.activeSelf)
             {
-                Vector3 lookTarget = _controller.TargetCursor.transform.position;
+                Vector3 lookTarget = _controller.TargetCursorObject.transform.position;
                 lookTarget.y = transform.position.y;
                 model.LookAt(lookTarget);
             }

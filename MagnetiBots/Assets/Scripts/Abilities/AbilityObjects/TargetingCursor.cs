@@ -6,27 +6,14 @@ namespace Ability.Object
     public class TargetingCursor : MonoBehaviour
     {
         private GameObject _targetCursor;
-        private Vector3 _playerPosition;
         private RangeIndicator _rangeIndicator;
         [SerializeField] private float cursorSpeed = 0.75f;
         [SerializeField] private float objectSpeed = 5;
 
-        private void Awake()
+        private void Start()
         {
-            _targetCursor = transform.GetChild(1).gameObject;
-            _rangeIndicator = transform.Find("RangeIndicator").GetComponent<RangeIndicator>();
-            /*Instantiate(GameObject.CreatePrimitive(PrimitiveType.Capsule),transform.position,transform.rotation );
-        
-        _targetCursor.transform.localScale = new Vector3(1.25f, 0.5f, 1.25f);
-        
-        _targetCursor.transform.parent = transform;
-        
-        _targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, _targetCursor.transform.position.z);
-        
-        _targetCursor.GetComponent<CapsuleCollider>().enabled = false;
-        
-        _targetCursor.name = "Target Cursor";
-        */
+            _targetCursor = transform.Find("Target Cursor").gameObject;
+            _rangeIndicator = GetComponent<RangeIndicator>();
 
             _targetCursor.SetActive(false);
         }
@@ -66,6 +53,24 @@ namespace Ability.Object
             
             return _targetCursor.transform.position;
         }
+        
+        private void MoveCursorInRange()
+        {
+            Vector3 playerPosition = transform.position;
+            
+            Vector3 cursorPosition = _targetCursor.transform.position;
+            cursorPosition.y = playerPosition.y;
+            
+            float distance = Vector3.Distance(playerPosition, cursorPosition);
+            
+            float range = _rangeIndicator.CurrentRange;
+            //Debug.Log("Distance: " + distance + " | Range: " + range);
+            
+            if (distance > range)
+            {
+                Debug.LogError("CURSOR OUT OF BOUNDS");
+            }
+        }
 
         public void MoveObjectToCursor(GameObject obj)
         {
@@ -77,14 +82,5 @@ namespace Ability.Object
             obj.transform.position = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
         }
 
-        private void MoveCursorInRange()
-        {
-            float distance = Vector3.Distance(_playerPosition - transform.position, _targetCursor.transform.position);
-            float range = _rangeIndicator.CurrentRange;
-            if (distance > range)
-            {
-                
-            }
-        }
     }
 }

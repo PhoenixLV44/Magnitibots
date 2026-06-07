@@ -93,12 +93,6 @@ namespace Ability
         public void MoveLassoTarget(/*Vector2 direction*/)
         {
             targetCursor.MoveObjectToCursor(_lassoLoop);
-            //Vector3 currentPosition = _lassoLoop.transform.position;
-            //Vector3 lassoTargetPosition = targetCursor.MoveCursor();
-            //lassoTargetPosition.y = currentPosition.y;
-            
-            //_lassoLoop.transform.position = Vector3.Lerp(currentPosition, lassoTargetPosition, Time.deltaTime);
-            
         }
         
         public void UnhookLasso()
