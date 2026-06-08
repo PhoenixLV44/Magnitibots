@@ -12,6 +12,9 @@ namespace Ability.Object
         public Ability.Smash SmashAbility { get => _smashAbility; set => _smashAbility = value; }
         [SerializeField] SphereCollider triggerCollider;
         public SphereCollider TriggerCollider => triggerCollider;
+        
+        private Vector3 _baseScale = new Vector3(1.5f, 1.5f, 1.5f);
+        public Vector3 BaseScale => _baseScale;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -28,9 +31,15 @@ namespace Ability.Object
             _smashAbility.DeactivateBall();
         }
 
+        public void IncreasePowerLevel(float newPowerLevel)
+        {
+            _powerLevel = newPowerLevel;
+            transform.localScale = _baseScale * (_powerLevel * 0.75f);
+        }
         private void OnEnable()
         {
             _powerLevel = 1;
+            transform.localScale = _baseScale;
             //triggerCollider.enabled = false;
         }
         

@@ -34,7 +34,7 @@ namespace Ability
                 {
                     Debug.Log("UPPING POWER LEVEL");
                     currentPowerLevel++;
-                    _smashBall.GetComponent<SmashBall>().PowerLevel = currentPowerLevel;
+                    _smashBall.GetComponent<SmashBall>().IncreasePowerLevel(currentPowerLevel);
                 }
                 yield return new WaitForSeconds(chargeTimer);
             }
@@ -66,13 +66,16 @@ namespace Ability
         
         private void ActivateBall()
         {
+            SmashBall smashBallScript = _smashBall.GetComponent<SmashBall>();
+            
             rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
 
             _smashBallRb.useGravity = false;
             _smashBall.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+            _smashBall.transform.localScale = smashBallScript.BaseScale;
             
             targetCursor.ActivateCursor(new Vector3(transform.position.x, transform.position.y, transform.position.z));
-            _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = false;
+            smashBallScript.TriggerCollider.enabled = false;
             _smashBall.SetActive(true);
 
             currentPowerLevel = basePowerLevel;
