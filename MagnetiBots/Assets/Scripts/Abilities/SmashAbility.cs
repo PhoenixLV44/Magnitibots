@@ -15,7 +15,7 @@ namespace Ability
         {
             InitializeAbility();
             maxPowerLevel = 3;
-            basePowerLevel = 5;
+            baseRange = 5;
         }
 
         public override void Activate()
@@ -27,13 +27,12 @@ namespace Ability
         {
             //Debug.Log("Charging Smash");
             float chargeTimer = 1f;
-            rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
             yield return new WaitForSeconds(chargeTimer/2);
             while (true)
             {
-
-                if (currentPowerLevel < basePowerLevel)
+                if (currentPowerLevel < maxPowerLevel)
                 {
+                    Debug.Log("UPPING POWER LEVEL");
                     currentPowerLevel++;
                     _smashBall.GetComponent<SmashBall>().PowerLevel = currentPowerLevel;
                 }
@@ -67,6 +66,8 @@ namespace Ability
         
         private void ActivateBall()
         {
+            rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
+
             _smashBallRb.useGravity = false;
             _smashBall.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
             
@@ -81,7 +82,7 @@ namespace Ability
 
         public void DeactivateBall()
         {
-            rangeIndicator.DisableRangeIndicator();
+            _smashBallRb.linearVelocity = Vector3.zero;
             _smashBall.SetActive(false);
         }
         private void DropBall()
@@ -90,6 +91,7 @@ namespace Ability
             _smashBallRb.useGravity = true;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
             targetCursor.DeactivateCursor();
+            rangeIndicator.DisableRangeIndicator();
         }
         private IEnumerator MoveCursor()
         {
@@ -98,7 +100,7 @@ namespace Ability
                 //Debug.Log("Move Cursor");
                 //targetCursor.MoveCursor();
                 targetCursor.MoveObjectToCursor(_smashBall);
-                yield return new WaitForFixedUpdate();
+                yield return null;
             }
         }
     }   

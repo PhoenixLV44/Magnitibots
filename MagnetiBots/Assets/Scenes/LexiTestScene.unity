@@ -430,7 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb5b184762794a47bd80a8ea0454960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmashableTarget
-  healthLevel: 0
+  healthLevel: 2
+  health: 0
 --- !u!65 &593524049
 BoxCollider:
   m_ObjectHideFlags: 0

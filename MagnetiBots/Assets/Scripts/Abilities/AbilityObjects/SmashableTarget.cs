@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Ability.Object
@@ -12,32 +13,45 @@ namespace Ability.Object
         }
         [SerializeField] private HealthLevelEnum healthLevel;
 
-        private int _health;
-        public int Health => _health;
-
+        [SerializeField] private int health;
+        public int Health => health;
+        private bool _canTakeDamage = true;
         private void Start()
         {
             switch (healthLevel)
             {
                 case HealthLevelEnum.Low:
-                    _health = 1;
+                    health = 1;
                     break;
                 case HealthLevelEnum.Medium:
-                    _health = 2;
+                    health = 2;
                     break;
                 case HealthLevelEnum.High:
-                    _health = 3;
+                    health = 3;
                     break;
             }
         }
         public void DecreaseHealth(float damage)
         {
-            int damageInt = Mathf.RoundToInt(damage);
-            _health -= damageInt;
-            if (damageInt <= 0)
+            if (_canTakeDamage)
             {
-                gameObject.SetActive(false);
+                int damageInt = Mathf.RoundToInt(damage);
+                health -= damageInt;
+                Debug.Log("Health: " + health + " Damage: " + damageInt);
+                if (damageInt <= 0)
+                {
+                    //gameObject.SetActive(false);
+                }
+                _canTakeDamage = false;
+                StartCoroutine(EndHitStun());
             }
+
+        }
+
+        IEnumerator EndHitStun()
+        {
+            yield return new WaitForSeconds(0.1f);
+            _canTakeDamage = true;
         }
     }
 }

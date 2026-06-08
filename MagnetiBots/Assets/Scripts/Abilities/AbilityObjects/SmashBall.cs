@@ -6,7 +6,7 @@ namespace Ability.Object
 {
     public class SmashBall : MonoBehaviour
     {
-        private float _powerLevel = 1;
+        [SerializeField] private float _powerLevel = 1;
         public float PowerLevel { get => _powerLevel; set => _powerLevel = value; }
         private Ability.Smash _smashAbility;
         public Ability.Smash SmashAbility { get => _smashAbility; set => _smashAbility = value; }
@@ -15,6 +15,7 @@ namespace Ability.Object
 
         private void OnTriggerEnter(Collider other)
         {
+            triggerCollider.enabled = false;
             if (other.CompareTag("SmashTarget"))
             {
                 SmashableTarget target = other.GetComponent<SmashableTarget>();
