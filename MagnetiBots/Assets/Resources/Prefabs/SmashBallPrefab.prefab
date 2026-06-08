@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 3435342763265525896}
   - component: {fileID: 4452132234132817085}
   - component: {fileID: 9059259742896017739}
-  m_Layer: 0
+  - component: {fileID: 7980808266514985375}
+  m_Layer: 13
   m_Name: SmashBallPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd90c56674b19784ca3524aa354fbcf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmashObject
+  triggerCollider: {fileID: 7980808266514985375}
 --- !u!54 &9059259742896017739
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,3 +155,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &7980808266514985375
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2980832752732395650}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.52
+  m_Center: {x: 0, y: 0, z: 0}

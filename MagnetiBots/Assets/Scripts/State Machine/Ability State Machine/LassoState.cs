@@ -9,14 +9,14 @@ namespace Ability
         public override void EnterState()
         {
             base.EnterState();
-            Debug.Log("Entered Lasso State");
+            //Debug.Log("Entered Lasso State");
         }
 
         public override void ExitState()
         {
             ability.StopAllCoroutines();
             ability.enabled = false;
-            Debug.Log("Exited Lasso State");
+            //Debug.Log("Exited Lasso State");
         }
 
         public override void TransitionChecks()

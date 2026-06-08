@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 593524054}
   m_Layer: 12
   m_Name: SmashableObjectTest (Low Health)
-  m_TagString: Untagged
+  m_TagString: SmashTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1548,6 +1548,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
+      propertyPath: merblePrefab
+      value: 
+      objectReference: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
     - target: {fileID: 8043479003321384820, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
       propertyPath: m_Name
       value: Player Stand-in

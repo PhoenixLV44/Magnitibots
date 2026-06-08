@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Ability.Object
@@ -14,6 +13,7 @@ namespace Ability.Object
         [SerializeField] private HealthLevelEnum healthLevel;
 
         private int _health;
+        public int Health => _health;
 
         private void Start()
         {
@@ -28,6 +28,15 @@ namespace Ability.Object
                 case HealthLevelEnum.High:
                     _health = 3;
                     break;
+            }
+        }
+        public void DecreaseHealth(float damage)
+        {
+            int damageInt = Mathf.RoundToInt(damage);
+            _health -= damageInt;
+            if (damageInt <= 0)
+            {
+                gameObject.SetActive(false);
             }
         }
     }

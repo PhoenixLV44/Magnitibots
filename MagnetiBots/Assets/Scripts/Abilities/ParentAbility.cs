@@ -14,16 +14,17 @@ namespace Ability
         protected bool isCharging;
         public bool IsCharging {get => isCharging; set => isCharging = value;}
         
-        protected int currentPowerLevel = 1;
-        protected int basePowerLevel = 1;
+        protected float currentPowerLevel = 1;
+        protected float basePowerLevel = 1;
         protected float baseRange;
         protected int maxPowerLevel;
-        public int CurrentPowerLevel => currentPowerLevel;
+        public float CurrentPowerLevel => currentPowerLevel;
         protected float heightOffset;
         
         protected Player.Controller controller;
         protected IEnumerator chargeCoroutine;
         protected TargetingCursor targetCursor;
+        public TargetingCursor TargetCursor => targetCursor;
         protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         

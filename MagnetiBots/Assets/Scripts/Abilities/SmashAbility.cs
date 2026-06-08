@@ -8,13 +8,14 @@ namespace Ability
 {
     public class Smash : Parent
     {
-        private GameObject _smashObjectPrefab;
         private GameObject _smashBall;
-        private SmashBall _smashObjectScript;
+        //public GameObject SmashBall => _smashBall;
+        private Rigidbody _smashBallRb;
         private void Start()
         {
             InitializeAbility();
-            
+            maxPowerLevel = 3;
+            basePowerLevel = 5;
         }
 
         public override void Activate()
@@ -24,56 +25,81 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
+            //Debug.Log("Charging Smash");
             float chargeTimer = 1f;
+            rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
+            yield return new WaitForSeconds(chargeTimer/2);
             while (true)
             {
-                if (!_smashBall.activeSelf)
-                {
-                    _smashBall.SetActive(true);
-                    yield return new WaitForSeconds(0.5f);
-                }
-                else
+
+                if (currentPowerLevel < basePowerLevel)
                 {
                     currentPowerLevel++;
+                    _smashBall.GetComponent<SmashBall>().PowerLevel = currentPowerLevel;
                 }
-
-            }
-        }
-        
-        private void Update()
-        {
-            if (InputSystem.actions.FindAction("Charge").IsPressed())
-            {
-                targetCursor.MoveCursor();
-                targetCursor.MoveObjectToCursor(_smashBall);
+                yield return new WaitForSeconds(chargeTimer);
             }
         }
 
         public override void StartCharging()
         {
             base.StartCharging();
-            targetCursor.ActivateCursor(transform.position);
-        }
-
-        public override void StopCharging()
-        {
-            base.StopCharging();
-            targetCursor.DeactivateCursor();
+            ActivateBall();
+            StartCoroutine(MoveCursor());
         }
 
         public override void Fire()
         {
-            //base.Fire();
+            DropBall();
         }
 
         protected override void InitializeAbility()
         {
             base.InitializeAbility();
-            _smashObjectPrefab = Resources.Load<GameObject>("Prefabs/SmashBallPrefab");
-            _smashBall = Instantiate(_smashObjectPrefab, transform.position, transform.rotation, transform);
+            
+            _smashBall = Instantiate(Resources.Load<GameObject>("Prefabs/SmashBallPrefab"), transform.position, transform.rotation, transform);
+            _smashBall.GetComponent<SmashBall>().SmashAbility = this;
+            _smashBall.name = "SmashBall";
+            _smashBallRb = _smashBall.GetComponent<Rigidbody>();
+            
+            DeactivateBall();
+        }
+        
+        private void ActivateBall()
+        {
+            _smashBallRb.useGravity = false;
+            _smashBall.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+            
+            targetCursor.ActivateCursor(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+            _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = false;
+            _smashBall.SetActive(true);
+
+            currentPowerLevel = basePowerLevel;
+
+            //StartCoroutine(MoveCursor());
+        }
+
+        public void DeactivateBall()
+        {
+            rangeIndicator.DisableRangeIndicator();
             _smashBall.SetActive(false);
-            _smashObjectScript = _smashBall.GetComponent<SmashBall>();
+        }
+        private void DropBall()
+        {
+            StopAllCoroutines();
+            _smashBallRb.useGravity = true;
+            _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
+            targetCursor.DeactivateCursor();
+        }
+        private IEnumerator MoveCursor()
+        {
+            while (true)
+            {
+                //Debug.Log("Move Cursor");
+                //targetCursor.MoveCursor();
+                targetCursor.MoveObjectToCursor(_smashBall);
+                yield return new WaitForFixedUpdate();
+            }
         }
     }   
 }

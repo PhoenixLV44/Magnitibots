@@ -64,7 +64,11 @@ namespace Ability.Object
             float distance = Vector3.Distance(playerPosition, cursorPosition);
             
             float range = _rangeIndicator.CurrentRange;
-            
+            Debug.Log("range: " + range);
+            if (range == 0)
+            {
+                range = 15;
+            }
             if (distance > range)
             {
                 _targetCursor.transform.position =
@@ -75,6 +79,7 @@ namespace Ability.Object
         public void MoveObjectToCursor(GameObject obj)
         {
             Vector3 targetPosition = MoveCursor();
+            Debug.Log("Cursor Target Position: " + targetPosition);
             Vector3 currentPosition = obj.transform.position;
             targetPosition.y =  currentPosition.y;
             float distance = Vector3.Distance(targetPosition, currentPosition);

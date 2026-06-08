@@ -24,6 +24,7 @@ public class RangeIndicator : MonoBehaviour
             _rangeIndicator.SetActive(true);
         } 
         //Debug.Log("Radius: " + radius);
+        Debug.Log("Circumference: " + circumference);
         _rangeIndicator.transform.localScale = new Vector3(circumference, 0.1f, circumference);
         _currentRange = circumference / 2;
     }
