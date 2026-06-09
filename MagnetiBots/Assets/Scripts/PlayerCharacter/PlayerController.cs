@@ -90,8 +90,7 @@ namespace Player
             {
                 StartCoroutine(ChannelingMerbles(Vector3.zero));
             }
-            Quaternion _cameraAdjust = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
-            _movement.adjustedMovement = _cameraAdjust;
+            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
