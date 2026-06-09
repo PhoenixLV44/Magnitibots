@@ -38,7 +38,7 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
-
+            
             return cursorMovement;
         }
 
@@ -46,7 +46,10 @@ namespace Ability.Object
         {
             Cursor.lockState = CursorLockMode.Locked;
             Vector3 cursorMovement = GetCursorDelta();
-
+            
+            Quaternion cameraRotation = GetComponent<Player.Movement>().adjustedMovement;
+            cursorMovement = cameraRotation * cursorMovement;
+            
             _targetCursor.transform.position += cursorMovement * (Time.deltaTime * cursorSpeed);
             
             MoveCursorInRange();
