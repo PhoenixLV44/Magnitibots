@@ -7,16 +7,18 @@ namespace Player
 {
     public class Controller : MonoBehaviour
     {
-        Player.Movement _movement;
         #region Movement Variables
+        Player.Movement _movement;
         [SerializeField] float movementSpeed;
         [SerializeField] float jumpForce;
         #endregion
 
+        #region Merbles
         Merbles.Boss _merbleBoss;
         [SerializeField] GameObject merblePrefab;
         [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
+            #endregion
 
         #region Scripts
         private Ability.Lasso _lassoAbility;
@@ -45,6 +47,9 @@ namespace Player
         private bool _lassoHooked = false;
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
         
+        private Player.PCamera _playerCamera;
+        public PCamera PlayerCamera { get =>  _playerCamera; set => _playerCamera = value; }
+        
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
             
@@ -54,9 +59,6 @@ namespace Player
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
-
-            Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.PCamera>().gameObject.transform.rotation.eulerAngles.y,0);
-            _movement.adjustedMovement = _cameraAdjust;
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
             _merbleBoss.MerbleFollowType = merbleFollowType;
@@ -88,8 +90,7 @@ namespace Player
             {
                 StartCoroutine(ChannelingMerbles(Vector3.zero));
             }
-            
-
+            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
