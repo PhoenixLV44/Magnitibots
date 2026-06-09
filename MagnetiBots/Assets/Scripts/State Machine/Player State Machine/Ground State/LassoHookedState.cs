@@ -1,12 +1,10 @@
 using UnityEngine;
-using Player.States;
 using UnityEngine.InputSystem;
 
-public class LassoHooked : PlayerState
+public class LassoHooked : GroundedState
 {
-    public LassoHooked(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
-
-    protected Vector2 moveInput;
+    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    
     private Ability.Lasso _lassoAbility;
     
     public override void EnterState()
@@ -17,6 +15,7 @@ public class LassoHooked : PlayerState
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
         player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     
     public override void LogicUpdate()
@@ -24,13 +23,23 @@ public class LassoHooked : PlayerState
         base.LogicUpdate();
         moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
         
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        if(_lassoAbility.Lever == null)
+        {
+            //Debug.Log("No Lever");
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
-        _lassoAbility.MoveLassoTarget();
-        
-        player.Movement.Move(moveInput);
+            _lassoAbility.MoveLassoTarget();
 
-        if (InputSystem.actions.FindAction("Charge").IsPressed())
+            player.Movement.Move(moveInput);
+        }
+        else
+        {
+            if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
+            {
+                _lassoAbility.PullLever();
+            }
+        }
+        if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
         {
             _lassoAbility.UnhookLasso();
         }

@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Ability.Object;
 
 namespace Ability
 {
@@ -19,10 +19,12 @@ namespace Ability
         protected float baseRange;
         protected int maxPowerLevel;
         public int CurrentPowerLevel => currentPowerLevel;
+        protected float heightOffset;
         
         protected Player.Controller controller;
         protected IEnumerator chargeCoroutine;
         protected TargetingCursor targetCursor;
+        protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         
         protected GameObject aimingGuide;
@@ -56,7 +58,7 @@ namespace Ability
 
             if (chargeInput.IsPressed())
             {
-                Charge();
+                //Charge();
             }
             else if (fireInput.IsPressed())
             {
@@ -65,7 +67,7 @@ namespace Ability
         }
         public void StartCharging()
         {
-            Debug.Log("Starting charging");
+            //Debug.Log("Starting charging");
             if (chargeCoroutine != null)
             {
                 aimingGuide.SetActive(true);
@@ -83,16 +85,17 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
-                Debug.Log("Stopping charging");
+                //Debug.Log("Stopping charging");
                 aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 StopCoroutine(chargeCoroutine);
             }
         }
 
-        public virtual void InitializeAbility()
+        protected virtual void InitializeAbility()
         {
             targetCursor = GetComponent<TargetingCursor>();
+            targetCursorObject = targetCursor.gameObject;
             
             controller = GetComponent<Player.Controller>();
             
@@ -100,7 +103,7 @@ namespace Ability
             
             chargeCoroutine = Charge();
             
-            aimingGuide = transform.GetChild(3).gameObject;
+            aimingGuide = transform.GetChild(0).transform.GetChild(1).gameObject;
             aimingGuide.SetActive(false);
         }
     }

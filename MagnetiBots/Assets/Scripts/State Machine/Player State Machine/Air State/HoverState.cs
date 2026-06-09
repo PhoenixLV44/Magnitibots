@@ -1,6 +1,5 @@
 using UnityEngine;
-using Player.States;
 public class HoverState : AirState
 {
-    public HoverState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public HoverState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
 }

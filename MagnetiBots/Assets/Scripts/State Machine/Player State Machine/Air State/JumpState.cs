@@ -1,7 +1,6 @@
-using Player.States;
 using UnityEngine;
 
 public class JumpState: AirState
 {
-    public JumpState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public JumpState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
 }

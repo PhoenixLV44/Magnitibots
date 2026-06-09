@@ -1,10 +1,9 @@
-using Player.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class IdleState : GroundedState
 {
-    public IdleState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public IdleState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
     
     private Ability.StateManager _abilityManager;
     private Ability.Parent _currentAbility;
@@ -15,9 +14,14 @@ public class IdleState : GroundedState
         if (!_abilityManager)
         {
             _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
+            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        }
+        else
+        {
+            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
         }
 
-        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public override void TransitionChecks()
@@ -43,7 +47,15 @@ public class IdleState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        if (stateManager.PlayerMovement != null)
+        {
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+            //Debug.LogError("NOT NULL");
+        }
+        else
+        {
+            Debug.LogError("No State Manager found!");
+        }
 
         if (InputSystem.actions.FindAction("Fire").IsPressed())
         {

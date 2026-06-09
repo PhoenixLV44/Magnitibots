@@ -28,6 +28,7 @@ namespace Merbles
         {
             _agent = GetComponent<NavMeshAgent>();
             _agent.enabled = false;
+            
         }
         public void SetPool(ObjectPool<GameObject> pool)
         {
@@ -70,38 +71,16 @@ namespace Merbles
             {
                 switch (_followType)
                 {
-                    case FollowTypes.Coalition:
+                    //Fix slowdown
+                    /*case FollowTypes.Coalition:
                         break;
+                    */
                     case FollowTypes.Snake:
-                        int index = myBoss.merbleList.IndexOf(this);
-                        if (index == 0)
-                        {
-                            if (Vector3.Distance(transform.position, myBoss.transform.position) > 2f)
-                            {
-                                _agent.isStopped = false;
-                                _agent.destination = myBoss.transform.position;
-                            }
-                            else
-                            {
-                                _agent.isStopped = true;
-                            }
-                        }
-                        else if (index != -1)
-                        {
-                            if (Vector3.Distance(transform.position, myBoss.merbleList[index-1].transform.position) > 1f)
-                            {
-                                _agent.isStopped = false;
-                                _agent.destination = myBoss.merbleList[index - 1].transform.position;
-                            }
-                            else
-                            {
-                                _agent.isStopped = true;
-                            }
-                        }
+                        SnakeMovement();
                         break;
                     default:
                     case FollowTypes.Loose:
-                        if (Vector3.Distance(transform.position, myBoss.transform.position) > 5f)
+                        if (Vector3.Distance(transform.position, myBoss.transform.position) > 2f)
                         {
                             _agent.isStopped = false;
                             _agent.destination = myBoss.transform.position;
@@ -109,6 +88,7 @@ namespace Merbles
                         else
                         {
                             _agent.isStopped = true;
+                            _agent.velocity = Vector3.zero;
                         }
                         break;
                 }
@@ -119,7 +99,7 @@ namespace Merbles
         public void StartCharge(Vector3 target)
         {
             Debug.Log("Waagh");
-            myBoss.merbleList.Remove(this);
+            
             StartCoroutine(Charge(target));
         }
         IEnumerator Charge(Vector3 target)
@@ -128,8 +108,48 @@ namespace Merbles
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
-            yield return new WaitUntil(() => Vector3.Distance(transform.position, target) < 1f);
+            yield return new WaitUntil(() => _agent.hasPath);
+            yield return new WaitUntil(() => _agent.remainingDistance < 0.25f);
+            myBoss.merbleList.Remove(this);
             _merblePool.Release(gameObject);
+            myBoss.chargingMerbles--;
+            myBoss.chargedMerbles++;
+        }
+        public void StopCharging()
+        {
+            _isCharging = false;
+            _agent.ResetPath();
+            StopAllCoroutines();
+        }
+
+        public void SnakeMovement()
+        {
+            int index = myBoss.merbleList.IndexOf(this);
+            if (index == 0 || myBoss.merbleList[index-1].Charging==true)
+            {
+                if (Vector3.Distance(transform.position, myBoss.transform.position) > 1+_agent.speed/2)
+                {
+                    _agent.isStopped = false;
+                    _agent.destination = myBoss.transform.position;
+                }
+                else
+                {
+                    _agent.isStopped = true;
+                }
+            }
+            else if (index != -1)
+            {
+                if (Vector3.Distance(transform.position, myBoss.merbleList[index - 1].transform.position) > 0.5+_agent.speed/5)
+                {
+                    _agent.isStopped = false;
+                    _agent.destination = myBoss.merbleList[index - 1].transform.position;
+                }
+                else
+                {
+                    //_agent.velocity = 0;
+                    _agent.isStopped = true;
+                }
+            }
         }
     }
 }

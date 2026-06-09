@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
-using Player.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ShowcaseGUI : MonoBehaviour
 {
     [SerializeField] private Player.Controller _playerController;
-    [SerializeField] private PlayerStateManager _playerStateManager;
+    [SerializeField] private Player.StateManager _playerStateManager;
     [SerializeField] private Ability.StateManager _abilityStateManager;
 
     [SerializeField] private Camera[] cameras;
@@ -31,7 +30,7 @@ public class ShowcaseGUI : MonoBehaviour
 
                 if (_playerStateManager == null)
                 {
-                    _playerStateManager = _playerController.gameObject.GetComponent<PlayerStateManager>();
+                    _playerStateManager = _playerController.gameObject.GetComponent<Player.StateManager>();
                 }
 
                 if (_abilityStateManager == null)
@@ -90,7 +89,7 @@ public class ShowcaseGUI : MonoBehaviour
         
         GUILayout.BeginArea(new Rect(20, 20, 1000, 500));
         {
-            GUILayout.Label("Player State: "  + _playerStateManager.PlayerStateMachine.CurrentState.ToString());
+            GUILayout.Label("Player State: "  + _playerStateManager.StateMachine.CurrentState.ToString());
             GUILayout.Label("Current Ability: " + _abilityStateManager.StateMachine.CurrentState.ToString());
             GUILayout.Label("Charge Level: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel);
         }

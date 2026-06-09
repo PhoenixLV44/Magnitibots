@@ -1,10 +1,9 @@
-using Player.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ChargeState : GroundedState
 {
-    public ChargeState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public ChargeState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
     
     private Ability.StateManager _abilityManager;
     private Ability.Parent _currentAbility;
@@ -12,7 +11,7 @@ public class ChargeState : GroundedState
 
     public override void EnterState()
     {
-        Debug.Log("Entering Charge State");
+        //Debug.Log("Entering Charge State");
         if (!_abilityManager)
         {
             _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
@@ -20,6 +19,7 @@ public class ChargeState : GroundedState
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
         _currentAbility.StartCharging();
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public override void ExitState()
