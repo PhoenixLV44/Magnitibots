@@ -7,16 +7,18 @@ namespace Player
 {
     public class Controller : MonoBehaviour
     {
-        Player.Movement _movement;
         #region Movement Variables
+        Player.Movement _movement;
         [SerializeField] float movementSpeed;
         [SerializeField] float jumpForce;
         #endregion
 
+        #region Merbles
         Merbles.Boss _merbleBoss;
         [SerializeField] GameObject merblePrefab;
         [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
+            #endregion
 
         #region Scripts
         private Ability.Lasso _lassoAbility;
@@ -43,6 +45,9 @@ namespace Player
             #endregion
             
         private bool _lassoHooked = false;
+        
+        private Player.PCamera _camera;
+        public PCamera PCamera { get =>  _camera; set => _camera = value; }
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
         
         private RangeIndicator _rangeIndicator;
