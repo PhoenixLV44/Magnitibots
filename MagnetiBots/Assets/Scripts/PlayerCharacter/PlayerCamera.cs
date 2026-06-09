@@ -1,20 +1,53 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
     public class PCamera : MonoBehaviour
     {
-        GameObject player;
-        Vector3 offset;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        GameObject _player;
+        GameObject _pivotPoint;
+        public GameObject PivotPoint => _pivotPoint;
+        Vector3 _offset;
+        
+        private InputAction _rotateCameraLeft;
+        private InputAction _rotateCameraRight;
+        [SerializeField] private float rotationSpeed = 50f;
+
         void Start()
         {
-            player = GameObject.FindFirstObjectByType<Player.Controller>().gameObject;
-            offset = transform.position - player.transform.position;
+            _player = GameObject.FindFirstObjectByType<Player.Controller>().gameObject;
+            _player.GetComponent<Controller>().PlayerCamera = this;
+            _pivotPoint = transform.parent.gameObject;
+            _offset = transform.position - _player.transform.position;
+            
+            _rotateCameraLeft = InputSystem.actions.FindAction("Rotate Camera Left");
+            _rotateCameraRight = InputSystem.actions.FindAction("Rotate Camera Right");
         }
         private void Update()
         {
-            transform.position = player.transform.position + offset;
+            _pivotPoint.transform.position = _player.transform.position;
+        }
+
+        private void LateUpdate()
+        {
+            RotateCamera();
+        }
+
+        private void RotateCamera()
+        {
+            if (_rotateCameraLeft.IsPressed() && _rotateCameraRight.IsPressed())
+            {
+                return;
+            }
+            else if (_rotateCameraLeft.IsPressed())
+            {
+                _pivotPoint.transform.RotateAround(_pivotPoint.transform.position, _pivotPoint.transform.up, -rotationSpeed * Time.deltaTime);
+            }
+            else if (_rotateCameraRight.IsPressed())
+            {
+                _pivotPoint.transform.RotateAround(_pivotPoint.transform.position, _pivotPoint.transform.up, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 }
