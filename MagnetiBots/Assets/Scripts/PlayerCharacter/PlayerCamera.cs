@@ -7,6 +7,7 @@ namespace Player
     {
         GameObject _player;
         GameObject _pivotPoint;
+        public GameObject PivotPoint => _pivotPoint;
         Vector3 _offset;
         
         private InputAction _rotateCameraLeft;
@@ -16,6 +17,7 @@ namespace Player
         void Start()
         {
             _player = GameObject.FindFirstObjectByType<Player.Controller>().gameObject;
+            _player.GetComponent<Controller>().PlayerCamera = this;
             _pivotPoint = transform.parent.gameObject;
             _offset = transform.position - _player.transform.position;
             

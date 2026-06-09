@@ -45,10 +45,10 @@ namespace Player
             #endregion
             
         private bool _lassoHooked = false;
-        
-        private Player.PCamera _camera;
-        public PCamera PCamera { get =>  _camera; set => _camera = value; }
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
+        
+        private Player.PCamera _playerCamera;
+        public PCamera PlayerCamera { get =>  _playerCamera; set => _playerCamera = value; }
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
@@ -59,9 +59,6 @@ namespace Player
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
-
-            Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.PCamera>().gameObject.transform.rotation.eulerAngles.y,0);
-            _movement.adjustedMovement = _cameraAdjust;
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
             _merbleBoss.MerbleFollowType = merbleFollowType;
@@ -93,8 +90,8 @@ namespace Player
             {
                 StartCoroutine(ChannelingMerbles(Vector3.zero));
             }
-            
-
+            Quaternion _cameraAdjust = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
+            _movement.adjustedMovement = _cameraAdjust;
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
