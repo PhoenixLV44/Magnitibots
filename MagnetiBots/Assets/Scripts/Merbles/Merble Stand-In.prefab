@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3821673620712416676}
   - component: {fileID: 2743572093774569444}
   - component: {fileID: 5414890369579410839}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Merble Stand-In
   m_TagString: MerbleCollect
   m_Icon: {fileID: 0}
@@ -99,14 +99,14 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!195 &3821673620712416676
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 0.5
   m_BaseOffset: 1.35
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -152,10 +152,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 31927
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -189,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 045ad52fb85eeef408ba6105ddcfdacd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.416
+      value: -0.916
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 045ad52fb85eeef408ba6105ddcfdacd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -223,9 +223,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6071118217290950423, guid: 045ad52fb85eeef408ba6105ddcfdacd, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 045ad52fb85eeef408ba6105ddcfdacd, type: 3}
       propertyPath: m_Name
       value: mrble_final
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 045ad52fb85eeef408ba6105ddcfdacd, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761716766978655909, guid: 045ad52fb85eeef408ba6105ddcfdacd, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

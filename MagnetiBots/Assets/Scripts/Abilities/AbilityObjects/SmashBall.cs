@@ -13,7 +13,7 @@ namespace Ability.Object
         [SerializeField] SphereCollider triggerCollider;
         public SphereCollider TriggerCollider => triggerCollider;
         
-        private Vector3 _baseScale = new Vector3(1.5f, 1.5f, 1.5f);
+        private Vector3 _baseScale = new Vector3(1f, 1f, 1f);
         public Vector3 BaseScale => _baseScale;
 
         private void OnTriggerEnter(Collider other)
@@ -34,7 +34,7 @@ namespace Ability.Object
         public void IncreasePowerLevel(float newPowerLevel)
         {
             _powerLevel = newPowerLevel;
-            transform.localScale = _baseScale * (_powerLevel * 0.75f);
+            transform.localScale = _baseScale * (_powerLevel);
         }
         private void OnEnable()
         {
