@@ -128,7 +128,12 @@ namespace Player
                     if (!InputSystem.actions.FindAction("Jump").IsPressed())
                     {
                         _movement.Jump(_merbleBoss.chargedMerbles);
-                        yield return new WaitForSeconds(1);
+                        if(_merbleBoss.chargedMerbles>0)
+                        {
+                            _movement.Gliding = true;
+                            yield return new WaitForSeconds(8);
+                            _movement.Gliding = false;
+                        }
                         _merbleBoss.FireMerbles();
                         jumpLock = false;
                         break;
@@ -139,7 +144,12 @@ namespace Player
                 yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
                 _movement.Jump(_merbleBoss.chargedMerbles);
                 jumpLock = false;
-                yield return new WaitForSeconds(1);
+                if (_merbleBoss.chargedMerbles > 0)
+                {
+                    _movement.Gliding = true;
+                    yield return new WaitForSeconds(8);
+                    _movement.Gliding = false;
+                }
                 _merbleBoss.FireMerbles();
             }
         }
