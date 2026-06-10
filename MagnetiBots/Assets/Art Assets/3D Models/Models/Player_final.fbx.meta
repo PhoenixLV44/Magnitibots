@@ -3,7 +3,47 @@ guid: 6142ecc7e0bec3d46941d58a8318eb43
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bag1
+    second: {fileID: 2100000, guid: e7d4c8a296073cb46b6d210789766957, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body1
+    second: {fileID: 2100000, guid: 410b64c294a91c94e81fb0a5781ecee8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hat1
+    second: {fileID: 2100000, guid: d3087f0d19fe4d340b1c0481847c25cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Head
+    second: {fileID: 2100000, guid: f67b2d1d5d9dd9a47a9c1dd19bacdc2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: L_Arm1
+    second: {fileID: 2100000, guid: 3332a242dfd4bc3418640f0753cf5af5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: L_Leg1
+    second: {fileID: 2100000, guid: 8d48c800926e4344a8aa703ba20098dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: R_Arm1
+    second: {fileID: 2100000, guid: 06778d5f5a71129408e376fe8028ffdd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: R_Leg1
+    second: {fileID: 2100000, guid: 528b43e4e4341cf49937e7fd6b502df2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
