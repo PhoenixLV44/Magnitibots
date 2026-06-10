@@ -8,9 +8,7 @@ public class ShowcaseGUI : MonoBehaviour
     [SerializeField] private Player.Controller _playerController;
     [SerializeField] private Player.StateManager _playerStateManager;
     [SerializeField] private Ability.StateManager _abilityStateManager;
-
-    [SerializeField] private Camera[] cameras;
-    private int _cameraInt = 0;
+    
 
     private void Start()
     {
@@ -50,39 +48,10 @@ public class ShowcaseGUI : MonoBehaviour
 
     private void Update()
     {
-        if (InputSystem.actions.FindAction("Sprint").WasReleasedThisFrame())
-        {
-            SwitchCamera();
-        }
         if(InputSystem.actions.FindAction("Crouch").WasReleasedThisFrame())
             Application.Quit();
     }
-
-    private void SwitchCamera()
-    {
-        switch (_cameraInt)
-        {
-            case 3:
-                _cameraInt = 0;
-                break;
-            default:
-                _cameraInt++;
-                break;     
-        }
-
-        for(int i = 0; i < cameras.Length; i++)
-        {
-            if (i != _cameraInt)
-            {
-                cameras[i].gameObject.SetActive(false);
-            }
-            else
-            {
-                cameras[i].gameObject.SetActive(true);
-            }
-        }
-        Debug.Log("Camera Int: " + _cameraInt);
-    }
+    
     private void OnGUI()
     {
         GUI.skin.label.fontSize = 20;

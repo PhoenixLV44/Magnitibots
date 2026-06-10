@@ -12,8 +12,8 @@ public class RangeIndicator : MonoBehaviour
     private void Start()
     {
         _rangeIndicator = transform.GetChild(2).gameObject;
-        _rangeIndicatorRenderer = _rangeIndicator.GetComponent<Renderer>();
-        _rangeIndicatorRenderer.material.color = Color.deepSkyBlue;
+        //_rangeIndicatorRenderer = _rangeIndicator.GetComponent<Renderer>();
+        //_rangeIndicatorRenderer.material.color = Color.deepSkyBlue;
         _rangeIndicator.SetActive(false);
     }
 

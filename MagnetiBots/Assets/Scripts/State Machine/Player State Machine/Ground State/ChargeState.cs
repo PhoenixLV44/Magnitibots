@@ -20,6 +20,7 @@ public class ChargeState : GroundedState
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
         _currentAbility.StartCharging();
         Cursor.lockState = CursorLockMode.None;
+        player.Movement.rb.linearVelocity = Vector3.zero;
     }
 
     public override void ExitState()

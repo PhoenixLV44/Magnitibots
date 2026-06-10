@@ -14,20 +14,21 @@ namespace Ability
         protected bool isCharging;
         public bool IsCharging {get => isCharging; set => isCharging = value;}
         
-        protected int currentPowerLevel = 1;
-        protected int basePowerLevel = 1;
+        protected float currentPowerLevel = 1;
+        protected float basePowerLevel = 1;
         protected float baseRange;
         protected int maxPowerLevel;
-        public int CurrentPowerLevel => currentPowerLevel;
+        public float CurrentPowerLevel => currentPowerLevel;
         protected float heightOffset;
         
         protected Player.Controller controller;
         protected IEnumerator chargeCoroutine;
         protected TargetingCursor targetCursor;
+        public TargetingCursor TargetCursor => targetCursor;
         protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         
-        protected GameObject aimingGuide;
+        [SerializeField]protected GameObject aimingGuide;
 
         private void Start()
         {
@@ -49,45 +50,28 @@ namespace Ability
         {
             throw new System.NotImplementedException();
         }
-        public virtual void GetInputs()
-        {
-            if (activateInput.IsPressed())
-            {
-                Activate();
-            }
-
-            if (chargeInput.IsPressed())
-            {
-                //Charge();
-            }
-            else if (fireInput.IsPressed())
-            {
-                Fire();
-            }
-        }
-        public void StartCharging()
+        public virtual void StartCharging()
         {
             //Debug.Log("Starting charging");
             if (chargeCoroutine != null)
             {
-                aimingGuide.SetActive(true);
                 StartCoroutine(chargeCoroutine);
             }
             else
             {
                 chargeCoroutine = Charge();
-                aimingGuide.SetActive(true);
                 StartCoroutine(chargeCoroutine);
             }
         }
 
-        public void StopCharging()
+        public virtual void StopCharging()
         {
             if (chargeCoroutine != null)
             {
-                //Debug.Log("Stopping charging");
+                Debug.Log("Stopping charging");
                 aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
+                rangeIndicator.DisableRangeIndicator();
                 StopCoroutine(chargeCoroutine);
             }
         }
@@ -103,7 +87,7 @@ namespace Ability
             
             chargeCoroutine = Charge();
             
-            aimingGuide = transform.GetChild(0).transform.GetChild(1).gameObject;
+            aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
             aimingGuide.SetActive(false);
         }
     }
