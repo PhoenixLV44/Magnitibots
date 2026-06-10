@@ -28106,10 +28106,10 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
+    m_Bits: 7351
+  m_UseGeometry: 1
   m_DefaultArea: 0
-  m_GenerateLinks: 0
+  m_GenerateLinks: 1
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
@@ -72644,6 +72644,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1559437103381977257, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1691496332156011038, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733663244630715442, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3303176257897354181, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4580427214147130760, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: merbleFollowType
+      value: Snake
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386499518817758353, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754755603029288520, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134634969224980529, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7427511517533860104, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7898236789186208531, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -72655,6 +72691,10 @@ PrefabInstance:
     - target: {fileID: 8043479003321384820, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8676651163925495030, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
