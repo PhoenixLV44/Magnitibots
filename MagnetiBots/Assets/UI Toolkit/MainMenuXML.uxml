@@ -1,6 +1,13 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
-    <ui:VisualElement name="Base" style="flex-grow: 1;">
-        <ui:Label text="Title" class="header" style="height: auto;"/>
+    <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-grow: 1; flex-direction: column; overflow: visible;">
+        <ui:Label text="Magnetibots" class="header" style="height: auto;"/>
+        <ui:Button text="Start" name="StartButton" class="button"/>
+        <ui:Button text="Settings" name="SettingsButton" class="button"/>
+        <ui:Button text="Quit" name="QuitButton" class="button"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="SettingsMenu" class="SettingsMenu" style="flex-grow: 1; justify-content: space-between; transform-origin: left top; width: 1780px;">
+        <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center;"/>
+        <ui:Button text="Return" name="ReturnButton" class="button"/>
     </ui:VisualElement>
 </ui:UXML>
