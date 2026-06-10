@@ -28,7 +28,7 @@ namespace Ability
         protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         
-        protected GameObject aimingGuide;
+        [SerializeField]protected GameObject aimingGuide;
 
         private void Start()
         {
@@ -68,7 +68,7 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
-                //Debug.Log("Stopping charging");
+                Debug.Log("Stopping charging");
                 aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
@@ -87,7 +87,7 @@ namespace Ability
             
             chargeCoroutine = Charge();
             
-            aimingGuide = transform.GetChild(0).transform.GetChild(1).gameObject;
+            aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
             aimingGuide.SetActive(false);
         }
     }
