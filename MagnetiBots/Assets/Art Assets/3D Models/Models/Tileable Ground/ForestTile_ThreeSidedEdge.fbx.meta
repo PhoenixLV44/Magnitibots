@@ -12,6 +12,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: MAT_ForestTileWall
+    second: {fileID: 2100000, guid: c41a24316763b184d876221b931e2d8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: MAT_ForestTileaOverhang
     second: {fileID: 2100000, guid: 5ad6d63cc7cd99842b2aa033322c59a8, type: 2}
   materials:
