@@ -22,11 +22,7 @@ namespace Ability
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Activate Smash").IsPressed())
-            {
-                stateMachine.ChangeState(stateManager.SmashState);
-            }
-            if (InputSystem.actions.FindAction("Activate Propeller").IsPressed())
+            if (InputSystem.actions.FindAction("Activate Smash").IsPressed() && player.CanUseSmash)
             {
                 stateMachine.ChangeState(stateManager.SmashState);
             }
