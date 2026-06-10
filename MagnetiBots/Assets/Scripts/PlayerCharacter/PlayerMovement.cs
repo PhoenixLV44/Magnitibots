@@ -101,5 +101,17 @@ namespace Player
             Debug.Log("jumping with power "+jumpPower);
             rb.AddForce(jumpPower * Vector3.up);
         }
+        public bool CheckGrounded()
+        {
+            RaycastHit hit;
+            if(Physics.SphereCast(transform.position - Vector3.up, 0, -Vector3.up, out hit))
+            {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
