@@ -1,22 +1,24 @@
 using UnityEngine;
-using Player.States;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Ability.Object;
 
 namespace Player
 {
     public class Controller : MonoBehaviour
     {
-        Player.Movement _movement;
         #region Movement Variables
-        [SerializeField] float _movementSpeed;
-        [SerializeField] float _jumpForce;
+        Player.Movement _movement;
+        [SerializeField] float movementSpeed;
+        [SerializeField] float jumpForce;
         #endregion
 
+        #region Merbles
         Merbles.Boss _merbleBoss;
-        [SerializeField] GameObject _merblePrefab;
-        [SerializeField] string _merbleFollowType;
+        [SerializeField] GameObject merblePrefab;
+        [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
+            #endregion
 
         #region Scripts
         private Ability.Lasso _lassoAbility;
@@ -28,17 +30,25 @@ namespace Player
         private Ability.Propeller _propellerAbility;
         public Ability.Propeller PropellerAbility { get { return _propellerAbility; } }
         
-        private TargetingCursor _targetCursor;
-        public TargetingCursor TargetCursor { get { return _targetCursor; } }
+        private TargetingCursor _targetCursorScript;
+        public TargetingCursor TargetCursorScript { get { return _targetCursorScript; } }
+        
+        private GameObject _targetCursorObject;
+        public GameObject TargetCursorObject => _targetCursorObject;
             #endregion
 
         #region States
-        Player.States.PlayerStateManager _playerStateManager;
+        private Player.StateManager _playerStateManager;
+        public Player.StateManager PlayerStateManager => _playerStateManager; 
         Ability.StateManager  _abilityStateManager;
+        public Ability.StateManager AbilityStateManager => _abilityStateManager;
             #endregion
             
         private bool _lassoHooked = false;
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
+        
+        private Player.PCamera _playerCamera;
+        public PCamera PlayerCamera { get =>  _playerCamera; set => _playerCamera = value; }
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
@@ -47,26 +57,18 @@ namespace Player
         {
             _movement = gameObject.AddComponent<Player.Movement>();
 
-            _movement.moveSpeed = _movementSpeed;
-            _movement.jumpForce = _jumpForce;
-
-            Quaternion _cameraAdjust = Quaternion.Euler(0,FindFirstObjectByType<Player.PCamera>().gameObject.transform.rotation.eulerAngles.y,0);
-            _movement.adjustedMovement = _cameraAdjust;
+            _movement.moveSpeed = movementSpeed;
+            _movement.jumpForce = jumpForce;
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
-            _merbleBoss.MerbleFollowType = _merbleFollowType;
-            _merbleBoss.merblePrefab = _merblePrefab;
+            _merbleBoss.MerbleFollowType = merbleFollowType;
+            _merbleBoss.merblePrefab = merblePrefab;
             _merbleBoss.defaultCapacity = 0;
             _merbleBoss.maxSize = 10;
-
-            /*
-            _lassoAbility = gameObject.AddComponent<Ability.Lasso>();
-            _smashAbility = gameObject.AddComponent<Ability.Smash>();
-            _propellerAbility = gameObject.AddComponent<Ability.Propeller>();
-            */
-            _targetCursor = gameObject.AddComponent<TargetingCursor>();
             
-            _playerStateManager = gameObject.AddComponent<PlayerStateManager>();
+            _targetCursorScript = gameObject.AddComponent<TargetingCursor>();
+            
+            _playerStateManager = gameObject.AddComponent<Player.StateManager>();
             _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
             
             _playerStateManager.PlayerController = this;
@@ -76,6 +78,8 @@ namespace Player
             _abilityStateManager.PlayerController = this;
             
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
+            
+            _targetCursorObject = transform.Find("Target Cursor").gameObject;
 
         }
 
@@ -86,8 +90,7 @@ namespace Player
             {
                 StartCoroutine(ChannelingMerbles(Vector3.zero));
             }
-            
-
+            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {

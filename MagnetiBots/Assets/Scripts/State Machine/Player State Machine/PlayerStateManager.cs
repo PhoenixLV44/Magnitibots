@@ -1,18 +1,15 @@
-using System;
-using Player.States;
-using Player;
 using UnityEngine;
 
-namespace Player.States
+namespace Player
 {
-    public class PlayerStateManager : MonoBehaviour
+    public class StateManager : MonoBehaviour
     {
         private  Player.Controller _playerController;
         public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
-        private Player.Movement _playerMovement;
+        [SerializeField]private Player.Movement _playerMovement;
         public Player.Movement PlayerMovement {get {return _playerMovement;} set {_playerMovement = value;} }
-        private PlayerStateMachine _playerStateMachine;
-        public PlayerStateMachine PlayerStateMachine {get {return _playerStateMachine;} }
+        private StateMachine _stateMachine;
+        public StateMachine StateMachine {get {return _stateMachine;} }
     
         //States for when the player is on the ground
         private IdleState _idleState;
@@ -34,22 +31,22 @@ namespace Player.States
 
         private void Start()
         {
-            _playerStateMachine = new PlayerStateMachine();
-            _idleState = new IdleState(_playerController, _playerStateMachine, this);
-            _movementState = new MovementState(_playerController, _playerStateMachine, this);
-            _chargeState = new ChargeState(_playerController, _playerStateMachine, this);
-            _lassoHookedState = new LassoHooked(_playerController, _playerStateMachine, this);
-            _playerStateMachine.InitializeStateMachine(_idleState);
+            _stateMachine = new StateMachine();
+            _idleState = new IdleState(_playerController, _stateMachine, this);
+            _movementState = new MovementState(_playerController, _stateMachine, this);
+            _chargeState = new ChargeState(_playerController, _stateMachine, this);
+            _lassoHookedState = new LassoHooked(_playerController, _stateMachine, this);
+            _stateMachine.InitializeStateMachine(_idleState);
         }
 
         private void Update()
         {
-            _playerStateMachine.CurrentState.LogicUpdate();
+            _stateMachine.CurrentState.LogicUpdate();
         }
 
         private void LateUpdate()
         {
-            _playerStateMachine.CurrentState.PhysicsUpdate();
+            _stateMachine.CurrentState.PhysicsUpdate();
         }
     }
 }

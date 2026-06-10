@@ -9,7 +9,7 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float velocityCap=30f;
+        float _velocityCap=30f;
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -19,6 +19,8 @@ namespace Player
         InputAction _move;
         InputAction _look;
         InputAction _jump;
+        
+        private Player.Controller _controller;
 
         private void Start()
         {
@@ -27,6 +29,7 @@ namespace Player
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
+            _controller = GetComponent<Player.Controller>();
         }
         private void Update()
         {
@@ -55,11 +58,9 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            
-            if(rb.linearVelocity.magnitude < velocityCap)
+            if(rb.linearVelocity.magnitude < _velocityCap)
             {
                 rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
-                
             }
         }
         /// <summary>
@@ -69,7 +70,17 @@ namespace Player
         public void Look(Vector3 input)
         {
             //Debug.Log(input[1]);
-            model.rotation = Quaternion.LookRotation(input, Vector3.up);
+            
+            if(_controller.TargetCursorObject.activeSelf)
+            {
+                Vector3 lookTarget = _controller.TargetCursorObject.transform.position;
+                lookTarget.y = transform.position.y;
+                model.LookAt(lookTarget);
+            }
+            else
+            {
+                model.rotation = Quaternion.LookRotation(input, Vector3.up);
+            }
         }
         public void Jump()
         {

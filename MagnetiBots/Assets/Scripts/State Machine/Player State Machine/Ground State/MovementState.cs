@@ -1,11 +1,10 @@
-using Player.States;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MovementState : GroundedState
 {
-    public MovementState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public MovementState(Player.Controller pc, StateMachine stateMachine, StateManager stateManager) : base(pc, stateMachine, stateManager) { }
     
     private Ability.StateManager _abilityManager;
     private Ability.Parent _currentAbility;

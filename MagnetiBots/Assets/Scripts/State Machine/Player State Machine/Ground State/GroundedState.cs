@@ -1,10 +1,9 @@
 using UnityEngine;
-using Player.States;
 using UnityEngine.InputSystem;
 
-public abstract class GroundedState : PlayerState
+public abstract class GroundedState : Player.State
 {
-    public GroundedState(Player.Controller pc, PlayerStateMachine stateMachine, PlayerStateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public GroundedState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
 
     protected Vector2 moveInput;
     protected bool isGrounded;

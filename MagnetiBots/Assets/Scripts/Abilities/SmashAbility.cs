@@ -1,21 +1,23 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Ability.Object;
 
 namespace Ability
 {
     public class Smash : Parent
     {
+        private GameObject _smashObjectPrefab;
+        private GameObject _smashBall;
+        private SmashObject _smashObjectScript;
         private void Start()
         {
-            activateInput = InputSystem.actions.FindAction("ActivateSmash");
-            chargeInput = InputSystem.actions.FindAction("Charge");
-            fireInput = InputSystem.actions.FindAction("Fire");
+            InitializeAbility();
         }
 
         public override void Activate()
         {
-            base.Activate();
+            //base.Activate();
         }
 
         public override IEnumerator Charge()
@@ -28,7 +30,15 @@ namespace Ability
 
         public override void Fire()
         {
-            base.Fire();
+            //base.Fire();
+        }
+
+        protected override void InitializeAbility()
+        {
+            base.InitializeAbility();
+            _smashObjectPrefab = Resources.Load<GameObject>("Prefabs/SmashPrefab");
+            _smashBall = Instantiate(_smashObjectPrefab);
+            _smashObjectScript = _smashBall.GetComponent<SmashObject>();
         }
     }   
 }

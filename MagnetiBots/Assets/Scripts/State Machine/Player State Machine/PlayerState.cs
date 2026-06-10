@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Player.States;
-namespace Player.States
+
+namespace Player
 {
-    public abstract class PlayerState
+    public abstract class State
     {
         protected Player.Controller player;
-        protected Player.States.PlayerStateMachine stateMachine;
-        protected PlayerStateManager stateManager;
+        protected Player.StateMachine stateMachine;
+        protected Player.StateManager stateManager;
         protected Animator animationController;
         protected string animationName;
 
@@ -15,7 +15,7 @@ namespace Player.States
         protected bool isAnimationFinished;
         protected float startTime;
 
-        public PlayerState(Player.Controller _player, PlayerStateMachine _stateMachine, PlayerStateManager _stateManager)
+        public State(Player.Controller _player, StateMachine _stateMachine, Player.StateManager _stateManager)
         {
             player = _player;
             stateMachine = _stateMachine;
