@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -47,7 +48,7 @@ namespace Player
             Vector3[] returnable = { movedir, lookdir };
             if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
-                Jump();
+                _controller.StartJumpChannel();
             }
 
             return returnable;
@@ -82,10 +83,12 @@ namespace Player
                 model.rotation = Quaternion.LookRotation(input, Vector3.up);
             }
         }
-        public void Jump()
+        public void Jump(int jumpModifier)
         {
-            Debug.Log("Jump");
-            rb.AddForce(Vector3.up * jumpForce);
+
+            float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
+            Debug.Log("jumping with power "+jumpPower);
+            rb.AddForce(jumpPower * Vector3.up);
         }
     }
 }
