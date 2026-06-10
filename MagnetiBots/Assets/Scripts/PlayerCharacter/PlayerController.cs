@@ -113,7 +113,7 @@ namespace Player
         private bool jumpLock;
         public void StartJumpChannel()
         {
-            if (!jumpLock)
+            if (!jumpLock && _movement.CheckGrounded())
             {
                 StartCoroutine(JumpChanneling());
                 jumpLock = true;
