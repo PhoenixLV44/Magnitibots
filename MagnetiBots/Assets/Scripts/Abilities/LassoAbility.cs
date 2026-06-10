@@ -14,6 +14,8 @@ namespace Ability
 
         private Interactable.Lever lever;
         public Interactable.Lever Lever => lever;
+
+        private Vector3 _lassoLoopScale;
         
         private void Start()
         {
@@ -34,14 +36,19 @@ namespace Ability
             currentPowerLevel = basePowerLevel;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
+            aimingGuide.SetActive(true);
             while (true)
             {
+                if (aimingGuide.activeSelf)
+                {
+                    Debug.Log("Aiming Guid Active");
+                }
                 rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel)* 2);
 
                 yield return new WaitForSecondsRealtime(chargeTimer);
 
-                if(currentPowerLevel < maxPowerLevel)
-                    currentPowerLevel++;
+                if (currentPowerLevel < maxPowerLevel)
+                    currentPowerLevel += 0.2f;
             }
             // ReSharper disable once IteratorNeverReturns
         }
@@ -60,25 +67,32 @@ namespace Ability
             {
                 //Debug.Log("GOT AN OBJECT");
                 hitPoint = hitInfo.point;
-                hitPoint.y = transform.position.y;
+                Vector3 position = new Vector3(hitPoint.x, _lassoLoop.transform.position.y, hitPoint.z);
                 
                 _lassoLoop.transform.position = hitPoint;
+                _lassoLoop.transform.parent = null;
                 _lassoLoop.SetActive(true);
 
                 if (hitInfo.collider.CompareTag("Lever"))
                 {
+                    _lassoLoop.transform.localScale = _lassoLoopScale;
                     lever = hitInfo.collider.GetComponent<Lever>();
                     controller.RangeIndicator.DisableRangeIndicator();
                     controller.LassoHooked = true;
                 }
                 else
                 {
+                    Vector3 newLassoScale = new Vector3(hitInfo.collider.transform.localScale.x, _lassoLoopScale.y, hitInfo.collider.transform.localScale.z);
                     targetCursor.ActivateCursor(_lassoLoop.transform.position);
 
                     hitInfo.collider.gameObject.transform.parent = _lassoLoop.transform;
 
                     hitInfo.collider.gameObject.transform.localPosition = Vector3.zero;
-
+                    Rigidbody rb = hitInfo.collider.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.useGravity = false;
+                    }
                     controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
                     controller.LassoHooked = true;
                 }
@@ -101,6 +115,9 @@ namespace Ability
             if (_lassoLoop.transform.childCount > 0)
             {
                 GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
+                _lassoLoop.transform.parent = transform;
+                Rigidbody rb = loopedObject.GetComponent<Rigidbody>();
+                rb.useGravity = true;
                 loopedObject.transform.parent = null;
             }
             
@@ -122,6 +139,7 @@ namespace Ability
             _lassoLoop = transform.Find("Lasso Loop").gameObject;
             _lassoLoop.SetActive(false);
             _layerMask = LayerMask.GetMask("LassoTarget");
+            _lassoLoopScale = _lassoLoop.transform.localScale;
         }
 
         public void PullLever()

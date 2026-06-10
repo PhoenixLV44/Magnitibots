@@ -20,7 +20,7 @@ namespace Ability.Object
 
         public void ActivateCursor(Vector3 position)
         {
-            _targetCursor.transform.position = new Vector3(position.x, 0, position.z);
+            _targetCursor.transform.position = new Vector3(position.x, transform.position.y - 1, position.z);
             Cursor.lockState = CursorLockMode.Locked;
             _targetCursor.SetActive(true);
         }
@@ -38,7 +38,7 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
-
+            
             return cursorMovement;
         }
 
@@ -46,7 +46,10 @@ namespace Ability.Object
         {
             Cursor.lockState = CursorLockMode.Locked;
             Vector3 cursorMovement = GetCursorDelta();
-
+            
+            Quaternion cameraRotation = GetComponent<Player.Movement>().adjustedMovement;
+            cursorMovement = cameraRotation * cursorMovement;
+            
             _targetCursor.transform.position += cursorMovement * (Time.deltaTime * cursorSpeed);
             
             MoveCursorInRange();
@@ -64,7 +67,11 @@ namespace Ability.Object
             float distance = Vector3.Distance(playerPosition, cursorPosition);
             
             float range = _rangeIndicator.CurrentRange;
-            
+            //Debug.Log("range: " + range);
+            if (range == 0)
+            {
+                range = 15;
+            }
             if (distance > range)
             {
                 _targetCursor.transform.position =
@@ -75,6 +82,7 @@ namespace Ability.Object
         public void MoveObjectToCursor(GameObject obj)
         {
             Vector3 targetPosition = MoveCursor();
+            //Debug.Log("Cursor Target Position: " + targetPosition);
             Vector3 currentPosition = obj.transform.position;
             targetPosition.y =  currentPosition.y;
             float distance = Vector3.Distance(targetPosition, currentPosition);

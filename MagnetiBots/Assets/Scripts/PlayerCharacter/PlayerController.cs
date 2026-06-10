@@ -53,7 +53,8 @@ namespace Player
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
-            
+        private bool canUseSmash;
+        public bool CanUseSmash { get => canUseSmash; set => canUseSmash = value; }
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
