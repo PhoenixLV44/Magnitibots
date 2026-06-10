@@ -15,6 +15,28 @@ namespace Player
         {
             _respawnInput = InputSystem.actions.FindAction("Respawn");
             _respawnPosition = transform.position;
+            _playerController = GetComponent<Controller>();
+        }
+
+        private void Update()
+        {
+            if (_respawnInput.WasPressedThisFrame())
+            {
+                Respawn();
+            }
+        }
+
+        private void Respawn()
+        {
+            _playerController.transform.position = _respawnPosition;
+            _playerController.Movement.rb.linearVelocity = Vector3.zero;
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "RespawnPlane")
+            {
+                Respawn();
+            }
         }
     }
 

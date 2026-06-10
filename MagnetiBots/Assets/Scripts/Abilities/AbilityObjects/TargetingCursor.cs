@@ -20,7 +20,7 @@ namespace Ability.Object
 
         public void ActivateCursor(Vector3 position)
         {
-            _targetCursor.transform.position = new Vector3(position.x, 0, position.z);
+            _targetCursor.transform.position = new Vector3(position.x, transform.position.y - 1, position.z);
             Cursor.lockState = CursorLockMode.Locked;
             _targetCursor.SetActive(true);
         }
