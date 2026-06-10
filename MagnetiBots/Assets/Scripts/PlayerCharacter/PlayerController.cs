@@ -16,6 +16,7 @@ namespace Player
 
         #region Merbles
         Merbles.Boss _merbleBoss;
+        public Merbles.Boss MerbleBoss { get { return _merbleBoss; } }
         [SerializeField] GameObject merblePrefab;
         [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
@@ -53,8 +54,10 @@ namespace Player
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
-        private bool canUseSmash;
-        public bool CanUseSmash { get => canUseSmash; set => canUseSmash = value; }
+        private bool _canUseSmash = false;
+        public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
+        private bool _canUsePropeller = false;
+        public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
@@ -90,7 +93,7 @@ namespace Player
         {
             if (InputSystem.actions.FindAction("Charge").triggered)
             {
-                StartCoroutine(ChannelingMerbles(Vector3.zero));
+                StartCoroutine(ChannelingMerbles(transform.position));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
         }
@@ -113,10 +116,17 @@ namespace Player
         private bool jumpLock;
         public void StartJumpChannel()
         {
-            if (!jumpLock)
+            if (_canUsePropeller)
             {
-                StartCoroutine(JumpChanneling());
-                jumpLock = true;
+                if (!jumpLock)
+                {
+                    StartCoroutine(JumpChanneling());
+                    jumpLock = true;
+                }
+            }
+            else
+            {
+                _movement.Jump(1);
             }
         }
         IEnumerator JumpChanneling()
