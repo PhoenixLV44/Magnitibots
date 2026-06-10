@@ -131,7 +131,9 @@ namespace Player
                         if(_merbleBoss.chargedMerbles>0)
                         {
                             _movement.Gliding = true;
-                            yield return new WaitForSeconds(8);
+                            yield return new WaitUntil(() => !_movement.CheckGrounded());
+                            Debug.Log("gliding");
+                            yield return new WaitUntil(() => _movement.CheckGrounded());
                             _movement.Gliding = false;
                         }
                         _merbleBoss.FireMerbles();
@@ -147,7 +149,9 @@ namespace Player
                 if (_merbleBoss.chargedMerbles > 0)
                 {
                     _movement.Gliding = true;
-                    yield return new WaitForSeconds(8);
+                    yield return new WaitUntil(() => !_movement.CheckGrounded());
+                    Debug.Log("gliding");
+                    yield return new WaitUntil(() => _movement.CheckGrounded());
                     _movement.Gliding = false;
                 }
                 _merbleBoss.FireMerbles();
