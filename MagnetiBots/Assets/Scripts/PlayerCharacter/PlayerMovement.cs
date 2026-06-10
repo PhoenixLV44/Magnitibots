@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,12 +11,15 @@ namespace Player
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
         float _velocityCap=30f;
+        float _glidingSpeed=-1f;
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;
         public Vector3[] Submitted { get { return _submitted; } }
+        bool _isGliding;
+        public bool Gliding { get { return _isGliding; } set { _isGliding = value; } }
         InputAction _move;
         InputAction _look;
         InputAction _jump;
@@ -34,6 +38,13 @@ namespace Player
         private void Update()
         {
             _submitted = GetInput();
+            if (_isGliding)
+            {
+                if(rb.linearVelocity.y < _glidingSpeed)
+                {
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x,_glidingSpeed,rb.linearVelocity.z);
+                }
+            }
         }
 
         public Vector3[] GetInput()
@@ -47,7 +58,7 @@ namespace Player
             Vector3[] returnable = { movedir, lookdir };
             if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
-                Jump();
+                _controller.StartJumpChannel();
             }
 
             return returnable;
@@ -82,10 +93,12 @@ namespace Player
                 model.rotation = Quaternion.LookRotation(input, Vector3.up);
             }
         }
-        public void Jump()
+        public void Jump(int jumpModifier)
         {
-            Debug.Log("Jump");
-            rb.AddForce(Vector3.up * jumpForce);
+
+            float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
+            Debug.Log("jumping with power "+jumpPower);
+            rb.AddForce(jumpPower * Vector3.up);
         }
     }
 }
