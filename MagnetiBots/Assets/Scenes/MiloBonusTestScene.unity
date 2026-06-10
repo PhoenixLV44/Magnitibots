@@ -1006,7 +1006,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058545804}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 19cea829ab087ca478d52f0ff59adf21, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1636,7 +1636,7 @@ PrefabInstance:
       objectReference: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
     - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
       propertyPath: movementSpeed
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
       propertyPath: merbleFollowType
