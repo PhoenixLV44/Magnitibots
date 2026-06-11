@@ -1,0 +1,33 @@
+:root {
+    position: relative;
+}
+
+.header {
+    width: auto;
+    font-size: 300px;
+}
+
+.button {
+    width: 200px;
+    height: 100px;
+    font-size: 50px;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    margin-top: 44px;
+    margin-bottom: 20px;
+}
+
+.SettingsMenu {
+    position: absolute;
+    visibility: visible;
+}
+
+.MainMenu {
+    position: absolute;
+}
+
+.ControlsMenu {
+    position: absolute;
+    visibility: visible;
+}

@@ -92,6 +92,7 @@ namespace Merbles
                 _merbles.Get();
             }
             chargedMerbles = 0;
+            merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position,transform.position)));
         }
     }
 }

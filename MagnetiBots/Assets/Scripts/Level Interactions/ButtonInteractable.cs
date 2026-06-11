@@ -5,8 +5,12 @@ namespace Interactable
 {
     public class Button : InteractableObject
     {
-        [SerializeField] InteractableObject triggerObject;
+        [SerializeField] InteractableObject[] triggerObjects;
 
+        private void Awake()
+        {
+            canBeDeactivated = true;
+        }
         private void PlayAnimation() //for when animations are in the game
         {
 
@@ -14,9 +18,12 @@ namespace Interactable
 
         public override void ActivateObject()
         {
-            if (triggerObject != null)
+            if (triggerObjects != null)
             {
-                triggerObject.ActivateObject();
+                foreach (var triggerObject in triggerObjects)
+                {
+                    triggerObject.ActivateObject();
+                }
             }
             else
             {
@@ -26,9 +33,12 @@ namespace Interactable
 
         public override void DeactivateObject()
         {
-            if (triggerObject != null)
+            if (triggerObjects != null)
             {
-                triggerObject.DeactivateObject();
+                foreach (var triggerObject in triggerObjects)
+                {
+                    triggerObject.DeactivateObject();
+                }            
             }
             else
             {
