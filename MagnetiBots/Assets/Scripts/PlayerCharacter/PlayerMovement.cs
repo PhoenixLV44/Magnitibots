@@ -98,10 +98,10 @@ namespace Player
         }
         public void Jump(int jumpModifier)
         {
-
             float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
             Debug.Log("jumping with power "+jumpPower);
             rb.AddForce(jumpPower * Vector3.up);
+            _controller.jumpLock = false;
         }
     }
 }

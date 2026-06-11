@@ -148,7 +148,7 @@ namespace Player
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
             _merbleBoss.FireMerbles();
         }
-        private bool jumpLock;
+        public bool jumpLock;
         public void StartJumpChannel()
         {
             if (_canUsePropeller && _movement.Grounded)
@@ -161,11 +161,21 @@ namespace Player
             }
             else
             {
-               if(_movement.Grounded)
+                if(_movement.Grounded)
                {
-                _movement.Jump(0);
+                    if (!jumpLock)
+                    {
+                        jumpLock = true;
+                        StartCoroutine(BaseJump());
+                    }
                }
             }
+        }
+        IEnumerator BaseJump()
+        {
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
+            _movement.Jump(0);
         }
         IEnumerator JumpChanneling()
         {
@@ -186,7 +196,6 @@ namespace Player
                             _movement.Gliding = false;
                         }
                         _merbleBoss.FireMerbles();
-                        jumpLock = false;
                         break;
                     }
                     _merbleBoss.ChargeMerble(transform.position);
@@ -194,7 +203,6 @@ namespace Player
                 }
                 yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
                 _movement.Jump(_merbleBoss.chargedMerbles);
-                jumpLock = false;
                 if (_merbleBoss.chargedMerbles > 0)
                 {
                     _movement.Gliding = true;

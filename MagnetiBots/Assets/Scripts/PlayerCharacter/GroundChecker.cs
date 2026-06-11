@@ -6,14 +6,14 @@ public class GroundChecker : MonoBehaviour
     private void OnTriggerEnter(Collider other)
 
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("LassoTarget"))
         {
             movement.Grounded = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("LassoTarget"))
         {
             movement.Grounded = false;
         }
