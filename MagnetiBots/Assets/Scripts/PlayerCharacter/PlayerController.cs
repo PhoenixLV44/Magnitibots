@@ -132,9 +132,11 @@ namespace Player
             }
             
         }
-        IEnumerator ChannelingMerbles(Vector3 target)
+        public Vector3 channelTarget;
+        IEnumerator ChannelingMerbles(Vector3 changeTarget)
         {
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
+            channelTarget = changeTarget;
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, channelTarget).CompareTo(Vector3.Distance(b.transform.position, channelTarget)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())
@@ -142,7 +144,7 @@ namespace Player
                     _merbleBoss.FireMerbles();
                     break;
                 }
-                _merbleBoss.ChargeMerble(target);
+                _merbleBoss.ChargeMerble(channelTarget);
                 yield return new WaitForSeconds(1);
             }
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
