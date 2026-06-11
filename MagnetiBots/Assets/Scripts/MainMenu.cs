@@ -56,6 +56,7 @@ public class MainMenu : MonoBehaviour
         _controlsContainer = _mainDocument.rootVisualElement.Q("ControlsMenu");
 
         _controlsReturnButton = _mainDocument.rootVisualElement.Q("ControlsReturnButton") as Button;
+        _controlsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnControls);
         #endregion
 
         _mainContainer.BringToFront();
@@ -65,8 +66,10 @@ public class MainMenu : MonoBehaviour
     {
         _startButton.UnregisterCallback<ClickEvent>(OnClickStart);
         _quitButton.UnregisterCallback<ClickEvent>(OnClickQuit);
+        _controlsButton.UnregisterCallback<ClickEvent>(OnClickControls);
         _settingsButton.UnregisterCallback<ClickEvent>(OnClickSettings);
         _returnSettingsButton.UnregisterCallback<ClickEvent>(OnClickReturnSettings);
+        _controlsReturnButton.UnregisterCallback<ClickEvent>(OnClickReturnControls);
     }
 
     private void OnClickStart(ClickEvent click)

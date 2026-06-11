@@ -15,7 +15,7 @@
     align-self: center;
     align-items: center;
     margin-top: 44px;
-    margin-bottom: 39px;
+    margin-bottom: 20px;
 }
 
 .SettingsMenu {
@@ -25,4 +25,9 @@
 
 .MainMenu {
     position: absolute;
+}
+
+.ControlsMenu {
+    position: absolute;
+    visibility: visible;
 }
