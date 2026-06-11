@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class ShowcaseGUI : MonoBehaviour
 {
@@ -48,38 +49,44 @@ public class ShowcaseGUI : MonoBehaviour
 
     private void Update()
     {
-        if(InputSystem.actions.FindAction("Crouch").WasReleasedThisFrame())
-            Application.Quit();
+        if (InputSystem.actions.FindAction("MainMenu").WasReleasedThisFrame())
+        {
+            Debug.Log("MainMenu Pressed");
+            SceneManager.LoadScene("MenuScene");
+        }
     }
     
     private void OnGUI()
     {
         GUI.skin.label.fontSize = 20;
         
-        GUILayout.BeginArea(new Rect(20, 20, 1000, 500));
+        /*GUILayout.BeginArea(new Rect(20, 20, 1000, 500));
         {
             GUILayout.Label("Player State: "  + _playerStateManager.StateMachine.CurrentState.ToString());
             GUILayout.Label("Current Ability: " + _abilityStateManager.StateMachine.CurrentState.ToString());
             GUILayout.Label("Charge Level: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel);
         }
-        GUILayout.EndArea();
+        GUILayout.EndArea();*/
         
-        GUILayout.BeginArea(new Rect(20, 920, 1000, 500));
+        GUILayout.BeginArea(new Rect(20, 800, 1000, 500));
         {
             GUILayout.Label("WASD to Move, Space to Jump");
-            GUILayout.Label("Hold Left Mouse to charge ability/Spawn more marbles, Release to fire. Press again to release object");
-            GUILayout.Label("Move mouse to move Lasso'd object");
-            GUILayout.Label("Press Shift to switch cameras");
-            GUILayout.Label("Press C to quit");
+            GUILayout.Label("Q and E to Rotate Camera");
+            if (_playerController.CanUsePropeller)
+            {
+                GUILayout.Label("Hold Space to Charge Propeller");
+            }
+            GUILayout.Label("Hold Left Click to Charge Ability, Release to Use Ability");
+            GUILayout.Label("Move Mouse to Aim Ability");
+            
+            if (_playerController.CanUseSmash)
+            {
+                GUILayout.Label("Press 1 to use Lasso, 2 to use Smash");
+            }
+            GUILayout.Label("Press R to Respawn");
+            GUILayout.Label("Press Esc to Return to Main Menu");
         }
         GUILayout.EndArea();
         
-        GUILayout.BeginArea(new Rect(1920 - 500, 20, 1000, 500));
-        {
-            GUILayout.Label("Level Whitebox'd by Gwen");
-            GUILayout.Label("Cat Lantern modeled by Vincent, textured by Kaiden");
-            GUILayout.Label("Rocks modeled by Nick");
-        }
-        GUILayout.EndArea();
     }
 }
