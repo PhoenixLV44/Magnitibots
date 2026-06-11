@@ -19,9 +19,11 @@ namespace Player
         [SerializeField] GameObject merblePrefab;
         [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
-            #endregion
+        #endregion
 
         #region Scripts
+        private GroundChecker _groundChecker;
+
         private Ability.Lasso _lassoAbility;
         public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
         
@@ -58,6 +60,7 @@ namespace Player
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
+            GetComponentInChildren<GroundChecker>().movement = _movement;
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
@@ -113,7 +116,7 @@ namespace Player
         private bool jumpLock;
         public void StartJumpChannel()
         {
-            if (!jumpLock && _movement.CheckGrounded())
+            if (!jumpLock && _movement.Grounded)
             {
                 StartCoroutine(JumpChanneling());
                 jumpLock = true;
@@ -132,9 +135,9 @@ namespace Player
                         if(_merbleBoss.chargedMerbles>0)
                         {
                             _movement.Gliding = true;
-                            yield return new WaitUntil(() => !_movement.CheckGrounded());
+                            yield return new WaitUntil(() => !_movement.Grounded);
                             Debug.Log("gliding");
-                            yield return new WaitUntil(() => _movement.CheckGrounded());
+                            yield return new WaitUntil(() => _movement.Grounded);
                             _movement.Gliding = false;
                         }
                         _merbleBoss.FireMerbles();
@@ -150,9 +153,9 @@ namespace Player
                 if (_merbleBoss.chargedMerbles > 0)
                 {
                     _movement.Gliding = true;
-                    yield return new WaitUntil(() => !_movement.CheckGrounded());
+                    yield return new WaitUntil(() => !_movement.Grounded);
                     Debug.Log("gliding");
-                    yield return new WaitUntil(() => _movement.CheckGrounded());
+                    yield return new WaitUntil(() => _movement.Grounded);
                     _movement.Gliding = false;
                 }
                 _merbleBoss.FireMerbles();

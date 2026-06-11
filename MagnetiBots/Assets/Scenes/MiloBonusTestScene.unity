@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactable.Button
   canBeDeactivated: 0
-  triggerObject: {fileID: 1008856610}
+  triggerObjects: []
 --- !u!65 &472940984
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -431,6 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmashableTarget
   healthLevel: 0
+  health: 0
 --- !u!65 &593524049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1314,7 +1315,6 @@ MonoBehaviour:
   _playerController: {fileID: 1917051485}
   _playerStateManager: {fileID: 0}
   _abilityStateManager: {fileID: 0}
-  cameras: []
 --- !u!4 &1967222270
 Transform:
   m_ObjectHideFlags: 0
@@ -1625,22 +1625,6 @@ PrefabInstance:
     - target: {fileID: 128776154970847861, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
-      propertyPath: jumpForce
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
-      propertyPath: merblePrefab
-      value: 
-      objectReference: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
-    - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
-      propertyPath: movementSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4580427214147130760, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
-      propertyPath: merbleFollowType
-      value: Snake
       objectReference: {fileID: 0}
     - target: {fileID: 8043479003321384820, guid: 3496b8207916dd64d9af3686c57f40a3, type: 3}
       propertyPath: m_Name
