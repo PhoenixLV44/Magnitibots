@@ -20,6 +20,8 @@ namespace Player
         public Vector3[] Submitted { get { return _submitted; } }
         bool _isGliding;
         public bool Gliding { get { return _isGliding; } set { _isGliding = value; } }
+        bool _isGrounded;
+        public bool Grounded { get { return _isGrounded; } set { _isGrounded = value; } }
         InputAction _move;
         InputAction _look;
         InputAction _jump;
@@ -34,6 +36,7 @@ namespace Player
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
             _controller = GetComponent<Player.Controller>();
+            _isGrounded= true;
         }
         private void Update()
         {
@@ -56,7 +59,7 @@ namespace Player
             Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.height-0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
-            if (InputSystem.actions.FindAction("Jump").WasCompletedThisDynamicUpdate())
+            if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
                 _controller.StartJumpChannel();
             }
@@ -100,18 +103,6 @@ namespace Player
             float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
             Debug.Log("jumping with power "+jumpPower);
             rb.AddForce(jumpPower * Vector3.up);
-        }
-        public bool CheckGrounded()
-        {
-            RaycastHit hit;
-            if(Physics.SphereCast(transform.position - Vector3.up, 0, -Vector3.up, out hit))
-            {
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

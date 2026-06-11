@@ -11,10 +11,15 @@ public class MainMenu : MonoBehaviour
     private Button _startButton;
     private Button _settingsButton;
     private Button _quitButton;
+    private Button _controlsButton;
 
     private VisualElement _settingsContainer;
 
-    private Button _returnButton;
+    private Button _returnSettingsButton;
+
+    private VisualElement _controlsContainer;
+
+    private Button _controlsReturnButton;
 
     private void Awake()
     {
@@ -28,6 +33,9 @@ public class MainMenu : MonoBehaviour
         _startButton = _mainDocument.rootVisualElement.Q("StartButton") as Button;
         _startButton.RegisterCallback<ClickEvent>(OnClickStart);
 
+        _controlsButton = _mainDocument.rootVisualElement.Q("ControlsButton") as Button;
+        _controlsButton.RegisterCallback<ClickEvent>(OnClickControls);
+
         _settingsButton = _mainDocument.rootVisualElement.Q("SettingsButton") as Button;
         _settingsButton.RegisterCallback<ClickEvent>(OnClickSettings);
 
@@ -35,12 +43,21 @@ public class MainMenu : MonoBehaviour
         _quitButton.RegisterCallback<ClickEvent>(OnClickQuit);
         #endregion
 
+        #region Settings Container and Buttons
         _settingsContainer = _mainDocument.rootVisualElement.Q("SettingsMenu");
 
-        _returnButton = _mainDocument.rootVisualElement.Q("ReturnButton") as Button;
-        _returnButton.RegisterCallback<ClickEvent>(OnClickReturn);
+        _returnSettingsButton = _mainDocument.rootVisualElement.Q("ReturnButton") as Button;
+        _returnSettingsButton.RegisterCallback<ClickEvent>(OnClickReturnSettings);
 
         _settingsContainer.visible = false;
+        #endregion
+
+        #region Controls Container and Button
+        _controlsContainer = _mainDocument.rootVisualElement.Q("ControlsMenu");
+
+        _controlsReturnButton = _mainDocument.rootVisualElement.Q("ControlsReturnButton") as Button;
+        #endregion
+
         _mainContainer.BringToFront();
 
     }
@@ -49,7 +66,7 @@ public class MainMenu : MonoBehaviour
         _startButton.UnregisterCallback<ClickEvent>(OnClickStart);
         _quitButton.UnregisterCallback<ClickEvent>(OnClickQuit);
         _settingsButton.UnregisterCallback<ClickEvent>(OnClickSettings);
-        _returnButton.UnregisterCallback<ClickEvent>(OnClickReturn);
+        _returnSettingsButton.UnregisterCallback<ClickEvent>(OnClickReturnSettings);
     }
 
     private void OnClickStart(ClickEvent click)
@@ -63,16 +80,28 @@ public class MainMenu : MonoBehaviour
         _settingsContainer.BringToFront();
         _mainContainer.visible = false;
     }
+    private void OnClickControls(ClickEvent click)
+    {
+        _controlsContainer.visible = true;
+        _controlsContainer.BringToFront();
+        _mainContainer.visible = false;
+    }
 
     private void OnClickQuit(ClickEvent click)
     {
         Application.Quit();
     }
 
-    private void OnClickReturn(ClickEvent click)
+    private void OnClickReturnSettings(ClickEvent click)
     {
         _mainContainer.visible = true;
         _mainContainer.BringToFront();
         _settingsContainer.visible=false;
+    }
+    private void OnClickReturnControls(ClickEvent click)
+    {
+        _mainContainer.visible = true;
+        _mainContainer.BringToFront();
+        _controlsContainer.visible=false;
     }
 }
