@@ -157,14 +157,13 @@ namespace Player
                 {
                     jumpLock = true;
                     StartCoroutine(JumpChanneling());
-                    
                 }
             }
             else
             {
                if(_movement.Grounded)
                {
-                _movement.Jump(1);
+                _movement.Jump(0);
                }
             }
         }
