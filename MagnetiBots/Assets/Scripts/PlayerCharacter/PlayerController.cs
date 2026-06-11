@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Ability.Object;
+using TMPro;
 
 namespace Player
 {
@@ -15,12 +16,15 @@ namespace Player
 
         #region Merbles
         Merbles.Boss _merbleBoss;
+        public Merbles.Boss MerbleBoss { get { return _merbleBoss; } }
         [SerializeField] GameObject merblePrefab;
         [SerializeField] string merbleFollowType;
         public Movement Movement { get { return _movement; } }
-            #endregion
+        #endregion
 
         #region Scripts
+        private GroundChecker _groundChecker;
+
         private Ability.Lasso _lassoAbility;
         public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
         
@@ -52,10 +56,18 @@ namespace Player
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
-            
+        private bool _canUseSmash = false;
+        public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
+        private bool _canUsePropeller = false;
+        public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
+
+        [SerializeField] private TextMeshProUGUI currentAbilityText;
+        [SerializeField] private TextMeshProUGUI chargeText;
+        [SerializeField] private TextMeshProUGUI merbleCountText;
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
+            GetComponentInChildren<GroundChecker>().movement = _movement;
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
@@ -88,12 +100,41 @@ namespace Player
         {
             if (InputSystem.actions.FindAction("Charge").triggered)
             {
-                StartCoroutine(ChannelingMerbles(Vector3.zero));
+                StartCoroutine(ChannelingMerbles(transform.position));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
+
+            if (_abilityStateManager.StateMachine.CurrentState.Ability == _lassoAbility)
+            {
+                currentAbilityText.text = "Ability: Lasso";
+            }
+            else if (_abilityStateManager.StateMachine.CurrentState.Ability == _smashAbility)
+            {
+                currentAbilityText.text = "Ability: Smash";
+            }
+
+            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            {
+                chargeText.text = "Charge: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel;
+            }
+            else
+            {
+                chargeText.text = "";
+            }
+
+            if (_merbleBoss.merbleList.Count > 0)
+            {
+                merbleCountText.text = "Mrbles Collected: " + _merbleBoss.merbleList.Count;
+            }
+            else
+            {
+                merbleCountText.text = "";
+            }
+            
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())
@@ -106,6 +147,65 @@ namespace Player
             }
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
             _merbleBoss.FireMerbles();
+        }
+        private bool jumpLock;
+        public void StartJumpChannel()
+        {
+            if (_canUsePropeller && _movement.Grounded)
+            {
+                if (!jumpLock)
+                {
+                    jumpLock = true;
+                    StartCoroutine(JumpChanneling());
+                    
+                }
+            }
+            else
+            {
+               if(_movement.Grounded)
+               {
+                _movement.Jump(1);
+               }
+            }
+        }
+        IEnumerator JumpChanneling()
+        {
+            {
+                Debug.Log("jump charging");
+                _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
+                {
+                    if (!InputSystem.actions.FindAction("Jump").IsPressed())
+                    {
+                        _movement.Jump(_merbleBoss.chargedMerbles);
+                        if(_merbleBoss.chargedMerbles>0)
+                        {
+                            _movement.Gliding = true;
+                            yield return new WaitUntil(() => !_movement.Grounded);
+                            Debug.Log("gliding");
+                            yield return new WaitUntil(() => _movement.Grounded);
+                            _movement.Gliding = false;
+                        }
+                        _merbleBoss.FireMerbles();
+                        jumpLock = false;
+                        break;
+                    }
+                    _merbleBoss.ChargeMerble(transform.position);
+                    yield return new WaitForSeconds(1);
+                }
+                yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
+                _movement.Jump(_merbleBoss.chargedMerbles);
+                jumpLock = false;
+                if (_merbleBoss.chargedMerbles > 0)
+                {
+                    _movement.Gliding = true;
+                    yield return new WaitUntil(() => !_movement.Grounded);
+                    Debug.Log("gliding");
+                    yield return new WaitUntil(() => _movement.Grounded);
+                    _movement.Gliding = false;
+                }
+                _merbleBoss.FireMerbles();
+            }
         }
     }
 }
