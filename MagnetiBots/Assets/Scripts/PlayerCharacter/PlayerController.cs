@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Ability.Object;
-using static UnityEngine.GraphicsBuffer;
+using TMPro;
 
 namespace Player
 {
@@ -60,6 +60,10 @@ namespace Player
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
+
+        [SerializeField] private TextMeshProUGUI currentAbilityText;
+        [SerializeField] private TextMeshProUGUI chargeText;
+        [SerializeField] private TextMeshProUGUI merbleCountText;
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
@@ -99,6 +103,34 @@ namespace Player
                 StartCoroutine(ChannelingMerbles(transform.position));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
+
+            if (_abilityStateManager.StateMachine.CurrentState.Ability == _lassoAbility)
+            {
+                currentAbilityText.text = "Ability: Lasso";
+            }
+            else if (_abilityStateManager.StateMachine.CurrentState.Ability == _smashAbility)
+            {
+                currentAbilityText.text = "Ability: Smash";
+            }
+
+            if (InputSystem.actions.FindAction("Charge").IsPressed())
+            {
+                chargeText.text = "Charge: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel;
+            }
+            else
+            {
+                chargeText.text = "";
+            }
+
+            if (_merbleBoss.merbleList.Count > 0)
+            {
+                merbleCountText.text = "Mrbles Collected: " + _merbleBoss.merbleList.Count;
+            }
+            else
+            {
+                merbleCountText.text = "";
+            }
+            
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
