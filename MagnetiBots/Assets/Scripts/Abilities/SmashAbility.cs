@@ -26,14 +26,14 @@ namespace Ability
         public override IEnumerator Charge()
         {
             //Debug.Log("Charging Smash");
-            float chargeTimer = 1f;
+            float chargeTimer = 0.5f;
             yield return new WaitForSeconds(chargeTimer/2);
             while (true)
             {
                 if (currentPowerLevel < maxPowerLevel)
                 {
-                    Debug.Log("UPPING POWER LEVEL");
-                    currentPowerLevel++;
+                    //Debug.Log("UPPING POWER LEVEL");
+                    currentPowerLevel += 0.25f;
                     _smashBall.GetComponent<SmashBall>().IncreasePowerLevel(currentPowerLevel);
                 }
                 yield return new WaitForSeconds(chargeTimer);
@@ -66,12 +66,16 @@ namespace Ability
         
         private void ActivateBall()
         {
+            Debug.Log("Activating Ball");
             SmashBall smashBallScript = _smashBall.GetComponent<SmashBall>();
             
             rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
 
             _smashBallRb.useGravity = false;
-            _smashBall.transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
+            Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
+            newPosition = controller.Movement.adjustedMovement * newPosition;
+            newPosition.y = transform.position.y + 5;
+            _smashBall.transform.position = newPosition;
             _smashBall.transform.localScale = smashBallScript.BaseScale;
             
             targetCursor.ActivateCursor(new Vector3(transform.position.x, transform.position.y, transform.position.z));
