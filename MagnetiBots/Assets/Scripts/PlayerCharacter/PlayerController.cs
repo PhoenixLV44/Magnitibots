@@ -130,7 +130,7 @@ namespace Player
             }
             else
             {
-               if(_movement.grounded)
+               if(_movement.Grounded)
                {
                 _movement.Jump(1);
                }
