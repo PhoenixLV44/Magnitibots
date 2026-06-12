@@ -11,6 +11,8 @@ namespace Player
         public float jumpForce = 10f;
         float _velocityCap=30f;
         float _glidingSpeed=-1f;
+        private CharacterController cc;
+
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -30,6 +32,7 @@ namespace Player
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            cc = GetComponent<CharacterController>();
             model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
@@ -62,7 +65,6 @@ namespace Player
             {
                 _controller.StartJumpChannel();
             }
-
             return returnable;
         }
         /// <summary>
@@ -71,10 +73,8 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            if(rb.linearVelocity.magnitude < _velocityCap)
-            {
-                rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
-            }
+            //do acceleration!!!!!!    
+            cc.Move(input*Time.deltaTime*moveSpeed);
         }
         /// <summary>
         /// Called in every player state currently implemented
@@ -100,8 +100,12 @@ namespace Player
         {
             float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
             Debug.Log("jumping with power "+jumpPower);
-            rb.AddForce(jumpPower * Vector3.up);
+            cc.Move(jumpPower * Vector3.up*Time.deltaTime);
             _controller.jumpLock = false;
+        }
+        public void Gravity()
+        {
+            cc.Move(Physics.gravity*Time.deltaTime);
         }
     }
 }

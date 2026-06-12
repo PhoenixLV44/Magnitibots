@@ -10,6 +10,8 @@ namespace Player
     {
         #region Movement Variables
         Player.Movement _movement;
+        Player.GroundChecker _groundChecker;
+        public LayerMask groundLayers;
         [SerializeField] float movementSpeed;
         [SerializeField] float jumpForce;
         #endregion
@@ -23,7 +25,6 @@ namespace Player
         #endregion
 
         #region Scripts
-        private GroundChecker _groundChecker;
 
         private Ability.Lasso _lassoAbility;
         public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
@@ -67,7 +68,10 @@ namespace Player
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
-            GetComponentInChildren<GroundChecker>().movement = _movement;
+
+            _groundChecker = gameObject.AddComponent<Player.GroundChecker>();
+            _groundChecker.checkerMask = groundLayers;
+            _groundChecker.movement = _movement;
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
@@ -130,7 +134,13 @@ namespace Player
             {
                 merbleCountText.text = "";
             }
-            
+        }
+        private void FixedUpdate()
+        {
+            if (!_movement.Grounded)
+            {
+                _movement.Gravity();
+            }
         }
         public Vector3 channelTarget;
         IEnumerator ChannelingMerbles(Vector3 changeTarget)
@@ -171,6 +181,7 @@ namespace Player
                         StartCoroutine(BaseJump());
                     }
                }
+                
             }
         }
         IEnumerator BaseJump()
