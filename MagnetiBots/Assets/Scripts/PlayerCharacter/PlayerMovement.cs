@@ -12,6 +12,7 @@ namespace Player
         float _velocityCap=30f;
         float _glidingSpeed=-1f;
         private CharacterController cc;
+        private Vector3 currentVelocity;
 
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
@@ -73,8 +74,13 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            //do acceleration!!!!!!    
-            cc.Move(input*Time.deltaTime*moveSpeed);
+            //do acceleration!!!!!!
+            Vector3 targetVelocity = input * moveSpeed;
+            currentVelocity = cc.velocity;
+
+            currentVelocity.x = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, 60*Time.deltaTime);
+            currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 60*Time.deltaTime);
+            cc.Move(currentVelocity*Time.deltaTime);
         }
         /// <summary>
         /// Called in every player state currently implemented
