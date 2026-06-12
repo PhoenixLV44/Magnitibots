@@ -74,12 +74,11 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            //do acceleration!!!!!!
             Vector3 targetVelocity = input * moveSpeed;
             currentVelocity = cc.velocity;
 
-            currentVelocity.x = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, 60*Time.deltaTime);
-            currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 60*Time.deltaTime);
+            currentVelocity.x = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, 40*Time.deltaTime);
+            currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 40*Time.deltaTime);
             cc.Move(currentVelocity*Time.deltaTime);
         }
         /// <summary>
