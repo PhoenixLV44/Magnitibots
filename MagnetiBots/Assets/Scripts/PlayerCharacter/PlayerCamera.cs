@@ -16,6 +16,8 @@ namespace Player
         private InputAction _moveCamera;
         [SerializeField] private float rotationSpeed = 50f;
         
+        [Tooltip("xAxisLimits is the rotational limits for the x-axis of the _pivotPoint. The x value is the minimum and the y value is the maximum.")]
+        [SerializeField] private Vector2 xAxisLimits;
 
         void Start()
         {
@@ -28,6 +30,7 @@ namespace Player
             _rotateCameraRight = InputSystem.actions.FindAction("Rotate Camera Right");
             _rotateCamera = InputSystem.actions.FindAction("Rotate Camera");
             _moveCamera = InputSystem.actions.FindAction("Cursor Movement");
+            Debug.Log("Limits:" + xAxisLimits);
         }
         private void Update()
         {
@@ -57,9 +60,17 @@ namespace Player
             {
                 Vector3 cameraRotationDelta = _moveCamera.ReadValue<Vector2>() * (rotationSpeed * Time.deltaTime);
                 Vector3 newCameraRotation = _pivotPoint.transform.rotation.eulerAngles;
+                
                 newCameraRotation.x += cameraRotationDelta.y;
                 newCameraRotation.y += cameraRotationDelta.x;
-                _pivotPoint.transform.rotation = Quaternion.Euler(newCameraRotation);
+                
+                /* For if we ever want to let the player rotate the x-axis of the pivot. Right now cant go below 0 
+                newCameraRotation.x = (_pivotPoint.transform.rotation.eulerAngles.x > 180) ? _pivotPoint.transform.rotation.eulerAngles.x - 360 : _pivotPoint.transform.rotation.eulerAngles.x;
+                */
+
+                newCameraRotation.x = Mathf.Clamp(newCameraRotation.x, 0, xAxisLimits.y);
+
+                _pivotPoint.transform.localEulerAngles = newCameraRotation;
             }
         }
     }
