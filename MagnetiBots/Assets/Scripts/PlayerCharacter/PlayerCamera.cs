@@ -12,7 +12,10 @@ namespace Player
         
         private InputAction _rotateCameraLeft;
         private InputAction _rotateCameraRight;
+        private InputAction _rotateCamera;
+        private InputAction _moveCamera;
         [SerializeField] private float rotationSpeed = 50f;
+        
 
         void Start()
         {
@@ -23,6 +26,8 @@ namespace Player
             
             _rotateCameraLeft = InputSystem.actions.FindAction("Rotate Camera Left");
             _rotateCameraRight = InputSystem.actions.FindAction("Rotate Camera Right");
+            _rotateCamera = InputSystem.actions.FindAction("Rotate Camera");
+            _moveCamera = InputSystem.actions.FindAction("Cursor Movement");
         }
         private void Update()
         {
@@ -36,7 +41,7 @@ namespace Player
 
         private void RotateCamera()
         {
-            if (_rotateCameraLeft.IsPressed() && _rotateCameraRight.IsPressed())
+            /*if (_rotateCameraLeft.IsPressed() && _rotateCameraRight.IsPressed())
             {
                 return;
             }
@@ -47,6 +52,14 @@ namespace Player
             else if (_rotateCameraRight.IsPressed())
             {
                 _pivotPoint.transform.RotateAround(_pivotPoint.transform.position, _pivotPoint.transform.up, rotationSpeed * Time.deltaTime);
+            }*/
+            if (_rotateCamera.IsPressed())
+            {
+                Vector3 cameraRotationDelta = _moveCamera.ReadValue<Vector2>() * (rotationSpeed * Time.deltaTime);
+                Vector3 newCameraRotation = _pivotPoint.transform.rotation.eulerAngles;
+                newCameraRotation.x += cameraRotationDelta.y;
+                newCameraRotation.y += cameraRotationDelta.x;
+                _pivotPoint.transform.rotation = Quaternion.Euler(newCameraRotation);
             }
         }
     }
