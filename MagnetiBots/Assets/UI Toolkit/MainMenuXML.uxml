@@ -13,7 +13,7 @@
     </ui:VisualElement>
     <ui:VisualElement name="ControlsMenu" class="ControlsMenu" style="flex-grow: 1; justify-content: space-between; transform-origin: left top; width: 1780px; visibility: hidden; display: flex;">
         <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center;"/>
-        <ui:Label text="WASD to Move&#10;Space to Jump&#10;Q and E to rotate the Camera&#10;Hold space to Propeller (when unlocked)&#10;Hold Left Mouse to charge ability&#10;Move Mouse to move Lasso&apos;d objects&#10;F to pull Lasso&apos;d Levers&#10;R to Respawn" name="ControlList" style="font-size: 51px;"/>
+        <ui:Label text="WASD to Move&#10;Space to Jump&#10;Right Click + Mouse to rotate the Camera&#10;Hold space to Propeller (when unlocked)&#10;Hold Left Mouse to charge ability&#10;Move Mouse to move Lasso&apos;d objects&#10;E to pull Lasso&apos;d Levers&#10;R to Respawn" name="ControlList" style="font-size: 51px;"/>
         <ui:Button text="Return" name="ControlsReturnButton" class="button"/>
     </ui:VisualElement>
 </ui:UXML>

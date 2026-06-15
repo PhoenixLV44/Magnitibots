@@ -61,10 +61,7 @@ namespace Player
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
-
-        [SerializeField] private TextMeshProUGUI currentAbilityText;
-        [SerializeField] private TextMeshProUGUI chargeText;
-        [SerializeField] private TextMeshProUGUI merbleCountText;
+        
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
