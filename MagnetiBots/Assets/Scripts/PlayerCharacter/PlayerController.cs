@@ -10,6 +10,8 @@ namespace Player
     {
         #region Movement Variables
         Player.Movement _movement;
+        Player.GroundChecker _groundChecker;
+        public LayerMask groundLayers;
         [SerializeField] float movementSpeed;
         [SerializeField] float jumpForce;
         #endregion
@@ -23,7 +25,6 @@ namespace Player
         #endregion
 
         #region Scripts
-        private GroundChecker _groundChecker;
 
         private Ability.Lasso _lassoAbility;
         public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
@@ -60,14 +61,14 @@ namespace Player
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
-
-        [SerializeField] private TextMeshProUGUI currentAbilityText;
-        [SerializeField] private TextMeshProUGUI chargeText;
-        [SerializeField] private TextMeshProUGUI merbleCountText;
+        
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
-            GetComponentInChildren<GroundChecker>().movement = _movement;
+
+            _groundChecker = gameObject.AddComponent<Player.GroundChecker>();
+            _groundChecker.checkerMask = groundLayers;
+            _groundChecker.movement = _movement;
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
@@ -102,39 +103,20 @@ namespace Player
             {
                 StartCoroutine(ChannelingMerbles(transform.position));
             }
-            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
-
-            if (_abilityStateManager.StateMachine.CurrentState.Ability == _lassoAbility)
-            {
-                currentAbilityText.text = "Ability: Lasso";
-            }
-            else if (_abilityStateManager.StateMachine.CurrentState.Ability == _smashAbility)
-            {
-                currentAbilityText.text = "Ability: Smash";
-            }
-
-            if (InputSystem.actions.FindAction("Charge").IsPressed())
-            {
-                chargeText.text = "Charge: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel;
-            }
-            else
-            {
-                chargeText.text = "";
-            }
-
-            if (_merbleBoss.merbleList.Count > 0)
-            {
-                merbleCountText.text = "Mrbles Collected: " + _merbleBoss.merbleList.Count;
-            }
-            else
-            {
-                merbleCountText.text = "";
-            }
-            
+            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
         }
-        IEnumerator ChannelingMerbles(Vector3 target)
+        private void FixedUpdate()
         {
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
+            if (!_movement.Grounded)
+            {
+                _movement.Gravity();
+            }
+        }
+        public Vector3 channelTarget;
+        IEnumerator ChannelingMerbles(Vector3 changeTarget)
+        {
+            channelTarget = changeTarget;
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, channelTarget).CompareTo(Vector3.Distance(b.transform.position, channelTarget)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())
@@ -142,13 +124,13 @@ namespace Player
                     _merbleBoss.FireMerbles();
                     break;
                 }
-                _merbleBoss.ChargeMerble(target);
+                _merbleBoss.ChargeMerble(channelTarget);
                 yield return new WaitForSeconds(1);
             }
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
             _merbleBoss.FireMerbles();
         }
-        private bool jumpLock;
+        public bool jumpLock;
         public void StartJumpChannel()
         {
             if (_canUsePropeller && _movement.Grounded)
@@ -161,11 +143,22 @@ namespace Player
             }
             else
             {
-               if(_movement.Grounded)
+                if(_movement.Grounded)
                {
-                _movement.Jump(0);
+                    if (!jumpLock)
+                    {
+                        jumpLock = true;
+                        StartCoroutine(BaseJump());
+                    }
                }
+                
             }
+        }
+        IEnumerator BaseJump()
+        {
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
+            _movement.Jump(0);
         }
         IEnumerator JumpChanneling()
         {
@@ -186,7 +179,6 @@ namespace Player
                             _movement.Gliding = false;
                         }
                         _merbleBoss.FireMerbles();
-                        jumpLock = false;
                         break;
                     }
                     _merbleBoss.ChargeMerble(transform.position);
@@ -194,7 +186,6 @@ namespace Player
                 }
                 yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
                 _movement.Jump(_merbleBoss.chargedMerbles);
-                jumpLock = false;
                 if (_merbleBoss.chargedMerbles > 0)
                 {
                     _movement.Gliding = true;

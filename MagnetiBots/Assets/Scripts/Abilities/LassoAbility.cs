@@ -16,6 +16,7 @@ namespace Ability
         public Interactable.Lever Lever => lever;
 
         private Vector3 _lassoLoopScale;
+        [SerializeField] private float loopHeight;
         
         private void Start()
         {
@@ -144,7 +145,14 @@ namespace Ability
 
         public void PullLever()
         {
-            lever.ActivateObject();
+            if (!lever.Activated)
+            {
+                lever.ActivateObject();
+            }
+            else if (lever.Activated && lever.canBeDeactivated)
+            {
+                lever.DeactivateObject();
+            }
             lever = null;
             UnhookLasso();
         }

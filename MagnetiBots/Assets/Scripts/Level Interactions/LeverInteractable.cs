@@ -1,37 +1,23 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Interactable
 {
-    public class Lever : InteractableObject
+    public class Lever : TriggerObject
     {
-        [SerializeField] InteractableObject triggerObject;
 
-        private void PlayAnimation() //for when animations are in the game
+        private void Start()
         {
-
+            delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);
         }
-
         public override void ActivateObject()
         {
-            if (triggerObject != null)
-            {
-                triggerObject.ActivateObject();
-            }
-            else
-            {
-                Debug.LogWarning("Trigger object is null!");
-            }
+            base.ActivateObject();
         }
         public override void DeactivateObject()
         {
-            if (triggerObject != null)
-            {
-                triggerObject.DeactivateObject();
-            }
-            else
-            {
-                Debug.LogWarning("Trigger object is null!");
-            }
+            base.DeactivateObject();
         }
+        
     }
 }

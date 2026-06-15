@@ -9,8 +9,11 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float _velocityCap=30f;
         float _glidingSpeed=-1f;
+        bool _gravityOn;
+        private CharacterController cc;
+        private Vector3 currentVelocity;
+
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
@@ -30,12 +33,14 @@ namespace Player
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            cc = GetComponent<CharacterController>();
             model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
             _controller = GetComponent<Player.Controller>();
             _isGrounded= true;
+            _gravityOn = true;
         }
         private void Update()
         {
@@ -62,7 +67,6 @@ namespace Player
             {
                 _controller.StartJumpChannel();
             }
-
             return returnable;
         }
         /// <summary>
@@ -71,10 +75,16 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            if(rb.linearVelocity.magnitude < _velocityCap)
-            {
-                rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
-            }
+            Vector3 targetVelocity = input * moveSpeed;
+            currentVelocity = cc.velocity;
+
+            currentVelocity.x = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, 40*Time.deltaTime);
+            currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 40*Time.deltaTime);
+            cc.Move(currentVelocity*Time.deltaTime);
+        }
+        public void CheckDecelerate()
+        {
+
         }
         /// <summary>
         /// Called in every player state currently implemented
@@ -98,10 +108,32 @@ namespace Player
         }
         public void Jump(int jumpModifier)
         {
-
             float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
             Debug.Log("jumping with power "+jumpPower);
-            rb.AddForce(jumpPower * Vector3.up);
+            StartCoroutine(JumpAccelerated(jumpPower * Vector3.up * Time.deltaTime));
+        }
+        IEnumerator JumpAccelerated(Vector3 jumpTarget)
+        {
+            Vector3 jumpVelocity;
+            jumpVelocity = jumpTarget;
+            _gravityOn = false;
+            do
+            {
+                Debug.Log(jumpVelocity.y - jumpTarget.y);
+                jumpVelocity.y = Mathf.Lerp(jumpTarget.y, 0, 0.5f*9.8f*Time.deltaTime);
+                cc.Move(jumpVelocity * Time.deltaTime);
+                jumpTarget = cc.velocity;
+            } while (jumpVelocity.y > 0.01f);
+            _controller.jumpLock = false;
+            _gravityOn = true;
+            yield return null;
+        }
+        public void Gravity()
+        {
+            if (_gravityOn)
+            {
+                cc.Move(Physics.gravity * Time.deltaTime);
+            }
         }
     }
 }
