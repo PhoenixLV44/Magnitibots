@@ -9,8 +9,8 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float _velocityCap=30f;
         float _glidingSpeed=-1f;
+        bool _gravityOn;
         private CharacterController cc;
         private Vector3 currentVelocity;
 
@@ -40,6 +40,7 @@ namespace Player
             _jump = InputSystem.actions.FindAction("Jump");
             _controller = GetComponent<Player.Controller>();
             _isGrounded= true;
+            _gravityOn = true;
         }
         private void Update()
         {
@@ -105,12 +106,30 @@ namespace Player
         {
             float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
             Debug.Log("jumping with power "+jumpPower);
-            cc.Move(jumpPower * Vector3.up*Time.deltaTime);
+            StartCoroutine(JumpAccelerated(jumpPower * Vector3.up * Time.deltaTime));
+        }
+        IEnumerator JumpAccelerated(Vector3 jumpTarget)
+        {
+            Vector3 jumpVelocity;
+            jumpVelocity = jumpTarget;
+            _gravityOn = false;
+            do
+            {
+                Debug.Log(jumpVelocity.y - jumpTarget.y);
+                jumpVelocity.y = Mathf.Lerp(jumpTarget.y, 0, 0.5f*9.8f*Time.deltaTime);
+                cc.Move(jumpVelocity * Time.deltaTime);
+                jumpTarget = cc.velocity;
+            } while (jumpVelocity.y > 0.01f);
             _controller.jumpLock = false;
+            _gravityOn = true;
+            yield return null;
         }
         public void Gravity()
         {
-            cc.Move(Physics.gravity*Time.deltaTime);
+            if (_gravityOn)
+            {
+                cc.Move(Physics.gravity * Time.deltaTime);
+            }
         }
     }
 }
