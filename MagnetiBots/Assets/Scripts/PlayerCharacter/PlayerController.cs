@@ -103,34 +103,7 @@ namespace Player
             {
                 StartCoroutine(ChannelingMerbles(transform.position));
             }
-            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
-
-            if (_abilityStateManager.StateMachine.CurrentState.Ability == _lassoAbility)
-            {
-                currentAbilityText.text = "Ability: Lasso";
-            }
-            else if (_abilityStateManager.StateMachine.CurrentState.Ability == _smashAbility)
-            {
-                currentAbilityText.text = "Ability: Smash";
-            }
-
-            if (InputSystem.actions.FindAction("Charge").IsPressed())
-            {
-                chargeText.text = "Charge: " + _abilityStateManager.StateMachine.CurrentState.Ability.CurrentPowerLevel;
-            }
-            else
-            {
-                chargeText.text = "";
-            }
-
-            if (_merbleBoss.merbleList.Count > 0)
-            {
-                merbleCountText.text = "Mrbles Collected: " + _merbleBoss.merbleList.Count;
-            }
-            else
-            {
-                merbleCountText.text = "";
-            }
+            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
         }
         private void FixedUpdate()
         {
