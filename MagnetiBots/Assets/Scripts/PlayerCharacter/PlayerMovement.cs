@@ -82,6 +82,10 @@ namespace Player
             currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 40*Time.deltaTime);
             cc.Move(currentVelocity*Time.deltaTime);
         }
+        public void CheckDecelerate()
+        {
+
+        }
         /// <summary>
         /// Called in every player state currently implemented
         /// Called with Submitted[1]
