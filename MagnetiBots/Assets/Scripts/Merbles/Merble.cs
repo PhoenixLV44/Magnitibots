@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
@@ -10,8 +11,9 @@ namespace Merbles
         public Merbles.Boss myBoss;
         private ObjectPool<GameObject> _merblePool;
         private NavMeshAgent _agent;
+        public NavMeshAgent Agent => _agent;
 
-        enum FollowTypes
+        public enum FollowTypes
         {
             Loose,
             Snake,
@@ -24,11 +26,16 @@ namespace Merbles
         public bool Charging { get { return _isCharging; } private set { _isCharging = value; } }
         private bool _isCharging = false;
 
+        [SerializeField] private float floatingSpeed;
+        private bool floating;
+
+        public bool Floating => floating;
+
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _agent.enabled = false;
-
+            floatingSpeed = _agent.speed;
         }
         public void SetPool(ObjectPool<GameObject> pool)
         {
@@ -39,17 +46,17 @@ namespace Merbles
             tag = "Merble";
             _agent.enabled = true;
         }
-        public void SetFollowType(string type)
+        public void SetFollowType(FollowTypes type)
         {
             switch (type)
             {
-                case "Loose":
+                case FollowTypes.Loose:
                     _followType = FollowTypes.Loose;
                     break;
-                case "Coalition":
+                case FollowTypes.Coalition:
                     _followType = FollowTypes.Coalition;
                     break;
-                case "Snake":
+                case FollowTypes.Snake:
                     _followType = FollowTypes.Snake;
                     break;
                 default:
@@ -89,7 +96,7 @@ namespace Merbles
         }
         public void StartCharge(Vector3 target)
         {
-            Debug.Log("Waagh");
+            //Debug.Log("Waagh");
 
             StartCoroutine(Charge(target));
         }
@@ -100,15 +107,22 @@ namespace Merbles
             _agent.isStopped = false;
             _agent.destination = target;
             yield return new WaitUntil(() => _agent.hasPath);
-            yield return new WaitUntil(() => _agent.remainingDistance < 0.25f);
+            yield return new WaitUntil(() => _agent.remainingDistance <= 0.5f);
             myBoss.merbleList.Remove(this);
-            _merblePool.Release(gameObject);
+            myBoss.ChargedMerbleList.Add(this);
+            //_merblePool.Release(gameObject);
+            
+            _agent.enabled = false;
             myBoss.chargingMerbles--;
             myBoss.chargedMerbles++;
         }
         public void StopCharging()
         {
             _isCharging = false;
+            _agent.enabled = true;
+            _agent.destination = myBoss.transform.position;
+            myBoss.ChargedMerbleList.Remove(this);
+            myBoss.merbleList.Add(this);
             _agent.ResetPath();
             StopAllCoroutines();
         }
@@ -162,6 +176,39 @@ namespace Merbles
             else
             {
 
+            }
+        }
+
+        public void FloatTowardsObject(GameObject target, float index, float speed = 2.5f)
+        {
+            if (!floating)
+            {
+                _agent.enabled = false;
+                //transform.parent = target.transform;
+                floating = true;
+            }
+            Vector2 rngMinMax = new Vector2(-1.5f, 1.5f);
+            if (index > 1)
+            {
+                rngMinMax.x -= (index / 10);
+                rngMinMax.y += (index / 10);
+            }
+            
+            Vector3 targetPos = new Vector3(target.transform.position.x + (Random.Range(rngMinMax.x, rngMinMax.y)), target.transform.position.y + (Random.Range(rngMinMax.x, rngMinMax.y)), target.transform.position.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
+            //Debug.Log("FLOATING");
+            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+        }
+
+        public IEnumerator UseGravity()
+        {
+            float t = 0;
+            while (!_agent.enabled)
+            {
+                Vector3 dir = new Vector3(transform.position.x, transform.position.y - (9.8f * t),
+                    transform.position.z);
+                transform.position = dir;
+                t += Time.deltaTime;
+                yield return null;
             }
         }
     }

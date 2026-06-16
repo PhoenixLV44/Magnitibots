@@ -18,7 +18,7 @@ namespace Player
         Merbles.Boss _merbleBoss;
         public Merbles.Boss MerbleBoss { get { return _merbleBoss; } }
         [SerializeField] GameObject merblePrefab;
-        [SerializeField] string merbleFollowType;
+        [SerializeField] Merbles.Merble.FollowTypes merbleFollowType;
         public Movement Movement { get { return _movement; } }
         #endregion
 
@@ -98,24 +98,26 @@ namespace Player
             if (InputSystem.actions.FindAction("Charge").triggered)
             {
                 StartCoroutine(ChannelingMerbles(transform.position));
+                //_merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
         }
         IEnumerator ChannelingMerbles(Vector3 target)
         {
+            Debug.Log("Great Googly Moogly");
             _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())
                 {
-                    _merbleBoss.FireMerbles();
+                    //_merbleBoss.FireMerbles();
                     break;
                 }
                 _merbleBoss.ChargeMerble(target);
                 yield return new WaitForSeconds(1);
             }
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
-            _merbleBoss.FireMerbles();
+            //_merbleBoss.FireMerbles();
         }
         public bool jumpLock;
         public void StartJumpChannel()

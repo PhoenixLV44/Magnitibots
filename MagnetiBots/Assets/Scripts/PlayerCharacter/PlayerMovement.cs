@@ -16,6 +16,7 @@ namespace Player
 
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
+        private float _velocityCap = 20f;
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;

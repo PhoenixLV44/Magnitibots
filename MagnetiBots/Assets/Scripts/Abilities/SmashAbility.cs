@@ -1,8 +1,9 @@
-using System;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Ability.Object;
+using Merbles;
 
 namespace Ability
 {
@@ -25,7 +26,8 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            //Debug.Log("Charging Smash");
+            Debug.Log("Charging Smash");
+            /*
             float chargeTimer = 0.5f;
             yield return new WaitForSeconds(chargeTimer/2);
             while (true)
@@ -38,6 +40,30 @@ namespace Ability
                 }
                 yield return new WaitForSeconds(chargeTimer);
             }
+            */
+            maxPowerLevel = MerbleBoss.merbleList.Count;
+            //float merbleSpeed = 1.5f;
+            yield return new WaitUntil(() => MerbleBoss.ChargedMerbleList.Count > 0);
+            StartCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());
+            //yield return new WaitForSecondsRealtime(0.5f);
+            Debug.Log("Boop");
+            while (true)
+            {
+                /*
+                foreach (var merble in merbleList)
+                {
+                    merble.FloatTowardsObject(_smashBall);
+                } 
+                for (int i = 0; i < MerbleBoss.ChargedMerbleList.Count; i++)
+                {
+                    merbleBoss.ChargedMerbleList[i].Agent.enabled = false;
+                    merbleBoss.ChargedMerbleList[i].transform.position = Vector3.Lerp(merbleBoss.ChargedMerbleList[i].transform.position, _smashBall.transform.position, Time.deltaTime * merbleSpeed);
+                    yield return new WaitForSecondsRealtime(0.5f);
+                }
+                */
+
+                yield return null;
+            }
         }
 
         public override void StartCharging()
@@ -49,6 +75,7 @@ namespace Ability
 
         public override void Fire()
         {
+            Cursor.lockState = CursorLockMode.None;
             DropBall();
         }
 
@@ -66,7 +93,7 @@ namespace Ability
         
         private void ActivateBall()
         {
-            Debug.Log("Activating Ball");
+            //Debug.Log("Activating Ball");
             SmashBall smashBallScript = _smashBall.GetComponent<SmashBall>();
             
             rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
@@ -90,15 +117,26 @@ namespace Ability
         public void DeactivateBall()
         {
             _smashBallRb.linearVelocity = Vector3.zero;
+            Merble[] merbleArray = MerbleBoss.ChargedMerbleList.ToArray();
             _smashBall.SetActive(false);
+            foreach (var merble in merbleArray)
+            {
+                merble.StopCharging();
+            }
         }
         private void DropBall()
         {
-            StopAllCoroutines();
             _smashBallRb.useGravity = true;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
             targetCursor.DeactivateCursor();
+            StopCoroutine(MoveCursor());
+            StopCoroutine(Charge());
+            //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             rangeIndicator.DisableRangeIndicator();
+            foreach (var b in MerbleBoss.ChargedMerbleList)
+            {
+                //StartCoroutine(b.UseGravity());
+            }
         }
         private IEnumerator MoveCursor()
         {
