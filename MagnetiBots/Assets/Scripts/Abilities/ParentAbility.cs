@@ -35,8 +35,8 @@ namespace Ability
         protected Merbles.Boss merbleBoss;
 
         public Boss MerbleBoss { get => merbleBoss; set => merbleBoss = value; }
-        protected List<Merble> chargedMerbleList;
-        public List<Merble> ChargedMerbleList => chargedMerbleList;
+        /*protected List<Merble> chargedMerbleList;
+        public List<Merble> ChargedMerbleList => chargedMerbleList;*/
 
         private void Start()
         {
