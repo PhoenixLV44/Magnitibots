@@ -9,7 +9,7 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float _glidingSpeed = -1f;
+        float _glidingSpeed = 1f;
         bool _gravityOn;
         private CharacterController cc;
         private Vector3 currentVelocity;
@@ -47,13 +47,6 @@ namespace Player
         private void Update()
         {
             _submitted = GetInput();
-            if (_isGliding)
-            {
-                if (rb.linearVelocity.y < _glidingSpeed)
-                {
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, _glidingSpeed, rb.linearVelocity.z);
-                }
-            }
         }
 
         public Vector3[] GetInput()
@@ -130,6 +123,11 @@ namespace Player
             if (_gravityOn && !Grounded)
             {
                 intendedVerticalForce -= Physics.gravity.magnitude;
+            }
+            //the force of glide
+            if (_isGliding && !Grounded)
+            {
+                intendedVerticalForce -= _glidingSpeed;
             }
             //the force of jump
             if (submittedJump != 0)
