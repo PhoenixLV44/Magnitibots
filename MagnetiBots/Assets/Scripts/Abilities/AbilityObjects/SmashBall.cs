@@ -77,11 +77,11 @@ namespace Ability.Object
                     {
                         if (!rb.useGravity)
                         {
-                            _merbleList[i].FloatTowardsObject(gameObject, i);
+                            _merbleList[i].FloatTowardsObject(gameObject.transform, i);
                         }
                         else
                         {
-                            _merbleList[i].FloatTowardsObject(gameObject, i, rb.linearVelocity.magnitude);
+                            _merbleList[i].FloatTowardsObject(gameObject.transform, i, rb.linearVelocity.magnitude);
                         }
                     }
                 }

@@ -60,7 +60,10 @@ namespace Player
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
-        
+
+        [SerializeField] private GameObject _merbleHolder;
+        public GameObject MerbleHolder => _merbleHolder;
+
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
@@ -89,7 +92,6 @@ namespace Player
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
             
             _targetCursorObject = transform.Find("Target Cursor").gameObject;
-
         }
 
         // Update is called once per frame

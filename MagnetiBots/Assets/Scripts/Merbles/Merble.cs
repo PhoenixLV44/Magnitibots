@@ -111,7 +111,7 @@ namespace Merbles
         }
         IEnumerator Charge(Vector3 target)
         {
-            Debug.Log("Arrgh!");
+            //Debug.Log("Arrgh!");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
@@ -194,7 +194,7 @@ namespace Merbles
             }
         }
 
-        public void FloatTowardsObject(GameObject target, float index, float speed = 2.5f)
+        public void FloatTowardsObject(Transform target, float index, float speed = 2.5f)
         {
             if (!floating)
             {
@@ -212,6 +212,11 @@ namespace Merbles
             Vector3 targetPos = new Vector3(target.transform.position.x + (Random.Range(rngMinMax.x, rngMinMax.y)), target.transform.position.y + (Random.Range(rngMinMax.x, rngMinMax.y)), target.transform.position.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
             //Debug.Log("FLOATING");
             transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+        }
+
+        public void CreateLine(GameObject target, float index, float distance)
+        {
+            
         }
 
         public IEnumerator UseGravity()

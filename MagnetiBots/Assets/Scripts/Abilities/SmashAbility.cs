@@ -49,18 +49,6 @@ namespace Ability
             Debug.Log("Boop");
             while (true)
             {
-                /*
-                foreach (var merble in merbleList)
-                {
-                    merble.FloatTowardsObject(_smashBall);
-                } 
-                for (int i = 0; i < MerbleBoss.ChargedMerbleList.Count; i++)
-                {
-                    merbleBoss.ChargedMerbleList[i].Agent.enabled = false;
-                    merbleBoss.ChargedMerbleList[i].transform.position = Vector3.Lerp(merbleBoss.ChargedMerbleList[i].transform.position, _smashBall.transform.position, Time.deltaTime * merbleSpeed);
-                    yield return new WaitForSecondsRealtime(0.5f);
-                }
-                */
                 _smashBall.GetComponent<SmashBall>().MerbleList = merbleBoss.ChargedMerbleList;
                 yield return null;
             }
