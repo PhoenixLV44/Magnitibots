@@ -107,10 +107,7 @@ namespace Player
         }
         private void FixedUpdate()
         {
-            if (!_movement.Grounded)
-            {
-                _movement.Gravity();
-            }
+            _movement.HandleMovement();
         }
         public Vector3 channelTarget;
         IEnumerator ChannelingMerbles(Vector3 changeTarget)
