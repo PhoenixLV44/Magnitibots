@@ -9,14 +9,17 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float _glidingSpeed=-1f;
+        float _glidingSpeed = -1f;
         bool _gravityOn;
         private CharacterController cc;
         private Vector3 currentVelocity;
+        private float playerMass = 5f;
+        public float maxMoveSpeed = 10f;
 
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed  => _defaultMoveSpeed;
         private float _velocityCap = 20f;
+        public float DefaultMoveSpeed => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;
@@ -28,7 +31,7 @@ namespace Player
         InputAction _move;
         InputAction _look;
         InputAction _jump;
-        
+
         private Player.Controller _controller;
 
         private void Start()
@@ -39,7 +42,7 @@ namespace Player
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
             _controller = GetComponent<Player.Controller>();
-            _isGrounded= true;
+            _isGrounded = true;
             _gravityOn = true;
         }
         private void Update()
@@ -47,9 +50,9 @@ namespace Player
             _submitted = GetInput();
             if (_isGliding)
             {
-                if(rb.linearVelocity.y < _glidingSpeed)
+                if (rb.linearVelocity.y < _glidingSpeed)
                 {
-                    rb.linearVelocity = new Vector3(rb.linearVelocity.x,_glidingSpeed,rb.linearVelocity.z);
+                    rb.linearVelocity = new Vector3(rb.linearVelocity.x, _glidingSpeed, rb.linearVelocity.z);
                 }
             }
         }
@@ -60,7 +63,7 @@ namespace Player
 
             movedir = adjustedMovement * movedir;
 
-            Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x/Screen.width-0.5f, 0, _look.ReadValue<Vector2>().y/Screen.height-0.5f);
+            Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x / Screen.width - 0.5f, 0, _look.ReadValue<Vector2>().y / Screen.height - 0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
             if (InputSystem.actions.FindAction("Jump").IsPressed())
@@ -80,6 +83,15 @@ namespace Player
             {
                 rb.linearVelocity += input * (moveSpeed * Time.deltaTime);
             }
+            Vector3 targetVelocity = input * moveSpeed;
+            /*
+            currentVelocity = cc.velocity;
+
+            currentVelocity.x = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, 40 * Time.deltaTime);
+            currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 40 * Time.deltaTime);
+            cc.Move(currentVelocity * Time.deltaTime);
+            */
+            submittedMovement = targetVelocity;
         }
         public void CheckDecelerate()
         {
@@ -92,8 +104,8 @@ namespace Player
         public void Look(Vector3 input)
         {
             //Debug.Log(input[1]);
-            
-            if(_controller.TargetCursorObject.activeSelf)
+
+            if (_controller.TargetCursorObject.activeSelf)
             {
                 Vector3 lookTarget = _controller.TargetCursorObject.transform.position;
                 lookTarget.y = transform.position.y;
@@ -107,32 +119,97 @@ namespace Player
         }
         public void Jump(int jumpModifier)
         {
-            float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier+1));
-            Debug.Log("jumping with power "+jumpPower);
-            StartCoroutine(JumpAccelerated(jumpPower * Vector3.up * Time.deltaTime));
+            float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier + 1));
+            Debug.Log("jumping with power " + jumpPower);
+            submittedJump = jumpPower;
         }
-        IEnumerator JumpAccelerated(Vector3 jumpTarget)
+        float submittedJump = 0;
+        /// <summary>
+        /// Calculate the vertical motion of the character at once, rather than applying two moves seperately. Combined in HandleMovement().
+        /// </summary>
+        /// <returns>A Vector3 representing the intended vertical velocity.</returns>
+        public Vector3 VerticalMotion()
         {
-            Vector3 jumpVelocity;
-            jumpVelocity = jumpTarget;
-            _gravityOn = false;
-            do
+            //calculate forces
+            float intendedVerticalForce = 0;
+            //the force of gravity
+            if (_gravityOn && !Grounded)
             {
-                Debug.Log(jumpVelocity.y - jumpTarget.y);
-                jumpVelocity.y = Mathf.Lerp(jumpTarget.y, 0, 0.5f*9.8f*Time.deltaTime);
-                cc.Move(jumpVelocity * Time.deltaTime);
-                jumpTarget = cc.velocity;
-            } while (jumpVelocity.y > 0.01f);
-            _controller.jumpLock = false;
-            _gravityOn = true;
-            yield return null;
-        }
-        public void Gravity()
-        {
-            if (_gravityOn)
-            {
-                cc.Move(Physics.gravity * Time.deltaTime);
+                intendedVerticalForce -= Physics.gravity.magnitude;
             }
+            //the force of jump
+            if (submittedJump != 0)
+            {
+                intendedVerticalForce += submittedJump;
+                submittedJump = 0;
+                _controller.jumpLock = false;
+            }
+
+            //calculate acceleration from force
+            Vector3 intendedVerticalAcceleration = Vector3.zero;
+            intendedVerticalAcceleration.y += intendedVerticalForce/playerMass;
+
+            //calculate speed from acceleration
+            Vector3 intendedVerticalSpeed = new Vector3(0,cc.velocity.y,0);
+            intendedVerticalSpeed += intendedVerticalAcceleration;
+
+            //move a distance based on the speed
+            return intendedVerticalSpeed;
+        }
+        Vector3 submittedMovement;
+        /// <summary>
+        /// Calculate the horizontal movement of the character at once, instead of doing Move and Friction seperately. Combined in HandleMovement()
+        /// </summary>
+        /// <returns>A Vector3 representing the total horizontal movement of the character.</returns>
+        public Vector3 HorizontalMotion()
+        {
+            //calculate forces
+            Vector3 intendedHorizontalForce = Vector3.zero;
+            Vector3 ccHorizontal = new Vector3(cc.velocity.x,0,cc.velocity.z);
+
+            //the force of movement
+            if (submittedMovement != Vector3.zero) 
+            {
+                intendedHorizontalForce += submittedMovement;
+                submittedMovement = Vector3.zero;
+            }
+
+            //the force of friction
+            if (ccHorizontal.x != 0 || ccHorizontal.z != 0)
+            {
+                //direction
+                Vector3 frictionalForce = -Vector3.Normalize(ccHorizontal);
+                //magnitude
+                frictionalForce *= (0.45f * Physics.gravity.magnitude);
+                if (frictionalForce.magnitude > ccHorizontal.magnitude)
+                {
+                    frictionalForce = Vector3.ClampMagnitude(frictionalForce, ccHorizontal.magnitude);
+                }
+                intendedHorizontalForce += frictionalForce;
+                Debug.Log("Friction! " + ccHorizontal.x + " " + ccHorizontal.z);
+            }
+
+            //calculate acceleration from force
+            Vector3 intendedHorizontalAcceleration = Vector3.zero;
+            intendedHorizontalAcceleration += intendedHorizontalForce / playerMass;
+
+            //calculate speed from acceleration
+            Vector3 intendedHorizontalSpeed = ccHorizontal;
+            intendedHorizontalSpeed += intendedHorizontalAcceleration;
+
+            //clamp horizontal speed
+            intendedHorizontalSpeed = Vector3.ClampMagnitude(intendedHorizontalSpeed, maxMoveSpeed);
+
+            //move a distance based on the speed
+            return intendedHorizontalSpeed;
+        }
+        /// <summary>
+        /// The function that combines movement behaviors into a single move. Called in FixedUpdate of PlayerController.
+        /// </summary>
+        public void HandleMovement()
+        {
+            Vector3 intendedTotalMovement = HorizontalMotion() + VerticalMotion();
+            cc.Move(intendedTotalMovement * Time.deltaTime);
         }
     }
 }
