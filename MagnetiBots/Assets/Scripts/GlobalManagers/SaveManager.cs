@@ -11,25 +11,11 @@ public class SaveManager : MonoBehaviour
     {
         public Dictionary<string, object> data = new Dictionary<string, object>();
     }
-
-    private static SaveManager _instance;
-    public static SaveManager Instance {  get { return _instance; } }
     SaveDataObject data;
     string json;
     string filePath;
     private void Awake()
     {
-        //singleton pattern
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            _instance = this;
-        }
-
-
         filePath = Path.Combine(Application.persistentDataPath, "SaveData.json");
         if(File.Exists(filePath))
         {
@@ -64,11 +50,11 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     /// <param name="name">The ID that was given to the data when it was added.</param>
     /// <returns>Anythign that is found attached to the ID in the data object.</returns>
-    public dynamic GetData(string name)
+    public T GetData<T>(string name)
     {
-        if(data.data.TryGetValue(name, out object obj)) {  return obj; }
+        if(data.data.TryGetValue(name, out object obj)) {  return (T)obj; }
         Debug.Log("failed to find " + name);
-        return null;
+        return default(T);
     }
     /// <summary>
     /// Add or update data to the data object.
@@ -76,16 +62,16 @@ public class SaveManager : MonoBehaviour
     /// <param name="name">An ID that will identify the data within the data object.</param>
     /// <param name="data">The data to be added to the data object.</param>
     /// <param name="save">Whether to save the data after it is added. Defaults to true.</param>
-    public void AddData(string name, dynamic data, bool save = true)
+    public void AddData<T>(string name, T newData, bool save = true)
     {
         //check for update vs create
         if (data.data.ContainsKey(name))
         {
-            data.data[name] = data;
+            data.data[name] = newData;
         }
         else
         {
-            data.data.Add(name, data);
+            data.data.Add(name, newData);
         }
 
         //save data by default
