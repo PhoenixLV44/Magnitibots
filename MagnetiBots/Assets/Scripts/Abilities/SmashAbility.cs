@@ -61,7 +61,7 @@ namespace Ability
                     yield return new WaitForSecondsRealtime(0.5f);
                 }
                 */
-
+                _smashBall.GetComponent<SmashBall>().MerbleList = merbleBoss.ChargedMerbleList;
                 yield return null;
             }
         }

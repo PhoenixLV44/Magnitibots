@@ -31,11 +31,15 @@ namespace Merbles
 
         public bool Floating => floating;
 
+        private float defaultOffset;
+        [SerializeField]LayerMask groundLayer;
+
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _agent.enabled = false;
             floatingSpeed = _agent.speed;
+            defaultOffset = _agent.baseOffset;
         }
         public void SetPool(ObjectPool<GameObject> pool)
         {
@@ -74,24 +78,29 @@ namespace Merbles
         }
         private void Update()
         {
-            if (_isAlive && !_isCharging)
+            if (GroundCheck() && !floating)
             {
-                switch (_followType)
+                if (_isAlive && !_isCharging)
                 {
-                    //Fix slowdown
-                    /*case FollowTypes.Coalition:
-                        break;
-                    */
-                    case FollowTypes.Snake:
-                        SnakeMovement();
-                        break;
-                    default:
-                    case FollowTypes.Loose:
+                    switch (_followType)
+                    {
+                        //Fix slowdown
+                        /*case FollowTypes.Coalition:
+                            break;
+                        */
+                        case FollowTypes.Snake:
+                            SnakeMovement();
+                            break;
+                        default:
+                        case FollowTypes.Loose:
 
-                        break;
+                            break;
+                    }
                 }
-
-
+            }
+            else if(!GroundCheck() && !floating)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, _agent.destination, Time.deltaTime * _agent.speed);
             }
         }
         public void StartCharge(Vector3 target)
@@ -119,11 +128,17 @@ namespace Merbles
         public void StopCharging()
         {
             _isCharging = false;
+            floating = false;
+            transform.position = myBoss.transform.position;
             _agent.enabled = true;
             _agent.destination = myBoss.transform.position;
+            _agent.ResetPath();
+            
+            /*_agent.enabled = true;
+            _agent.destination = myBoss.transform.position;
+            _agent.ResetPath();*/
             myBoss.ChargedMerbleList.Remove(this);
             myBoss.merbleList.Add(this);
-            _agent.ResetPath();
             StopAllCoroutines();
         }
 
@@ -209,6 +224,38 @@ namespace Merbles
                 transform.position = dir;
                 t += Time.deltaTime;
                 yield return null;
+            }
+        }
+
+        public IEnumerator ReturnToPlayer()
+        {
+            float distance = Vector3.Distance(transform.position, myBoss.transform.position);
+            while ((distance) > 1)
+            {
+                //_agent.baseOffset = Mathf.Lerp(_agent.baseOffset, defaultOffset, _agent.speed * Time.deltaTime);
+                transform.position = Vector3.Slerp(transform.position, myBoss.transform.position, _agent.speed * Time.deltaTime);
+                distance = Vector3.Distance(transform.position, myBoss.transform.position);
+                Debug.Log("Returning to player" + distance);
+                
+                yield return null;
+            }
+
+            floating = false;
+            _agent.enabled = true;
+            _agent.destination = myBoss.transform.position;
+            _agent.ResetPath();
+        }
+
+        private bool GroundCheck()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, _agent.baseOffset + 1, groundLayer))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

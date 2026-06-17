@@ -34,8 +34,13 @@ namespace Ability.Object
             }
             else if (other.CompareTag("Ground"))
             {
-                _smashAbility.DeactivateBall();
             }
+
+            foreach (Merbles.Merble merble in _merbleList)
+            {
+                
+            }
+            _smashAbility.DeactivateBall();
         }
 
         public void IncreasePowerLevel(float newPowerLevel)
@@ -61,22 +66,22 @@ namespace Ability.Object
 
         public IEnumerator MoveMerbles()
         {
-            List<Merbles.Merble> merbleList =  new List<Merbles.Merble>();
+            //_merbleList =  new List<Merbles.Merble>();
             while(gameObject.activeSelf)
             {
                 if (_smashAbility.MerbleBoss.ChargedMerbleList.Count > 0)
                 {
                     Debug.Log("Moving Merbles");
-                    merbleList = _smashAbility.MerbleBoss.ChargedMerbleList;
-                    for(int i = 0 ; i < merbleList.Count; i++)
+                    _merbleList = _smashAbility.MerbleBoss.ChargedMerbleList;
+                    for(int i = 0 ; i < _merbleList.Count; i++)
                     {
                         if (!rb.useGravity)
                         {
-                            merbleList[i].FloatTowardsObject(gameObject, i);
+                            _merbleList[i].FloatTowardsObject(gameObject, i);
                         }
                         else
                         {
-                            merbleList[i].FloatTowardsObject(gameObject, i, rb.linearVelocity.magnitude);
+                            _merbleList[i].FloatTowardsObject(gameObject, i, rb.linearVelocity.magnitude);
                         }
                     }
                 }
