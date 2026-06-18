@@ -36,12 +36,18 @@ public class LassoHooked : GroundedState
         {
             if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
             {
-                _lassoAbility.PullLever();
+                if (_lassoAbility.Lever)
+                {
+                    _lassoAbility.PullLever();
+                }
+                else
+                {
+                   _lassoAbility.UnhookLasso();
+                }
             }
         }
         if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
         {
-            _lassoAbility.UnhookLasso();
         }
     }
 
