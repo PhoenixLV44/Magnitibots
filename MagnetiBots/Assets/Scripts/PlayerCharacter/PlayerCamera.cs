@@ -26,7 +26,7 @@ namespace Player
             
             _rotateCamera = InputSystem.actions.FindAction("Rotate Camera");
             _moveCamera = InputSystem.actions.FindAction("Cursor Movement");
-            Debug.Log("Limits:" + xAxisLimits);
+            //Debug.Log("Limits:" + xAxisLimits);
         }
         private void Update()
         {

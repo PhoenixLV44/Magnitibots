@@ -10,6 +10,8 @@ namespace Player
     {
         #region Movement Variables
         Player.Movement _movement;
+        Player.GroundChecker _groundChecker;
+        public LayerMask groundLayers;
         [SerializeField] float movementSpeed;
         [SerializeField] float jumpForce;
         #endregion
@@ -18,12 +20,11 @@ namespace Player
         Merbles.Boss _merbleBoss;
         public Merbles.Boss MerbleBoss { get { return _merbleBoss; } }
         [SerializeField] GameObject merblePrefab;
-        [SerializeField] string merbleFollowType;
+        [SerializeField] Merbles.Merble.FollowTypes merbleFollowType;
         public Movement Movement { get { return _movement; } }
         #endregion
 
         #region Scripts
-        private GroundChecker _groundChecker;
 
         private Ability.Lasso _lassoAbility;
         public Ability.Lasso LassoAbility { get { return _lassoAbility; } }
@@ -60,11 +61,17 @@ namespace Player
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
-        
+
+        [SerializeField] private GameObject _merbleHolder;
+        public GameObject MerbleHolder => _merbleHolder;
+
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
-            GetComponentInChildren<GroundChecker>().movement = _movement;
+
+            _groundChecker = gameObject.AddComponent<Player.GroundChecker>();
+            _groundChecker.checkerMask = groundLayers;
+            _groundChecker.movement = _movement;
 
             _movement.moveSpeed = movementSpeed;
             _movement.jumpForce = jumpForce;
@@ -89,7 +96,6 @@ namespace Player
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
             
             _targetCursorObject = transform.Find("Target Cursor").gameObject;
-
         }
 
         // Update is called once per frame
@@ -98,24 +104,31 @@ namespace Player
             if (InputSystem.actions.FindAction("Charge").triggered)
             {
                 StartCoroutine(ChannelingMerbles(transform.position));
+                //_merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             }
-            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);;
+            _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
         }
-        IEnumerator ChannelingMerbles(Vector3 target)
+        void FixedUpdate()
         {
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
+            _movement.HandleMovement();
+        }
+        public Vector3 channelTarget;
+        IEnumerator ChannelingMerbles(Vector3 changeTarget)
+        {
+            channelTarget = changeTarget;
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, channelTarget).CompareTo(Vector3.Distance(b.transform.position, channelTarget)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())
                 {
-                    _merbleBoss.FireMerbles();
+                    //_merbleBoss.FireMerbles();
                     break;
                 }
-                _merbleBoss.ChargeMerble(target);
+                _merbleBoss.ChargeMerble(changeTarget);
                 yield return new WaitForSeconds(1);
             }
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
-            _merbleBoss.FireMerbles();
+            //_merbleBoss.FireMerbles();
         }
         public bool jumpLock;
         public void StartJumpChannel()
