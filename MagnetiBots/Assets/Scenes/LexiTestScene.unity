@@ -400,37 +400,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
---- !u!1 &555129600
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 555129601}
-  m_Layer: 0
-  m_Name: MerbleHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &555129601
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555129600}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1913777887}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &593524047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,11 +1459,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
---- !u!4 &1913777887 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7514396821050651275, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
-  m_PrefabInstance: {fileID: 6236096279470273627}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1917051485 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4580427214147130760, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
@@ -1711,14 +1675,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4580427214147130760, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
-      propertyPath: _merbleHolder
-      value: 
-      objectReference: {fileID: 555129600}
-    - target: {fileID: 4580427214147130760, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
-      propertyPath: merbleFollowType
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7898236789186208531, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -1729,10 +1685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7514396821050651275, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 555129601}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
 --- !u!1660057539 &9223372036854775807

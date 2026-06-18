@@ -61,9 +61,6 @@ namespace Player
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
 
-        [SerializeField] private GameObject _merbleHolder;
-        public GameObject MerbleHolder => _merbleHolder;
-
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
