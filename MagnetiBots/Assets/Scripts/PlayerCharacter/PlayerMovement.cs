@@ -178,7 +178,6 @@ namespace Player
                     frictionalForce = Vector3.ClampMagnitude(frictionalForce, ccHorizontal.magnitude);
                 }
                 intendedHorizontalForce += frictionalForce;
-                Debug.Log("Friction! " + ccHorizontal.x + " " + ccHorizontal.z);
             }
 
             //calculate acceleration from force
