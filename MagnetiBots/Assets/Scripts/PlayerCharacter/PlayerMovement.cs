@@ -35,6 +35,7 @@ namespace Player
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            cc = GetComponent<CharacterController>();
             model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
@@ -79,10 +80,6 @@ namespace Player
             cc.Move(currentVelocity * Time.deltaTime);
             */
             submittedMovement = targetVelocity;
-        }
-        public void CheckDecelerate()
-        {
-
         }
         /// <summary>
         /// Called in every player state currently implemented
@@ -145,6 +142,9 @@ namespace Player
             Vector3 intendedVerticalSpeed = new Vector3(0,cc.velocity.y,0);
             intendedVerticalSpeed += intendedVerticalAcceleration;
 
+            Debug.Log(intendedVerticalSpeed);
+            Debug.Log(_gravityOn);
+            Debug.Log(Grounded);
             //move a distance based on the speed
             return intendedVerticalSpeed;
         }
