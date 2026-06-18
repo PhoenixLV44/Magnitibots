@@ -173424,6 +173424,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8999998, y: 0.8999977, z: 1.0147967}
   m_Center: {x: -0.44999984, y: -0.44999886, z: 0.50739837}
+--- !u!1 &1902066735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1902066736}
+  m_Layer: 0
+  m_Name: dhosdfd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1902066736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902066735}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.42734, y: 0.5, z: 4.5773}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1903007858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200542,3 +200573,4 @@ SceneRoots:
   - {fileID: 3895966933309257011}
   - {fileID: 4803648531058284216}
   - {fileID: 1851733116}
+  - {fileID: 1902066736}
