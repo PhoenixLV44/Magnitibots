@@ -34,7 +34,6 @@ namespace Player
         private void Respawn()
         {
             _playerController.transform.position = _respawnPosition;
-           _movement.rb.linearVelocity = Vector3.zero;
             foreach (var merble in _boss.merbleList)
             {
                 merble.transform.position = _respawnPosition;

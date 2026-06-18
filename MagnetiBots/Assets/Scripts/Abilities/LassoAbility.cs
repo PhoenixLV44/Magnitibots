@@ -38,12 +38,12 @@ namespace Ability
             currentPowerLevel = basePowerLevel;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
-            aimingGuide.SetActive(true);
+            //aimingGuide.SetActive(true);
             while (true)
             {
-                if (aimingGuide.activeSelf)
+                //if (aimingGuide.activeSelf)
                 {
-                    Debug.Log("Aiming Guid Active");
+                   // Debug.Log("Aiming Guid Active");
                 }
                 rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel));
 
@@ -181,9 +181,10 @@ namespace Ability
                 else if (Vector3.Distance(transform.position, _lassoLoop.transform.position) <=
                          chargedMerbleList.Count * distanceBetweenMerblesMinMax.x)
                 {
-                    chargedMerbleList[chargedMerbleList.Count - 1].transform.position = transform.position;
-                    merbleList.Add(chargedMerbleList[chargedMerbleList.Count - 1]);
-                    chargedMerbleList.RemoveAt(chargedMerbleList.Count - 1);
+                    int j = chargedMerbleList.Count - 1;
+                    chargedMerbleList[j].transform.position = transform.position;
+                    merbleList.Add(chargedMerbleList[j]);
+                    chargedMerbleList.RemoveAt(j);
                 }
                 
                 merbleBoss.ChargedMerbleList = chargedMerbleList;
