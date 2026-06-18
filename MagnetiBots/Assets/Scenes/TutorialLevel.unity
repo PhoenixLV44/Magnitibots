@@ -187881,10 +187881,6 @@ PrefabInstance:
       propertyPath: currentAbilityText
       value: 
       objectReference: {fileID: 3140842649707552924, guid: 40e143b040f6da24ea0f2acf5787d2ef, type: 3}
-    - target: {fileID: 4580427214147130760, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
-      propertyPath: groundLayers.m_Bits
-      value: 1152
-      objectReference: {fileID: 0}
     - target: {fileID: 5386499518817758353, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -187924,6 +187920,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4173390178946762346, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
+    - {fileID: 5022406700796658581, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
