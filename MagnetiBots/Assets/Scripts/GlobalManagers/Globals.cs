@@ -19,6 +19,11 @@ public class Globals : MonoBehaviour
 
         _sInstance = new SaveManager();
         _aInstance = new AudioManager();
+        _setInstance = new SettingsManager();
+
+        Saves.LateAwake();
+        Settings.LateAwake();
+        Audio.LateAwake();
     }
 
     #region Saving

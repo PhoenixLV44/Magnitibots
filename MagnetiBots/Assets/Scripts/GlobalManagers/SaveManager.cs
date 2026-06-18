@@ -29,6 +29,10 @@ public class SaveManager : MonoBehaviour
             json = JsonUtility.ToJson(data);
         }
     }
+    public void LateAwake()
+    {
+
+    }
     /// <summary>
     /// Save the current stored data to the JSON file.
     /// </summary>
@@ -50,11 +54,12 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     /// <param name="name">The ID that was given to the data when it was added.</param>
     /// <returns>Anythign that is found attached to the ID in the data object.</returns>
-    public T GetData<T>(string name)
+    public bool GetData<T>(string name, out T value)
     {
-        if(data.data.TryGetValue(name, out object obj)) {  return (T)obj; }
+        if(data.data.TryGetValue(name, out object obj)) {  value = (T)obj; return true; }
         Debug.Log("failed to find " + name);
-        return default(T);
+        value = default(T);
+        return false;
     }
     /// <summary>
     /// Add or update data to the data object.

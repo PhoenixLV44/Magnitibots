@@ -74,6 +74,10 @@ public class AudioManager : MonoBehaviour
         bgmSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("BGM")[0];
         #endregion
     }
+    public void LateAwake()
+    {
+
+    }
     /// <summary>
     /// Event Handler for changing the volume settings.
     /// </summary>
