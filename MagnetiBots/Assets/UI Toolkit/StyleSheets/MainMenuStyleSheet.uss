@@ -31,3 +31,19 @@
     position: absolute;
     visibility: visible;
 }
+
+.settingSlider {
+    align-self: auto;
+    align-items: center;
+    font-size: 39px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    -unity-text-align: upper-center;
+    align-content: auto;
+    max-width: none;
+    right: auto;
+    left: auto;
+    min-width: 836px;
+}
