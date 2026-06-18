@@ -35,7 +35,6 @@ namespace Player
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
-            cc = GetComponent<CharacterController>();
             model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
@@ -62,6 +61,7 @@ namespace Player
             {
                 _controller.StartJumpChannel();
             }
+
             return returnable;
         }
         /// <summary>

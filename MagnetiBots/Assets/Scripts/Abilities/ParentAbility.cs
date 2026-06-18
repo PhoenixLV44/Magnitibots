@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Ability.Object;
+using Merbles;
+using System.Collections.Generic;
 
 namespace Ability
 {
@@ -29,6 +31,12 @@ namespace Ability
         protected RangeIndicator rangeIndicator;
         
         [SerializeField]protected GameObject aimingGuide;
+
+        protected Merbles.Boss merbleBoss;
+
+        public Boss MerbleBoss { get => merbleBoss; set => merbleBoss = value; }
+        /*protected List<Merble> chargedMerbleList;
+        public List<Merble> ChargedMerbleList => chargedMerbleList;*/
 
         private void Start()
         {
@@ -68,7 +76,7 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
-                Debug.Log("Stopping charging");
+                //Debug.Log("Stopping charging");
                 aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
@@ -89,6 +97,8 @@ namespace Ability
             
             aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
             aimingGuide.SetActive(false);
+
+            merbleBoss = GetComponent<Merbles.Boss>();
         }
     }
 }

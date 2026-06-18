@@ -12,10 +12,12 @@ namespace Merbles
         public int chargingMerbles = 0;
         public int chargedMerbles = 0;
         public List<Merble> merbleList;
+        [SerializeField] private List<Merble> chargedMerblesList;
+        public List<Merble> ChargedMerbleList{get => chargedMerblesList; set => chargedMerblesList = value; }
 
         public GameObject merblePrefab;
-        public string MerbleFollowType {get {return _merbleFollowType;} set { _merbleFollowType = value; } }
-        private string _merbleFollowType;
+        public Merble.FollowTypes MerbleFollowType {get {return _merbleFollowType;} set { _merbleFollowType = value; } }
+        private Merble.FollowTypes _merbleFollowType;
 
         public ObjectPool<GameObject> Merbles { get { return _merbles; } private set { _merbles = value; } }
         private ObjectPool<GameObject> _merbles;
@@ -26,6 +28,8 @@ namespace Merbles
         {
             merbleList = new List<Merble>();
             merblePrefab.GetComponent<Merble>().myBoss = this;
+            
+            chargedMerblesList = new List<Merble>();
 
             collector = gameObject.AddComponent<Collector>();
             collector.boss = this;
@@ -82,14 +86,14 @@ namespace Merbles
         }
         public void FireMerbles()
         {
-            for (int i = 0; i < chargingMerbles; i++)
+            for (int i = 0; i < chargedMerblesList.Count; i++)
             {
                 merbleList[i].StopCharging();
             }
             chargingMerbles = 0;
-            for (int i = 0; i < chargedMerbles; i++)
+            for (int i = 0; i < chargedMerblesList.Count; i++)
             {
-                _merbles.Get();
+                //_merbles.Get();
             }
             chargedMerbles = 0;
             merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position,transform.position)));

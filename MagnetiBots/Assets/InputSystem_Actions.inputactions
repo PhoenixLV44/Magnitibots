@@ -1062,7 +1062,7 @@
                 {
                     "name": "",
                     "id": "28640432-82d5-46f4-a35e-6bfbf6dad0f8",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1175,6 +1175,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cheats",
+            "id": "db36dce8-8d1f-4529-b7e2-055559753a84",
+            "actions": [
+                {
+                    "name": "Unlock Abilities",
+                    "type": "Button",
+                    "id": "3e5cfdde-4a6f-4f28-a71e-5f018521606c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8800d300-3e42-41d7-8901-422ccebd75f3",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unlock Abilities",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

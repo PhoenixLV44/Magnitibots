@@ -27,7 +27,7 @@ namespace Ability.Object
 
         public void DeactivateCursor()
         {
-            _targetCursor.transform.position = transform.position;
+            //_targetCursor.transform.position = transform.position;
             Cursor.lockState = CursorLockMode.None;
             _targetCursor.SetActive(false);
         }

@@ -1,24 +1,21 @@
 using UnityEngine;
 
-namespace Player {
-    public class GroundChecker : MonoBehaviour
-    {
-        public Player.Movement movement;
-        public LayerMask checkerMask;
+public class GroundChecker : MonoBehaviour
+{
+    public Player.Movement movement;
+    private void OnTriggerEnter(Collider other)
 
-        private void FixedUpdate()
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("LassoTarget"))
         {
-            RaycastHit hit;
-            if (Physics.SphereCast((transform.position), 0.5f, -Vector3.up, out hit,0.75f,checkerMask))
-            {
-                Debug.Log("cast did find ground");
-                movement.Grounded = true;
-            }
-            else
-            {
-                Debug.Log("cast did not find ground");
-                movement.Grounded = false;
-            }
+            movement.Grounded = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground") || other.gameObject.layer == LayerMask.NameToLayer("LassoTarget"))
+        {
+            movement.Grounded = false;
         }
     }
 }
