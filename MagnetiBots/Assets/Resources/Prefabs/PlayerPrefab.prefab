@@ -250,6 +250,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundChecker
   movement: {fileID: 0}
+  checkerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!136 &6279495117082450053
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -463,6 +466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95893a6563273cd4d8076d6b47420edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1152
   movementSpeed: 10
   jumpForce: 10
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
@@ -520,6 +526,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundChecker
   movement: {fileID: 0}
+  checkerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8271787115211172300
 GameObject:
   m_ObjectHideFlags: 0
