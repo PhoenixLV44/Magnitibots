@@ -12,20 +12,24 @@ namespace Player
         float _glidingSpeed = 1f;
         bool _gravityOn;
         private CharacterController cc;
-        private Vector3 currentVelocity;
-        private float playerMass = 5f;
+        public CharacterController CharacterController => cc;
+        private Vector3 _currentVelocity;
+        private float _playerMass = 5f;
         public float maxMoveSpeed = 10f;
 
         private float _defaultMoveSpeed = 10f;
         public float DefaultMoveSpeed => _defaultMoveSpeed;
         public Quaternion adjustedMovement;
-        public Rigidbody rb;
         Vector3[] _submitted;
-        public Vector3[] Submitted { get { return _submitted; } }
+        public Vector3[] Submitted => _submitted;
         bool _isGliding;
-        public bool Gliding { get { return _isGliding; } set { _isGliding = value; } }
+        public bool Gliding { get => _isGliding;
+            set => _isGliding = value;
+        }
         bool _isGrounded;
-        public bool Grounded { get { return _isGrounded; } set { _isGrounded = value; } }
+        public bool Grounded { get => _isGrounded;
+            set => _isGrounded = value;
+        }
         InputAction _move;
         InputAction _look;
         InputAction _jump;
@@ -34,7 +38,7 @@ namespace Player
 
         private void Start()
         {
-            rb = GetComponent<Rigidbody>();
+            cc = GetComponent<CharacterController>();
             model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
@@ -139,7 +143,7 @@ namespace Player
 
             //calculate acceleration from force
             Vector3 intendedVerticalAcceleration = Vector3.zero;
-            intendedVerticalAcceleration.y += intendedVerticalForce/playerMass;
+            intendedVerticalAcceleration.y += intendedVerticalForce/_playerMass;
 
             //calculate speed from acceleration
             Vector3 intendedVerticalSpeed = new Vector3(0,cc.velocity.y,0);
@@ -183,7 +187,7 @@ namespace Player
 
             //calculate acceleration from force
             Vector3 intendedHorizontalAcceleration = Vector3.zero;
-            intendedHorizontalAcceleration += intendedHorizontalForce / playerMass;
+            intendedHorizontalAcceleration += intendedHorizontalForce / _playerMass;
 
             //calculate speed from acceleration
             Vector3 intendedHorizontalSpeed = ccHorizontal;

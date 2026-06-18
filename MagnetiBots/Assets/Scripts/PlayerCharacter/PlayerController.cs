@@ -120,7 +120,7 @@ namespace Player
                     //_merbleBoss.FireMerbles();
                     break;
                 }
-                _merbleBoss.ChargeMerble(target);
+                _merbleBoss.ChargeMerble(channelTarget);
                 yield return new WaitForSeconds(1);
             }
             yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));

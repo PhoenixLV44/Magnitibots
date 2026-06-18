@@ -77,7 +77,7 @@ namespace Ability
             if (chargeCoroutine != null)
             {
                 //Debug.Log("Stopping charging");
-                aimingGuide.SetActive(false);
+                //aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
                 StopCoroutine(chargeCoroutine);
@@ -95,8 +95,8 @@ namespace Ability
             
             chargeCoroutine = Charge();
             
-            aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
-            aimingGuide.SetActive(false);
+            //aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
+            //aimingGuide.SetActive(false);
 
             merbleBoss = GetComponent<Merbles.Boss>();
         }

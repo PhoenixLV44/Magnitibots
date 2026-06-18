@@ -78,7 +78,7 @@ namespace Merbles
         }
         private void Update()
         {
-            if (GroundCheck() && !floating)
+            //if (GroundCheck() && !floating)
             {
                 if (_isAlive && !_isCharging)
                 {
@@ -98,9 +98,9 @@ namespace Merbles
                     }
                 }
             }
-            else if(!GroundCheck() && !floating)
+            //else if(!GroundCheck() && !floating)
             {
-                transform.position = Vector3.MoveTowards(transform.position, _agent.destination, Time.deltaTime * _agent.speed);
+                //transform.position = Vector3.MoveTowards(transform.position, _agent.destination, Time.deltaTime * _agent.speed);
             }
         }
         public void StartCharge(Vector3 target)
