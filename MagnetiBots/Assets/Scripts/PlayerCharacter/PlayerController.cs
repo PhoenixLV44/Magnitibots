@@ -104,10 +104,15 @@ namespace Player
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
         }
-        IEnumerator ChannelingMerbles(Vector3 target)
+        void FixedUpdate()
         {
-            Debug.Log("Great Googly Moogly");
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, target).CompareTo(Vector3.Distance(b.transform.position, target)));
+            _movement.HandleMovement();
+        }
+        public Vector3 channelTarget;
+        IEnumerator ChannelingMerbles(Vector3 changeTarget)
+        {
+            channelTarget = changeTarget;
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, channelTarget).CompareTo(Vector3.Distance(b.transform.position, channelTarget)));
             while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
             {
                 if (!InputSystem.actions.FindAction("Charge").IsPressed())
