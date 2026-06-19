@@ -111,6 +111,7 @@ namespace Ability
             {
                 merble.StopCharging();
             }
+
         }
         private void DropBall()
         {
@@ -118,6 +119,7 @@ namespace Ability
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
             targetCursor.DeactivateCursor();
             StopCoroutine(MoveCursor());
+            Cursor.lockState = CursorLockMode.None;
             StopCoroutine(Charge());
             //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             rangeIndicator.DisableRangeIndicator();

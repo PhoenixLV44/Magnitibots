@@ -23,7 +23,7 @@ namespace Merbles
 
         public bool Sentience { get { return _isAlive; } set { _isAlive = value; } }
         private bool _isAlive = false;
-        public bool Charging { get { return _isCharging; } private set { _isCharging = value; } }
+        public bool Charging { get { return _isCharging; } set { _isCharging = value; } }
         private bool _isCharging = false;
 
         [SerializeField] private float floatingSpeed;
@@ -80,7 +80,7 @@ namespace Merbles
         {
             //if (GroundCheck() && !floating)
             {
-                if (_isAlive && !_isCharging)
+                if (_isAlive && !_isCharging && myBoss.merbleList.Count > 0 && !myBoss.ChargedMerbleList.Contains(this))
                 {
                     switch (_followType)
                     {
@@ -133,12 +133,17 @@ namespace Merbles
             _agent.enabled = true;
             _agent.destination = myBoss.transform.position;
             _agent.ResetPath();
-            
+
+            //Debug.Log("wow!");
+
             /*_agent.enabled = true;
             _agent.destination = myBoss.transform.position;
             _agent.ResetPath();*/
             myBoss.ChargedMerbleList.Remove(this);
-            myBoss.merbleList.Add(this);
+            if (!myBoss.merbleList.Contains(this))
+            {
+                myBoss.merbleList.Add(this);
+            }
             StopAllCoroutines();
         }
 

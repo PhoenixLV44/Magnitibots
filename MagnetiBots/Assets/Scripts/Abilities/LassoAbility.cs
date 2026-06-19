@@ -105,6 +105,7 @@ namespace Ability
                 controller.RangeIndicator.DisableRangeIndicator();
                 //Cursor.lockState =  CursorLockMode.None;
                 //Debug.Log("MISS");
+                merbleBoss.FireMerbles();
             }
         }
 
@@ -115,6 +116,8 @@ namespace Ability
         
         public void UnhookLasso()
         {
+            targetCursor.DeactivateCursor();
+            Cursor.lockState = CursorLockMode.None;
             if (_lassoLoop.transform.childCount > 0)
             {
                 GameObject loopedObject = _lassoLoop.transform.GetChild(0).gameObject;
@@ -126,12 +129,11 @@ namespace Ability
             
             _lassoLoop.SetActive(false);
 
-            targetCursor.DeactivateCursor();
-
-            //Cursor.lockState = CursorLockMode.None;
+            rangeIndicator.DisableRangeIndicator();
 
             controller.LassoHooked = false;
             StopCoroutine(FormLineOfMerbles());
+            merbleBoss.FireMerbles();
         }
 
         protected override void InitializeAbility()
@@ -190,7 +192,7 @@ namespace Ability
                 merbleBoss.ChargedMerbleList = chargedMerbleList;
                 merbleBoss.merbleList = merbleList;
                 
-                Debug.Log("Blep");
+                //Debug.Log("Blep");
                 for (int i = chargedMerbleList.Count - 1; i >= 0; i--)
                 {
                     /* From the player to the object

@@ -61,6 +61,7 @@ namespace Ability.Object
 
         private void OnDisable()
         {
+            Cursor.lockState = CursorLockMode.None;
             StopAllCoroutines();
         }
 
@@ -71,7 +72,7 @@ namespace Ability.Object
             {
                 if (_smashAbility.MerbleBoss.ChargedMerbleList.Count > 0)
                 {
-                    Debug.Log("Moving Merbles");
+                    //Debug.Log("Moving Merbles");
                     _merbleList = _smashAbility.MerbleBoss.ChargedMerbleList;
                     for(int i = 0 ; i < _merbleList.Count; i++)
                     {
