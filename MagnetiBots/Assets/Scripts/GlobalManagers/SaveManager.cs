@@ -21,12 +21,12 @@ public class SaveManager : MonoBehaviour
         {
             json = File.ReadAllText(filePath);
             data = JsonUtility.FromJson<SaveDataObject>(json);
-            
         }
         else
         {
             data = new SaveDataObject();
             json = JsonUtility.ToJson(data);
+            File.WriteAllText(filePath, json);
         }
     }
     public void LateAwake()
@@ -73,10 +73,13 @@ public class SaveManager : MonoBehaviour
         if (data.data.ContainsKey(name))
         {
             data.data[name] = newData;
+            Debug.Log("updated!");
         }
         else
         {
             data.data.Add(name, newData);
+            Debug.Log("saved!");
+            Debug.Log(data.data[name]);
         }
 
         //save data by default

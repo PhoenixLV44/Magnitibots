@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UIElements;
@@ -16,7 +17,7 @@ public class AudioManager : MonoBehaviour
         public Dictionary<string, AudioClip> bgm = new Dictionary<string, AudioClip>();
     }
 
-    AudioDataObject data;
+    [SerializeField] AudioDataObject data;
     #endregion
 
     AudioSource sfxSource;
@@ -24,13 +25,17 @@ public class AudioManager : MonoBehaviour
 
     AudioMixer audioMixer;
 
+    float maxVolume = 0;
+    float minVolume = -80;
+
     public static class AudioSettings 
     {
         public enum Destination
         {
             BGM,
             SFX,
-            Master
+            Master,
+            UI
         }
     }
 
@@ -40,6 +45,10 @@ public class AudioManager : MonoBehaviour
         //load audio resources
         AudioClip[] SFXLoad = Resources.LoadAll<AudioClip>("Audio/SFX");
         AudioClip[] BGMLoad = Resources.LoadAll<AudioClip>("Audio/BGM");
+
+        Debug.Log(BGMLoad[0].name);
+
+        data = new AudioDataObject();
 
         //parse audio resources
         for (int i = 0; i < SFXLoad.Length; i++) 
@@ -56,9 +65,9 @@ public class AudioManager : MonoBehaviour
         {
             if (BGMLoad[i] != null)
             {
-                if (!data.sfx.ContainsValue(BGMLoad[i]))
+                if (!data.bgm.ContainsValue(BGMLoad[i]))
                 {
-                    data.sfx.Add(BGMLoad[i].name, BGMLoad[i]);
+                    data.bgm.Add(BGMLoad[i].name, BGMLoad[i]);
                 }
             }
         }
@@ -68,10 +77,15 @@ public class AudioManager : MonoBehaviour
         audioMixer = Resources.Load<AudioMixer>("Audio/AudioMixer");
 
         sfxSource = gameObject.AddComponent<AudioSource>();
-        bgmSource = gameObject.AddComponent<AudioSource>();
-
         sfxSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
+
+        bgmSource = gameObject.AddComponent<AudioSource>();
         bgmSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("BGM")[0];
+        bgmSource.loop = true;
+
+
+
+
         #endregion
     }
     public void LateAwake()
@@ -83,18 +97,35 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void UpdateVolumes(AudioSettings.Destination destination, float value)
     {
+        float volume = Mathf.Lerp(minVolume, maxVolume, value);
         switch (destination)
         {
             case AudioSettings.Destination.Master:
-                audioMixer.SetFloat("Master_Volume", value);
+                audioMixer.SetFloat("Master_Volume", volume);
                 break;
             case AudioSettings.Destination.SFX:
-                audioMixer.SetFloat("SFX_Volume", value);
+                audioMixer.SetFloat("SFX_Volume", volume);
                 break;
             case AudioSettings.Destination.BGM:
-                audioMixer.SetFloat("BGM_Volume", value);
+                audioMixer.SetFloat("BGM_Volume", volume);
+                break;
+            case AudioSettings.Destination.UI:
+                audioMixer.SetFloat("UI_Volume", volume);
                 break;
             default: break;
         }
+    }
+    public void FullVolumeUpdate()
+    {
+        Debug.Log(Globals.Managers.Settings.MasterVolume);
+        audioMixer.SetFloat("Master_Volume", Globals.Managers.Settings.MasterVolume);
+        audioMixer.SetFloat("BGM_Volume", Globals.Managers.Settings.BGMVolume);
+        audioMixer.SetFloat("SFX_Volume", Globals.Managers.Settings.SFXVolume);
+        audioMixer.SetFloat("UI_Volume", Globals.Managers.Settings.UIVolume);
+    }
+    public void UpdateBGM(string clipName)
+    {
+        bgmSource.clip = data.bgm[clipName];
+        bgmSource.Play();
     }
 }

@@ -62,6 +62,10 @@ public class MainMenu : MonoBehaviour
         _mainContainer.BringToFront();
 
     }
+    private void Start()
+    {
+        Globals.Managers.Audio.UpdateBGM("ImportantPlaceholderMusic");
+    }
     private void OnDisable()
     {
         _startButton.UnregisterCallback<ClickEvent>(OnClickStart);
