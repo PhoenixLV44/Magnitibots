@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 4145038468368915358}
   - component: {fileID: 2003932312782983204}
   - component: {fileID: 3585383839424172950}
+  - component: {fileID: 9209533989977405092}
   m_Layer: 6
   m_Name: Lasso Loop
   m_TagString: Untagged
@@ -142,7 +143,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 0.5, z: 2}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 128776154970847861}
@@ -204,6 +205,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &9209533989977405092
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911464060617943199}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 30967
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.6
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4173390178946762346
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,9 +401,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   movementSpeed: 10
-  jumpForce: 10
+  jumpForce: 250
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
-  merbleFollowType: 0
+  merbleFollowType: 1
   _merbleHolder: {fileID: 0}
   channelTarget: {x: 0, y: 0, z: 0}
   jumpLock: 0
@@ -536,6 +558,37 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8886765286485355465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5245915394468783996}
+  m_Layer: 0
+  m_Name: LassoPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5245915394468783996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8886765286485355465}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7514396821050651275}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8053062193852257632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -606,7 +659,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6142ecc7e0bec3d46941d58a8318eb43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5245915394468783996}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6142ecc7e0bec3d46941d58a8318eb43, type: 3}
 --- !u!4 &7514396821050651275 stripped

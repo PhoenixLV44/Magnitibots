@@ -12,34 +12,38 @@ namespace Merbles
         private ObjectPool<GameObject> _merblePool;
         private NavMeshAgent _agent;
         public NavMeshAgent Agent => _agent;
+        
+        Rigidbody _rb;
 
-        public enum FollowTypes
-        {
-            Loose,
-            Snake,
-            Coalition
-        }
+        public enum FollowTypes { Loose, Snake, Coalition }
         private FollowTypes _followType;
+        
+        public enum AbilityEnum{ None, Lasso, Smash, Propeller}
+
+        private AbilityEnum _currentAbilityEnum = AbilityEnum.None;
+        public AbilityEnum CurrentAbilityEnum { get => _currentAbilityEnum; set => _currentAbilityEnum = value; }
 
         public bool Sentience { get { return _isAlive; } set { _isAlive = value; } }
         private bool _isAlive = false;
-        public bool Charging { get { return _isCharging; } private set { _isCharging = value; } }
+        public bool Charging { get { return _isCharging; } set { _isCharging = value; } }
         private bool _isCharging = false;
 
         [SerializeField] private float floatingSpeed;
         private bool floating;
 
         public bool Floating => floating;
-
-        private float defaultOffset;
+        
         [SerializeField]LayerMask groundLayer;
+        private ParticleSystem _chargedParticles;
 
+        [SerializeField] private Transform parent;
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _agent.enabled = false;
             floatingSpeed = _agent.speed;
-            defaultOffset = _agent.baseOffset;
+            _rb = GetComponent<Rigidbody>();
+            _chargedParticles = GetComponent<ParticleSystem>();
         }
         public void SetPool(ObjectPool<GameObject> pool)
         {
@@ -68,19 +72,12 @@ namespace Merbles
                     break;
             }
         }
-        private void OnEnable()
-        {
 
-        }
-        private void OnDisable()
-        {
-
-        }
         private void Update()
         {
             //if (GroundCheck() && !floating)
             {
-                if (_isAlive && !_isCharging)
+                if (_isAlive && !_isCharging && myBoss.merbleList.Count > 0 && !myBoss.ChargedMerbleList.Contains(this))
                 {
                     switch (_followType)
                     {
@@ -105,21 +102,24 @@ namespace Merbles
         }
         public void StartCharge(Vector3 target)
         {
-            //Debug.Log("Waagh");
-
             StartCoroutine(Charge(target));
         }
         IEnumerator Charge(Vector3 target)
         {
-            //Debug.Log("Arrgh!");
+            Debug.Log("MerbleCharging");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
             yield return new WaitUntil(() => _agent.hasPath);
-            yield return new WaitUntil(() => _agent.remainingDistance <= 0.5f);
+            yield return new WaitUntil(() => Vector3.Distance(transform.position, myBoss.transform.position) <= 0.5f);
             myBoss.merbleList.Remove(this);
             myBoss.ChargedMerbleList.Add(this);
             //_merblePool.Release(gameObject);
+
+            if (_chargedParticles)
+            {
+                _chargedParticles.Play();
+            }
             
             _agent.enabled = false;
             myBoss.chargingMerbles--;
@@ -127,18 +127,34 @@ namespace Merbles
         }
         public void StopCharging()
         {
+            transform.parent = parent;
             _isCharging = false;
             floating = false;
-            transform.position = myBoss.transform.position;
+            if (_currentAbilityEnum == AbilityEnum.Smash)
+            {
+                transform.position = myBoss.transform.position;
+            }
             _agent.enabled = true;
             _agent.destination = myBoss.transform.position;
             _agent.ResetPath();
-            
+
+            if (_chargedParticles)
+            {
+                _chargedParticles.Stop();
+            }
+
+            //Debug.Log("wow!");
+
             /*_agent.enabled = true;
             _agent.destination = myBoss.transform.position;
             _agent.ResetPath();*/
             myBoss.ChargedMerbleList.Remove(this);
-            myBoss.merbleList.Add(this);
+            if (!myBoss.merbleList.Contains(this))
+            {
+                myBoss.merbleList.Add(this);
+            }
+
+            _currentAbilityEnum = AbilityEnum.None;
             StopAllCoroutines();
         }
 
@@ -194,30 +210,33 @@ namespace Merbles
             }
         }
 
-        public void FloatTowardsObject(Transform target, float index, float speed = 2.5f)
+        public void FloatTowardsObject(Vector3 vectorPos, float index, AbilityEnum currentAbility, float speed = 2.5f)
         {
-            if (!floating)
+            switch (currentAbility)
             {
-                _agent.enabled = false;
-                //transform.parent = target.transform;
-                floating = true;
-            }
-            Vector2 rngMinMax = new Vector2(-1.5f, 1.5f);
-            if (index > 1)
-            {
-                rngMinMax.x -= (index / 10);
-                rngMinMax.y += (index / 10);
-            }
+                case AbilityEnum.Lasso:
+                    transform.position = Vector3.Lerp(transform.position, vectorPos, Time.deltaTime * speed);
+                    break;
+                
+                case AbilityEnum.Smash:
+                    Vector2 rngMinMax = new Vector2(-1.5f, 1.5f);
+                    if (index > 1)
+                    {
+                        rngMinMax.x -= (index / 10);
+                        rngMinMax.y += (index / 10);
+                    }
             
-            Vector3 targetPos = new Vector3(target.transform.position.x + (Random.Range(rngMinMax.x, rngMinMax.y)), target.transform.position.y + (Random.Range(rngMinMax.x, rngMinMax.y)), target.transform.position.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
-            //Debug.Log("FLOATING");
-            transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+                    Vector3 targetPos = new Vector3(vectorPos.x + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.y + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
+                    //Debug.Log("FLOATING");
+                    transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+                    break;
+                default:
+                    Debug.LogError("Unknown AbilityEnum");
+                    break;
+                    
+            }
         }
-
-        public void CreateLine(GameObject target, float index, float distance)
-        {
-            
-        }
+        
 
         public IEnumerator UseGravity()
         {
@@ -262,6 +281,11 @@ namespace Merbles
             {
                 return false;
             }
+        }
+
+        private void ChangeSentience(bool value)
+        {
+            
         }
     }
 }
