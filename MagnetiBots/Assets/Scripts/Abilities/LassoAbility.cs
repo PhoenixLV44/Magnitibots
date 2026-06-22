@@ -20,12 +20,15 @@ namespace Ability
 
         private Vector3 _lassoLoopScale;
         [SerializeField] private float loopHeight;
+
+        private IEnumerator lineOfMerblesCoroutine;
         
         private void Start()
         {
             InitializeAbility();
             activateInput = InputSystem.actions.FindAction("ActivateLasso");
             chargeInput = InputSystem.actions.FindAction("Charge");
+            
         }
 
         public override void Activate()
@@ -100,7 +103,7 @@ namespace Ability
                     controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
                     controller.LassoHooked = true;
                 }
-                StartCoroutine(FormLineOfMerbles());
+                StartCoroutine(lineOfMerblesCoroutine);
             }
             else
             {
@@ -137,7 +140,7 @@ namespace Ability
             rangeIndicator.DisableRangeIndicator();
 
             controller.LassoHooked = false;
-            StopCoroutine(FormLineOfMerbles());
+            StopCoroutine(lineOfMerblesCoroutine);
             merbleBoss.FireMerbles();
         }
 
@@ -151,6 +154,7 @@ namespace Ability
             _lassoLoop.SetActive(false);
             _layerMask = LayerMask.GetMask("LassoTarget");
             _lassoLoopScale = _lassoLoop.transform.localScale;
+            lineOfMerblesCoroutine = FormLineOfMerbles();
         }
 
         public void PullLever()
@@ -195,7 +199,6 @@ namespace Ability
                 {
                     int j = chargedMerbleList.Count - 1;
                     chargedMerbleList[j].StopCharging();
-                    yield return new WaitUntil(() => !chargedMerbleList[j].Charging);
                     chargedMerbleList = merbleBoss.ChargedMerbleList;
                     if (!merbleList.Contains(chargedMerbleList[j]))
                     {

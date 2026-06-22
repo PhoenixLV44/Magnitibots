@@ -30,8 +30,6 @@ namespace Ability
         protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         
-        [SerializeField]protected GameObject aimingGuide;
-
         protected Merbles.Boss merbleBoss;
 
         public Boss MerbleBoss { get => merbleBoss; set => merbleBoss = value; }
