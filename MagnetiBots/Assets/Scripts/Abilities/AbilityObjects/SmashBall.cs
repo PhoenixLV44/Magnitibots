@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Merbles;
 using UnityEngine;
 
 namespace Ability.Object
@@ -78,11 +79,11 @@ namespace Ability.Object
                     {
                         if (!rb.useGravity)
                         {
-                            _merbleList[i].FloatTowardsObject(gameObject.transform, i);
+                            _merbleList[i].FloatTowardsObject(gameObject.transform.position, i, Merble.AbilityEnum.Smash);
                         }
                         else
                         {
-                            _merbleList[i].FloatTowardsObject(gameObject.transform, i, rb.linearVelocity.magnitude);
+                            _merbleList[i].FloatTowardsObject(gameObject.transform.position, i, Merble.AbilityEnum.Smash, rb.linearVelocity.magnitude);
                         }
                     }
                 }

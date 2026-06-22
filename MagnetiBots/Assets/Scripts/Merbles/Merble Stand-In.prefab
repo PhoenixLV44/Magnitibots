@@ -143,6 +143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Merbles.Merble
   myBoss: {fileID: 0}
   floatingSpeed: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!135 &5414890369579410839
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ namespace Ability.Object
         private RangeIndicator _rangeIndicator;
         [SerializeField] private float cursorSpeed = 0.75f;
         [SerializeField] private float objectSpeed = 5;
+        public float ObjectSpeed => objectSpeed;
 
         private void Start()
         {
