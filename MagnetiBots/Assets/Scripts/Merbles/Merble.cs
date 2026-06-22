@@ -111,7 +111,7 @@ namespace Merbles
             _agent.isStopped = false;
             _agent.destination = target;
             yield return new WaitUntil(() => _agent.hasPath);
-            yield return new WaitUntil(() => _agent.remainingDistance <= 0.5f);
+            yield return new WaitUntil(() => Vector3.Distance(transform.position, myBoss.transform.position) <= 0.5f);
             myBoss.merbleList.Remove(this);
             myBoss.ChargedMerbleList.Add(this);
             //_merblePool.Release(gameObject);
