@@ -102,7 +102,10 @@ namespace Merbles
         }
         public void StartCharge(Vector3 target)
         {
-            StartCoroutine(Charge(target));
+            if (!myBoss.ChargedMerbleList.Contains(this))
+            {
+                StartCoroutine(Charge(target));
+            }
         }
         IEnumerator Charge(Vector3 target)
         {
@@ -111,7 +114,7 @@ namespace Merbles
             _agent.isStopped = false;
             _agent.destination = target;
             yield return new WaitUntil(() => _agent.hasPath);
-            yield return new WaitUntil(() => Vector3.Distance(transform.position, myBoss.transform.position) <= 0.5f);
+            yield return new WaitUntil(() => Vector3.Distance(transform.position, myBoss.transform.position) <= 1);
             myBoss.merbleList.Remove(this);
             myBoss.ChargedMerbleList.Add(this);
             //_merblePool.Release(gameObject);

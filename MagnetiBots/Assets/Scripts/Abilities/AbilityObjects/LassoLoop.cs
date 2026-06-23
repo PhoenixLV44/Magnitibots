@@ -24,10 +24,11 @@ namespace Ability.Object
             }
 
             _lassoAbility.LoopBeingThrown = false;
-            if (Vector3.Distance(transform.position, target) >= 0)
+            if (Vector3.Distance(transform.position, startPos) > Vector3.Distance(startPos, target))
             {
-                transform.position = _lassoAbility.transform.position;
+                transform.position = startPos;
                 gameObject.SetActive(false);
+                _lassoAbility.MerbleBoss.FireMerbles();
             }
         }
 

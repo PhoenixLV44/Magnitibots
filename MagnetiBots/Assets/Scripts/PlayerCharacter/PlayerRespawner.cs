@@ -8,7 +8,7 @@ namespace Player
     public class Respawner : MonoBehaviour
     {
         private InputAction _respawnInput;
-        Vector3 _respawnPosition;
+        [SerializeField] Vector3 _respawnPosition;
         public Vector3 RespawnPosition { get { return _respawnPosition; } set { _respawnPosition = value; } }
         Controller _playerController;
         Movement _movement;
@@ -20,11 +20,15 @@ namespace Player
             _respawnPosition = transform.position;
             _playerController = GetComponent<Controller>();
             _movement = _playerController.Movement;
-            _boss = GetComponent<Merbles.Boss>();
+            
         }
 
         private void Update()
         {
+            if (!_boss)
+            {
+                _boss = GetComponent<Merbles.Boss>();
+            }
             if (_respawnInput.WasPressedThisFrame())
             {
                 Respawn();
