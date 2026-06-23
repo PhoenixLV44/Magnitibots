@@ -44,6 +44,10 @@ namespace Merbles
             floatingSpeed = _agent.speed;
             _rb = GetComponent<Rigidbody>();
             _chargedParticles = GetComponent<ParticleSystem>();
+            if (transform.parent != null)
+            {
+                parent = transform.parent;
+            }
         }
         public void SetPool(ObjectPool<GameObject> pool)
         {

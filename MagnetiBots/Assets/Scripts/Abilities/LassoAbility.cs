@@ -110,17 +110,21 @@ namespace Ability
 
             
             GameObject playerModel = transform.Find("PlayerModel").gameObject;
-            Vector3 target = playerModel.transform.forward * baseRange * merbleBoss.ChargedMerbleList.Count;
+            Vector3 target = transform.position;
+            target += playerModel.transform.forward * baseRange * merbleBoss.ChargedMerbleList.Count;
+            Debug.Log("Target: " + target);
             target.y = transform.position.y + 0.5f;
 
-            if (currentPowerLevel != 0)
+            if (currentPowerLevel >= 1)
             {
                 _lassoLoopObject.transform.rotation = playerModel.transform.rotation;
                 _lassoLoopObject.transform.parent = null;
                 _lassoLoopObject.SetActive(true);
                 _loopScript.StartMovement(transform.position,target);
             }
-            
+
+            currentPowerLevel = 0;
+
             /*
             RaycastHit hitInfo;
             Vector3 hitPoint;
@@ -129,7 +133,7 @@ namespace Ability
                 //Debug.Log("GOT AN OBJECT");
                 hitPoint = hitInfo.point;
                 Vector3 position = new Vector3(hitPoint.x, _lassoLoopObject.transform.position.y, hitPoint.z);
-                
+
                 _lassoLoopObject.transform.position = hitPoint;
                 _lassoLoopObject.transform.parent = null;
                 _lassoLoopObject.SetActive(true);

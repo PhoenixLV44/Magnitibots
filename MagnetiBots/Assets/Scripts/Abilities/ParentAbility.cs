@@ -16,8 +16,8 @@ namespace Ability
         protected bool isCharging;
         public bool IsCharging {get => isCharging; set => isCharging = value;}
         
-        protected float currentPowerLevel = 1;
-        protected float basePowerLevel = 1;
+        [SerializeField] protected float currentPowerLevel;
+        protected float basePowerLevel;
         public float BasePowerLevel => basePowerLevel;
         protected float baseRange;
         public float BaseRange => baseRange;
