@@ -35,7 +35,6 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            //Debug.Log("Start Lasso Charge");
             currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
@@ -45,34 +44,23 @@ namespace Ability
             Debug.Log("MAX POWER: " + maxPower);
             for (int i = 0; i < 5; i++)
             {
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging)
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[i].StartCharge(transform.position);
                 }
             }
 
             int j = 0;
-            //aimingGuide.SetActive(true);
             while (true)
             {
-                /*
-                if (currentPowerLevel < maxPowerLevel)
-                {
-                    currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
-                    
-                    rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel));
-                    
-                    yield return new WaitForSecondsRealtime(chargeTimer);
-                    merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-                    
-                    merbleBoss.merbleList[0].StartCharge(transform.position);
-                }
-                */
+                
                 currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
                 Debug.Log("Current PowerLevel: " + currentPowerLevel);
                 rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel));
-                
-                merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position))); 
+
+                merbleBoss.merbleList.Sort((a, b) =>
+                    Vector3.Distance(a.transform.position, transform.position)
+                        .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
                 Merble[] merbleArray = merbleBoss.merbleList.ToArray();
 
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging)
@@ -83,22 +71,8 @@ namespace Ability
                         //j++;
                     }
                 }
-                
+
                 yield return new WaitForSecondsRealtime(chargeTimer);
-                
-                /*if (currentPowerLevel < maxPower)
-                {
-                    foreach (var merble in merbleArray)
-                    {
-
-                            if (!merbleBoss.ChargedMerbleList.Contains(merble) && !merble.Charging)
-                            {
-                                merble.StartCharge(transform.position);
-                            }
-                    }
-                }*/
-
-                //yield return null;
             }
         }
 
