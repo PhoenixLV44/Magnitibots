@@ -26,31 +26,42 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            Debug.Log("Charging Smash");
-            /*
+            currentPowerLevel = 0;
             float chargeTimer = 0.5f;
-            yield return new WaitForSeconds(chargeTimer/2);
-            while (true)
+            rangeIndicator.DisableRangeIndicator();
+            
+            int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
+            merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            Debug.Log("MAX POWER: " + maxPower);
+            for (int i = 0; i < 5; i++)
             {
-                if (currentPowerLevel < maxPowerLevel)
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
-                    //Debug.Log("UPPING POWER LEVEL");
-                    currentPowerLevel += 0.25f;
-                    _smashBall.GetComponent<SmashBall>().IncreasePowerLevel(currentPowerLevel);
+                    merbleBoss.merbleList[i].StartCharge(transform.position);
                 }
-                yield return new WaitForSeconds(chargeTimer);
             }
-            */
-            maxPowerLevel = MerbleBoss.merbleList.Count;
-            //float merbleSpeed = 1.5f;
-            yield return new WaitUntil(() => MerbleBoss.ChargedMerbleList.Count > 0);
-            StartCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());
-            //yield return new WaitForSecondsRealtime(0.5f);
-            Debug.Log("Boop");
+
+            int j = 0;
             while (true)
             {
-                _smashBall.GetComponent<SmashBall>().MerbleList = merbleBoss.ChargedMerbleList;
-                yield return null;
+                
+                currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
+                Debug.Log("Current PowerLevel: " + currentPowerLevel);
+                merbleBoss.merbleList.Sort((a, b) =>
+                    Vector3.Distance(a.transform.position, transform.position)
+                        .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                Merble[] merbleArray = merbleBoss.merbleList.ToArray();
+
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging)
+                {
+                    merbleArray[j].StartCharge(transform.position);
+                    if (j < maxPower)
+                    {
+                        //j++;
+                    }
+                }
+
+                yield return new WaitForSecondsRealtime(chargeTimer);
             }
         }
 
