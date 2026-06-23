@@ -86,14 +86,19 @@ namespace Merbles
         }
         public void FireMerbles()
         {
-            for (int i = 0; i < chargedMerblesList.Count; i++)
+            Merble[] merbleArray = chargedMerblesList.ToArray();
+            for (int i = 0; i < merbleArray.Length; i++)
             {
-                merbleList[i].StopCharging();
+                merbleArray[i].StopCharging();
             }
             chargingMerbles = 0;
-            for (int i = 0; i < chargedMerblesList.Count; i++)
+            for (int i = 0; i < merbleList.Count; i++)
             {
                 //_merbles.Get();
+                if (merbleList[i].Charging)
+                {
+                    merbleList[i].StopCharging();
+                }
             }
             chargedMerbles = 0;
             merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position,transform.position)));
