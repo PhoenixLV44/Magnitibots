@@ -66,11 +66,13 @@ namespace Ability
             if (chargeCoroutine != null)
             {
                 StartCoroutine(chargeCoroutine);
+                controller.ChargingParticles.SetActive(true);
             }
             else
             {
                 chargeCoroutine = Charge();
                 StartCoroutine(chargeCoroutine);
+                controller.ChargingParticles.SetActive(true);
             }
         }
 
@@ -82,6 +84,7 @@ namespace Ability
                 //aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
+                controller.ChargingParticles.SetActive(false);
                 StopCoroutine(chargeCoroutine);
             }
         }

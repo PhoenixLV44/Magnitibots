@@ -28,6 +28,7 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
+            //controller.ChargingParticles.SetActive(true);
             currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
