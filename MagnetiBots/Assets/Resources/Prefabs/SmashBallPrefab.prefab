@@ -129,6 +129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SmashObject
   _powerLevel: 1
   triggerCollider: {fileID: 7980808266514985375}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!54 &9059259742896017739
 Rigidbody:
   m_ObjectHideFlags: 0

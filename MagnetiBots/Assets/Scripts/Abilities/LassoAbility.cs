@@ -17,7 +17,7 @@ namespace Ability
         private LayerMask _layerMask;
 
         private Interactable.Lever _lever;
-        public Interactable.Lever Lever => _lever;
+        public Interactable.Lever Lever { get; set; }
         
         [SerializeField] private float loopHeight;
 
