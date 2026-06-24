@@ -248,6 +248,9 @@ namespace Merbles
                     //Debug.Log("FLOATING");
                     transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
                     break;
+                case AbilityEnum.Propeller:
+                    transform.position = Vector3.Lerp(transform.position, vectorPos, Time.deltaTime * speed);
+                    break;
                 default:
                     Debug.LogError("Unknown AbilityEnum");
                     break;

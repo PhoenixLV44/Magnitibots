@@ -33,11 +33,11 @@ public class IdleState : GroundedState
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
 
-        if (InputSystem.actions.FindAction("Charge").IsPressed() || InputSystem.actions.FindAction("Jump").IsPressed())
+        if (InputSystem.actions.FindAction("Charge").IsPressed())
         {
             stateMachine.ChangeState(stateManager.ChargeState);
         }
-
+        
         if (moveInput != Vector2.zero)
         {
             stateMachine.ChangeState(stateManager.MovementState);
