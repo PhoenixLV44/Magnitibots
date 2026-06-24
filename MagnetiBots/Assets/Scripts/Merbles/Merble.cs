@@ -260,9 +260,21 @@ namespace Merbles
 
         public IEnumerator ReturnToPlayer()
         {
-            float distance = Vector3.Distance(transform.position, myBoss.transform.position);
-            while ((distance) > 1)
+            while (true)
             {
+                _agent.enabled = true;
+                if (!_agent.isOnNavMesh)
+                {
+                    _agent.enabled = false;
+                }
+                else
+                {
+                    _agent.destination = myBoss.transform.position;
+                    _agent.ResetPath();
+                    yield break;
+                }
+                
+                float distance = Vector3.Distance(transform.position, myBoss.transform.position);
                 //_agent.baseOffset = Mathf.Lerp(_agent.baseOffset, defaultOffset, _agent.speed * Time.deltaTime);
                 transform.position = Vector3.Slerp(transform.position, myBoss.transform.position, _agent.speed * Time.deltaTime);
                 distance = Vector3.Distance(transform.position, myBoss.transform.position);
@@ -272,9 +284,6 @@ namespace Merbles
             }
 
             floating = false;
-            _agent.enabled = true;
-            _agent.destination = myBoss.transform.position;
-            _agent.ResetPath();
         }
 
         private bool GroundCheck()

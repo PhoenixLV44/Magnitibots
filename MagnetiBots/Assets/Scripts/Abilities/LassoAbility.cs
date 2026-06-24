@@ -149,7 +149,7 @@ namespace Ability
 
         public void MoveLassoTarget(/*Vector2 direction*/)
         {
-            targetCursor.MoveObjectToCursor(_lassoLoopObject);
+            targetCursor.MoveObjectToCursor(_lassoLoopObject, this);
         }
         
         public void UnhookLasso()

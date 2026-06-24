@@ -19,6 +19,7 @@ namespace Ability.Object
 
         private List<Merbles.Merble> _merbleList;
         public List<Merbles.Merble> MerbleList { get => _merbleList; set => _merbleList = value; }
+        
         private Rigidbody rb;
 
         private void OnTriggerEnter(Collider other)
@@ -32,16 +33,18 @@ namespace Ability.Object
                 {
                     Destroy(target.gameObject);
                 }
+                else
+                {
+                    //_smashAbility.DeactivateBall();
+                }
+
             }
             else if (other.CompareTag("Ground"))
             {
+                Debug.Log("Ground");
+                _smashAbility.DeactivateBall();
+                _smashAbility.MerbleBoss.FireMerbles();
             }
-
-            foreach (Merbles.Merble merble in _merbleList)
-            {
-                
-            }
-            _smashAbility.DeactivateBall();
         }
 
         public void IncreasePowerLevel(float newPowerLevel)

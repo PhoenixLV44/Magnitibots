@@ -12,6 +12,8 @@ namespace Ability
         private GameObject _smashBall;
         //public GameObject SmashBall => _smashBall;
         private Rigidbody _smashBallRb;
+
+        private IEnumerator moveCursorRoutine;
         private void Start()
         {
             InitializeAbility();
@@ -69,7 +71,7 @@ namespace Ability
         {
             base.StartCharging();
             ActivateBall();
-            StartCoroutine(MoveCursor());
+            StartCoroutine(moveCursorRoutine);
         }
 
         public override void Fire()
@@ -86,6 +88,8 @@ namespace Ability
             _smashBall.GetComponent<SmashBall>().SmashAbility = this;
             _smashBall.name = "SmashBall";
             _smashBallRb = _smashBall.GetComponent<Rigidbody>();
+
+            moveCursorRoutine = MoveCursor();
             
             DeactivateBall();
         }
@@ -110,6 +114,8 @@ namespace Ability
 
             currentPowerLevel = basePowerLevel;
 
+            StartCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());
+
             //StartCoroutine(MoveCursor());
         }
 
@@ -122,14 +128,15 @@ namespace Ability
             {
                 merble.StopCharging();
             }
-
+            StopCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());
         }
         private void DropBall()
         {
+            //Debug.Log("DropBall");
             _smashBallRb.useGravity = true;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
+            StopCoroutine(moveCursorRoutine);
             targetCursor.DeactivateCursor();
-            StopCoroutine(MoveCursor());
             Cursor.lockState = CursorLockMode.None;
             StopCoroutine(Charge());
             //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
@@ -145,7 +152,7 @@ namespace Ability
             {
                 //Debug.Log("Move Cursor");
                 //targetCursor.MoveCursor();
-                targetCursor.MoveObjectToCursor(_smashBall);
+                targetCursor.MoveObjectToCursor(_smashBall, this);
                 yield return null;
             }
         }
