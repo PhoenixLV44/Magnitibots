@@ -34,7 +34,9 @@ namespace Merbles
         public bool Floating => floating;
         
         [SerializeField]LayerMask groundLayer;
-        private ParticleSystem _chargedParticles;
+        [SerializeField] private GameObject chargedParticles;
+        [SerializeField] private GameObject collectParticles;
+        public GameObject CollectParticles => collectParticles;
 
         [SerializeField] private Transform parent;
         private void Awake()
@@ -43,10 +45,19 @@ namespace Merbles
             _agent.enabled = false;
             floatingSpeed = _agent.speed;
             _rb = GetComponent<Rigidbody>();
-            _chargedParticles = GetComponent<ParticleSystem>();
             if (transform.parent != null)
             {
                 parent = transform.parent;
+            }
+
+            if (chargedParticles)
+            {
+                chargedParticles.SetActive(false);
+            }
+
+            if (collectParticles)
+            {
+                collectParticles.SetActive(false);
             }
         }
         public void SetPool(ObjectPool<GameObject> pool)
@@ -123,9 +134,9 @@ namespace Merbles
             myBoss.ChargedMerbleList.Add(this);
             //_merblePool.Release(gameObject);
 
-            if (_chargedParticles)
+            if (chargedParticles)
             {
-                _chargedParticles.Play();
+                chargedParticles.SetActive(true);
             }
             
             _agent.enabled = false;
@@ -145,9 +156,9 @@ namespace Merbles
             _agent.destination = myBoss.transform.position;
             _agent.ResetPath();
 
-            if (_chargedParticles)
+            if (chargedParticles)
             {
-                _chargedParticles.Stop();
+                chargedParticles.SetActive(false);
             }
 
             //Debug.Log("wow!");
@@ -260,9 +271,21 @@ namespace Merbles
 
         public IEnumerator ReturnToPlayer()
         {
-            float distance = Vector3.Distance(transform.position, myBoss.transform.position);
-            while ((distance) > 1)
+            while (true)
             {
+                _agent.enabled = true;
+                if (!_agent.isOnNavMesh)
+                {
+                    _agent.enabled = false;
+                }
+                else
+                {
+                    _agent.destination = myBoss.transform.position;
+                    _agent.ResetPath();
+                    yield break;
+                }
+                
+                float distance = Vector3.Distance(transform.position, myBoss.transform.position);
                 //_agent.baseOffset = Mathf.Lerp(_agent.baseOffset, defaultOffset, _agent.speed * Time.deltaTime);
                 transform.position = Vector3.Slerp(transform.position, myBoss.transform.position, _agent.speed * Time.deltaTime);
                 distance = Vector3.Distance(transform.position, myBoss.transform.position);
@@ -272,9 +295,6 @@ namespace Merbles
             }
 
             floating = false;
-            _agent.enabled = true;
-            _agent.destination = myBoss.transform.position;
-            _agent.ResetPath();
         }
 
         private bool GroundCheck()

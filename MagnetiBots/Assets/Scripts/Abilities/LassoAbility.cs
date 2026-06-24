@@ -17,7 +17,7 @@ namespace Ability
         private LayerMask _layerMask;
 
         private Interactable.Lever _lever;
-        public Interactable.Lever Lever => _lever;
+        public Interactable.Lever Lever { get; set; }
         
         [SerializeField] private float loopHeight;
 
@@ -63,7 +63,7 @@ namespace Ability
                         .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
                 Merble[] merbleArray = merbleBoss.merbleList.ToArray();
 
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging)
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging && merbleArray.Length > 0)
                 {
                     merbleArray[j].StartCharge(transform.position);
                     if (j < maxPower)
@@ -80,9 +80,6 @@ namespace Ability
         {
             isCharging = false;
             
-            Vector3 castPoint = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-
-            
             GameObject playerModel = transform.Find("PlayerModel").gameObject;
             Vector3 target = transform.position;
             target += playerModel.transform.forward * baseRange * merbleBoss.ChargedMerbleList.Count;
@@ -98,58 +95,11 @@ namespace Ability
             }
 
             currentPowerLevel = 0;
-
-            /*
-            RaycastHit hitInfo;
-            Vector3 hitPoint;
-             if (Physics.SphereCast(castPoint, 0.5f, playerModel.transform.forward, out hitInfo, baseRange * currentPowerLevel, _layerMask))
-            {
-                //Debug.Log("GOT AN OBJECT");
-                hitPoint = hitInfo.point;
-                Vector3 position = new Vector3(hitPoint.x, _lassoLoopObject.transform.position.y, hitPoint.z);
-
-                _lassoLoopObject.transform.position = hitPoint;
-                _lassoLoopObject.transform.parent = null;
-                _lassoLoopObject.SetActive(true);
-
-                if (hitInfo.collider.CompareTag("Lever"))
-                {
-                    lever = hitInfo.collider.GetComponent<Lever>();
-                    controller.RangeIndicator.DisableRangeIndicator();
-                    controller.LassoHooked = true;
-                }
-                else
-                {
-                    targetCursor.ActivateCursor(_lassoLoopObject.transform.position);
-
-                    hitInfo.collider.gameObject.transform.parent = _lassoLoopObject.transform;
-
-                    hitInfo.collider.gameObject.transform.localPosition = Vector3.zero;
-                    Rigidbody rb = hitInfo.collider.GetComponent<Rigidbody>();
-                    if (rb != null)
-                    {
-                        rb.useGravity = false;
-                    }
-                    controller.RangeIndicator.ChangeRangeSize((baseRange * maxPowerLevel) * 2);
-                    controller.LassoHooked = true;
-                }
-                StartCoroutine(_merbleLine);
-            }
-            else
-            {
-                controller.RangeIndicator.DisableRangeIndicator();
-                //Cursor.lockState =  CursorLockMode.None;
-                //Debug.Log("MISS");
-                if (!_lassoLoopObject.gameObject.activeSelf)
-                {
-                    merbleBoss.FireMerbles();
-                }
-            }*/
         }
 
         public void MoveLassoTarget(/*Vector2 direction*/)
         {
-            targetCursor.MoveObjectToCursor(_lassoLoopObject);
+            targetCursor.MoveObjectToCursor(_lassoLoopObject, this);
         }
         
         public void UnhookLasso()

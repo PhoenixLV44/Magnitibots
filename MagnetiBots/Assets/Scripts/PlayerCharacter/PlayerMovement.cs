@@ -60,7 +60,7 @@ namespace Player
             Vector3[] returnable = { movedir, lookdir };
             if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
-                _controller.StartJumpChannel();
+                //_controller.StartJumpChannel();
             }
 
             return returnable;

@@ -9,6 +9,13 @@ namespace Ability.Object
         private Ability.Lasso _lassoAbility;
         public Lasso LassoAbility {get => _lassoAbility; set => _lassoAbility = value; }
 
+        private LayerMask _lassoMask;
+
+        private void Start()
+        {
+            _lassoMask = LayerMask.GetMask("LassoTarget");
+        }
+
         public void StartMovement(Vector3 startPos,Vector3 target, float speed = 5)
         {
             StartCoroutine(MoveFoward(startPos, target, speed));
@@ -65,6 +72,23 @@ namespace Ability.Object
                 _lassoAbility.MerbleBoss.FireMerbles();
             }
 
+        }
+
+        private void Update()
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position,0.6f,  transform.forward, out hit, 1, _lassoMask))
+            {
+                if (hit.collider.CompareTag("Lever"))
+                {
+                    Debug.Log("Lever");
+                    _lassoAbility.Lever = hit.collider.GetComponent<Interactable.Lever>();
+                    _lassoAbility.Controller.LassoHooked = true;
+                    transform.position = hit.collider.transform.position;
+                    _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
+                    _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine); 
+                }
+            }
         }
     }
 }

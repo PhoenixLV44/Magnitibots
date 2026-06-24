@@ -62,6 +62,7 @@ namespace Merbles
         {
             merble.GetComponent<Merble>().SetPool(Merbles);
             merble.SetActive(true);
+            merble.GetComponent<Merble>().CollectParticles.SetActive(true);
         }
         private void OnReleaseMerble(GameObject merble)
         {

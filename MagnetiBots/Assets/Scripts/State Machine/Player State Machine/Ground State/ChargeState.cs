@@ -18,6 +18,15 @@ public class ChargeState : GroundedState
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+
+        if (_currentAbility == player.PropellerAbility && !player.CanUsePropeller)
+        {
+            //_currentAbility.Fire();
+            //stateMachine.ChangeState(stateManager.IdleState);
+        }
+        else
+        {
+        }
         _currentAbility.StartCharging();
         Cursor.lockState = CursorLockMode.None;
         /*player.Movement.CharacterController*/
@@ -37,14 +46,25 @@ public class ChargeState : GroundedState
         {
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
-        if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
+
+        if (_abilityManager.StateMachine.CurrentState == _abilityManager.LassoState || _abilityManager.StateMachine.CurrentState == _abilityManager.SmashState)
         {
-            _currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
+            if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
+            {
+                Debug.Log("AFHUFADSHJF");
+                _currentAbility.Fire();
+                stateMachine.ChangeState(stateManager.IdleState);
+            }
         }
-        if (InputSystem.actions.FindAction("Fire").IsPressed())
+        else if(_abilityManager.StateMachine.CurrentState == _abilityManager.PropellerState)
         {
+            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
+            {
+                _currentAbility.Fire();
+                stateMachine.ChangeState(stateManager.IdleState);
+            }
         }
+        
     }
 
     public override void LogicUpdate()

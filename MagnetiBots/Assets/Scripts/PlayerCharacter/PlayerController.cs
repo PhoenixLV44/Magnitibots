@@ -61,9 +61,9 @@ namespace Player
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
         private bool _canUsePropeller = false;
         public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
-
-        [SerializeField] private GameObject _merbleHolder;
-        public GameObject MerbleHolder => _merbleHolder;
+        
+        [SerializeField] private GameObject chargingParticles;
+        public GameObject ChargingParticles => chargingParticles;
 
         void Start()
         {
@@ -96,6 +96,8 @@ namespace Player
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
             
             _targetCursorObject = transform.Find("Target Cursor").gameObject;
+            
+            chargingParticles.SetActive(false);
         }
 
         // Update is called once per frame
@@ -138,7 +140,7 @@ namespace Player
                 if (!jumpLock)
                 {
                     jumpLock = true;
-                    StartCoroutine(JumpChanneling());
+                    //StartCoroutine(JumpChanneling());
                 }
             }
             else

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Merbles;
@@ -19,8 +20,9 @@ namespace Ability.Object
 
         private List<Merbles.Merble> _merbleList;
         public List<Merbles.Merble> MerbleList { get => _merbleList; set => _merbleList = value; }
+        
         private Rigidbody rb;
-
+        [SerializeField] private LayerMask groundLayer;
         private void OnTriggerEnter(Collider other)
         {
             triggerCollider.enabled = false;
@@ -32,16 +34,18 @@ namespace Ability.Object
                 {
                     Destroy(target.gameObject);
                 }
+                else
+                {
+                    _smashAbility.DeactivateBall();
+                }
+
             }
             else if (other.CompareTag("Ground"))
             {
+                Debug.Log("Ground");
+                _smashAbility.DeactivateBall();
+                _smashAbility.MerbleBoss.FireMerbles();
             }
-
-            foreach (Merbles.Merble merble in _merbleList)
-            {
-                
-            }
-            _smashAbility.DeactivateBall();
         }
 
         public void IncreasePowerLevel(float newPowerLevel)
@@ -88,6 +92,20 @@ namespace Ability.Object
                     }
                 }
                 yield return null;
+            }
+        }
+
+        private void Update()
+        {
+            RaycastHit hitInfo;
+            if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 1, groundLayer))
+            {
+                if (hitInfo.collider.CompareTag("Ground"))
+                {
+                    Debug.Log("Ground");
+                    _smashAbility.DeactivateBall();
+                    _smashAbility.MerbleBoss.FireMerbles();
+                }
             }
         }
     }
