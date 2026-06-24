@@ -103,7 +103,7 @@ namespace Player
         {
             if (InputSystem.actions.FindAction("Charge").triggered)
             {
-                StartCoroutine(ChannelingMerbles(transform.position));
+                //StartCoroutine(ChannelingMerbles(transform.position));
                 //_merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
