@@ -83,7 +83,7 @@ namespace Ability
             GameObject playerModel = transform.Find("PlayerModel").gameObject;
             Vector3 target = transform.position;
             target += playerModel.transform.forward * baseRange * merbleBoss.ChargedMerbleList.Count;
-            Debug.Log("Target: " + target);
+            //Debug.Log("Target: " + target);
             target.y = transform.position.y + 0.5f;
 
             if (currentPowerLevel >= 1)
@@ -150,6 +150,11 @@ namespace Ability
             else if (_lever.Activated && _lever.canBeDeactivated)
             {
                 _lever.DeactivateObject();
+            }
+
+            if (!_lever.PlayerInRange)
+            {
+                _lever.Pullalble = false;
             }
             _lever = null;
             UnhookLasso();

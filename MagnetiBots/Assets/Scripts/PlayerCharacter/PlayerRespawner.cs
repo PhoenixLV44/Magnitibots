@@ -1,7 +1,9 @@
 using System;
 using Merbles;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace Player
 {
@@ -51,9 +53,15 @@ namespace Player
             Debug.Log("Respawn");
             _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
-            foreach (var merble in _boss.merbleList)
+            
+            foreach (var merble in _boss.MasterList)
             {
-                merble.transform.position = _respawnPosition;
+                Vector2 rng = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                Vector3 newMerblePos = new Vector3(_respawnPosition.x + rng.x, _respawnPosition.y - 1, _respawnPosition.z + rng.y);
+                merble.gameObject.SetActive(false);
+                
+                merble.transform.position = newMerblePos;
+                merble.gameObject.SetActive(true);
             }
             _movement.CharacterController.enabled = true;
         }
