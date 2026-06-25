@@ -108,7 +108,7 @@ namespace Player
         {
             float jumpPower = jumpModifier == 0? jumpForce: jumpForce + (jumpForce * Mathf.Log(jumpModifier));
             //jumpPower = jumpForce + (1 * jumpModifier);
-            Debug.Log("jumping with power " + jumpPower);
+            //Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
         }
         
