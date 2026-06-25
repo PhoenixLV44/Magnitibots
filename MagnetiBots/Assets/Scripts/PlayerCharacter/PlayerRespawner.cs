@@ -13,13 +13,15 @@ namespace Player
         Controller _playerController;
         Movement _movement;
         Merbles.Boss _boss;
+        
+        [SerializeField] LayerMask respawnMask;
 
         private void Start()
         {
             _respawnInput = InputSystem.actions.FindAction("Respawn");
             _respawnPosition = transform.position;
             _playerController = GetComponent<Controller>();
-            _movement = _playerController.Movement;
+            _movement = GetComponent<Movement>();
             
         }
 
@@ -35,8 +37,14 @@ namespace Player
             }
         }
 
+        private void FixedUpdate()
+        {
+            CheckForRespawn();
+        }
+
         private void Respawn()
         {
+            Debug.Log("Respawn");
             _playerController.transform.position = _respawnPosition;
             foreach (var merble in _boss.merbleList)
             {
@@ -47,6 +55,16 @@ namespace Player
         {
             if (other.tag == "RespawnPlane")
             {
+                //Respawn();
+            }
+        }
+
+        void CheckForRespawn()
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast((transform.position), 0.5f, -Vector3.up, out hit, 1.5f, respawnMask))
+            {
+                //Debug.Log("Respawn Raycast");
                 Respawn();
             }
         }

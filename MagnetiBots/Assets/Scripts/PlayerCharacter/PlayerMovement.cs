@@ -205,6 +205,7 @@ namespace Player
         public void HandleMovement()
         {
             Vector3 intendedTotalMovement = HorizontalMotion() + VerticalMotion();
+            //Debug.Log(intendedTotalMovement);
             _characterController.Move(intendedTotalMovement * Time.deltaTime);
         }
     }

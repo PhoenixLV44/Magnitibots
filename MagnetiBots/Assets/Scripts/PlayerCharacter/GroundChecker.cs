@@ -17,7 +17,8 @@ namespace Player
             else
             {
                 //Debug.Log("cast did not find ground");
-                movement.Grounded = false;
+                if(movement)
+                    movement.Grounded = false;
             }
         }
     }
