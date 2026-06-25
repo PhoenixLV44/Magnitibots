@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
     <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-grow: 1; flex-direction: column; overflow: visible; display: flex; width: 1840px; height: 1112px; visibility: visible;">
-        <ui:Image source="project://database/Assets/Art%20Assets/UI/Main%20Menu/UI_logo.png?fileID=2800000&amp;guid=0c33d15f04429134a883bd659bfb107b&amp;type=3#UI_logo" scale-mode="ScaleToFit" style="height: 336px; width: 1856px;"/>
+        <ui:Image scale-mode="ScaleToFit" source="project://database/Assets/Art%20Assets/UI/Main%20Menu/Logo_Final2.png?fileID=2800000&amp;guid=2ba1af0bc62a6944e80fcc53d51e0c6a&amp;type=3#Logo_Final2" style="height: 336px; width: 1856px;"/>
         <ui:Button text="Start" name="StartButton" class="button" style="-unity-text-align: middle-center;"/>
         <ui:Button text="Controls" name="ControlsButton" class="button"/>
         <ui:Button text="Settings" name="SettingsButton" class="button"/>

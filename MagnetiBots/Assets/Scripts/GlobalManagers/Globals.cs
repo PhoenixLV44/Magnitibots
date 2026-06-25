@@ -40,4 +40,6 @@ public class Globals : MonoBehaviour
     private SettingsManager _setInstance;
     public SettingsManager Settings { get { return _setInstance; } }
     #endregion
+
+    public bool paused = false;
 }
