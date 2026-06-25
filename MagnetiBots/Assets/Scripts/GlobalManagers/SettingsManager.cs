@@ -101,7 +101,10 @@ public class SettingsManager : MonoBehaviour
         UpdateSettingsSliders();
         UpdatePauseSliders();
     }
-
+    private void Start()
+    {
+        Globals.Managers.Audio.FullVolumeUpdate();
+    }
     public void ChangeVolumeCallback(ChangeEvent<float> evt, Destination destination)
     {
         Globals.Managers.Audio.UpdateVolumes(destination, evt.newValue);
@@ -133,6 +136,7 @@ public class SettingsManager : MonoBehaviour
     {
         float volumeHolder;
 
+        #region Volumes
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
@@ -164,14 +168,12 @@ public class SettingsManager : MonoBehaviour
         {
             MasterVolume = volumeHolder;
             pause_MasterVolumeSlider.value = MasterVolume;
-            Debug.Log("success!");
         }
         else
         {
             MasterVolume = 1;
             Globals.Managers.Saves.AddData<float>("MasterVolume", MasterVolume);
             pause_MasterVolumeSlider.value = MasterVolume;
-            Debug.Log("failure");
         }
 
         //UIVolume
@@ -187,11 +189,26 @@ public class SettingsManager : MonoBehaviour
             pause_UIVolumeSlider.value = UIVolume;
         }
         Globals.Managers.Audio.FullVolumeUpdate();
+        #endregion
+
+        //MouseSensitivity
+        if (Globals.Managers.Saves.GetData<float>("MouseSensitivity", out volumeHolder))
+        {
+            MouseSensitivity = volumeHolder;
+            MouseSensitivitySlider.value = MouseSensitivity;
+        }
+        else
+        {
+            UIVolume = 1;
+            Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
+            MouseSensitivitySlider.value = MouseSensitivity;
+        }
     }
     private void UpdateSettingsSliders()
     {
         float volumeHolder;
 
+        #region Volumes
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
@@ -223,14 +240,12 @@ public class SettingsManager : MonoBehaviour
         {
             MasterVolume = volumeHolder;
             MasterVolumeSlider.value = MasterVolume;
-            Debug.Log("success!");
         }
         else
         {
             MasterVolume = 1;
             Globals.Managers.Saves.AddData<float>("MasterVolume", MasterVolume);
             MasterVolumeSlider.value = MasterVolume;
-            Debug.Log("failure");
         }
 
         //UIVolume
@@ -246,5 +261,19 @@ public class SettingsManager : MonoBehaviour
             UIVolumeSlider.value = UIVolume;
         }
         Globals.Managers.Audio.FullVolumeUpdate();
+        #endregion
+
+        //MouseSensitivity
+        if (Globals.Managers.Saves.GetData<float>("MouseSensitivity", out volumeHolder))
+        {
+            MouseSensitivity = volumeHolder;
+            MouseSensitivitySlider.value = MouseSensitivity;
+        }
+        else
+        {
+            UIVolume = 1;
+            Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
+            MouseSensitivitySlider.value = MouseSensitivity;
+        }
     }
 }

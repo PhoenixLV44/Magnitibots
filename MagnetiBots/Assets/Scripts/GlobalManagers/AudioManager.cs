@@ -102,8 +102,13 @@ public class AudioManager : MonoBehaviour
         switch (destination)
         {
             case AudioSettings.Destination.Master:
+                Debug.Log(volume);
                 Globals.Managers.Settings.MasterVolume = value;
-                audioMixer.SetFloat("Master_Volume", volume);
+                if (audioMixer.SetFloat("Master_Volume", volume))
+                {
+                    Debug.Log("yippee!");
+                }
+                ;
                 break;
             case AudioSettings.Destination.SFX:
                 Globals.Managers.Settings.SFXVolume = value;
@@ -123,10 +128,10 @@ public class AudioManager : MonoBehaviour
     public void FullVolumeUpdate()
     {
         Debug.Log(Globals.Managers.Settings.MasterVolume);
-        audioMixer.SetFloat("Master_Volume", Globals.Managers.Settings.MasterVolume);
-        audioMixer.SetFloat("BGM_Volume", Globals.Managers.Settings.BGMVolume);
-        audioMixer.SetFloat("SFX_Volume", Globals.Managers.Settings.SFXVolume);
-        audioMixer.SetFloat("UI_Volume", Globals.Managers.Settings.UIVolume);
+        UpdateVolumes(AudioSettings.Destination.BGM, Globals.Managers.Settings.BGMVolume);
+        UpdateVolumes(AudioSettings.Destination.Master, Globals.Managers.Settings.MasterVolume);
+        UpdateVolumes(AudioSettings.Destination.SFX, Globals.Managers.Settings.SFXVolume);
+        UpdateVolumes(AudioSettings.Destination.UI, Globals.Managers.Settings.UIVolume);
     }
     public void UpdateBGM(string clipName)
     {
