@@ -15,8 +15,7 @@ namespace Merbles
                 hitMerble.myBoss = boss;
                 hitMerble.SetPool(boss.Merbles);
                 hitMerble.SetFollowType(boss.MerbleFollowType);
-                boss.currentMerbles++;
-                hitMerble.GetComponent<NavMeshAgent>().avoidancePriority = 10+boss.currentMerbles;
+                hitMerble.GetComponent<NavMeshAgent>().avoidancePriority = 10+boss.MasterList.Count;
             }
         }
     }

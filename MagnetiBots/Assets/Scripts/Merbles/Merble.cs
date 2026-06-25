@@ -124,7 +124,7 @@ namespace Merbles
         }
         IEnumerator Charge(Vector3 target)
         {
-            Debug.Log("MerbleCharging");
+            //Debug.Log("MerbleCharging");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
@@ -140,8 +140,7 @@ namespace Merbles
             }
             
             _agent.enabled = false;
-            myBoss.chargingMerbles--;
-            myBoss.chargedMerbles++;
+            myBoss.CheckForDuplicates(myBoss.ChargedMerbleList);
         }
         public void StopCharging()
         {
@@ -171,7 +170,7 @@ namespace Merbles
             {
                 myBoss.merbleList.Add(this);
             }
-
+            myBoss.CheckForDuplicates(myBoss.merbleList);
             _currentAbilityEnum = AbilityEnum.None;
             StopAllCoroutines();
         }
@@ -230,6 +229,10 @@ namespace Merbles
 
         public void FloatTowardsObject(Vector3 vectorPos, float index, AbilityEnum currentAbility, float speed = 2.5f)
         {
+            if (currentAbility == AbilityEnum.Lasso || currentAbility == AbilityEnum.Propeller)
+            {
+                
+            }
             switch (currentAbility)
             {
                 case AbilityEnum.Lasso:
