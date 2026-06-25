@@ -1,0 +1,49 @@
+:root {
+    position: relative;
+}
+
+.header {
+    width: auto;
+    font-size: 174px;
+    -unity-text-align: upper-center;
+}
+
+.button {
+    font-size: 35px;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 162px;
+}
+
+.SettingsMenu {
+    position: absolute;
+    visibility: visible;
+}
+
+.MainMenu {
+    position: absolute;
+}
+
+.ControlsMenu {
+    position: absolute;
+    visibility: visible;
+}
+
+.settingSlider {
+    align-self: auto;
+    align-items: center;
+    font-size: 39px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    -unity-text-align: upper-center;
+    align-content: auto;
+    max-width: none;
+    right: auto;
+    left: auto;
+    min-width: 836px;
+}

@@ -102,15 +102,19 @@ public class AudioManager : MonoBehaviour
         switch (destination)
         {
             case AudioSettings.Destination.Master:
+                Globals.Managers.Settings.MasterVolume = value;
                 audioMixer.SetFloat("Master_Volume", volume);
                 break;
             case AudioSettings.Destination.SFX:
+                Globals.Managers.Settings.SFXVolume = value;
                 audioMixer.SetFloat("SFX_Volume", volume);
                 break;
             case AudioSettings.Destination.BGM:
+                Globals.Managers.Settings.BGMVolume = value;
                 audioMixer.SetFloat("BGM_Volume", volume);
                 break;
             case AudioSettings.Destination.UI:
+                Globals.Managers.Settings.UIVolume = value;
                 audioMixer.SetFloat("UI_Volume", volume);
                 break;
             default: break;
