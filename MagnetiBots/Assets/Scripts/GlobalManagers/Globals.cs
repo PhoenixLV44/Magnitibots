@@ -17,9 +17,9 @@ public class Globals : MonoBehaviour
         }
         #endregion
 
-        _sInstance = new SaveManager();
-        _aInstance = new AudioManager();
-        _setInstance = new SettingsManager();
+        _sInstance = gameObject.AddComponent<SaveManager>();
+        _aInstance = gameObject.AddComponent<AudioManager>();
+        _setInstance = gameObject.AddComponent<SettingsManager>();
 
         Saves.LateAwake();
         Settings.LateAwake();
@@ -40,4 +40,6 @@ public class Globals : MonoBehaviour
     private SettingsManager _setInstance;
     public SettingsManager Settings { get { return _setInstance; } }
     #endregion
+
+    public bool paused = false;
 }
