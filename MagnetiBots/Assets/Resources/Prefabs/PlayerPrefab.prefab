@@ -586,7 +586,7 @@ GameObject:
   - component: {fileID: 5303230749335911064}
   m_Layer: 6
   m_Name: PlayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -680,7 +680,6 @@ MonoBehaviour:
   merbleFollowType: 1
   chargingParticles: {fileID: 5113423678552748251}
   superJumpPoint: {fileID: 4496413624167517707}
-  channelTarget: {x: 0, y: 0, z: 0}
   jumpLock: 0
 --- !u!114 &3686224252282532151
 MonoBehaviour:
@@ -695,6 +694,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Respawner
   _respawnPosition: {x: 0, y: 0, z: 0}
+  respawnMask:
+    serializedVersion: 2
+    m_Bits: 32768
 --- !u!143 &5303230749335911064
 CharacterController:
   m_ObjectHideFlags: 0

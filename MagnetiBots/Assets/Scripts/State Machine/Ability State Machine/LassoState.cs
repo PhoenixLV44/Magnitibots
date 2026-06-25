@@ -26,10 +26,6 @@ namespace Ability
             {
                 stateMachine.ChangeState(stateManager.SmashState);
             }
-            if (InputSystem.actions.FindAction("Jump").IsPressed() && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState)
-            {
-                stateMachine.ChangeState(stateManager.PropellerState);
-            }
         }
     }
 }

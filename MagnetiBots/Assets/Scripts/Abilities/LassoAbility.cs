@@ -17,7 +17,7 @@ namespace Ability
         private LayerMask _layerMask;
 
         private Interactable.Lever _lever;
-        public Interactable.Lever Lever { get; set; }
+        public Interactable.Lever Lever { get => _lever; set => _lever = value; }
         
         [SerializeField] private float loopHeight;
 
@@ -83,7 +83,7 @@ namespace Ability
             GameObject playerModel = transform.Find("PlayerModel").gameObject;
             Vector3 target = transform.position;
             target += playerModel.transform.forward * baseRange * merbleBoss.ChargedMerbleList.Count;
-            Debug.Log("Target: " + target);
+            //Debug.Log("Target: " + target);
             target.y = transform.position.y + 0.5f;
 
             if (currentPowerLevel >= 1)
@@ -111,7 +111,10 @@ namespace Ability
                 GameObject loopedObject = _lassoLoopObject.transform.GetChild(0).gameObject;
                 _lassoLoopObject.transform.parent = transform;
                 Rigidbody rb = loopedObject.GetComponent<Rigidbody>();
-                rb.useGravity = true;
+                if (rb)
+                {
+                    rb.useGravity = true;
+                }
                 loopedObject.transform.parent = null;
             }
             
@@ -148,6 +151,11 @@ namespace Ability
             {
                 _lever.DeactivateObject();
             }
+
+            if (!_lever.PlayerInRange)
+            {
+                _lever.Pullalble = false;
+            }
             _lever = null;
             UnhookLasso();
         }
@@ -173,7 +181,7 @@ namespace Ability
                 merbleBoss.merbleList = merbleList;
         
                 float chargedCount = chargedMerbleList.Count;
-                Debug.Log("DISTANCE/CHARGECOUNT = " + distance/chargedCount);
+                //Debug.Log("DISTANCE/CHARGECOUNT = " + distance/chargedCount);
 
                 if (distance / chargedCount > 1.5f)
                 {

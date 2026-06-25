@@ -61,7 +61,7 @@ namespace Player
             Vector3[] returnable = { movedir, lookdir };
             if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
-                //_controller.StartJumpChannel();
+                _controller.StartJumpChannel();
             }
             
             return returnable;
@@ -108,7 +108,7 @@ namespace Player
         {
             float jumpPower = jumpModifier == 0? jumpForce: jumpForce + (jumpForce * Mathf.Log(jumpModifier));
             //jumpPower = jumpForce + (1 * jumpModifier);
-            Debug.Log("jumping with power " + jumpPower);
+            //Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
         }
         
@@ -205,6 +205,7 @@ namespace Player
         public void HandleMovement()
         {
             Vector3 intendedTotalMovement = HorizontalMotion() + VerticalMotion();
+            //Debug.Log(intendedTotalMovement);
             _characterController.Move(intendedTotalMovement * Time.deltaTime);
         }
     }

@@ -18,15 +18,7 @@ public class ChargeState : GroundedState
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-
-        if (_currentAbility == player.PropellerAbility && !player.CanUsePropeller)
-        {
-            //_currentAbility.Fire();
-            //stateMachine.ChangeState(stateManager.IdleState);
-        }
-        else
-        {
-        }
+        
         _currentAbility.StartCharging();
         Cursor.lockState = CursorLockMode.None;
         /*player.Movement.CharacterController*/
