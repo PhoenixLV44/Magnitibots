@@ -9,12 +9,14 @@ namespace Ability
     {
         private Player.Movement _playerMovement;
         private GameObject _superJumpPoint;
+        IEnumerator _rotateCoroutine;
         
         private void Start()
         {
             activateInput = InputSystem.actions.FindAction("ActivatePropeller");
             chargeInput = InputSystem.actions.FindAction("Charge");
             fireInput = InputSystem.actions.FindAction("Fire");
+            InitializeAbility();
         }
 
         public override void Activate()
@@ -25,8 +27,8 @@ namespace Ability
         public override IEnumerator Charge()
         {
             //controller.ChargingParticles.SetActive(true);
-            StartCoroutine(RotateSuperJumpPoint());
-            currentPowerLevel = 0;
+            //StartCoroutine(_rotateCoroutine);
+            /*currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
 
@@ -64,13 +66,15 @@ namespace Ability
                     }
                 }
 
-                yield return new WaitForSecondsRealtime(chargeTimer);
             }
+                yield return new WaitForSecondsRealtime(chargeTimer);
+            */
+            yield return null;
         }
 
         public override void Fire()
         {
-            int merbleCount = merbleBoss.merbleList.Count > 0 ? merbleBoss.merbleList.Count : 0;
+            /*int merbleCount = merbleBoss.merbleList.Count > 0 ? merbleBoss.merbleList.Count : 0;
             if (_playerMovement.Grounded)
             {
                 _playerMovement.Jump(merbleCount);
@@ -78,20 +82,32 @@ namespace Ability
             /*if (merbleBoss.ChargedMerbleList.Count >= 10)
             {
                 _playerMovement.Gliding = true;
-            }*/
-            StopCharging();
+            }#1#
+            StopCharging();*/
         }
 
         public override void StartCharging()
         {
-            if (controller.CanUsePropeller)
+            /*if (controller.CanUsePropeller)
             {
-                base.StartCharging();
+                if (chargeCoroutine != null)
+                {
+                    StartCoroutine(chargeCoroutine);
+                    controller.ChargingParticles.SetActive(true);
+                }
+                else
+                {
+                    chargeCoroutine = Charge();
+                    StartCoroutine(chargeCoroutine);
+                    controller.ChargingParticles.SetActive(true);
+                }            
             }
             else
             {
+                Debug.Log("Can't charge propeller");
                 _playerMovement.Jump(0);
-            }
+                StopCharging();
+            }*/
         }
 
         public override void StopCharging()
@@ -100,14 +116,20 @@ namespace Ability
         }
         protected override void InitializeAbility()
         {
+            /*
             base.InitializeAbility();
             _playerMovement = GetComponent<Player.Movement>();
             _superJumpPoint = transform.GetChild(6).gameObject;
             maxPowerLevel = 10;
+            _rotateCoroutine = RotateSuperJumpPoint();
+            StartCoroutine(_rotateCoroutine);
+            */
+
         }
 
         private IEnumerator RotateSuperJumpPoint()
         {
+            Debug.Log("RotateSuperJumpPoint");
             Transform[] merblePoints = new Transform[10];
             for (int i = 0; i < merblePoints.Length; i++)
             {

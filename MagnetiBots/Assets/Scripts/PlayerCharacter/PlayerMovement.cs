@@ -11,9 +11,10 @@ namespace Player
         public float jumpForce = 10f;
         float _glidingSpeed = 1f;
         bool _gravityOn;
-        private CharacterController cc;
-        private Vector3 currentVelocity;
-        private float playerMass = 5f;
+        private CharacterController _characterController;
+        public CharacterController CharacterController => _characterController;
+        private Vector3 _currentVelocity;
+        private float _playerMass = 5f;
         public float maxMoveSpeed = 10f;
 
         private float _defaultMoveSpeed = 10f;
@@ -35,7 +36,7 @@ namespace Player
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
-            cc = GetComponent<CharacterController>();
+            _characterController = GetComponent<CharacterController>();
             model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
@@ -62,7 +63,7 @@ namespace Player
             {
                 //_controller.StartJumpChannel();
             }
-
+            
             return returnable;
         }
         /// <summary>
@@ -79,7 +80,7 @@ namespace Player
             currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 40 * Time.deltaTime);
             cc.Move(currentVelocity * Time.deltaTime);
             */
-            submittedMovement = targetVelocity;
+            _submittedMovement = targetVelocity;
         }
         /// <summary>
         /// Called in every player state currently implemented
@@ -101,13 +102,16 @@ namespace Player
                 model.rotation = Quaternion.LookRotation(input, Vector3.up);
             }
         }
+        
+        float _submittedJump = 0;
         public void Jump(int jumpModifier)
         {
-            float jumpPower = jumpForce + (jumpForce * Mathf.Log(jumpModifier + 1));
+            float jumpPower = jumpModifier == 0? jumpForce: jumpForce + (jumpForce * Mathf.Log(jumpModifier));
+            //jumpPower = jumpForce + (1 * jumpModifier);
             Debug.Log("jumping with power " + jumpPower);
-            submittedJump = jumpPower;
+            _submittedJump = jumpPower;
         }
-        float submittedJump = 0;
+        
         /// <summary>
         /// Calculate the vertical motion of the character at once, rather than applying two moves seperately. Combined in HandleMovement().
         /// </summary>
@@ -122,24 +126,24 @@ namespace Player
                 intendedVerticalForce -= Physics.gravity.magnitude;
             }
             //the force of glide
-            if (_isGliding && !Grounded)
+            else if (_isGliding && !Grounded)
             {
                 intendedVerticalForce -= _glidingSpeed;
             }
             //the force of jump
-            if (submittedJump != 0)
+            if (_submittedJump != 0)
             {
-                intendedVerticalForce += submittedJump;
-                submittedJump = 0;
+                intendedVerticalForce += _submittedJump;
+                _submittedJump = 0;
                 _controller.jumpLock = false;
             }
 
             //calculate acceleration from force
             Vector3 intendedVerticalAcceleration = Vector3.zero;
-            intendedVerticalAcceleration.y += intendedVerticalForce/playerMass;
+            intendedVerticalAcceleration.y += intendedVerticalForce/_playerMass;
 
             //calculate speed from acceleration
-            Vector3 intendedVerticalSpeed = new Vector3(0,cc.velocity.y,0);
+            Vector3 intendedVerticalSpeed = new Vector3(0,_characterController.velocity.y,0);
             intendedVerticalSpeed += intendedVerticalAcceleration;
 /*
             Debug.Log(intendedVerticalSpeed);
@@ -148,7 +152,8 @@ namespace Player
             //move a distance based on the speed
             return intendedVerticalSpeed;
         }
-        Vector3 submittedMovement;
+        
+        Vector3 _submittedMovement;
         /// <summary>
         /// Calculate the horizontal movement of the character at once, instead of doing Move and Friction seperately. Combined in HandleMovement()
         /// </summary>
@@ -157,13 +162,13 @@ namespace Player
         {
             //calculate forces
             Vector3 intendedHorizontalForce = Vector3.zero;
-            Vector3 ccHorizontal = new Vector3(cc.velocity.x,0,cc.velocity.z);
+            Vector3 ccHorizontal = new Vector3(_characterController.velocity.x,0,_characterController.velocity.z);
 
             //the force of movement
-            if (submittedMovement != Vector3.zero) 
+            if (_submittedMovement != Vector3.zero) 
             {
-                intendedHorizontalForce += submittedMovement;
-                submittedMovement = Vector3.zero;
+                intendedHorizontalForce += _submittedMovement;
+                _submittedMovement = Vector3.zero;
             }
 
             //the force of friction
@@ -182,7 +187,7 @@ namespace Player
 
             //calculate acceleration from force
             Vector3 intendedHorizontalAcceleration = Vector3.zero;
-            intendedHorizontalAcceleration += intendedHorizontalForce / playerMass;
+            intendedHorizontalAcceleration += intendedHorizontalForce / _playerMass;
 
             //calculate speed from acceleration
             Vector3 intendedHorizontalSpeed = ccHorizontal;
@@ -200,7 +205,7 @@ namespace Player
         public void HandleMovement()
         {
             Vector3 intendedTotalMovement = HorizontalMotion() + VerticalMotion();
-            cc.Move(intendedTotalMovement * Time.deltaTime);
+            _characterController.Move(intendedTotalMovement * Time.deltaTime);
         }
     }
 }

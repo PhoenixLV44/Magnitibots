@@ -65,6 +65,13 @@ namespace Player
         [SerializeField] private GameObject chargingParticles;
         public GameObject ChargingParticles => chargingParticles;
 
+        [SerializeField] private SuperJumpPoint superJumpPoint;
+
+        private IEnumerator _chargeJump;
+        private IEnumerator _spinMerbles;
+        bool _jumping = false;
+        public bool Jumping => _jumping;
+
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
@@ -98,6 +105,12 @@ namespace Player
             _targetCursorObject = transform.Find("Target Cursor").gameObject;
             
             chargingParticles.SetActive(false);
+
+            _chargeJump = JumpCharging();
+            _spinMerbles = superJumpPoint.MoveMerblesCoroutine;
+
+            superJumpPoint.PlayerController = this;
+            superJumpPoint.MerbleBoss = _merbleBoss;
         }
 
         // Update is called once per frame
@@ -114,24 +127,7 @@ namespace Player
         {
             _movement.HandleMovement();
         }
-        public Vector3 channelTarget;
-        IEnumerator ChannelingMerbles(Vector3 changeTarget)
-        {
-            channelTarget = changeTarget;
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, channelTarget).CompareTo(Vector3.Distance(b.transform.position, channelTarget)));
-            while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
-            {
-                if (!InputSystem.actions.FindAction("Charge").IsPressed())
-                {
-                    //_merbleBoss.FireMerbles();
-                    break;
-                }
-                _merbleBoss.ChargeMerble(changeTarget);
-                yield return new WaitForSeconds(1);
-            }
-            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
-            //_merbleBoss.FireMerbles();
-        }
+
         public bool jumpLock;
         public void StartJumpChannel()
         {
@@ -140,7 +136,9 @@ namespace Player
                 if (!jumpLock)
                 {
                     jumpLock = true;
-                    //StartCoroutine(JumpChanneling());
+                    StartCoroutine(_chargeJump);
+                    StartCoroutine(CheckForJumpRelease());
+                    StartCoroutine(_spinMerbles);
                 }
             }
             else
@@ -158,45 +156,63 @@ namespace Player
         IEnumerator BaseJump()
         {
             _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
+            yield return new WaitUntil(() => (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame()));
             _movement.Jump(0);
         }
-        IEnumerator JumpChanneling()
+        IEnumerator JumpCharging()
         {
+            superJumpPoint.IsCharging = true;
+            chargingParticles.SetActive(true);
+            //StartCoroutine(_spinMerbles);
+            //Debug.Log("jump charging");
+            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+
+            while (_merbleBoss.ChargedMerbleList.Count <= 10)
             {
-                Debug.Log("jump charging");
-                _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-                while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
+                //_merbleBoss.CheckForDuplicates();
+                /*if (!InputSystem.actions.FindAction("Jump").IsPressed())
                 {
-                    if (!InputSystem.actions.FindAction("Jump").IsPressed())
+                    _movement.Jump(_merbleBoss.ChargedMerbleList.Count);
+                    if(_merbleBoss.ChargedMerbleList.Count>0)
                     {
-                        _movement.Jump(_merbleBoss.chargedMerbles);
-                        if(_merbleBoss.chargedMerbles>0)
-                        {
-                            _movement.Gliding = true;
-                            yield return new WaitUntil(() => !_movement.Grounded);
-                            Debug.Log("gliding");
-                            yield return new WaitUntil(() => _movement.Grounded);
-                            _movement.Gliding = false;
-                        }
-                        _merbleBoss.FireMerbles();
-                        break;
+                        _movement.Gliding = true;
+                        yield return new WaitUntil(() => !_movement.Grounded);
+                        Debug.Log("gliding");
+                        yield return new WaitUntil(() => _movement.Grounded);
+                        _movement.Gliding = false;
                     }
-                    _merbleBoss.ChargeMerble(transform.position);
-                    yield return new WaitForSeconds(1);
-                }
-                yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
-                _movement.Jump(_merbleBoss.chargedMerbles);
-                if (_merbleBoss.chargedMerbles > 0)
+                    _merbleBoss.FireMerbles();
+                    break;
+                }*/
+
+                if (!_merbleBoss.ChargedMerbleList.Contains(_merbleBoss.merbleList[0]) && _merbleBoss.ChargedMerbleList.Count < 10)
                 {
-                    _movement.Gliding = true;
-                    yield return new WaitUntil(() => !_movement.Grounded);
-                    Debug.Log("gliding");
-                    yield return new WaitUntil(() => _movement.Grounded);
-                    _movement.Gliding = false;
+                    _merbleBoss.merbleList[0].StartCharge(transform.position);
                 }
-                _merbleBoss.FireMerbles();
+                yield return new WaitForSeconds(0.5f);
+                //_merbleBoss.ChargeMerble(transform.position);
             }
+        }
+        IEnumerator CheckForJumpRelease()
+        {
+            yield return new WaitUntil(() =>  (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame()));
+            int jumpPowerMult = _merbleBoss.ChargedMerbleList.Count;
+            
+            StopCoroutine(_chargeJump);
+            chargingParticles.SetActive(false);
+            
+            _movement.Jump(jumpPowerMult);
+        
+            yield return new WaitUntil(() => !_movement.Grounded);
+            if (jumpPowerMult > 5)
+                _movement.Gliding = true; Debug.Log("GLIDING");
+            
+            yield return new WaitUntil(() => _movement.Grounded);
+            Debug.Log("BEE BOOP");
+            _merbleBoss.FireMerbles();
+            StopCoroutine(_spinMerbles);
+            superJumpPoint.IsCharging = false;
+            _movement.Gliding = false;
         }
     }
 }

@@ -431,6 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 666754257231696287}
+  - component: {fileID: 4496413624167517707}
   m_Layer: 0
   m_Name: SuperJumpPoint
   m_TagString: Untagged
@@ -463,6 +464,19 @@ Transform:
   - {fileID: 3748574994513637588}
   m_Father: {fileID: 128776154970847861}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4496413624167517707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4779996245836140771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa924a44c7e599418d0a166b7b44f53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuperJumpPoint
+  rotationSpeed: 1.5
 --- !u!1 &6074950599130136089
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,10 +675,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   movementSpeed: 10
-  jumpForce: 250
+  jumpForce: 100
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
   merbleFollowType: 1
   chargingParticles: {fileID: 5113423678552748251}
+  superJumpPoint: {fileID: 4496413624167517707}
   channelTarget: {x: 0, y: 0, z: 0}
   jumpLock: 0
 --- !u!114 &3686224252282532151

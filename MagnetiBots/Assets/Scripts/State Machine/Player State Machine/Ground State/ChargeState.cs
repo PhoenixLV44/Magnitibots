@@ -47,24 +47,12 @@ public class ChargeState : GroundedState
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
 
-        if (_abilityManager.StateMachine.CurrentState == _abilityManager.LassoState || _abilityManager.StateMachine.CurrentState == _abilityManager.SmashState)
+        if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
-            if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
-            {
-                Debug.Log("AFHUFADSHJF");
-                _currentAbility.Fire();
-                stateMachine.ChangeState(stateManager.IdleState);
-            }
+            //Debug.Log("AFHUFADSHJF");
+            _currentAbility.Fire();
+            stateMachine.ChangeState(stateManager.IdleState);
         }
-        else if(_abilityManager.StateMachine.CurrentState == _abilityManager.PropellerState)
-        {
-            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
-            {
-                _currentAbility.Fire();
-                stateMachine.ChangeState(stateManager.IdleState);
-            }
-        }
-        
     }
 
     public override void LogicUpdate()
