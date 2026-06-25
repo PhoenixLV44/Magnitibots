@@ -346,7 +346,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
   m_Height: 2.86
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -1759,6 +1759,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestLever
       objectReference: {fileID: 0}
+    - target: {fileID: 6962055658659196927, guid: 64700331602a6e54d9dcf15564094bcd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6962055658659196927, guid: 64700331602a6e54d9dcf15564094bcd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2101,10 +2109,6 @@ PrefabInstance:
     - target: {fileID: 128776154970847861, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3686224252282532151, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
-      propertyPath: respawnMask.m_Bits
-      value: 32768
       objectReference: {fileID: 0}
     - target: {fileID: 8043479003321384820, guid: 561d4fdf214aa0448a8f38b5111a25c8, type: 3}
       propertyPath: m_Name
