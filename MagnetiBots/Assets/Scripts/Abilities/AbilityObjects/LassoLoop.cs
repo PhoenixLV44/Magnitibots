@@ -87,6 +87,7 @@ namespace Ability.Object
                     transform.position = hit.collider.transform.position;
                     _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
                     _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine); 
+                    StopAllCoroutines();
                 }
             }
         }

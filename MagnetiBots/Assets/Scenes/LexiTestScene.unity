@@ -1400,6 +1400,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
+--- !u!1 &1089788236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1089788238}
+  - component: {fileID: 1089788237}
+  m_Layer: 0
+  m_Name: test interactavle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1089788237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089788236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55f1ba152e0a0849b527799f53ac493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interactable.InteractableObject
+--- !u!4 &1089788238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089788236}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.28113, y: 0.19679, z: 0.28113}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1109227516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1590,6 +1634,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6680326226766787958, guid: 64700331602a6e54d9dcf15564094bcd, type: 3}
+      propertyPath: interactionObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6680326226766787958, guid: 64700331602a6e54d9dcf15564094bcd, type: 3}
+      propertyPath: 'interactionObjects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1089788237}
     - target: {fileID: 6783243003180228268, guid: 64700331602a6e54d9dcf15564094bcd, type: 3}
       propertyPath: m_Name
       value: TestLever
@@ -1971,3 +2023,4 @@ SceneRoots:
   - {fileID: 135102292}
   - {fileID: 5947901531540592577}
   - {fileID: 3291117124027343540}
+  - {fileID: 1089788238}

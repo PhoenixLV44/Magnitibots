@@ -17,7 +17,7 @@ namespace Ability
         private LayerMask _layerMask;
 
         private Interactable.Lever _lever;
-        public Interactable.Lever Lever { get; set; }
+        public Interactable.Lever Lever { get => _lever; set => _lever = value; }
         
         [SerializeField] private float loopHeight;
 
@@ -111,7 +111,10 @@ namespace Ability
                 GameObject loopedObject = _lassoLoopObject.transform.GetChild(0).gameObject;
                 _lassoLoopObject.transform.parent = transform;
                 Rigidbody rb = loopedObject.GetComponent<Rigidbody>();
-                rb.useGravity = true;
+                if (rb)
+                {
+                    rb.useGravity = true;
+                }
                 loopedObject.transform.parent = null;
             }
             
@@ -173,7 +176,7 @@ namespace Ability
                 merbleBoss.merbleList = merbleList;
         
                 float chargedCount = chargedMerbleList.Count;
-                Debug.Log("DISTANCE/CHARGECOUNT = " + distance/chargedCount);
+                //Debug.Log("DISTANCE/CHARGECOUNT = " + distance/chargedCount);
 
                 if (distance / chargedCount > 1.5f)
                 {
