@@ -14,6 +14,7 @@ public class SaveManager : MonoBehaviour
         public SerializedDictionary<string, int> ints = new SerializedDictionary<string, int>();
         public SerializedDictionary<string, float> floats = new SerializedDictionary<string, float>();
         public SerializedDictionary<string, string> strings = new SerializedDictionary<string, string>();
+        public SerializedDictionary<string, Vector3> vectors = new SerializedDictionary<string, Vector3>();
     }
     [SerializeField] SaveDataObject data;
     string json;
@@ -74,6 +75,10 @@ public class SaveManager : MonoBehaviour
         {
             if (data.floats.TryGetValue(name, out float obj)) { value = (T)(object)obj; return true; }
         }
+        if(type == typeof(Vector3))
+        {
+            if (data.vectors.TryGetValue(name, out Vector3 obj)) { value = (T)(object)obj; return true; }
+        }
         Debug.Log("failed to find " + name);
         value = default(T);
         return false;
@@ -127,6 +132,20 @@ public class SaveManager : MonoBehaviour
             else
             {
                 data.floats.Add(name, (float)(object)newData);
+                Debug.Log("saved!");
+                Debug.Log(data.floats[name]);
+            }
+        }
+        if (type == typeof(Vector3))
+        {
+            if (data.vectors.ContainsKey(name))
+            {
+                data.vectors[name] = (Vector3)(object)newData;
+                Debug.Log("updated!");
+            }
+            else
+            {
+                data.vectors.Add(name, (Vector3)(object)newData);
                 Debug.Log("saved!");
                 Debug.Log(data.floats[name]);
             }
