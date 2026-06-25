@@ -133,7 +133,6 @@ namespace Player
             else if(Grounded)
             {
                 _gravityOn = true;
-                Debug.Log("fall");
             }
             //the force of jump
             if (_submittedJump != 0)

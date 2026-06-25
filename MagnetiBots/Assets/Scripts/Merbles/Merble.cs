@@ -213,26 +213,22 @@ namespace Merbles
             {
                 if (Vector3.Distance(transform.position, myBoss.transform.position) > 2f)
                 {
-                    _agent.isStopped = false;
                     _agent.destination = myBoss.transform.position;
                 }
                 else
                 {
-                    _agent.isStopped = true;
-                    _agent.velocity = Vector3.zero;
+                    _agent.velocity = _agent.velocity/4;
                 }
             }
             else
             {
-                if (Vector3.Distance(transform.position, hit.transform.position) > 2f)
+                if (Vector3.Distance(transform.position, hit.transform.position) > 1f)
                 {
-                    _agent.isStopped = false;
                     _agent.destination = hit.transform.position;
                 }
                 else
                 {
-                    _agent.isStopped = true;
-                    _agent.velocity = Vector3.zero;
+                    _agent.velocity = _agent.velocity / 4;
                 }
             }
         }
