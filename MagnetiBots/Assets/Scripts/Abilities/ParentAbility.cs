@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Ability.Object;
+using Merbles;
+using System.Collections.Generic;
 
 namespace Ability
 {
@@ -14,21 +16,29 @@ namespace Ability
         protected bool isCharging;
         public bool IsCharging {get => isCharging; set => isCharging = value;}
         
-        protected float currentPowerLevel = 1;
-        protected float basePowerLevel = 1;
+        [SerializeField] protected float currentPowerLevel;
+        protected float basePowerLevel;
+        public float BasePowerLevel => basePowerLevel;
         protected float baseRange;
+        public float BaseRange => baseRange;
         protected int maxPowerLevel;
+        public int MaxPowerLevel => maxPowerLevel;
         public float CurrentPowerLevel => currentPowerLevel;
         protected float heightOffset;
         
         protected Player.Controller controller;
+        public Player.Controller Controller => controller;
         protected IEnumerator chargeCoroutine;
         protected TargetingCursor targetCursor;
         public TargetingCursor TargetCursor => targetCursor;
         protected GameObject targetCursorObject;
         protected RangeIndicator rangeIndicator;
         
-        [SerializeField]protected GameObject aimingGuide;
+        protected Merbles.Boss merbleBoss;
+
+        public Boss MerbleBoss { get => merbleBoss; set => merbleBoss = value; }
+        /*protected List<Merble> chargedMerbleList;
+        public List<Merble> ChargedMerbleList => chargedMerbleList;*/
 
         private void Start()
         {
@@ -55,12 +65,17 @@ namespace Ability
             //Debug.Log("Starting charging");
             if (chargeCoroutine != null)
             {
-                StartCoroutine(chargeCoroutine);
+                if (merbleBoss.MasterList.Count >= 1)
+                {
+                    StartCoroutine(chargeCoroutine);
+                    controller.ChargingParticles.SetActive(true);
+                }
             }
             else
             {
                 chargeCoroutine = Charge();
                 StartCoroutine(chargeCoroutine);
+                controller.ChargingParticles.SetActive(true);
             }
         }
 
@@ -68,10 +83,11 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
-                Debug.Log("Stopping charging");
-                aimingGuide.SetActive(false);
+                //Debug.Log("Stopping charging");
+                //aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
+                controller.ChargingParticles.SetActive(false);
                 StopCoroutine(chargeCoroutine);
             }
         }
@@ -87,8 +103,10 @@ namespace Ability
             
             chargeCoroutine = Charge();
             
-            aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
-            aimingGuide.SetActive(false);
+            //aimingGuide = transform.GetChild(0).transform.Find("Aiming Guide").gameObject;
+            //aimingGuide.SetActive(false);
+
+            merbleBoss = GetComponent<Merbles.Boss>();
         }
     }
 }

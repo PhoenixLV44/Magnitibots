@@ -11,7 +11,7 @@ namespace Abilities.Unlock
 
         private void Start()
         {
-            if (unlockAbilityText.gameObject.activeSelf)
+            if (unlockAbilityText && unlockAbilityText.gameObject.activeSelf)
             {
                 unlockAbilityText.gameObject.SetActive(false);
             }
@@ -42,10 +42,11 @@ namespace Abilities.Unlock
             else
             {
                 unlockAbilityText.gameObject.SetActive(true);
-                unlockAbilityText.text = "Smash Unlocked";
+                unlockAbilityText.text = "Super Jump Unlocked";
             }
             yield return new WaitForSecondsRealtime(5f);
             unlockAbilityText.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

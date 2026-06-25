@@ -18,9 +18,10 @@ public class ChargeState : GroundedState
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        
         _currentAbility.StartCharging();
         Cursor.lockState = CursorLockMode.None;
-        player.Movement.rb.linearVelocity = Vector3.zero;
+        /*player.Movement.CharacterController*/
     }
 
     public override void ExitState()
@@ -37,13 +38,12 @@ public class ChargeState : GroundedState
         {
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
+
         if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
+            //Debug.Log("AFHUFADSHJF");
             _currentAbility.Fire();
             stateMachine.ChangeState(stateManager.IdleState);
-        }
-        if (InputSystem.actions.FindAction("Fire").IsPressed())
-        {
         }
     }
 

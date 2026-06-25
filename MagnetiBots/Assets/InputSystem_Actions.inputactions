@@ -97,27 +97,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Rotate Camera Left",
-                    "type": "Button",
-                    "id": "f3ac5fd6-563d-40ca-884f-8b6709d4cbb5",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Rotate Camera Right",
-                    "type": "Button",
-                    "id": "596a9f15-4e17-423b-8fba-b638c9b08393",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Respawn",
                     "type": "Button",
                     "id": "c0a80591-7791-4911-9afe-ed686194184d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate Camera",
+                    "type": "Button",
+                    "id": "0918d839-041a-47dd-97d5-d0d9aded0b2a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -469,7 +460,7 @@
                 {
                     "name": "",
                     "id": "1c04ea5f-b012-41d1-a6f7-02e963b52893",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -523,34 +514,23 @@
                 },
                 {
                     "name": "",
-                    "id": "aa48cfbe-37f5-48bc-a92a-f75ef6a8ab31",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Rotate Camera Left",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bc84fa21-1441-4894-a0e9-2d3803c93081",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate Camera Right",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f050e455-6b17-46af-bbbe-d5ab326b0ccf",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Respawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "128ea9f1-2353-41b5-98c8-0894a7092e9e",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Camera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1082,7 +1062,7 @@
                 {
                     "name": "",
                     "id": "28640432-82d5-46f4-a35e-6bfbf6dad0f8",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1195,6 +1175,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cheats",
+            "id": "db36dce8-8d1f-4529-b7e2-055559753a84",
+            "actions": [
+                {
+                    "name": "Unlock Abilities",
+                    "type": "Button",
+                    "id": "3e5cfdde-4a6f-4f28-a71e-5f018521606c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8800d300-3e42-41d7-8901-422ccebd75f3",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unlock Abilities",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

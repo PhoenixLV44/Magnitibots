@@ -1,8 +1,9 @@
-using System;
+using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Ability.Object;
+using Merbles;
 
 namespace Ability
 {
@@ -11,6 +12,8 @@ namespace Ability
         private GameObject _smashBall;
         //public GameObject SmashBall => _smashBall;
         private Rigidbody _smashBallRb;
+
+        private IEnumerator moveCursorRoutine;
         private void Start()
         {
             InitializeAbility();
@@ -25,18 +28,43 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            //Debug.Log("Charging Smash");
+            //controller.ChargingParticles.SetActive(true);
+            currentPowerLevel = 0;
             float chargeTimer = 0.5f;
-            yield return new WaitForSeconds(chargeTimer/2);
+            rangeIndicator.DisableRangeIndicator();
+            
+            int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
+            merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            Debug.Log("MAX POWER: " + maxPower);
+            for (int i = 0; i < 5; i++)
+            {
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
+                {
+                    merbleBoss.merbleList[i].StartCharge(transform.position);
+                }
+            }
+
+            int j = 0;
             while (true)
             {
-                if (currentPowerLevel < maxPowerLevel)
+                
+                currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
+                Debug.Log("Current PowerLevel: " + currentPowerLevel);
+                merbleBoss.merbleList.Sort((a, b) =>
+                    Vector3.Distance(a.transform.position, transform.position)
+                        .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                Merble[] merbleArray = merbleBoss.merbleList.ToArray();
+
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging)
                 {
-                    //Debug.Log("UPPING POWER LEVEL");
-                    currentPowerLevel += 0.25f;
-                    _smashBall.GetComponent<SmashBall>().IncreasePowerLevel(currentPowerLevel);
+                    merbleArray[j].StartCharge(transform.position);
+                    if (j < maxPower)
+                    {
+                        //j++;
+                    }
                 }
-                yield return new WaitForSeconds(chargeTimer);
+
+                yield return new WaitForSecondsRealtime(chargeTimer);
             }
         }
 
@@ -44,11 +72,12 @@ namespace Ability
         {
             base.StartCharging();
             ActivateBall();
-            StartCoroutine(MoveCursor());
+            StartCoroutine(moveCursorRoutine);
         }
 
         public override void Fire()
         {
+            Cursor.lockState = CursorLockMode.None;
             DropBall();
         }
 
@@ -60,13 +89,15 @@ namespace Ability
             _smashBall.GetComponent<SmashBall>().SmashAbility = this;
             _smashBall.name = "SmashBall";
             _smashBallRb = _smashBall.GetComponent<Rigidbody>();
+
+            moveCursorRoutine = MoveCursor();
             
             DeactivateBall();
         }
         
         private void ActivateBall()
         {
-            Debug.Log("Activating Ball");
+            //Debug.Log("Activating Ball");
             SmashBall smashBallScript = _smashBall.GetComponent<SmashBall>();
             
             rangeIndicator.ChangeRangeSize(baseRange * maxPowerLevel * 2 );
@@ -84,21 +115,38 @@ namespace Ability
 
             currentPowerLevel = basePowerLevel;
 
+            StartCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());
+
             //StartCoroutine(MoveCursor());
         }
 
         public void DeactivateBall()
         {
             _smashBallRb.linearVelocity = Vector3.zero;
+            Merble[] merbleArray = MerbleBoss.ChargedMerbleList.ToArray();
             _smashBall.SetActive(false);
+            foreach (var merble in merbleArray)
+            {
+                merble.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                merble.StopCharging();
+            }
+            StopCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());
         }
         private void DropBall()
         {
-            StopAllCoroutines();
+            //Debug.Log("DropBall");
             _smashBallRb.useGravity = true;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
+            StopCoroutine(moveCursorRoutine);
             targetCursor.DeactivateCursor();
+            Cursor.lockState = CursorLockMode.None;
+            StopCoroutine(Charge());
+            //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             rangeIndicator.DisableRangeIndicator();
+            foreach (var b in MerbleBoss.ChargedMerbleList)
+            {
+                //StartCoroutine(b.UseGravity());
+            }
         }
         private IEnumerator MoveCursor()
         {
@@ -106,7 +154,7 @@ namespace Ability
             {
                 //Debug.Log("Move Cursor");
                 //targetCursor.MoveCursor();
-                targetCursor.MoveObjectToCursor(_smashBall);
+                targetCursor.MoveObjectToCursor(_smashBall, this);
                 yield return null;
             }
         }

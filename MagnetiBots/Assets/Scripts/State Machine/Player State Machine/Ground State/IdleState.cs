@@ -37,7 +37,7 @@ public class IdleState : GroundedState
         {
             stateMachine.ChangeState(stateManager.ChargeState);
         }
-
+        
         if (moveInput != Vector2.zero)
         {
             stateMachine.ChangeState(stateManager.MovementState);

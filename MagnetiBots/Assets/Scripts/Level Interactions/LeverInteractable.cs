@@ -1,36 +1,67 @@
+
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Interactable
 {
-    public class Lever : InteractableObject
+    public class Lever : TriggerObject
     {
-        [SerializeField] InteractableObject triggerObject;
-
-        private void PlayAnimation() //for when animations are in the game
+        bool _pullalble;
+        public bool Pullalble{get => _pullalble; set => _pullalble = value; }
+        private bool _playerInRange;
+        public bool  PlayerInRange => _playerInRange;
+        private Canvas _canvas;
+        private void Start()
         {
-
+            delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);
+            _canvas = GetComponentInChildren<Canvas>();
+            _canvas.worldCamera = Camera.main;
+            _canvas.gameObject.SetActive(false);
         }
-
         public override void ActivateObject()
         {
-            if (triggerObject != null)
+            base.ActivateObject();
+            Debug.Log("Pull lever");
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
             {
-                triggerObject.ActivateObject();
-            }
-            else
-            {
-                Debug.LogWarning("Trigger object is null!");
+                Debug.Log("Player entered");
+                _pullalble = true;
+                _playerInRange = true;
             }
         }
-        public override void DeactivateObject()
+
+        private void OnTriggerExit(Collider other)
         {
-            if (triggerObject != null)
+            if (other.CompareTag("Player"))
             {
-                triggerObject.DeactivateObject();
+                _pullalble = false;
+                _playerInRange = false;
+            }
+        }
+
+        private void Update()
+        {
+            IfLeverPullable();
+        }
+
+        void IfLeverPullable()
+        {
+            if (_pullalble)
+            {
+                _canvas.gameObject.SetActive(true);
+                _canvas.transform.rotation = Quaternion.LookRotation( _canvas.transform.position - Camera.main.transform.position);
+                if (_playerInRange && InputSystem.actions.FindAction("Interact").WasPressedThisFrame())
+                {
+                    ActivateObject();
+                }
             }
             else
             {
-                Debug.LogWarning("Trigger object is null!");
+                _canvas.gameObject.SetActive(false);
             }
         }
     }
