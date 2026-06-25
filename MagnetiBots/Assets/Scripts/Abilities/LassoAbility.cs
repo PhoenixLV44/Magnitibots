@@ -56,14 +56,14 @@ namespace Ability
                 
                 currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
                 Debug.Log("Current PowerLevel: " + currentPowerLevel);
-                rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel));
+                rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel * 2));
 
                 merbleBoss.merbleList.Sort((a, b) =>
                     Vector3.Distance(a.transform.position, transform.position)
                         .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
                 Merble[] merbleArray = merbleBoss.merbleList.ToArray();
 
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging && merbleArray.Length > 0)
+                if (merbleArray.Length > 0)
                 {
                     merbleArray[j].StartCharge(transform.position);
                     if (j < maxPower)
@@ -79,21 +79,22 @@ namespace Ability
         public override void Fire()
         {
             isCharging = false;
-            
-            GameObject playerModel = transform.Find("PlayerModel").gameObject;
-            Vector3 target = transform.position;
-            target += playerModel.transform.forward * baseRange * merbleBoss.ChargedMerbleList.Count;
-            //Debug.Log("Target: " + target);
-            target.y = transform.position.y + 0.5f;
-
-            if (currentPowerLevel >= 1)
+            if (merbleBoss.ChargedMerbleList.Count >= 1)
             {
+                GameObject playerModel = transform.Find("PlayerModel").gameObject;
+                Vector3 target = transform.position;
+                target += playerModel.transform.forward * (baseRange * merbleBoss.ChargedMerbleList.Count);
+                //Debug.Log("Target: " + target);
+                target.y = transform.position.y + 0.5f;
                 _lassoLoopObject.transform.rotation = playerModel.transform.rotation;
                 _lassoLoopObject.transform.parent = null;
                 _lassoLoopObject.SetActive(true);
                 _loopScript.StartMovement(transform.position,target);
             }
-
+            else
+            {
+            }
+            merbleBoss.FireMerbles();
             currentPowerLevel = 0;
         }
 
@@ -130,7 +131,7 @@ namespace Ability
         protected override void InitializeAbility()
         {
             base.InitializeAbility();
-            baseRange = 1f;
+            baseRange = 1.5f;
             basePowerLevel = 1;
             maxPowerLevel = 15;
             _lassoLoopObject = transform.Find("Lasso Loop").gameObject;
@@ -185,20 +186,24 @@ namespace Ability
 
                 if (distance / chargedCount > 1.5f)
                 {
-                    if (!chargedMerbleList.Contains(merbleList[0]))
+                    if (merbleBoss.merbleList.Count > 0)
                     {
-                        merbleList[0].StartCharge(transform.position);
-                        int i = chargedMerbleList.Count;
-                        //yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count > i);
-                        chargedMerbleList = merbleBoss.ChargedMerbleList;
-                        merbleList =  merbleBoss.merbleList;
+                        merbleBoss.merbleList[0].StartCharge(transform.position);
                     }
+                    int i = chargedMerbleList.Count;
+                    //yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count > i);
+                    chargedMerbleList = merbleBoss.ChargedMerbleList;
+                    merbleList =  merbleBoss.merbleList;
+                    /*if (!chargedMerbleList.Contains(merbleList[0]))
+                    {
+                    }*/
                 }
                 else if  (distance / chargedCount < 1.5f)
                 {
                     if (!merbleList.Contains(chargedMerbleList.Last()))
                     {
                         chargedMerbleList.Last().StopCharging();
+                        
                         int i = chargedMerbleList.Count;
                         //yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count < i);
                         chargedMerbleList = merbleBoss.ChargedMerbleList;

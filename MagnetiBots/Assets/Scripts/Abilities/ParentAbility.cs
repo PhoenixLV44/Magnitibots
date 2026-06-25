@@ -65,8 +65,11 @@ namespace Ability
             //Debug.Log("Starting charging");
             if (chargeCoroutine != null)
             {
-                StartCoroutine(chargeCoroutine);
-                controller.ChargingParticles.SetActive(true);
+                if (merbleBoss.MasterList.Count >= 1)
+                {
+                    StartCoroutine(chargeCoroutine);
+                    controller.ChargingParticles.SetActive(true);
+                }
             }
             else
             {

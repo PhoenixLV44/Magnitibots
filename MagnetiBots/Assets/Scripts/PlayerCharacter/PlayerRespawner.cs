@@ -48,7 +48,7 @@ namespace Player
             CheckForRespawn();
         }
 
-        private void Respawn()
+        public void Respawn()
         {
             Debug.Log("Respawn");
             _movement.CharacterController.enabled = false;
