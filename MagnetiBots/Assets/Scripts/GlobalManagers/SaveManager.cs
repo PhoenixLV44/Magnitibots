@@ -128,6 +128,9 @@ public class SaveManager : MonoBehaviour
             {
                 data.floats[name] = (float)(object)newData;
                 Debug.Log("updated!");
+                Debug.Log(newData);
+                Debug.Log(data.floats[name]);
+
             }
             else
             {
@@ -187,7 +190,14 @@ public class SaveManager : MonoBehaviour
                 data.floats.Remove(name);
             }
         }
-            
+        if (type == typeof(Vector3))
+        {
+            if (data.vectors.ContainsKey(name))
+            {
+                data.vectors.Remove(name);
+            }
+        }
+
 
         //save data by default
         if (save)
