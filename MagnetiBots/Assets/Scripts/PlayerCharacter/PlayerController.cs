@@ -155,6 +155,7 @@ namespace Player
         }
         IEnumerator BaseJump()
         {
+            Debug.Log("Jump");
             _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             yield return new WaitUntil(() => (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame()));
             _movement.Jump(0);
