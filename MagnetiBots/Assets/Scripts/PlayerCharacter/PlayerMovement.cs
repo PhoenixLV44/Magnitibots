@@ -9,7 +9,7 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float _glidingSpeed = 1f;
+        float _glidingSpeed = 0.7f;
         bool _gravityOn;
         private CharacterController _characterController;
         public CharacterController CharacterController => _characterController;
@@ -130,6 +130,11 @@ namespace Player
             {
                 intendedVerticalForce -= _glidingSpeed;
             }
+            else if(Grounded)
+            {
+                _gravityOn = true;
+                Debug.Log("fall");
+            }
             //the force of jump
             if (_submittedJump != 0)
             {
@@ -206,7 +211,12 @@ namespace Player
         {
             Vector3 intendedTotalMovement = HorizontalMotion() + VerticalMotion();
             //Debug.Log(intendedTotalMovement);
-            _characterController.Move(intendedTotalMovement * Time.deltaTime);
+            Vector3 intendedTotalDistance = intendedTotalMovement * Time.deltaTime;
+            _characterController.Move(intendedTotalDistance);
+            if (intendedTotalDistance.y < 0 && _isGliding)
+            {
+                _gravityOn = false;
+            }
         }
     }
 }

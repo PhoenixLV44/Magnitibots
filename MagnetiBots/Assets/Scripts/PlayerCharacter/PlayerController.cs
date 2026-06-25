@@ -213,10 +213,17 @@ namespace Player
             _movement.Jump(jumpPowerMult);
         
             yield return new WaitUntil(() => !_movement.Grounded);
-            if (jumpPowerMult > 5)
-                _movement.Gliding = true; Debug.Log("GLIDING");
-            
-            yield return new WaitUntil(() => _movement.Grounded);
+            if (jumpPowerMult > 3)
+            {
+                _movement.Gliding = true;
+                Debug.Log("GLIDING");
+            }
+            else
+            {
+                _movement.Gliding = false;
+            }
+
+                yield return new WaitUntil(() => _movement.Grounded);
             Debug.Log("BEE BOOP");
             _merbleBoss.FireMerbles();
             foreach (var merble in _merbleBoss.MasterList)
