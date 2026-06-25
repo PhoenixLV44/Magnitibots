@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
+using static UnityEngine.Rendering.DebugUI;
 
 
 
@@ -9,9 +11,11 @@ public class SaveManager : MonoBehaviour
     [System.Serializable]
     public class SaveDataObject
     {
-        public Dictionary<string, object> data = new Dictionary<string, object>();
+        public SerializedDictionary<string, int> ints = new SerializedDictionary<string, int>();
+        public SerializedDictionary<string, float> floats = new SerializedDictionary<string, float>();
+        public SerializedDictionary<string, string> strings = new SerializedDictionary<string, string>();
     }
-    SaveDataObject data;
+    [SerializeField] SaveDataObject data;
     string json;
     string filePath;
     private void Awake()
@@ -42,7 +46,7 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(filePath, json);
     }
     /// <summary>
-    /// Load the current stored data to the JSON file.
+    /// Load the current stored data from the JSON file.
     /// </summary>
     public void LoadData() 
     {
@@ -56,7 +60,20 @@ public class SaveManager : MonoBehaviour
     /// <returns>Anythign that is found attached to the ID in the data object.</returns>
     public bool GetData<T>(string name, out T value)
     {
-        if(data.data.TryGetValue(name, out object obj)) {  value = (T)obj; return true; }
+        System.Type type = typeof(T);
+
+        if (type == typeof(int))
+        {
+            if (data.ints.TryGetValue(name, out int obj)) { value = (T)(object)obj; return true; }
+        }
+        if (type == typeof(string))
+        {
+            if (data.strings.TryGetValue(name, out string obj)) { value = (T)(object)obj; return true; }
+        }
+        if (type == typeof(float))
+        {
+            if (data.floats.TryGetValue(name, out float obj)) { value = (T)(object)obj; return true; }
+        }
         Debug.Log("failed to find " + name);
         value = default(T);
         return false;
@@ -69,17 +86,50 @@ public class SaveManager : MonoBehaviour
     /// <param name="save">Whether to save the data after it is added. Defaults to true.</param>
     public void AddData<T>(string name, T newData, bool save = true)
     {
-        //check for update vs create
-        if (data.data.ContainsKey(name))
+
+        System.Type type = typeof(T);
+
+        if (type == typeof(int))
         {
-            data.data[name] = newData;
-            Debug.Log("updated!");
+            if (data.ints.ContainsKey(name))
+            {
+                data.ints[name] = (int)(object)newData;
+                Debug.Log("updated!");
+            }
+            else
+            {
+                data.ints.Add(name, (int)(object)newData);
+                Debug.Log("saved!");
+                Debug.Log(data.ints[name]);
+            }
         }
-        else
+        if (type == typeof(string))
         {
-            data.data.Add(name, newData);
-            Debug.Log("saved!");
-            Debug.Log(data.data[name]);
+            if (data.strings.ContainsKey(name))
+            {
+                data.strings[name] = (string)(object)newData;
+                Debug.Log("updated!");
+            }
+            else
+            {
+                data.strings.Add(name, (string)(object)newData);
+                Debug.Log("saved!");
+                Debug.Log(data.strings[name]);
+            }
+        }
+        if (type == typeof(float))
+        {
+            if (data.floats.ContainsKey(name))
+            {
+                data.floats[name] = (float)(object)newData;
+                Debug.Log("updated!");
+            }
+            else
+            {
+                data.floats.Add(name, (float)(object)newData);
+                Debug.Log("saved!");
+                Debug.Log(data.floats[name]);
+            }
         }
 
         //save data by default
@@ -93,12 +143,32 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     /// <param name="name">The ID that was assigned to the data.</param>
     /// <param name="save">Whether to save the data object after data is removed. Defaults to true.</param>
-    public void RemoveData(string name, bool save = true)
+    public void RemoveData<T>(string name, bool save = true)
     {
-        if (data.data.ContainsKey(name))
+        System.Type type = typeof(T);
+
+        if (type == typeof(int))
         {
-            data.data.Remove(name);
+            if (data.ints.ContainsKey(name))
+            {
+                data.ints.Remove(name);
+            }
         }
+        if (type == typeof(string))
+        {
+            if (data.strings.ContainsKey(name))
+            {
+                data.strings.Remove(name);
+            }
+        }
+        if (type == typeof(float))
+        {
+            if (data.floats.ContainsKey(name))
+            {
+                data.floats.Remove(name);
+            }
+        }
+            
 
         //save data by default
         if (save)

@@ -4,6 +4,7 @@ using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
@@ -13,8 +14,8 @@ public class AudioManager : MonoBehaviour
     [System.Serializable]
     public class AudioDataObject
     {
-        public Dictionary<string, AudioClip> sfx = new Dictionary<string, AudioClip>();
-        public Dictionary<string, AudioClip> bgm = new Dictionary<string, AudioClip>();
+        public SerializedDictionary<string, AudioClip> sfx = new SerializedDictionary<string, AudioClip>();
+        public SerializedDictionary<string, AudioClip> bgm = new SerializedDictionary<string, AudioClip>();
     }
 
     [SerializeField] AudioDataObject data;
@@ -25,7 +26,7 @@ public class AudioManager : MonoBehaviour
 
     AudioMixer audioMixer;
 
-    float maxVolume = 0;
+    float maxVolume = -20;
     float minVolume = -80;
 
     public static class AudioSettings 
