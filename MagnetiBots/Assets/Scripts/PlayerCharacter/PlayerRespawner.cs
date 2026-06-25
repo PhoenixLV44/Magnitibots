@@ -12,6 +12,9 @@ namespace Player
         public Vector3 RespawnPosition { get { return _respawnPosition; } set { _respawnPosition = value; } }
         Controller _playerController;
         Movement _movement;
+        public Movement Movement { get => _movement;
+            set => _movement = value;
+        }
         Merbles.Boss _boss;
         
         [SerializeField] LayerMask respawnMask;
@@ -21,7 +24,8 @@ namespace Player
             _respawnInput = InputSystem.actions.FindAction("Respawn");
             _respawnPosition = transform.position;
             _playerController = GetComponent<Controller>();
-            _movement = GetComponent<Movement>();
+            if(!_movement)
+                _movement = GetComponent<Movement>();
             
         }
 
@@ -45,11 +49,13 @@ namespace Player
         private void Respawn()
         {
             Debug.Log("Respawn");
+            _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
             foreach (var merble in _boss.merbleList)
             {
                 merble.transform.position = _respawnPosition;
             }
+            _movement.CharacterController.enabled = true;
         }
         private void OnTriggerEnter(Collider other)
         {

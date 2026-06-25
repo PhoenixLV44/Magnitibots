@@ -111,6 +111,9 @@ namespace Player
 
             superJumpPoint.PlayerController = this;
             superJumpPoint.MerbleBoss = _merbleBoss;
+            
+            Respawner respawner = GetComponent<Respawner>();
+            respawner.Movement = _movement;
         }
 
         // Update is called once per frame
