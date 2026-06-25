@@ -23,6 +23,7 @@ public class Checkpoint : MonoBehaviour
             Player.Respawner respawner = other.GetComponent<Player.Respawner>();
             respawner.RespawnPosition = transform.position;
             respawner.Respawn();
+            Globals.Managers.Saves.AddData<Vector3>("LastRespawn",transform.position);
             Destroy(gameObject);
         }
     }

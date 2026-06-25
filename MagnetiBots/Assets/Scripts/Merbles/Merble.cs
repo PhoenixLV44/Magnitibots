@@ -11,6 +11,7 @@ namespace Merbles
         public Merbles.Boss myBoss;
         private ObjectPool<GameObject> _merblePool;
         private NavMeshAgent _agent;
+        [SerializeField] LayerMask merbleMask;
         public NavMeshAgent Agent => _agent;
         
         Rigidbody _rb;
@@ -105,7 +106,7 @@ namespace Merbles
                             break;
                         default:
                         case FollowTypes.Loose:
-
+                            LooseMovement();
                             break;
                     }
                 }
@@ -206,24 +207,29 @@ namespace Merbles
         }
         public void LooseMovement()
         {
-            NavMeshHit hit;
+            RaycastHit hit;
 
-            if (!_agent.Raycast(myBoss.transform.position, out hit))
+            if (!Physics.Raycast(transform.position, myBoss.transform.position, out hit, 40, merbleMask))
             {
                 if (Vector3.Distance(transform.position, myBoss.transform.position) > 2f)
                 {
-                    _agent.isStopped = false;
                     _agent.destination = myBoss.transform.position;
                 }
                 else
                 {
-                    _agent.isStopped = true;
-                    _agent.velocity = Vector3.zero;
+                    _agent.velocity = _agent.velocity/4;
                 }
             }
             else
             {
-
+                if (Vector3.Distance(transform.position, hit.transform.position) > 1f)
+                {
+                    _agent.destination = hit.transform.position;
+                }
+                else
+                {
+                    _agent.velocity = _agent.velocity / 4;
+                }
             }
         }
 

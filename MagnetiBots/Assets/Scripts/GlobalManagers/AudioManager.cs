@@ -138,4 +138,9 @@ public class AudioManager : MonoBehaviour
         bgmSource.clip = data.bgm[clipName];
         bgmSource.Play();
     }
+    public void PlaySFX(string clipName)
+    {
+        sfxSource.clip = data.sfx[clipName];
+        sfxSource.Play();
+    }
 }
