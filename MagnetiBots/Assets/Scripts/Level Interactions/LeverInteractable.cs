@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,10 +23,6 @@ namespace Interactable
             base.ActivateObject();
             Debug.Log("Pull lever");
         }
-        public override void DeactivateObject()
-        {
-            base.DeactivateObject();
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -48,7 +43,7 @@ namespace Interactable
             }
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             IfLeverPullable();
         }
@@ -59,7 +54,7 @@ namespace Interactable
             {
                 _canvas.gameObject.SetActive(true);
                 _canvas.transform.rotation = Quaternion.LookRotation( _canvas.transform.position - Camera.main.transform.position);
-                if (_playerInRange && InputSystem.actions.FindAction("Interact").WasPerformedThisFrame())
+                if (_playerInRange && InputSystem.actions.FindAction("Interact").WasPressedThisFrame())
                 {
                     ActivateObject();
                 }

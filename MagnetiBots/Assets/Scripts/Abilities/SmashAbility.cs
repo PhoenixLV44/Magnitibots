@@ -127,6 +127,7 @@ namespace Ability
             _smashBall.SetActive(false);
             foreach (var merble in merbleArray)
             {
+                merble.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
                 merble.StopCharging();
             }
             StopCoroutine(_smashBall.GetComponent<SmashBall>().MoveMerbles());

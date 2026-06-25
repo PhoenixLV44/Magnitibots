@@ -72,6 +72,8 @@ namespace Player
         bool _jumping = false;
         public bool Jumping => _jumping;
 
+        [SerializeField] private TextMeshProUGUI currentAbilityText;
+
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
@@ -128,7 +130,11 @@ namespace Player
         }
         void FixedUpdate()
         {
-            _movement.HandleMovement();
+            if (_movement.CharacterController)
+            {
+                _movement.HandleMovement();
+            }
+            currentAbilityText.text = _abilityStateManager.StateMachine.CurrentState.ToString();
         }
 
         public bool jumpLock;
@@ -213,6 +219,10 @@ namespace Player
             yield return new WaitUntil(() => _movement.Grounded);
             Debug.Log("BEE BOOP");
             _merbleBoss.FireMerbles();
+            foreach (var merble in _merbleBoss.MasterList)
+            {
+                merble.transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+            }
             StopCoroutine(_spinMerbles);
             superJumpPoint.IsCharging = false;
             _movement.Gliding = false;

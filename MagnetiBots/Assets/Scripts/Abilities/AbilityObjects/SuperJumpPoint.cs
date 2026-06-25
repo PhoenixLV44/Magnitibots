@@ -30,7 +30,7 @@ public class SuperJumpPoint : MonoBehaviour
             _merblePoints[i] = transform.GetChild(i);
         }
         _movement = GetComponentInParent<Player.Movement>();
-        _characterController = _movement.CharacterController;
+        _characterController = GetComponentInParent<CharacterController>();
     }
 
     private void Update()
