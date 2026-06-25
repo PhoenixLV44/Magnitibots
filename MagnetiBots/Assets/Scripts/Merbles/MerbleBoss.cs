@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -14,6 +15,9 @@ namespace Merbles
         public List<Merble> merbleList;
         [SerializeField] private List<Merble> chargedMerblesList;
         public List<Merble> ChargedMerbleList{get => chargedMerblesList; set => chargedMerblesList = value; }
+        
+        [SerializeField] private List<Merble> _masterList = new List<Merble>();
+        public List<Merble> MasterList => _masterList;
 
         public GameObject merblePrefab;
         public Merble.FollowTypes MerbleFollowType {get {return _merbleFollowType;} set { _merbleFollowType = value; } }
@@ -43,6 +47,7 @@ namespace Merbles
                 defaultCapacity: defaultCapacity,
                 maxSize: maxSize
                 );
+            StartCoroutine(AssignMasterList());
         }
         private GameObject OnCreateMerble()
         {
@@ -57,6 +62,7 @@ namespace Merbles
         {
             merble.GetComponent<Merble>().SetPool(Merbles);
             merble.SetActive(true);
+            merble.GetComponent<Merble>().CollectParticles.SetActive(true);
         }
         private void OnReleaseMerble(GameObject merble)
         {
@@ -102,6 +108,43 @@ namespace Merbles
             }
             chargedMerbles = 0;
             merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position,transform.position)));
+        }
+
+        IEnumerator AssignMasterList()
+        {
+            while (true)
+            {
+                if (merbleList.Count > 0)
+                {
+                    foreach (var merble in merbleList)
+                    {
+                        if (!_masterList.Contains(merble))
+                        {
+                            _masterList.Add(merble);
+                        }   
+                    }
+                }
+
+                if (chargedMerblesList.Count > 0)
+                {
+                    foreach (var merble in chargedMerblesList)
+                    {
+                        if (!_masterList.Contains(merble))
+                        {
+                            _masterList.Add(merble);
+                        }
+                    }
+                }
+
+                if (_masterList.Count > 0)
+                {
+                    foreach (var merble in _masterList)
+                    {
+                        merble.transform.name = "Merble " + _masterList.IndexOf(merble);
+                    }
+                }
+                yield return null;
+            }
         }
     }
 }

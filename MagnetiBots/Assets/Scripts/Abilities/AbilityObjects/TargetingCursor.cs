@@ -80,12 +80,12 @@ namespace Ability.Object
             }
         }
 
-        public void MoveObjectToCursor(GameObject obj)
+        public void MoveObjectToCursor(GameObject obj, Ability.Parent ability)
         {
             Vector3 targetPosition = MoveCursor();
             //Debug.Log("Cursor Target Position: " + targetPosition);
             Vector3 currentPosition = obj.transform.position;
-            targetPosition.y =  currentPosition.y;
+            targetPosition.y =  ability == GetComponent<Lasso>()? _targetCursor.transform.parent.position.y + 1: _targetCursor.transform.parent.position.y + 6;
             float distance = Vector3.Distance(targetPosition, currentPosition);
             
             obj.transform.position = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);

@@ -16,8 +16,8 @@ namespace Ability
         protected bool isCharging;
         public bool IsCharging {get => isCharging; set => isCharging = value;}
         
-        protected float currentPowerLevel = 1;
-        protected float basePowerLevel = 1;
+        [SerializeField] protected float currentPowerLevel;
+        protected float basePowerLevel;
         public float BasePowerLevel => basePowerLevel;
         protected float baseRange;
         public float BaseRange => baseRange;
@@ -66,11 +66,13 @@ namespace Ability
             if (chargeCoroutine != null)
             {
                 StartCoroutine(chargeCoroutine);
+                controller.ChargingParticles.SetActive(true);
             }
             else
             {
                 chargeCoroutine = Charge();
                 StartCoroutine(chargeCoroutine);
+                controller.ChargingParticles.SetActive(true);
             }
         }
 
@@ -82,6 +84,7 @@ namespace Ability
                 //aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
+                controller.ChargingParticles.SetActive(false);
                 StopCoroutine(chargeCoroutine);
             }
         }
