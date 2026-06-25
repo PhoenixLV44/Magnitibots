@@ -134,7 +134,10 @@ namespace Player
             {
                 _movement.HandleMovement();
             }
-            currentAbilityText.text = _abilityStateManager.StateMachine.CurrentState.ToString();
+            if (currentAbilityText)
+            {
+                currentAbilityText.text = _abilityStateManager.StateMachine.CurrentState.ToString();
+            }
         }
 
         public bool jumpLock;

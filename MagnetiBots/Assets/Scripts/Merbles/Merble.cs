@@ -306,7 +306,7 @@ namespace Merbles
                 yield return null;
             }
 
-            floating = false;
+/*            floating = false;*/
         }
 
         private bool GroundCheck()

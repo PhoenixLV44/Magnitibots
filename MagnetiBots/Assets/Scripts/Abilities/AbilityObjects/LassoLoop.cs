@@ -43,29 +43,32 @@ namespace Ability.Object
         private void OnTriggerEnter(Collider other)
         {
             StopAllCoroutines();
-            if (other.CompareTag("LassoTarget"))
+            if (!_lassoAbility.Controller.LassoHooked)
             {
-                Debug.Log("LassoTarget");
-                _lassoAbility.Controller.LassoHooked = true;
-
-                transform.position = other.transform.position;
-                _lassoAbility.TargetCursor.ActivateCursor(transform.position);
-                other.transform.parent = transform;
-                Rigidbody rb = other.GetComponent<Rigidbody>();
-                if (rb != null)
+                if (other.CompareTag("LassoTarget"))
                 {
-                    rb.useGravity = false;
+                    Debug.Log("LassoTarget");
+                    _lassoAbility.Controller.LassoHooked = true;
+
+                    transform.position = other.transform.position;
+                    _lassoAbility.TargetCursor.ActivateCursor(transform.position);
+                    other.transform.parent = transform;
+                    Rigidbody rb = other.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.useGravity = false;
+                    }
+                    _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
+                    _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                 }
-                _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
-                _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
-            }
-            else if (other.CompareTag("Lever"))
-            {
-                Debug.Log("Lever");
-                _lassoAbility.Controller.LassoHooked = true;
-                transform.position = other.transform.position;
-                _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
-                _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);    
+                else if (other.CompareTag("Lever"))
+                {
+                    Debug.Log("Lever");
+                    _lassoAbility.Controller.LassoHooked = true;
+                    transform.position = other.transform.position;
+                    _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
+                    _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
+                }
             }
             else
             {

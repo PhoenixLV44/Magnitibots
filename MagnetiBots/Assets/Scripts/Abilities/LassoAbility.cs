@@ -28,6 +28,9 @@ namespace Ability
         public bool LoopBeingThrown
         { get; set; }
 
+        private bool _attached;
+        public bool Attached { get => _attached; set => _attached = value; }
+
         private void Start()
         {
             InitializeAbility();
