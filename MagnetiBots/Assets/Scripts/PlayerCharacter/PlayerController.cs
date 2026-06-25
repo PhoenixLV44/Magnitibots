@@ -150,7 +150,8 @@ namespace Player
                     jumpLock = true;
                     StartCoroutine(_chargeJump);
                     StartCoroutine(CheckForJumpRelease());
-                    StartCoroutine(_spinMerbles);
+                    StartCoroutine(Spin());
+                    //StartCoroutine(_spinMerbles);
                 }
             }
             else
@@ -212,6 +213,7 @@ namespace Player
             
             StopCoroutine(_chargeJump);
             chargingParticles.SetActive(false);
+
             
             _movement.Jump(jumpPowerMult);
         
@@ -233,9 +235,21 @@ namespace Player
             {
                 merble.transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
             }
-            StopCoroutine(_spinMerbles);
+            StopCoroutine(Spin());
             superJumpPoint.IsCharging = false;
             _movement.Gliding = false;
+        }
+        IEnumerator Spin()
+        {
+            yield return new WaitUntil(() => _merbleBoss.ChargedMerbleList.Count > 0);
+            while(true)
+            {
+                for(int i = 0; i < _merbleBoss.ChargedMerbleList.Count; i++)
+                {
+                    _merbleBoss.ChargedMerbleList[i].transform.position = superJumpPoint.MerblePoints[i].transform.position;
+                }
+                yield return null;
+            }
         }
     }
 }

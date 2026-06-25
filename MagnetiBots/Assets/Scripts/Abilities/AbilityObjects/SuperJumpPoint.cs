@@ -11,6 +11,7 @@ public class SuperJumpPoint : MonoBehaviour
     private IEnumerator _moveMerblesCoroutine;
     public IEnumerator MoveMerblesCoroutine => _moveMerblesCoroutine;
     private Transform[] _merblePoints;
+    public Transform[] MerblePoints => _merblePoints;
     private Player.Movement _movement;
     private Player.Controller _playerController;
     public Player.Controller PlayerController
@@ -23,7 +24,7 @@ public class SuperJumpPoint : MonoBehaviour
     private CharacterController _characterController;
     private void Start()
     {
-        _moveMerblesCoroutine = MoveMerbles();
+        //_moveMerblesCoroutine = MoveMerbles();
         _merblePoints = new Transform[transform.childCount];
         for (int i = 0; i < _merblePoints.Length; i++)
         {

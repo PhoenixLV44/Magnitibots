@@ -144,6 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Merbles.Merble
   myBoss: {fileID: 0}
+  merbleMask:
+    serializedVersion: 2
+    m_Bits: 0
   floatingSpeed: 0
   groundLayer:
     serializedVersion: 2
@@ -380,6 +383,10 @@ PrefabInstance:
     - target: {fileID: 8031679727735888577, guid: e97e7abedcb7ecc46a187da9935be7bd, type: 3}
       propertyPath: m_Name
       value: ChargingParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 8635944005784564793, guid: e97e7abedcb7ecc46a187da9935be7bd, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

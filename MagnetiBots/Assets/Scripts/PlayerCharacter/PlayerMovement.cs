@@ -9,7 +9,7 @@ namespace Player
         public Transform model;
         public float moveSpeed = 10f;
         public float jumpForce = 10f;
-        float _glidingSpeed = 0.7f;
+        float _glidingSpeed = 0.25f;
         bool _gravityOn;
         private CharacterController _characterController;
         public CharacterController CharacterController => _characterController;
