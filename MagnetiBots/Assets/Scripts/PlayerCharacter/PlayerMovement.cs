@@ -60,7 +60,7 @@ namespace Player
             Vector3[] returnable = { movedir, lookdir };
             if (InputSystem.actions.FindAction("Jump").IsPressed())
             {
-                _controller.StartJumpChannel();
+                //_controller.StartJumpChannel();
             }
 
             return returnable;
@@ -141,7 +141,10 @@ namespace Player
             //calculate speed from acceleration
             Vector3 intendedVerticalSpeed = new Vector3(0,cc.velocity.y,0);
             intendedVerticalSpeed += intendedVerticalAcceleration;
-
+/*
+            Debug.Log(intendedVerticalSpeed);
+            Debug.Log(_gravityOn);
+            Debug.Log(Grounded);*/
             //move a distance based on the speed
             return intendedVerticalSpeed;
         }

@@ -1,8 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
-    <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-grow: 1; flex-direction: column; overflow: visible; display: flex; visibility: visible;">
-        <ui:Label text="Magnetibots" class="header" style="height: auto;"/>
-        <ui:Button text="Start" name="StartButton" class="button"/>
+    <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-grow: 1; flex-direction: column; overflow: visible; display: flex; width: 1840px; height: 1112px;">
+        <ui:Image source="project://database/Assets/Art%20Assets/UI/Main%20Menu/UI_logo.png?fileID=2800000&amp;guid=0c33d15f04429134a883bd659bfb107b&amp;type=3#UI_logo" scale-mode="ScaleToFit" style="height: 336px; width: 1856px;"/>
+        <ui:Button text="Start" name="StartButton" class="button" style="-unity-text-align: middle-center;"/>
         <ui:Button text="Controls" name="ControlsButton" class="button"/>
         <ui:Button text="Settings" name="SettingsButton" class="button"/>
         <ui:Button text="Quit" name="QuitButton" class="button"/>
@@ -12,10 +12,9 @@
         <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: row; justify-content: center; align-self: stretch;">
             <ui:VisualElement name="Volumes" style="width: 960px;">
                 <ui:Label text="Volume" style="-unity-text-align: upper-center; font-size: 50px;"/>
-                <ui:Slider label="Master" value="1" high-value="1" name="MasterVolumeSlider" fill="true" low-value="0" class="settingSlider"/>
-                <ui:Slider label="Music" value="1" high-value="1" name="BGMVolumeSlider" fill="true" low-value="0" class="settingSlider"/>
-                <ui:Slider label="Effects" value="1" high-value="1" name="SFXVolumeSlider" fill="true" low-value="0" class="settingSlider"/>
-                <ui:Slider label="Menus" value="1" high-value="1" name="UIVolumeSlider" fill="true" low-value="0" class="settingSlider"/>
+                <ui:Slider label="Master" value="100" high-value="100" name="MasterVolumeSlider" fill="true" class="settingSlider"/>
+                <ui:Slider label="Music" value="100" high-value="100" name="BGMVolumeSlider" fill="true" class="settingSlider"/>
+                <ui:Slider label="SFX" value="100" high-value="100" name="SFXVolumeSlider" fill="true" class="settingSlider"/>
             </ui:VisualElement>
             <ui:VisualElement name="Cursor" style="flex-grow: 1; flex-direction: column;">
                 <ui:Label text="Cursor" name="Label" style="font-size: 50px; -unity-text-align: upper-center;"/>
