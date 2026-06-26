@@ -1,3 +1,4 @@
+using Interactable;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,10 +11,14 @@ namespace Ability.Object
         public Lasso LassoAbility {get => _lassoAbility; set => _lassoAbility = value; }
 
         private LayerMask _lassoMask;
+        private BoxCollider _boxCollider;
+        public BoxCollider BoxCollider => _boxCollider;
 
         private void Start()
         {
             _lassoMask = LayerMask.GetMask("LassoTarget");
+            _boxCollider = GetComponent<BoxCollider>();
+            _boxCollider.enabled = false;
         }
 
         public void StartMovement(Vector3 startPos,Vector3 target, float speed = 5)
@@ -49,17 +54,28 @@ namespace Ability.Object
                 {
                     Debug.Log("LassoTarget");
                     _lassoAbility.Controller.LassoHooked = true;
+                    GameObject hookedObject = other.GetComponent<ItemRespawner>() ? other.gameObject : other.transform.parent.gameObject;
 
-                    transform.position = other.transform.position;
+
+                    transform.position = hookedObject.transform.position;
+                    Vector3 defaultScale = transform.localScale.y == 1? hookedObject.transform.localScale: new Vector3(hookedObject.transform.localScale.x, hookedObject
+                        .transform.localScale.y * 2, hookedObject.transform.localScale.z);
+
                     _lassoAbility.TargetCursor.ActivateCursor(transform.position);
-                    other.transform.parent = transform;
+                    hookedObject.transform.parent = transform;
+
+                    hookedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    hookedObject.transform.localScale = defaultScale;
+
                     Rigidbody rb = other.GetComponent<Rigidbody>();
                     if (rb != null)
                     {
                         rb.useGravity = false;
+                        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY |RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                     }
                     _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
                     _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
+                    _boxCollider.enabled = true;
                 }
                 else if (other.CompareTag("Lever"))
                 {

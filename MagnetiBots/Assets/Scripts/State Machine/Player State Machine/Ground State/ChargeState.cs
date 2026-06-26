@@ -18,8 +18,11 @@ public class ChargeState : GroundedState
         }
 
         _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        
-        _currentAbility.StartCharging();
+
+        if (player.Movement.Grounded)
+        {
+            _currentAbility.StartCharging();
+        }
         Cursor.lockState = CursorLockMode.None;
         /*player.Movement.CharacterController*/
     }

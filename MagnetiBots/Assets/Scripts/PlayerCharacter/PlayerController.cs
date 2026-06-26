@@ -251,5 +251,12 @@ namespace Player
                 yield return null;
             }
         }
+        public void StopJumpCoroutines()
+        {
+            StopCoroutine(Spin());
+            StopCoroutine(CheckForJumpRelease());
+            StopCoroutine(JumpCharging());
+            _merbleBoss.FireMerbles();
+        }
     }
 }
