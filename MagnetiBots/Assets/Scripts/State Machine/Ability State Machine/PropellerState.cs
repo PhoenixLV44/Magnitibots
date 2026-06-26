@@ -15,13 +15,9 @@ namespace Ability
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Activate Lasso").IsPressed())
+            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
             {
-                stateMachine.ChangeState(stateManager.LassoState);
-            }
-            if (InputSystem.actions.FindAction("Activate Smash").IsPressed())
-            {
-                stateMachine.ChangeState(stateManager.SmashState);
+                stateMachine.ChangeState(stateMachine.PreviousState);
             }
         }
     }

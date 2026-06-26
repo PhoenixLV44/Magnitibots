@@ -18,10 +18,6 @@ namespace Ability
             {
                 stateMachine.ChangeState(stateManager.LassoState);
             }
-            if (InputSystem.actions.FindAction("Activate Propeller").IsPressed())
-            {
-                stateMachine.ChangeState(stateManager.PropellerState);
-            }
         }
     }  
 }

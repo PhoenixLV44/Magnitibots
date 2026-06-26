@@ -21,7 +21,7 @@ public class LassoHooked : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
+        //moveInput = InputSystem.actions.FindAction("Move").ReadValue<Vector2>() ;
         
         if(_lassoAbility.Lever == null)
         {
@@ -34,14 +34,27 @@ public class LassoHooked : GroundedState
         }
         else
         {
-            if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
+        }
+        if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
+        {
+            if (_lassoAbility.Lever != null)
             {
-                _lassoAbility.PullLever();
+                if (_lassoAbility.Lever)
+                {
+                    _lassoAbility.PullLever();
+                }
+                else
+                {
+                   _lassoAbility.UnhookLasso();
+                }
             }
+            else
+            {
+            }
+                _lassoAbility.UnhookLasso();
         }
         if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
         {
-            _lassoAbility.UnhookLasso();
         }
     }
 

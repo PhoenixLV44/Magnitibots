@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 5b036aa9b1441a44ab5696a0530c10df
+guid: ac2ad6ca6894d7049a1010546d8382f3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_TreeFoliage
+    second: {fileID: 2100000, guid: 6935a73d22608324ca6bd8bdfb2b886e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_TreeLeaves
+    second: {fileID: 2100000, guid: 599017554ddb95b4b8c7d59c0579c3cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Tree_B
+    second: {fileID: 2100000, guid: 10d48602e6d3db94497f17d055c788e2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

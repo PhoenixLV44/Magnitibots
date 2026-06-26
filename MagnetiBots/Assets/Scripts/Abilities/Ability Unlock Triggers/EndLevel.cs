@@ -11,7 +11,7 @@ public class EndLevel : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            SceneManager.LoadScene("MenuScene");
+            SceneManager.LoadScene(0);
         }
     }
     

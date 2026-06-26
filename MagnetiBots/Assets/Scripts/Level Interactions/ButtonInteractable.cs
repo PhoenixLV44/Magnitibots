@@ -3,47 +3,21 @@ using UnityEngine;
 
 namespace Interactable
 {
-    public class Button : InteractableObject
+    public class Button : TriggerObject
     {
-        [SerializeField] InteractableObject[] triggerObjects;
-
         private void Awake()
         {
             canBeDeactivated = true;
         }
-        private void PlayAnimation() //for when animations are in the game
-        {
-
-        }
 
         public override void ActivateObject()
         {
-            if (triggerObjects != null)
-            {
-                foreach (var triggerObject in triggerObjects)
-                {
-                    triggerObject.ActivateObject();
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Trigger object is null!");
-            }
+            base.ActivateObject();
         }
 
         public override void DeactivateObject()
         {
-            if (triggerObjects != null)
-            {
-                foreach (var triggerObject in triggerObjects)
-                {
-                    triggerObject.DeactivateObject();
-                }            
-            }
-            else
-            {
-                Debug.LogWarning("Trigger object is null!");
-            }
+            base.DeactivateObject();           
         }
 
         private void OnTriggerEnter(Collider other)

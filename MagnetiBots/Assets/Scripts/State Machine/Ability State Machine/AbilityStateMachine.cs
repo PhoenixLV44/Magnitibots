@@ -6,7 +6,8 @@ namespace Ability
     {
         private State  _currentState;
         public State CurrentState { get { return _currentState; }  private set { _currentState = value; } }
-
+        private State _previousState;
+        public State PreviousState => _previousState;
         public void InitializeStateMachine(State initialState)
         {
             _currentState = initialState;
@@ -17,7 +18,10 @@ namespace Ability
         public void ChangeState(State newState)
         {
             _currentState.ExitState();
-            
+            if (_currentState != null)
+            {
+                _previousState = _currentState;
+            }
             _currentState = newState;
 
             _currentState.EnterState();
