@@ -4,23 +4,12 @@ using UnityEngine.InputSystem;
 public class IdleState : GroundedState
 {
     public IdleState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
-    
-    private Ability.StateManager _abilityManager;
-    private Ability.Parent _currentAbility;
 
     public override void EnterState()
     {
         //Debug.Log("Entering Idle State");
-        if (!_abilityManager)
-        {
-            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
-            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        }
-        else
-        {
-            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        }
-
+        base.EnterState();
+        animator.Play("Idle");
         Cursor.lockState = CursorLockMode.None;
     }
 

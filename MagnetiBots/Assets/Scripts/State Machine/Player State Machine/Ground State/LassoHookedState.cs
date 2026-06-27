@@ -50,12 +50,10 @@ public class LassoHooked : GroundedState
             }
             else
             {
-            }
                 _lassoAbility.UnhookLasso();
+            }
         }
-        if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
-        {
-        }
+
     }
 
     public override void PhysicsUpdate()

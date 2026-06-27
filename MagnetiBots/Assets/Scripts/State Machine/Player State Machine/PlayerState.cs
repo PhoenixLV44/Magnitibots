@@ -8,19 +8,22 @@ namespace Player
         protected Player.Controller player;
         protected Player.StateMachine stateMachine;
         protected Player.StateManager stateManager;
-        protected Animator animationController;
+        protected Animator animator;
         protected string animationName;
 
         protected bool isExitingState;
         protected bool isAnimationFinished;
         protected float startTime;
+        
+        protected Ability.StateManager abilityManager;
+        protected Ability.Parent currentAbility;
 
-        public State(Player.Controller _player, StateMachine _stateMachine, Player.StateManager _stateManager, Animator _animationController)
+        public State(Player.Controller _player, StateMachine _stateMachine, Player.StateManager _stateManager, Animator _animator)
         {
             player = _player;
             stateMachine = _stateMachine;
             stateManager = _stateManager;
-            animationController = _animationController;
+            animator = _animator;
             //animationName = _animationName;
         }
         public virtual void EnterState()
@@ -29,6 +32,12 @@ namespace Player
             isExitingState = false;
             startTime = Time.time;
             //animationController.SetBool(animationName, true);
+            if (!abilityManager)
+            {
+                abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
+            }
+
+            currentAbility = abilityManager.StateMachine.CurrentState.Ability;
         }
         public virtual void ExitState()
         {

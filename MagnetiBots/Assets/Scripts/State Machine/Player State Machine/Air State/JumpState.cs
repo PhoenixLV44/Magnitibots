@@ -4,37 +4,22 @@ using UnityEngine.InputSystem;
 public class JumpState: AirState
 {
     public JumpState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
-    private Ability.StateManager _abilityManager;
-    private Ability.Parent _currentAbility;
+    
     
 
     public override void EnterState()
     {
-        //Debug.Log("Entering Charge State");
-        if (!_abilityManager)
-        {
-            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
-        }
-
-        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-
-        if (_currentAbility == player.PropellerAbility && !player.CanUsePropeller)
-        {
-            //_currentAbility.Fire();
-            //stateMachine.ChangeState(stateManager.IdleState);
-        }
-        else
-        {
-        }
-        _currentAbility.StartCharging();
+        base.EnterState();
+        
+        animator.Play("Jump");
         Cursor.lockState = CursorLockMode.None;
         /*player.Movement.CharacterController*/
     }
 
     public override void ExitState()
     {
-        _currentAbility.StopCharging();
-        _currentAbility.IsCharging = false;
+        currentAbility.StopCharging();
+        currentAbility.IsCharging = false;
     }
 
     public override void TransitionChecks()
@@ -49,7 +34,7 @@ public class JumpState: AirState
         if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
             //Debug.Log("AFHUFADSHJF");
-            _currentAbility.Fire();
+            currentAbility.Fire();
             stateMachine.ChangeState(stateManager.IdleState);
         }
     }
