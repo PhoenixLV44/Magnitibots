@@ -5,15 +5,16 @@ using Merbles;
 
 namespace Ability
 {
-    public class Propeller : Parent
+    public class SuperJump : Parent
     {
         private Player.Movement _playerMovement;
         private GameObject _superJumpPoint;
+        private Transform[]  _merblePoints;
         IEnumerator _rotateCoroutine;
         
         private void Start()
         {
-            activateInput = InputSystem.actions.FindAction("ActivatePropeller");
+            activateInput = InputSystem.actions.FindAction("Activate Super Jump");
             chargeInput = InputSystem.actions.FindAction("Charge");
             fireInput = InputSystem.actions.FindAction("Fire");
             InitializeAbility();
@@ -26,64 +27,27 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            //controller.ChargingParticles.SetActive(true);
-            //StartCoroutine(_rotateCoroutine);
-            /*currentPowerLevel = 0;
-            float chargeTimer = 0.5f;
-            rangeIndicator.DisableRangeIndicator();
+            controller.ChargingParticles.SetActive(true);
+            merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
 
-            int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
-            merbleBoss.merbleList.Sort((a, b) =>
-                Vector3.Distance(a.transform.position, transform.position)
-                    .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-            Debug.Log("MAX POWER: " + maxPower);
-            for (int i = 0; i < 5; i++)
+            while (merbleBoss.ChargedMerbleList.Count <= 10)
             {
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) &&
-                    !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[0]) && merbleBoss.ChargedMerbleList.Count < 10)
                 {
-                    merbleBoss.merbleList[i].StartCharge(transform.position);
+                    merbleBoss.merbleList[0].StartCharge(transform.position);
                 }
+                yield return new WaitForSeconds(0.5f);
             }
-
-            int j = 0;
-            while (true)
-            {
-
-                currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
-                Debug.Log("Current PowerLevel: " + currentPowerLevel);
-                merbleBoss.merbleList.Sort((a, b) =>
-                    Vector3.Distance(a.transform.position, transform.position)
-                        .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-                Merble[] merbleArray = merbleBoss.merbleList.ToArray();
-
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleArray[j]) && !merbleArray[j].Charging)
-                {
-                    merbleArray[j].StartCharge(transform.position);
-                    if (j < maxPower)
-                    {
-                        //j++;
-                    }
-                }
-
-            }
-                yield return new WaitForSecondsRealtime(chargeTimer);
-            */
-            yield return null;
         }
 
         public override void Fire()
         {
-            /*int merbleCount = merbleBoss.merbleList.Count > 0 ? merbleBoss.merbleList.Count : 0;
-            if (_playerMovement.Grounded)
-            {
-                _playerMovement.Jump(merbleCount);
-            }
-            /*if (merbleBoss.ChargedMerbleList.Count >= 10)
-            {
-                _playerMovement.Gliding = true;
-            }#1#
-            StopCharging();*/
+            int jumpPowerMult = merbleBoss.ChargedMerbleList.Count;
+            
+            controller.ChargingParticles.SetActive(false);
+            
+            _playerMovement.Jump(jumpPowerMult);
+            StopCharging();
         }
 
         public override void StartCharging()
@@ -116,11 +80,11 @@ namespace Ability
         }
         protected override void InitializeAbility()
         {
-            /*
             base.InitializeAbility();
             _playerMovement = GetComponent<Player.Movement>();
             _superJumpPoint = transform.GetChild(6).gameObject;
             maxPowerLevel = 10;
+            /*
             _rotateCoroutine = RotateSuperJumpPoint();
             StartCoroutine(_rotateCoroutine);
             */
@@ -144,7 +108,7 @@ namespace Ability
                 {
                     for (int i = 0; i < merbleArray.Length; i++)
                     {
-                        merbleArray[i].FloatTowardsObject(merblePoints[i].position, i,Merble.AbilityEnum.Propeller, 5);
+                        merbleArray[i].FloatTowardsObject(merblePoints[i].position, i,Merble.AbilityEnum.SuperJump, 5);
                     }
                 }
             }

@@ -32,8 +32,8 @@ namespace Player
         private Ability.Smash _smashAbility;
         public Ability.Smash SmashAbility { get { return _smashAbility; } }
         
-        private Ability.Propeller _propellerAbility;
-        public Ability.Propeller PropellerAbility { get { return _propellerAbility; } }
+        private Ability.SuperJump _superJumpAbility;
+        public Ability.SuperJump SuperJumpAbility { get { return _superJumpAbility; } }
         
         private TargetingCursor _targetCursorScript;
         public TargetingCursor TargetCursorScript { get { return _targetCursorScript; } }
@@ -59,8 +59,8 @@ namespace Player
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
         private bool _canUseSmash = false;
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
-        private bool _canUsePropeller = false;
-        public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
+        private bool _canUseSuperJump = false;
+        public bool CanUseSuperJump { get => _canUseSuperJump; set => _canUseSuperJump = value; }
         
         [SerializeField] private GameObject chargingParticles;
         public GameObject ChargingParticles => chargingParticles;
@@ -147,7 +147,7 @@ namespace Player
         public bool jumpLock;
         public void StartJumpChannel()
         {
-            if (_canUsePropeller && _movement.Grounded)
+            if (_canUseSuperJump && _movement.Grounded)
             {
                 if (!jumpLock)
                 {
@@ -178,36 +178,16 @@ namespace Player
         }
         IEnumerator JumpCharging()
         {
-            superJumpPoint.IsCharging = true;
             chargingParticles.SetActive(true);
-            //StartCoroutine(_spinMerbles);
-            //Debug.Log("jump charging");
             _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
 
             while (_merbleBoss.ChargedMerbleList.Count <= 10)
             {
-                //_merbleBoss.CheckForDuplicates();
-                /*if (!InputSystem.actions.FindAction("Jump").IsPressed())
-                {
-                    _movement.Jump(_merbleBoss.ChargedMerbleList.Count);
-                    if(_merbleBoss.ChargedMerbleList.Count>0)
-                    {
-                        _movement.Gliding = true;
-                        yield return new WaitUntil(() => !_movement.Grounded);
-                        Debug.Log("gliding");
-                        yield return new WaitUntil(() => _movement.Grounded);
-                        _movement.Gliding = false;
-                    }
-                    _merbleBoss.FireMerbles();
-                    break;
-                }*/
-
                 if (!_merbleBoss.ChargedMerbleList.Contains(_merbleBoss.merbleList[0]) && _merbleBoss.ChargedMerbleList.Count < 10)
                 {
                     _merbleBoss.merbleList[0].StartCharge(transform.position);
                 }
                 yield return new WaitForSeconds(0.5f);
-                //_merbleBoss.ChargeMerble(transform.position);
             }
         }
         IEnumerator CheckForJumpRelease()

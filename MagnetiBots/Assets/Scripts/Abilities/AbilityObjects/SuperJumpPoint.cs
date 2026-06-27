@@ -76,7 +76,7 @@ public class SuperJumpPoint : MonoBehaviour
 
                 int i = _merbleBoss.ChargedMerbleList.IndexOf(merble);
                 Debug.Log(moveSpeed);
-                merble.FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.Propeller, rotationSpeed);
+                merble.FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.SuperJump, rotationSpeed);
             }
             if (merbleArray.Length > 0)
             {

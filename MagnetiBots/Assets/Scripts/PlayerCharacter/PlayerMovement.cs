@@ -104,7 +104,7 @@ namespace Player
         }
         
         float _submittedJump = 0;
-        public void Jump(int jumpModifier)
+        public void Jump(int jumpModifier = 0)
         {
             float jumpPower = jumpModifier == 0? jumpForce: jumpForce + (jumpForce * Mathf.Log(jumpModifier));
             //jumpPower = jumpForce + (1 * jumpModifier);

@@ -3,13 +3,13 @@ using UnityEngine.InputSystem;
 
 namespace Ability
 {
-    public class PropellerState : State
+    public class SuperJumpState : State
     {
-        public PropellerState(Player.Controller playerController, StateMachine stateMachine, StateManager stateManager, Propeller ability) : base(playerController, stateMachine, stateManager,  ability) { }
+        public SuperJumpState(Player.Controller playerController, StateMachine stateMachine, StateManager stateManager, SuperJump ability) : base(playerController, stateMachine, stateManager,  ability) { }
         public override void EnterState()
         {
             base.EnterState();
-            Debug.Log("Entered Propeller State");
+            Debug.Log("Entered Super Jump State");
         }
 
         public override void TransitionChecks()
