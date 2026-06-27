@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class FallingState : AirState
 {
-    public FallingState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public FallingState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
 }

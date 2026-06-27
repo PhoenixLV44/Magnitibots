@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class MovementState : GroundedState
 {
-    public MovementState(Player.Controller pc, StateMachine stateMachine, StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public MovementState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     
     private Ability.StateManager _abilityManager;
     private Ability.Parent _currentAbility;

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class LassoHooked : GroundedState
 {
-    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     
     private Ability.Lasso _lassoAbility;
     

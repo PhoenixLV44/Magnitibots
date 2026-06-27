@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public abstract class GroundedState : Player.State
 {
-    public GroundedState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public GroundedState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
 
     protected Vector2 moveInput;
     protected bool isGrounded;

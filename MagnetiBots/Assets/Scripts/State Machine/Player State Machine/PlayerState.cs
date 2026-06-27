@@ -15,12 +15,12 @@ namespace Player
         protected bool isAnimationFinished;
         protected float startTime;
 
-        public State(Player.Controller _player, StateMachine _stateMachine, Player.StateManager _stateManager)
+        public State(Player.Controller _player, StateMachine _stateMachine, Player.StateManager _stateManager, Animator _animationController)
         {
             player = _player;
             stateMachine = _stateMachine;
             stateManager = _stateManager;
-            //animationController = _animationController;
+            animationController = _animationController;
             //animationName = _animationName;
         }
         public virtual void EnterState()

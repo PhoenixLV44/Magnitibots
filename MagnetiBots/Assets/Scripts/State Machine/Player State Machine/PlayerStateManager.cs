@@ -47,13 +47,13 @@ namespace Player
         {
             _stateMachine = new StateMachine();
             
-            _idleState = new IdleState(_playerController, _stateMachine, this);
-            _movementState = new MovementState(_playerController, _stateMachine, this);
-            _chargeState = new ChargeState(_playerController, _stateMachine, this);
-            _lassoHookedState = new LassoHooked(_playerController, _stateMachine, this);
-            _jumpState = new JumpState(_playerController, _stateMachine, this);
-            _fallState = new FallingState(_playerController, _stateMachine, this);
-            _hoverState = new HoverState(_playerController, _stateMachine, this);
+            _idleState = new IdleState(_playerController, _stateMachine, this, _playerController.Animator);
+            _movementState = new MovementState(_playerController, _stateMachine, this, _playerController.Animator);
+            _chargeState = new ChargeState(_playerController, _stateMachine, this, _playerController.Animator);
+            _lassoHookedState = new LassoHooked(_playerController, _stateMachine, this, _playerController.Animator);
+            _jumpState = new JumpState(_playerController, _stateMachine, this, _playerController.Animator);
+            _fallState = new FallingState(_playerController, _stateMachine, this, _playerController.Animator);
+            _hoverState = new HoverState(_playerController, _stateMachine, this, _playerController.Animator);
             
             _stateMachine.InitializeStateMachine(_idleState);
         }

@@ -73,10 +73,14 @@ namespace Player
         public bool Jumping => _jumping;
 
         [SerializeField] private TextMeshProUGUI currentAbilityText;
+        
+        Animator _animator;
+        public Animator Animator => _animator;
 
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
+            _animator = GetComponentInChildren<Animator>();
 
             _groundChecker = gameObject.AddComponent<Player.GroundChecker>();
             _groundChecker.checkerMask = groundLayers;

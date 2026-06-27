@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class JumpState: AirState
 {
-    public JumpState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public JumpState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     private Ability.StateManager _abilityManager;
     private Ability.Parent _currentAbility;
     
