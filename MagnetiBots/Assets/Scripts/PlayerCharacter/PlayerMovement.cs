@@ -6,40 +6,67 @@ namespace Player
 {
     public class Movement : MonoBehaviour
     {
-        public Transform model;
-        public float moveSpeed = 10f;
-        public float jumpForce = 10f;
-        float _glidingSpeed = 0.25f;
-        bool _gravityOn;
-        private CharacterController _characterController;
-        public CharacterController CharacterController => _characterController;
-        private Vector3 _currentVelocity;
-        private float _playerMass = 5f;
-        public float maxMoveSpeed = 10f;
+        #region Objects
+            private Player.Controller _controller;
+            private Transform _model;
+            public Transform Model { get; }
+            
+            private float _playerMass = 5f;
+            
+            private CharacterController _characterController;
+            public CharacterController CharacterController => _characterController;
+            
+        #endregion
 
-        private float _defaultMoveSpeed = 10f;
-        public float DefaultMoveSpeed => _defaultMoveSpeed;
-        public Quaternion adjustedMovement;
-        public Rigidbody rb;
-        Vector3[] _submitted;
-        public Vector3[] Submitted => _submitted;
-        bool _isHovering;
-        public bool Hovering { get => _isHovering; set => _isHovering = value; }
-        bool _isGrounded;
-        public bool Grounded { get => _isGrounded; set => _isGrounded = value; }
-        InputAction _move;
-        InputAction _look;
-        InputAction _jump;
+        #region Stats
 
-        private Player.Controller _controller;
+            private float _defaultMoveSpeed;
+            public float DefaultMoveSpeed { get => _defaultMoveSpeed; set => _defaultMoveSpeed = value; }
+            public float maxMoveSpeed = 10f;
+        
+            [SerializeField] private float _moveSpeed;
+            [SerializeField] private float _jumpForce;
+            public float JumpForce { get => _jumpForce; set => _jumpForce = value; }
 
-        private bool _jumpLock;
-        public bool JumpLock { get => _jumpLock; set => _jumpLock = value; }
+            private float _airSpeedMult = 0.75f;
+            private float _hoverSpeedMult = 0.25f;
+        
+
+        #endregion
+
+        #region Vectors/Quaternions
+            private Vector3 _currentVelocity;
+
+            public Quaternion adjustedMovement;
+            
+            Vector3[] _submitted;
+            public Vector3[] Submitted => _submitted;
+            
+        #endregion
+
+        #region Bools
+            bool _gravityOn;
+            bool _isHovering;
+            public bool Hovering { get => _isHovering; set => _isHovering = value; }
+            bool _isGrounded;
+            public bool Grounded { get => _isGrounded; set => _isGrounded = value; }
+            [SerializeField] private bool _jumpLock;
+            public bool JumpLock { get => _jumpLock; set => _jumpLock = value; }
+            
+        #endregion
+
+        #region Inputs
+
+            InputAction _move;
+            InputAction _look;
+            InputAction _jump;
+
+        #endregion
+
         private void Start()
         {
-            rb = GetComponent<Rigidbody>();
             _characterController = GetComponent<CharacterController>();
-            model = gameObject.transform.Find("PlayerModel");
+            _model = gameObject.transform.Find("PlayerModel");
             _move = InputSystem.actions.FindAction("Move");
             _look = InputSystem.actions.FindAction("Look");
             _jump = InputSystem.actions.FindAction("Jump");
@@ -61,7 +88,7 @@ namespace Player
             Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x / Screen.width - 0.5f, 0, _look.ReadValue<Vector2>().y / Screen.height - 0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
-            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
+            if (!InputSystem.actions.FindAction("Jump").IsPressed())
             {
                 _jumpLock =  false;
             }
@@ -74,14 +101,16 @@ namespace Player
         /// </summary>
         public void Move(Vector3 input)
         {
-            Vector3 targetVelocity = input * moveSpeed;
-            /*
-            currentVelocity = cc.velocity;
-
-            currentVelocity.x = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, 40 * Time.deltaTime);
-            currentVelocity.z = Mathf.MoveTowards(currentVelocity.z, targetVelocity.z, 40 * Time.deltaTime);
-            cc.Move(currentVelocity * Time.deltaTime);
-            */
+            _moveSpeed = _defaultMoveSpeed;
+            if (!_isGrounded && !_isHovering)
+            {
+                _moveSpeed *= _airSpeedMult;
+            }
+            else if (!_isGrounded && _isHovering)
+            {
+                _moveSpeed *= _hoverSpeedMult;
+            }
+            Vector3 targetVelocity = input * _moveSpeed;
             _submittedMovement = targetVelocity;
         }
         /// <summary>
@@ -96,20 +125,22 @@ namespace Player
             {
                 Vector3 lookTarget = _controller.TargetCursorObject.transform.position;
                 lookTarget.y = transform.position.y;
-                model.LookAt(lookTarget);
+                _model.LookAt(lookTarget);
             }
             else
             {
                 input = adjustedMovement * input;
-                model.rotation = Quaternion.LookRotation(input, Vector3.up);
+                _model.rotation = Quaternion.LookRotation(input, Vector3.up);
             }
         }
         
         float _submittedJump = 0;
-        public void Jump(int jumpModifier = 0)
+        public IEnumerator Jump(int jumpModifier = 0)
         {
+            _controller.Animator.Play("Jump");
+            yield return new WaitForSecondsRealtime(_controller.AnimController.JumpAnimLength);
             _jumpLock = true;
-            float jumpPower = jumpModifier == 0? jumpForce: jumpForce + (jumpForce * Mathf.Log(jumpModifier));
+            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce + (_jumpForce * Mathf.Log(jumpModifier));
             //jumpPower = jumpForce + (1 * jumpModifier);
             //Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
@@ -131,7 +162,7 @@ namespace Player
             //the force of glide
             else if (_isHovering && !Grounded)
             {
-                intendedVerticalForce -= _glidingSpeed;
+                intendedVerticalForce -= _hoverSpeedMult;
             }
             else if(Grounded)
             {
@@ -210,6 +241,7 @@ namespace Player
         /// </summary>
         public void HandleMovement()
         {
+            _previousPosition = transform.position;
             Vector3 intendedTotalMovement = HorizontalMotion() + VerticalMotion();
             //Debug.Log(intendedTotalMovement);
             Vector3 intendedTotalDistance = intendedTotalMovement * Time.deltaTime;
@@ -217,6 +249,19 @@ namespace Player
             if (intendedTotalDistance.y < 0 && _isHovering)
             {
                 _gravityOn = false;
+            }
+        }
+
+        private Vector3 _previousPosition;
+        public bool IsRising()
+        {
+            if(transform.position.y >= _previousPosition.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

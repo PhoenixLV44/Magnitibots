@@ -12,7 +12,6 @@ public class MovementState : GroundedState
         //Debug.Log("Entering Movement State");
         base.EnterState();
         currentAbility = abilityManager.StateMachine.CurrentState.Ability;
-        player.Movement.moveSpeed = player.Movement.DefaultMoveSpeed;
         //animator.Play("Walk");
         Cursor.lockState = CursorLockMode.None;
     }

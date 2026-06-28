@@ -10,13 +10,13 @@ namespace Ability
         {
             base.EnterState();
             Debug.Log("Entered Super Jump State");
-            animator.SetBool("SuperJump", true);
+            //animator.SetBool("SuperJump", true);
         }
 
         public override void ExitState()
         {
             base.ExitState();
-            animator.SetBool("SuperJump", false);
+            //animator.SetBool("SuperJump", false);
         }
 
         public override void TransitionChecks()

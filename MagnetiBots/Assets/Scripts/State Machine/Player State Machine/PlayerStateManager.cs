@@ -35,8 +35,8 @@ namespace Player
             private JumpState _jumpState;
             public JumpState JumpState => _jumpState;
 
-            private FallingState _fallState;
-            public FallingState FallState => _fallState;
+            private FallState _fallState;
+            public FallState FallState => _fallState;
             
             private HoverState _hoverState;
             public HoverState HoverState => _hoverState;
@@ -52,7 +52,7 @@ namespace Player
             _chargeState = new ChargeState(_playerController, _stateMachine, this, _playerController.Animator);
             _lassoHookedState = new LassoHooked(_playerController, _stateMachine, this, _playerController.Animator);
             _jumpState = new JumpState(_playerController, _stateMachine, this, _playerController.Animator);
-            _fallState = new FallingState(_playerController, _stateMachine, this, _playerController.Animator);
+            _fallState = new FallState(_playerController, _stateMachine, this, _playerController.Animator);
             _hoverState = new HoverState(_playerController, _stateMachine, this, _playerController.Animator);
             
             _stateMachine.InitializeStateMachine(_idleState);

@@ -32,7 +32,7 @@ namespace Ability
 
             while (merbleBoss.ChargedMerbleList.Count <= 10)
             {
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[0]) && merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
+                if (merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[0].StartCharge(transform.position);
                 }
@@ -46,12 +46,13 @@ namespace Ability
             
             controller.ChargingParticles.SetActive(false);
             
-            _playerMovement.Jump(jumpPowerMult);
+            StartCoroutine(_playerMovement.Jump(jumpPowerMult));
             if (merbleBoss.ChargedMerbleList.Count > 5)
             {
                 _playerMovement.Hovering = true;
             }
             StopCharging();
+            
         }
 
         public override void StartCharging()

@@ -32,9 +32,14 @@ public class IdleState : GroundedState
             stateMachine.ChangeState(stateManager.MovementState);
         }
 
-        if (InputSystem.actions.FindAction("Jump").IsPressed() && !player.Movement.JumpLock)
+        if (InputSystem.actions.FindAction("Jump").WasPerformedThisFrame() && !player.Movement.JumpLock)
         {
             stateMachine.ChangeState(stateManager.JumpState);
+        }
+
+        if (!player.Movement.Grounded)
+        {
+            stateMachine.ChangeState(stateManager.FallState);
         }
     }
 

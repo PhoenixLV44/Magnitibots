@@ -72,18 +72,22 @@ namespace Player
         Animator _animator;
         public Animator Animator => _animator;
         AnimController _animController;
+        public AnimController AnimController => _animController;
+
+        [SerializeField] private GameObject shadow;
 
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
             _animator = GetComponent<Animator>();
 
-            _groundChecker = gameObject.AddComponent<Player.GroundChecker>();
-            _groundChecker.checkerMask = groundLayers;
-            _groundChecker.movement = _movement;
+            /*_groundChecker = gameObject.AddComponent<Player.GroundChecker>();
+            _groundChecker.groundMask = groundLayers;
+            _groundChecker.movement = _movement;*/
 
-            _movement.moveSpeed = movementSpeed;
-            _movement.jumpForce = jumpForce;
+            _movement.DefaultMoveSpeed = movementSpeed;
+            _movement.JumpForce = jumpForce;
+            Debug.Log("Default Move Speed: " + _movement.DefaultMoveSpeed);
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
             _merbleBoss.MerbleFollowType = merbleFollowType;
@@ -112,11 +116,13 @@ namespace Player
             superJumpPoint.Movement = _movement;
             superJumpPoint.MerbleBoss = _merbleBoss;
 
-            _animController = gameObject.AddComponent<AnimController>();
+            _animController = GetComponent<AnimController>();
             _animController.SetUpController(this, _movement, _playerStateManager, _abilityStateManager, GetComponent<Ability.Lasso>(), GetComponent<Ability.Smash>(),  GetComponent<Ability.SuperJump>(), _animator);
             
             Respawner respawner = GetComponent<Respawner>();
             respawner.Movement = _movement;
+            
+            shadow = transform.GetChild(transform.childCount - 1).gameObject;
         }
 
         // Update is called once per frame
@@ -139,6 +145,58 @@ namespace Player
             {
                 currentAbilityText.text = _abilityStateManager.StateMachine.CurrentState.ToString();
             }
+            CheckForGround();
+            MoveShadow();
+        }
+        private void CheckForGround()
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position, 0.5f, -Vector3.up, out hit, 0.75f, groundLayers))
+            {
+                //Debug.Log("cast did find ground");
+                _movement.Grounded = true;
+            }
+            else
+            {
+                //Debug.Log("cast did not find ground");
+                if(_movement)
+                {
+                    _movement.Grounded = false;
+                }
+            }
+        }
+        private void MoveShadow()
+        {
+            RaycastHit hit;
+            if (_movement && shadow)
+            {
+                if (_movement.Grounded)
+                {
+                    shadow.SetActive(false);
+                }
+                else
+                {
+                    if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, groundLayers))
+                    {
+                        Debug.Log("activate shadow");
+                        Vector3 point = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
+                        shadow.SetActive(true);
+                        shadow.transform.position = point;
+                    }
+                }
+            }
+            else
+            {
+                if (!_movement)
+                {
+                    Debug.Log("no movement");
+                }
+
+                if (!shadow)
+                {
+                    Debug.Log("no shadow");
+                }
+            }
         }
     }
-}
+} 

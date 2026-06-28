@@ -39,7 +39,9 @@ public class ChargeState : GroundedState
         {
             //Debug.Log("AFHUFADSHJF");
             currentAbility.Fire();
-            switch (abilityManager.CurrentAbility)
+            stateMachine.ChangeState(stateManager.IdleState);
+
+            /*switch (abilityManager.CurrentAbility)
             {
                 case Ability.SuperJump:
                     stateMachine.ChangeState(stateManager.JumpState);
@@ -47,7 +49,7 @@ public class ChargeState : GroundedState
                 default:
                     stateMachine.ChangeState(stateManager.IdleState);
                     break;
-            }
+            }*/
         }
     }
 

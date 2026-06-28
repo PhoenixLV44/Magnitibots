@@ -24,6 +24,11 @@ namespace Player
         
         InputAction _move;
 
+        private float _jumpAnimLength;
+        public float JumpAnimLength => _jumpAnimLength;
+        [SerializeField] private AnimationClip jumpAnimation;
+        public AnimationClip JumpAnimation => jumpAnimation;
+
         public void SetUpController(Controller playerController, Movement playerMovement, Player.StateManager playerStateManager, Ability.StateManager abilityStateManager, Lasso lasso, Smash smash,
             SuperJump superJump,  Animator animator)
         {
@@ -106,6 +111,11 @@ namespace Player
                 }
             }
             _animator.SetFloat("IdleToWalk" , _walkBlendTree);
+        }
+
+        private void Start()
+        {
+            _jumpAnimLength = jumpAnimation.length / 4;
         }
     }
 }
