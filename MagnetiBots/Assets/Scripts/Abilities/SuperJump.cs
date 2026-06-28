@@ -8,9 +8,9 @@ namespace Ability
     public class SuperJump : Parent
     {
         private Player.Movement _playerMovement;
-        private GameObject _superJumpPoint;
+        private SuperJumpPoint _superJumpPoint;
         private Transform[]  _merblePoints;
-        IEnumerator _rotateCoroutine;
+        IEnumerator _moveMerblesCoroutine;
         
         private void Start()
         {
@@ -32,7 +32,7 @@ namespace Ability
 
             while (merbleBoss.ChargedMerbleList.Count <= 10)
             {
-                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[0]) && merbleBoss.ChargedMerbleList.Count < 10)
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[0]) && merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[0].StartCharge(transform.position);
                 }
@@ -47,31 +47,33 @@ namespace Ability
             controller.ChargingParticles.SetActive(false);
             
             _playerMovement.Jump(jumpPowerMult);
+            if (merbleBoss.ChargedMerbleList.Count > 5)
+            {
+                _playerMovement.Hovering = true;
+            }
             StopCharging();
         }
 
         public override void StartCharging()
         {
-            /*if (controller.CanUsePropeller)
+            if (chargeCoroutine != null)
             {
-                if (chargeCoroutine != null)
+                if (merbleBoss.MasterList.Count >= 1)
                 {
                     StartCoroutine(chargeCoroutine);
+                    StartCoroutine(_moveMerblesCoroutine);
+                    StartCoroutine(CheckForGround());
                     controller.ChargingParticles.SetActive(true);
                 }
-                else
-                {
-                    chargeCoroutine = Charge();
-                    StartCoroutine(chargeCoroutine);
-                    controller.ChargingParticles.SetActive(true);
-                }            
             }
             else
             {
-                Debug.Log("Can't charge propeller");
-                _playerMovement.Jump(0);
-                StopCharging();
-            }*/
+                chargeCoroutine = Charge();
+                StartCoroutine(chargeCoroutine);
+                StartCoroutine(_moveMerblesCoroutine);
+                StartCoroutine(CheckForGround());
+                controller.ChargingParticles.SetActive(true);
+            }
         }
 
         public override void StopCharging()
@@ -82,40 +84,31 @@ namespace Ability
         {
             base.InitializeAbility();
             _playerMovement = GetComponent<Player.Movement>();
-            _superJumpPoint = transform.GetChild(6).gameObject;
+            _superJumpPoint = transform.GetComponentInChildren<SuperJumpPoint>();
             maxPowerLevel = 10;
-            /*
-            _rotateCoroutine = RotateSuperJumpPoint();
-            StartCoroutine(_rotateCoroutine);
-            */
-
+            _moveMerblesCoroutine = MoveMerbles();
         }
 
-        private IEnumerator RotateSuperJumpPoint()
+        private IEnumerator MoveMerbles()
         {
-            Debug.Log("RotateSuperJumpPoint");
-            Transform[] merblePoints = new Transform[10];
-            for (int i = 0; i < merblePoints.Length; i++)
+            yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count > 0);
+            while(true)
             {
-                merblePoints[i] = transform.GetChild(i);
-            }
-            Vector3 rotationAmount = new Vector3(0, 5, 0);
-            while (true)
-            {
-                _superJumpPoint.transform.Rotate(rotationAmount);
-                Merble[] merbleArray = merbleBoss.ChargedMerbleList.ToArray();
-                if (merbleArray.Length > 0)
+                for(int i = 0; i < merbleBoss.ChargedMerbleList.Count; i++)
                 {
-                    for (int i = 0; i < merbleArray.Length; i++)
-                    {
-                        merbleArray[i].FloatTowardsObject(merblePoints[i].position, i,Merble.AbilityEnum.SuperJump, 5);
-                    }
+                    merbleBoss.ChargedMerbleList[i].FloatTowardsObject(_superJumpPoint.MerblePoints[i].transform.position, i, Merble.AbilityEnum.SuperJump, _superJumpPoint.RotationSpeed);
                 }
+                yield return null;
             }
         }
 
-        public void ReleaseMerbles()
+        private IEnumerator CheckForGround()
         {
+            yield return new WaitUntil((() => !_playerMovement.Grounded));
+            yield return new WaitUntil(() => _playerMovement.Grounded);
+            if(_playerMovement.Hovering)
+                _playerMovement.Hovering = false;
+            StopCoroutine(_moveMerblesCoroutine);
             merbleBoss.FireMerbles();
         }
     }

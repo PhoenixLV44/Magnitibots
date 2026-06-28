@@ -12,7 +12,7 @@ namespace Ability
         protected StateMachine stateMachine;
         protected StateManager stateManager;
         
-        protected Animator animationController;
+        protected Animator animator;
         protected string animationName;
 
         protected bool isExitingState;
@@ -25,6 +25,7 @@ namespace Ability
             stateMachine = _stateMachine;
             stateManager = _stateManager;
             ability = _ability;
+            animator = player.Animator;
         }
         public virtual void EnterState()
         {
@@ -33,6 +34,7 @@ namespace Ability
             startTime = Time.time;
             ability.enabled = true;
             ability.IsCharging = false;
+            stateManager.CurrentAbility = ability;
             //animationController.SetBool(animationName, true);
         }
         public virtual void ExitState()

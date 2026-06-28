@@ -12,30 +12,27 @@ public class JumpState: AirState
         base.EnterState();
         
         animator.Play("Jump");
+        player.Movement.Jump();
         Cursor.lockState = CursorLockMode.None;
-        /*player.Movement.CharacterController*/
+
     }
 
     public override void ExitState()
     {
-        currentAbility.StopCharging();
-        currentAbility.IsCharging = false;
+
     }
 
     public override void TransitionChecks()
     {
         base.TransitionChecks();
 
-        if (player.LassoHooked)
+        if (!player.Movement.Grounded && !player.Movement.Hovering)
         {
-            stateMachine.ChangeState(stateManager.LassoHookedState);
+            stateMachine.ChangeState(stateManager.FallState);
         }
-
-        if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
+        else if (!player.Movement.Grounded && player.Movement.Hovering)
         {
-            //Debug.Log("AFHUFADSHJF");
-            currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
+            stateMachine.ChangeState(stateManager.HoverState);
         }
     }
 
@@ -43,5 +40,10 @@ public class JumpState: AirState
     {
         base.LogicUpdate();
         stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+    }
+
+    public override void PhysicsUpdate()
+    {
+        stateManager.PlayerMovement.Move(stateManager.PlayerMovement.Submitted[0]);
     }
 }

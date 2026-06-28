@@ -13,7 +13,7 @@ public class MovementState : GroundedState
         base.EnterState();
         currentAbility = abilityManager.StateMachine.CurrentState.Ability;
         player.Movement.moveSpeed = player.Movement.DefaultMoveSpeed;
-        animator.Play("Walk");
+        //animator.Play("Walk");
         Cursor.lockState = CursorLockMode.None;
     }
     public override void ExitState()
@@ -31,9 +31,14 @@ public class MovementState : GroundedState
         if(moveInput == Vector2.zero)
             stateMachine.ChangeState(stateManager.IdleState);
 
-        if (InputSystem.actions.FindAction("Jump").IsPressed())
+        if (InputSystem.actions.FindAction("Jump").IsPressed() && !player.Movement.JumpLock)
         {
             stateMachine.ChangeState(stateManager.JumpState);
+        }
+
+        if (!player.Movement.Grounded)
+        {
+            stateMachine.ChangeState(stateManager.FallState);
         }
     }
 

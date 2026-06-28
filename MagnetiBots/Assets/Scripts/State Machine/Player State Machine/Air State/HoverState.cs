@@ -5,6 +5,19 @@ public class HoverState : AirState
     public override void EnterState()
     {
         base.EnterState();
-        animator.Play("Hover");
+    }
+
+    public override void ExitState()
+    {
+        animator.SetBool("Hovering", false);
+    }
+
+    public override void TransitionChecks()
+    {
+        base.TransitionChecks();
+        if (player.Movement.Grounded)
+        {
+            stateMachine.ChangeState(stateManager.IdleState);
+        }
     }
 }

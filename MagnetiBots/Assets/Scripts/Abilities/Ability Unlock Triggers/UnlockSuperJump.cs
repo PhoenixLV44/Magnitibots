@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-namespace Abilities.Unlock
+namespace Ability.Unlock
 {
     public class UnlockSuperJump : MonoBehaviour
     {

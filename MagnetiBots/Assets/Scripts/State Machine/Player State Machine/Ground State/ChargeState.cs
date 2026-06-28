@@ -1,3 +1,4 @@
+using Ability;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,7 +39,15 @@ public class ChargeState : GroundedState
         {
             //Debug.Log("AFHUFADSHJF");
             currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
+            switch (abilityManager.CurrentAbility)
+            {
+                case Ability.SuperJump:
+                    stateMachine.ChangeState(stateManager.JumpState);
+                    break;
+                default:
+                    stateMachine.ChangeState(stateManager.IdleState);
+                    break;
+            }
         }
     }
 

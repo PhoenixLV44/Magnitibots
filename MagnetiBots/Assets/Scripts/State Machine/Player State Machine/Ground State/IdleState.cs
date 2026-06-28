@@ -9,7 +9,7 @@ public class IdleState : GroundedState
     {
         //Debug.Log("Entering Idle State");
         base.EnterState();
-        animator.Play("Idle");
+        animator.Play("IdleWalk");
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -31,6 +31,11 @@ public class IdleState : GroundedState
         {
             stateMachine.ChangeState(stateManager.MovementState);
         }
+
+        if (InputSystem.actions.FindAction("Jump").IsPressed() && !player.Movement.JumpLock)
+        {
+            stateMachine.ChangeState(stateManager.JumpState);
+        }
     }
 
     public override void LogicUpdate()
@@ -44,11 +49,6 @@ public class IdleState : GroundedState
         else
         {
             Debug.LogError("No State Manager found!");
-        }
-
-        if (InputSystem.actions.FindAction("Fire").IsPressed())
-        {
-            //_currentAbility.Fire();
         }
     }
 }

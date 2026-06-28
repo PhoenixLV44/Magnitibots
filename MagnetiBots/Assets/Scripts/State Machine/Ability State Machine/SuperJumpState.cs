@@ -10,14 +10,26 @@ namespace Ability
         {
             base.EnterState();
             Debug.Log("Entered Super Jump State");
+            animator.SetBool("SuperJump", true);
+        }
+
+        public override void ExitState()
+        {
+            base.ExitState();
+            animator.SetBool("SuperJump", false);
         }
 
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
+            if (InputSystem.actions.FindAction("Activate Lasso").IsPressed())
             {
-                stateMachine.ChangeState(stateMachine.PreviousState);
+                stateMachine.ChangeState(stateManager.LassoState);
+            }
+
+            if (InputSystem.actions.FindAction("Activate Smash").IsPressed())
+            {
+                stateMachine.ChangeState(stateManager.SmashState);
             }
         }
     }

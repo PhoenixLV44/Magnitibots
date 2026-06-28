@@ -65,7 +65,7 @@ namespace Ability
         public virtual void StartCharging()
         {
             //Debug.Log("Starting charging");
-            controller.StopJumpCoroutines();
+            //controller.StopJumpCoroutines();
             if (chargeCoroutine != null)
             {
                 if (merbleBoss.MasterList.Count >= 1)

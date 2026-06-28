@@ -6,20 +6,27 @@ namespace Ability
     public class StateManager : MonoBehaviour
     {
         [SerializeField] private Player.Controller _playerController;
-        public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
+        public Player.Controller PlayerController {get => _playerController;
+            set => _playerController = value;
+        }
         
         private StateMachine _stateMachine;
-        public StateMachine StateMachine { get => _stateMachine;  }
-        
+        public StateMachine StateMachine => _stateMachine;
+
         [SerializeField] private LassoState _lassoState;
-        public LassoState LassoState {get {return _lassoState;} }
+        public LassoState LassoState => _lassoState;
         [SerializeField] private SmashState _smashState;
-        public SmashState SmashState {get {return _smashState;} }
+        public SmashState SmashState => _smashState;
         [SerializeField] private SuperJumpState _superJumpState;
-        public SuperJumpState SuperJumpState {get {return _superJumpState;} }
-        
+        public SuperJumpState SuperJumpState => _superJumpState;
+
         [SerializeField] private NoAbilityState _noAbilityState;
-        public NoAbilityState NoAbilityState {get {return _noAbilityState;} }
+        public NoAbilityState NoAbilityState => _noAbilityState;
+
+        private Parent _currentAbility;
+        public Parent CurrentAbility {get => _currentAbility;
+            set => _currentAbility = value;
+        }
 
         private void Awake()
         {

@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class SuperJumpPoint : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 1.5f;
+    [SerializeField] private float defaultRotationSpeed = 1.5f;
+    private float _rotationSpeed;
+    public float RotationSpeed => _rotationSpeed;
     private Boss _merbleBoss;
     public Boss MerbleBoss {get => _merbleBoss; set => _merbleBoss = value; }
     private IEnumerator _moveMerblesCoroutine;
@@ -13,6 +15,8 @@ public class SuperJumpPoint : MonoBehaviour
     private Transform[] _merblePoints;
     public Transform[] MerblePoints => _merblePoints;
     private Player.Movement _movement;
+    public Player.Movement Movement {get => _movement; set => _movement = value; }
+
     private Player.Controller _playerController;
     public Player.Controller PlayerController
     {
@@ -21,7 +25,6 @@ public class SuperJumpPoint : MonoBehaviour
     }
     private bool _isCharging;
     public bool IsCharging { get; set; }
-    private CharacterController _characterController;
     private void Start()
     {
         //_moveMerblesCoroutine = MoveMerbles();
@@ -30,71 +33,27 @@ public class SuperJumpPoint : MonoBehaviour
         {
             _merblePoints[i] = transform.GetChild(i);
         }
-        _movement = GetComponentInParent<Player.Movement>();
-        _characterController = GetComponentInParent<CharacterController>();
+        //_movement = _playerController.Movement;
+        _rotationSpeed = defaultRotationSpeed;
     }
 
     private void Update()
     {
-        transform.Rotate(0, rotationSpeed, 0 * Time.deltaTime);
-        //Debug.Log(_isCharging);
-        /*if (_isCharging)
+        if (_movement == null)
         {
-            Debug.Log("JUMP JUMP JUMP");
-            Merble[] merbleArray = _merbleBoss.ChargedMerbleList.ToArray();
-            foreach (var merble in _merbleBoss.ChargedMerbleList)
-            {
-                Debug.Log("SPINNY");
-                float moveSpeed = rotationSpeed;
-                if (!_movement.Grounded)
-                {
-                    moveSpeed = _characterController.velocity.magnitude;
-                }
-
-                int i = _merbleBoss.ChargedMerbleList.IndexOf(merble);
-                Debug.Log(moveSpeed);
-                //merble.FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.Propeller, rotationSpeed);
-                merble.transform.position = _merblePoints[i].transform.position;
-            }
-        }*/
-    }
-
-    public IEnumerator MoveMerbles()
-    {
-        while (true)
-        {
-            Debug.Log("MERBLES GO SPIN");
-            Merble[] merbleArray = _merbleBoss.ChargedMerbleList.ToArray();
-            foreach (var merble in merbleArray)
-            {
-                Debug.Log("SPINNY");
-                float moveSpeed = rotationSpeed;
-                if (!_movement.Grounded)
-                {
-                    moveSpeed = _characterController.velocity.magnitude;
-                }
-
-                int i = _merbleBoss.ChargedMerbleList.IndexOf(merble);
-                Debug.Log(moveSpeed);
-                merble.FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.SuperJump, rotationSpeed);
-            }
-            if (merbleArray.Length > 0)
-            {
-
-                /*for (int i = 0; i < merbleArray.Length; i++)
-                {
-                    Debug.Log("SPINNY");
-                    float moveSpeed = rotationSpeed;
-                    if (!_movement.Grounded)
-                    {
-                        moveSpeed = _characterController.velocity.magnitude;
-                    }
-                    Debug.Log(moveSpeed);
-                    merbleArray[i].FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.Propeller, rotationSpeed);
-                }*/
-
-            }
-            yield return null;  
+            _movement = _playerController.Movement;
         }
+        else
+        {
+            if (_movement.Grounded)
+            {
+                _rotationSpeed = defaultRotationSpeed;
+            }
+            else if(!_movement.Grounded)
+            {
+                _rotationSpeed = _movement.CharacterController.velocity.magnitude;
+            }
+        }
+        transform.Rotate(0, _rotationSpeed, 0 * Time.deltaTime);
     }
 }
