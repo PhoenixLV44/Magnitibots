@@ -46,7 +46,7 @@ public class IdleState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (stateManager.PlayerMovement != null)
+        if (stateManager.PlayerMovement != null && !player.Interacting)
         {
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
             //Debug.LogError("NOT NULL");

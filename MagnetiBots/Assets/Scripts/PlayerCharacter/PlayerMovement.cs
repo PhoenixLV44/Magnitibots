@@ -264,5 +264,11 @@ namespace Player
                 return false;
             }
         }
+
+        public void ChangeModelRotation(Vector3 target)
+        {
+            Vector3 newTarget = new Vector3(target.x, transform.position.y, target.z);
+            _model.LookAt(newTarget);
+        }
     }
 }

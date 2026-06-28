@@ -76,6 +76,9 @@ namespace Player
 
         [SerializeField] private GameObject shadow;
 
+        [SerializeField] private bool interacting;
+        public bool Interacting { get => interacting; set => interacting = value; }
+
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();

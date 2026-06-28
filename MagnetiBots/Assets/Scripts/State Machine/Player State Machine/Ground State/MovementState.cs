@@ -44,7 +44,10 @@ public class MovementState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        if (!player.Interacting)
+        {
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        }
     }
 
     public override void PhysicsUpdate()
