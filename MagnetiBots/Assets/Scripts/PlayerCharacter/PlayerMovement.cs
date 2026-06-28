@@ -22,17 +22,19 @@ namespace Player
         public Quaternion adjustedMovement;
         public Rigidbody rb;
         Vector3[] _submitted;
-        public Vector3[] Submitted { get { return _submitted; } }
-        bool _isGliding;
-        public bool Gliding { get { return _isGliding; } set { _isGliding = value; } }
+        public Vector3[] Submitted => _submitted;
+        bool _isHovering;
+        public bool Hovering { get => _isHovering; set => _isHovering = value; }
         bool _isGrounded;
-        public bool Grounded { get { return _isGrounded; } set { _isGrounded = value; } }
+        public bool Grounded { get => _isGrounded; set => _isGrounded = value; }
         InputAction _move;
         InputAction _look;
         InputAction _jump;
 
         private Player.Controller _controller;
 
+        private bool _jumpLock;
+        public bool JumpLock { get => _jumpLock; set => _jumpLock = value; }
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
@@ -59,9 +61,9 @@ namespace Player
             Vector3 lookdir = new Vector3(_look.ReadValue<Vector2>().x / Screen.width - 0.5f, 0, _look.ReadValue<Vector2>().y / Screen.height - 0.5f);
 
             Vector3[] returnable = { movedir, lookdir };
-            if (InputSystem.actions.FindAction("Jump").IsPressed())
+            if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame())
             {
-                _controller.StartJumpChannel();
+                _jumpLock =  false;
             }
             
             return returnable;
@@ -104,8 +106,9 @@ namespace Player
         }
         
         float _submittedJump = 0;
-        public void Jump(int jumpModifier)
+        public void Jump(int jumpModifier = 0)
         {
+            _jumpLock = true;
             float jumpPower = jumpModifier == 0? jumpForce: jumpForce + (jumpForce * Mathf.Log(jumpModifier));
             //jumpPower = jumpForce + (1 * jumpModifier);
             //Debug.Log("jumping with power " + jumpPower);
@@ -126,7 +129,7 @@ namespace Player
                 intendedVerticalForce -= Physics.gravity.magnitude;
             }
             //the force of glide
-            else if (_isGliding && !Grounded)
+            else if (_isHovering && !Grounded)
             {
                 intendedVerticalForce -= _glidingSpeed;
             }
@@ -139,7 +142,6 @@ namespace Player
             {
                 intendedVerticalForce += _submittedJump;
                 _submittedJump = 0;
-                _controller.jumpLock = false;
             }
 
             //calculate acceleration from force
@@ -212,7 +214,7 @@ namespace Player
             //Debug.Log(intendedTotalMovement);
             Vector3 intendedTotalDistance = intendedTotalMovement * Time.deltaTime;
             _characterController.Move(intendedTotalDistance);
-            if (intendedTotalDistance.y < 0 && _isGliding)
+            if (intendedTotalDistance.y < 0 && _isHovering)
             {
                 _gravityOn = false;
             }

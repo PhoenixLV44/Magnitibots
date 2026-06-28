@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class LassoHooked : GroundedState
 {
-    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     
     private Ability.Lasso _lassoAbility;
     
@@ -50,12 +50,10 @@ public class LassoHooked : GroundedState
             }
             else
             {
-            }
                 _lassoAbility.UnhookLasso();
+            }
         }
-        if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
-        {
-        }
+
     }
 
     public override void PhysicsUpdate()

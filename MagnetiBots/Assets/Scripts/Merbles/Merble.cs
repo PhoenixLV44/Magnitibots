@@ -19,7 +19,7 @@ namespace Merbles
         public enum FollowTypes { Loose, Snake, Coalition }
         private FollowTypes _followType;
         
-        public enum AbilityEnum{ None, Lasso, Smash, Propeller}
+        public enum AbilityEnum{ None, Lasso, Smash, SuperJump}
 
         private AbilityEnum _currentAbilityEnum = AbilityEnum.None;
         public AbilityEnum CurrentAbilityEnum { get => _currentAbilityEnum; set => _currentAbilityEnum = value; }
@@ -235,7 +235,7 @@ namespace Merbles
 
         public void FloatTowardsObject(Vector3 vectorPos, float index, AbilityEnum currentAbility, float speed = 2.5f)
         {
-            if (currentAbility == AbilityEnum.Lasso || currentAbility == AbilityEnum.Propeller)
+            if (currentAbility == AbilityEnum.Lasso || currentAbility == AbilityEnum.SuperJump)
             {
                 
             }
@@ -257,7 +257,7 @@ namespace Merbles
                     //Debug.Log("FLOATING");
                     transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
                     break;
-                case AbilityEnum.Propeller:
+                case AbilityEnum.SuperJump:
                     transform.position = Vector3.Lerp(transform.position, vectorPos, Time.deltaTime * speed);
                     break;
                 default:

@@ -4,20 +4,16 @@ using UnityEngine.InputSystem;
 
 public class MovementState : GroundedState
 {
-    public MovementState(Player.Controller pc, StateMachine stateMachine, StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public MovementState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     
-    private Ability.StateManager _abilityManager;
-    private Ability.Parent _currentAbility;
 
     public override void EnterState()
     {
         //Debug.Log("Entering Movement State");
-        if (!_abilityManager)
-        {
-            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
-        }
-        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
+        base.EnterState();
+        currentAbility = abilityManager.StateMachine.CurrentState.Ability;
         player.Movement.moveSpeed = player.Movement.DefaultMoveSpeed;
+        //animator.Play("Walk");
         Cursor.lockState = CursorLockMode.None;
     }
     public override void ExitState()
@@ -34,11 +30,15 @@ public class MovementState : GroundedState
 
         if(moveInput == Vector2.zero)
             stateMachine.ChangeState(stateManager.IdleState);
-        
-        if (InputSystem.actions.FindAction("Fire").IsPressed())
+
+        if (InputSystem.actions.FindAction("Jump").IsPressed() && !player.Movement.JumpLock)
         {
-            _currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
+            stateMachine.ChangeState(stateManager.JumpState);
+        }
+
+        if (!player.Movement.Grounded)
+        {
+            stateMachine.ChangeState(stateManager.FallState);
         }
     }
 

@@ -35,6 +35,8 @@ namespace Ability
         protected RangeIndicator rangeIndicator;
         
         protected Merbles.Boss merbleBoss;
+        
+        protected Animator animator;
 
         public Boss MerbleBoss { get => merbleBoss; set => merbleBoss = value; }
         /*protected List<Merble> chargedMerbleList;
@@ -63,6 +65,7 @@ namespace Ability
         public virtual void StartCharging()
         {
             //Debug.Log("Starting charging");
+            //controller.StopJumpCoroutines();
             if (chargeCoroutine != null)
             {
                 if (merbleBoss.MasterList.Count >= 1)

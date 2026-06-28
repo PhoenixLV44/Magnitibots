@@ -118,10 +118,12 @@ namespace Ability
                 if (rb)
                 {
                     rb.useGravity = true;
+                    rb.constraints = RigidbodyConstraints.None;
                 }
                 loopedObject.transform.parent = null;
             }
-            
+
+            _loopScript.BoxCollider.enabled = false;
             _lassoLoopObject.SetActive(false);
 
             rangeIndicator.DisableRangeIndicator();

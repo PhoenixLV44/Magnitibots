@@ -1,33 +1,29 @@
+using Ability;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ChargeState : GroundedState
 {
-    public ChargeState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
-    
-    private Ability.StateManager _abilityManager;
-    private Ability.Parent _currentAbility;
+    public ChargeState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     
 
     public override void EnterState()
     {
         //Debug.Log("Entering Charge State");
-        if (!_abilityManager)
-        {
-            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
-        }
+        base.EnterState();
 
-        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        
-        _currentAbility.StartCharging();
+        if (player.Movement.Grounded)
+        {
+            currentAbility.StartCharging();
+        }
         Cursor.lockState = CursorLockMode.None;
         /*player.Movement.CharacterController*/
     }
 
     public override void ExitState()
     {
-        _currentAbility.StopCharging();
-        _currentAbility.IsCharging = false;
+        currentAbility.StopCharging();
+        currentAbility.IsCharging = false;
     }
 
     public override void TransitionChecks()
@@ -42,8 +38,16 @@ public class ChargeState : GroundedState
         if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
             //Debug.Log("AFHUFADSHJF");
-            _currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
+            currentAbility.Fire();
+            switch (abilityManager.CurrentAbility)
+            {
+                case Ability.SuperJump:
+                    stateMachine.ChangeState(stateManager.JumpState);
+                    break;
+                default:
+                    stateMachine.ChangeState(stateManager.IdleState);
+                    break;
+            }
         }
     }
 
