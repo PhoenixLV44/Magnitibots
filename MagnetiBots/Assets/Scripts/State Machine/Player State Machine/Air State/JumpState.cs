@@ -10,9 +10,7 @@ public class JumpState: AirState
     public override void EnterState()
     {
         base.EnterState();
-        
-        animator.Play("Jump");
-        player.Movement.Jump();
+        player.Movement.StartCoroutine(player.Movement.Jump());
         Cursor.lockState = CursorLockMode.None;
 
     }
@@ -26,13 +24,17 @@ public class JumpState: AirState
     {
         base.TransitionChecks();
 
-        if (!player.Movement.Grounded && !player.Movement.Hovering)
+        if (!player.Movement.IsRising())
         {
-            stateMachine.ChangeState(stateManager.FallState);
-        }
-        else if (!player.Movement.Grounded && player.Movement.Hovering)
-        {
-            stateMachine.ChangeState(stateManager.HoverState);
+            //Debug.Log("Falling");
+            if (!player.Movement.Grounded && !player.Movement.Hovering)
+            {
+                stateMachine.ChangeState(stateManager.FallState);
+            }
+            else if (!player.Movement.Grounded && player.Movement.Hovering)
+            {
+                stateMachine.ChangeState(stateManager.HoverState);
+            }
         }
     }
 

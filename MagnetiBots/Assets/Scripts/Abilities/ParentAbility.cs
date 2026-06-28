@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using Ability.Object;
 using Merbles;
 using System.Collections.Generic;
+using Player;
 
 namespace Ability
 {
@@ -35,8 +36,6 @@ namespace Ability
         protected RangeIndicator rangeIndicator;
         
         protected Merbles.Boss merbleBoss;
-        
-        protected Animator animator;
 
         public Boss MerbleBoss { get => merbleBoss; set => merbleBoss = value; }
         /*protected List<Merble> chargedMerbleList;

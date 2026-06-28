@@ -171,7 +171,7 @@ namespace Ability
             List<Merbles.Merble> chargedMerbleList;
             List<Merbles.Merble> merbleList;
             Vector2 distanceBetweenMerblesMinMax = new Vector2(1, 2);
-            Transform pivotPoint = controller.Movement.model.GetChild(8);
+            Transform pivotPoint = controller.Movement.Model.GetChild(8);
             float speed = targetCursor.ObjectSpeed + 0.5f;
             while (true)
             {
@@ -245,7 +245,7 @@ namespace Ability
         private IEnumerator<Tuple<List<Merble>, List<Merble>>> CalculateMerblesNeeded(List<Merble> merbleList, List<Merble> chargedMerbleList)
         {
             Vector2 distanceBetweenMerblesMinMax = new Vector2(1, 2);
-            Transform pivotPoint = controller.Movement.model.GetChild(8);
+            Transform pivotPoint = controller.Movement.Model.GetChild(8);
                 
             merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
 

@@ -11,6 +11,7 @@ namespace Interactable
         private bool _playerInRange;
         public bool  PlayerInRange => _playerInRange;
         private Canvas _canvas;
+        private Player.Controller controller;
         private void Start()
         {
             delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);
@@ -21,6 +22,13 @@ namespace Interactable
         public override void ActivateObject()
         {
             base.ActivateObject();
+            if (_playerInRange)
+            {
+                controller.Interacting = true;
+                controller.Movement.ChangeModelRotation(transform.position);
+                controller.Animator.SetBool("PullingLever", true);
+                StartCoroutine(controller.AnimController.PullingLeverAnim());
+            }
             Debug.Log("Pull lever");
         }
 
@@ -29,6 +37,10 @@ namespace Interactable
             if (other.CompareTag("Player"))
             {
                 Debug.Log("Player entered");
+                if (!controller)
+                {
+                    controller = other.gameObject.GetComponent<Player.Controller>();
+                }
                 _pullalble = true;
                 _playerInRange = true;
             }

@@ -12,7 +12,6 @@ public class MovementState : GroundedState
         //Debug.Log("Entering Movement State");
         base.EnterState();
         currentAbility = abilityManager.StateMachine.CurrentState.Ability;
-        player.Movement.moveSpeed = player.Movement.DefaultMoveSpeed;
         //animator.Play("Walk");
         Cursor.lockState = CursorLockMode.None;
     }
@@ -45,7 +44,10 @@ public class MovementState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        if (!player.Interacting)
+        {
+            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        }
     }
 
     public override void PhysicsUpdate()

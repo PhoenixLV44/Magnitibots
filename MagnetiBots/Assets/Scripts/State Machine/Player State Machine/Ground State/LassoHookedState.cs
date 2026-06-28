@@ -14,7 +14,7 @@ public class LassoHooked : GroundedState
         {
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
-        player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
+        //player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
         Cursor.lockState = CursorLockMode.Locked;
     }
     
@@ -30,7 +30,7 @@ public class LassoHooked : GroundedState
 
             _lassoAbility.MoveLassoTarget();
 
-            player.Movement.Move(moveInput);
+            //player.Movement.Move(moveInput);
         }
         else
         {

@@ -24,6 +24,15 @@ namespace Player
         
         InputAction _move;
 
+        private float _jumpAnimLength;
+        public float JumpAnimLength => _jumpAnimLength;
+        [SerializeField] private AnimationClip jumpAnimation; //Player_Jump2
+        public AnimationClip JumpAnimation => jumpAnimation;
+        
+        private float _pullLeverAnimLength;
+        [SerializeField] private AnimationClip pullLeverAnimation; //Player_Pull_Mid
+        public AnimationClip PullLeverAnimation => pullLeverAnimation;
+
         public void SetUpController(Controller playerController, Movement playerMovement, Player.StateManager playerStateManager, Ability.StateManager abilityStateManager, Lasso lasso, Smash smash,
             SuperJump superJump,  Animator animator)
         {
@@ -84,7 +93,6 @@ namespace Player
                     _animator.SetBool("SuperJump", false);
                     break;
             }
-
         }
 
         private void ChangeWalkBlendTree()
@@ -106,6 +114,21 @@ namespace Player
                 }
             }
             _animator.SetFloat("IdleToWalk" , _walkBlendTree);
+        }
+
+        private void Start()
+        {
+            _jumpAnimLength = jumpAnimation.length / 4;
+            _pullLeverAnimLength = pullLeverAnimation.length;
+        }
+
+        public IEnumerator PullingLeverAnim()
+        {
+            Debug.Log("Pulling lever");
+            _animator.SetBool("PullingLever", _playerController.Interacting);
+            yield return new WaitForSeconds(1);
+            _playerController.Interacting = false;
+            _animator.SetBool("PullingLever", _playerController.Interacting);
         }
     }
 }
