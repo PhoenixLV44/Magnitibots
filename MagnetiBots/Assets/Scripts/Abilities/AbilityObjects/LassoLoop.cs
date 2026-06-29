@@ -21,7 +21,7 @@ namespace Ability.Object
             _boxCollider.enabled = false;
         }
 
-        public void StartMovement(Vector3 startPos,Vector3 target, float speed = 5)
+        public void StartMovement(Vector3 startPos,Vector3 target, float speed = 10)
         {
             StartCoroutine(MoveFoward(startPos, target, speed));
         }
@@ -37,12 +37,24 @@ namespace Ability.Object
             }
 
             _lassoAbility.LoopBeingThrown = false;
-            if (Vector3.Distance(transform.position, startPos) > Vector3.Distance(startPos, target))
+            
+
+            StartCoroutine(ReturnToStartPosition(startPos, target));
+        }
+
+        private IEnumerator ReturnToStartPosition(Vector3 startPos, Vector3 target, float speed = 10)
+        {
+            StopCoroutine(MoveFoward(startPos, target, speed));
+            _lassoAbility.Controller.Animator.Play("Pull");
+            yield return new WaitForSeconds(_lassoAbility.Controller.AnimController.PullAnimLength / 2);
+            while (Vector3.Distance(transform.position, startPos) > 0.1f)
             {
+                transform.position = Vector3.MoveTowards(transform.position, startPos, speed * Time.deltaTime);
+                yield return null;
             }
-            transform.position = startPos;
-            gameObject.SetActive(false);
             _lassoAbility.MerbleBoss.FireMerbles();
+            _lassoAbility.StopAllCoroutines();
+            gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -74,7 +86,7 @@ namespace Ability.Object
                         rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY |RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                     }
                     _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
-                    _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
+                    //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                     _boxCollider.enabled = true;
                 }
                 else if (other.CompareTag("Lever"))
@@ -83,12 +95,12 @@ namespace Ability.Object
                     _lassoAbility.Controller.LassoHooked = true;
                     transform.position = other.transform.position;
                     _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
-                    _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
+                    //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                 }
             }
             else
             {
-                _lassoAbility.MerbleBoss.FireMerbles();
+                //_lassoAbility.MerbleBoss.FireMerbles();
             }
 
         }
@@ -106,7 +118,7 @@ namespace Ability.Object
                     _lassoAbility.Controller.LassoHooked = true;
                     transform.position = hit.collider.transform.position;
                     _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
-                    _lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine); 
+                    //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine); 
                     StopAllCoroutines();
                 }
             }
