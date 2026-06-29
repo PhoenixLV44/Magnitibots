@@ -740,14 +740,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   movementSpeed: 7.5
-  jumpForce: 100
+  jumpForce: 110
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
   merbleFollowType: 0
+  _lassoHooked: 0
   chargingParticles: {fileID: 5113423678552748251}
   superJumpPoint: {fileID: 4496413624167517707}
-  currentAbilityText: {fileID: 0}
   shadow: {fileID: 0}
-  interacting: 0
 --- !u!114 &3686224252282532151
 MonoBehaviour:
   m_ObjectHideFlags: 0
