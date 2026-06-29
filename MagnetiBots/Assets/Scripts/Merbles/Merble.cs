@@ -30,9 +30,9 @@ namespace Merbles
         private bool _isCharging = false;
 
         [SerializeField] private float floatingSpeed;
-        private bool floating;
+        private bool _floating;
 
-        public bool Floating => floating;
+        public bool Floating => _floating;
         
         [SerializeField]LayerMask groundLayer;
         [SerializeField] private GameObject chargedParticles;
@@ -65,6 +65,8 @@ namespace Merbles
         {
             _merblePool = pool;
             Charging = false;
+            _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed;
+            floatingSpeed = _agent.speed;
             myBoss.merbleList.Add(this);
             Sentience = true;
             tag = "Merble";
@@ -147,7 +149,7 @@ namespace Merbles
         {
             transform.parent = parent;
             _isCharging = false;
-            floating = false;
+            _floating = false;
             if (_currentAbilityEnum == AbilityEnum.Smash)
             {
                 transform.position = myBoss.transform.position;

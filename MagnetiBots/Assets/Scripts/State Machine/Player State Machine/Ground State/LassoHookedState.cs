@@ -28,7 +28,10 @@ public class LassoHooked : GroundedState
             //Debug.Log("No Lever");
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
-            _lassoAbility.MoveLassoTarget();
+            if (!_lassoAbility.PullMerblesBool)
+            {
+                _lassoAbility.MoveLassoTarget();
+            }
 
             //player.Movement.Move(moveInput);
         }
@@ -37,6 +40,7 @@ public class LassoHooked : GroundedState
         }
         if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
         {
+            /*
             if (_lassoAbility.Lever != null)
             {
                 if (_lassoAbility.Lever)
@@ -45,13 +49,15 @@ public class LassoHooked : GroundedState
                 }
                 else
                 {
-                   _lassoAbility.UnhookLasso();
+                   _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
                 }
             }
             else
             {
-                _lassoAbility.UnhookLasso();
             }
+            */
+            
+            _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
         }
 
     }

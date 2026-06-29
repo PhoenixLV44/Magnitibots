@@ -49,7 +49,7 @@ namespace Player
         public Ability.StateManager AbilityStateManager => _abilityStateManager;
             #endregion
             
-        private bool _lassoHooked = false;
+        [SerializeField]private bool _lassoHooked = false;
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
         
         private Player.PCamera _playerCamera;
@@ -66,8 +66,6 @@ namespace Player
         public GameObject ChargingParticles => chargingParticles;
 
         [SerializeField] private SuperJumpPoint superJumpPoint;
-
-        [SerializeField] private TextMeshProUGUI currentAbilityText;
         
         Animator _animator;
         public Animator Animator => _animator;
@@ -76,8 +74,8 @@ namespace Player
 
         [SerializeField] private GameObject shadow;
 
-        [SerializeField] private bool interacting;
-        public bool Interacting { get => interacting; set => interacting = value; }
+        private bool _interacting;
+        public bool Interacting { get => _interacting; set => _interacting = value; }
 
         void Start()
         {
@@ -143,10 +141,6 @@ namespace Player
             if (_movement.CharacterController)
             {
                 _movement.HandleMovement();
-            }
-            if (currentAbilityText)
-            {
-                currentAbilityText.text = _abilityStateManager.StateMachine.CurrentState.ToString();
             }
             CheckForGround();
             MoveShadow();
