@@ -113,10 +113,6 @@ namespace Merbles
                     }
                 }
             }
-            //else if(!GroundCheck() && !floating)
-            {
-                //transform.position = Vector3.MoveTowards(transform.position, _agent.destination, Time.deltaTime * _agent.speed);
-            }
         }
         public void StartCharge(Vector3 target)
         {
@@ -237,30 +233,30 @@ namespace Merbles
 
         public void FloatTowardsObject(Vector3 vectorPos, float index, AbilityEnum currentAbility, float speed = 2.5f)
         {
-            if (currentAbility == AbilityEnum.Lasso || currentAbility == AbilityEnum.SuperJump)
-            {
-                
-            }
+            Vector2 rngMinMax;
+            Vector3 targetPos;
             switch (currentAbility)
             {
                 case AbilityEnum.Lasso:
-                    transform.position = Vector3.Lerp(transform.position, vectorPos, Time.deltaTime * speed);
+                    rngMinMax = new Vector2(-0.5f, 0.5f);
+                    targetPos = new Vector3(vectorPos.x + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.y + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
+                    transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * speed);
                     break;
                 
                 case AbilityEnum.Smash:
-                    Vector2 rngMinMax = new Vector2(-1.5f, 1.5f);
+                    rngMinMax = new Vector2(-1.5f, 1.5f);
                     if (index > 1)
                     {
                         rngMinMax.x -= (index / 10);
                         rngMinMax.y += (index / 10);
                     }
             
-                    Vector3 targetPos = new Vector3(vectorPos.x + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.y + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
+                    targetPos = new Vector3(vectorPos.x + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.y + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
                     //Debug.Log("FLOATING");
-                    transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
+                    transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * speed);
                     break;
                 case AbilityEnum.SuperJump:
-                    transform.position = Vector3.Lerp(transform.position, vectorPos, Time.deltaTime * speed);
+                    transform.position = Vector3.Slerp(transform.position, vectorPos, Time.deltaTime * speed);
                     break;
                 default:
                     Debug.LogError("Unknown AbilityEnum");
@@ -311,7 +307,7 @@ namespace Merbles
 /*            floating = false;*/
         }
 
-        private bool GroundCheck()
+        public bool GroundCheck()
         {
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, _agent.baseOffset + 1, groundLayer))

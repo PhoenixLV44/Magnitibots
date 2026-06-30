@@ -35,16 +35,20 @@ namespace Ability.Object
                     Destroy(target.gameObject);
                 }
                 else
-                {
+                {  
                     _smashAbility.DeactivateBall();
                 }
 
             }
-            else if (other.CompareTag("Ground"))
+            else if (other.CompareTag("Ground") && rb.linearVelocity.y < 0)
             {
                 Debug.Log("Ground");
                 _smashAbility.DeactivateBall();
                 _smashAbility.MerbleBoss.FireMerbles();
+            }
+            else if (!other.CompareTag("Ground") && !other.CompareTag("SmashTarget") && rb.linearVelocity.y < 0)
+            {
+                _smashAbility.DeactivateBall();
             }
         }
 
@@ -69,31 +73,7 @@ namespace Ability.Object
             Cursor.lockState = CursorLockMode.None;
             StopAllCoroutines();
         }
-
-        public IEnumerator MoveMerbles()
-        {
-            //_merbleList =  new List<Merbles.Merble>();
-            while(gameObject.activeSelf)
-            {
-                if (_smashAbility.MerbleBoss.ChargedMerbleList.Count > 0)
-                {
-                    //Debug.Log("Moving Merbles");
-                    _merbleList = _smashAbility.MerbleBoss.ChargedMerbleList;
-                    for(int i = 0 ; i < _merbleList.Count; i++)
-                    {
-                        if (!rb.useGravity)
-                        {
-                            _merbleList[i].FloatTowardsObject(gameObject.transform.position, i, Merble.AbilityEnum.Smash);
-                        }
-                        else
-                        {
-                            _merbleList[i].FloatTowardsObject(gameObject.transform.position, i, Merble.AbilityEnum.Smash, rb.linearVelocity.magnitude);
-                        }
-                    }
-                }
-                yield return null;
-            }
-        }
+        
 
         private void Update()
         {

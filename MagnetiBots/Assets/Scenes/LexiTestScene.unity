@@ -2119,6 +2119,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afb69139245ee75498596a01cdc95688, type: 3}
+--- !u!1001 &4796897791590733789
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.215675
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17781985
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.919981
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7459165289290584, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8373070103844153539, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
+      propertyPath: m_Name
+      value: BreakableBoulderPrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a336c393cd190a245bf73c7fd3eeeadf, type: 3}
 --- !u!1001 &5947901531540592577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2262,3 +2319,4 @@ SceneRoots:
   - {fileID: 3291117124027343540}
   - {fileID: 1089788238}
   - {fileID: 1101978651}
+  - {fileID: 4796897791590733789}
