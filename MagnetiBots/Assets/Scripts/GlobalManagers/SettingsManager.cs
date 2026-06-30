@@ -30,7 +30,6 @@ public class SettingsManager : MonoBehaviour
     Slider BGMVolumeSlider;
     Slider SFXVolumeSlider;
     Slider MasterVolumeSlider;
-    Slider UIVolumeSlider;
     Slider MouseSensitivitySlider;
     #endregion
 
@@ -39,7 +38,6 @@ public class SettingsManager : MonoBehaviour
     Slider pause_BGMVolumeSlider;
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
-    Slider pause_UIVolumeSlider;
     Slider pause_MouseSensitivitySlider;
     #endregion
 
@@ -57,19 +55,16 @@ public class SettingsManager : MonoBehaviour
         BGMVolumeSlider = root.Q<Slider>("BGMVolumeSlider");
         SFXVolumeSlider = root.Q<Slider>("SFXVolumeSlider");
         MasterVolumeSlider = root.Q<Slider>("MasterVolumeSlider");
-        UIVolumeSlider = root.Q<Slider>("UIVolumeSlider");
         MouseSensitivitySlider = root.Q<Slider>("MouseSensitivitySlider");
 
         //register callbacks
         BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
-        UIVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.UI);
 
         BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
-        UIVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.UI);
         #endregion
 
         #region pause settings menu
@@ -79,19 +74,16 @@ public class SettingsManager : MonoBehaviour
         pause_BGMVolumeSlider = pause_root.Q<Slider>("BGMVolumeSlider");
         pause_SFXVolumeSlider = pause_root.Q<Slider>("SFXVolumeSlider");
         pause_MasterVolumeSlider = pause_root.Q<Slider>("MasterVolumeSlider");
-        pause_UIVolumeSlider = pause_root.Q<Slider>("UIVolumeSlider");
         pause_MouseSensitivitySlider = pause_root.Q<Slider>("MouseSensitivitySlider");
 
         //register callbacks
         pause_BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
-        pause_UIVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.UI);
 
         pause_BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
-        pause_UIVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.UI);
         #endregion
 
 
@@ -125,9 +117,6 @@ public class SettingsManager : MonoBehaviour
                 break;
             case Destination.BGM:
                 Globals.Managers.Saves.AddData<float>("BGMVolume", BGMVolume);
-                break;
-            case Destination.UI:
-                Globals.Managers.Saves.AddData<float>("UIVolume", UIVolume);
                 break;
             default: break;
         }
@@ -176,18 +165,6 @@ public class SettingsManager : MonoBehaviour
             pause_MasterVolumeSlider.value = MasterVolume;
         }
 
-        //UIVolume
-        if (Globals.Managers.Saves.GetData<float>("UIVolume", out volumeHolder))
-        {
-            UIVolume = volumeHolder;
-            pause_UIVolumeSlider.value = UIVolume;
-        }
-        else
-        {
-            UIVolume = 1;
-            Globals.Managers.Saves.AddData<float>("UIVolume", UIVolume);
-            pause_UIVolumeSlider.value = UIVolume;
-        }
         Globals.Managers.Audio.FullVolumeUpdate();
         #endregion
 
@@ -248,18 +225,6 @@ public class SettingsManager : MonoBehaviour
             MasterVolumeSlider.value = MasterVolume;
         }
 
-        //UIVolume
-        if (Globals.Managers.Saves.GetData<float>("UIVolume", out volumeHolder))
-        {
-            UIVolume = volumeHolder;
-            UIVolumeSlider.value = UIVolume;
-        }
-        else
-        {
-            UIVolume = 1;
-            Globals.Managers.Saves.AddData<float>("UIVolume", UIVolume);
-            UIVolumeSlider.value = UIVolume;
-        }
         Globals.Managers.Audio.FullVolumeUpdate();
         #endregion
 
@@ -271,7 +236,7 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            UIVolume = 1;
+            MouseSensitivity = 1;
             Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
             MouseSensitivitySlider.value = MouseSensitivity;
         }
