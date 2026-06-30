@@ -28,10 +28,18 @@ namespace Player
         public float JumpAnimLength => _jumpAnimLength;
         [SerializeField] private AnimationClip jumpAnimation; //Player_Jump2
         public AnimationClip JumpAnimation => jumpAnimation;
+
+        private float _pullAnimLength;
+        public float PullAnimLength => _pullAnimLength;
+        [Tooltip("Animation called 'Pull_Full'")]
+        [SerializeField] private AnimationClip pullAnimation;
+        public AnimationClip PullAnimation => pullAnimation;
         
         private float _pullLeverAnimLength;
+        [Tooltip("Animation called 'Pull_Mid'")]
         [SerializeField] private AnimationClip pullLeverAnimation; //Player_Pull_Mid
         public AnimationClip PullLeverAnimation => pullLeverAnimation;
+        
 
         public void SetUpController(Controller playerController, Movement playerMovement, Player.StateManager playerStateManager, Ability.StateManager abilityStateManager, Lasso lasso, Smash smash,
             SuperJump superJump,  Animator animator)
@@ -93,6 +101,15 @@ namespace Player
                     _animator.SetBool("SuperJump", false);
                     break;
             }
+
+            if (_playerController.LassoHooked)
+            {
+                _animator.SetBool("LassoHooked", true);
+            }
+            else
+            {
+                _animator.SetBool("LassoHooked", false);
+            }
         }
 
         private void ChangeWalkBlendTree()
@@ -120,6 +137,7 @@ namespace Player
         {
             _jumpAnimLength = jumpAnimation.length / 4;
             _pullLeverAnimLength = pullLeverAnimation.length;
+            _pullAnimLength = pullAnimation.length;
         }
 
         public IEnumerator PullingLeverAnim()

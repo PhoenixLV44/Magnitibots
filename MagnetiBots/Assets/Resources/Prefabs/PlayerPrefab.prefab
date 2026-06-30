@@ -226,7 +226,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2911464060617943199}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 3686224252282532151}
   - component: {fileID: 5303230749335911064}
   - component: {fileID: 6838911463744903436}
+  - component: {fileID: 3189105818622406482}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -739,12 +740,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   movementSpeed: 7.5
-  jumpForce: 100
+  jumpForce: 110
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
   merbleFollowType: 0
+  _lassoHooked: 0
   chargingParticles: {fileID: 5113423678552748251}
   superJumpPoint: {fileID: 4496413624167517707}
-  currentAbilityText: {fileID: 0}
   shadow: {fileID: 0}
 --- !u!114 &3686224252282532151
 MonoBehaviour:
@@ -809,6 +810,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3189105818622406482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043479003321384820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea0a7de17cfd141968358a39f7dd09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.AnimController
+  jumpAnimation: {fileID: -594449180013613936, guid: 4c629730b6a46e74d9bbbf0afce4d040, type: 3}
+  pullAnimation: {fileID: 6573946197381652903, guid: daa92bb5f8046f546b5700f6bd693ab9, type: 3}
+  pullLeverAnimation: {fileID: 9095636634084129537, guid: a71d4815c7d475b4981f00cab2590116, type: 3}
 --- !u!1 &8220365761828623867
 GameObject:
   m_ObjectHideFlags: 0
