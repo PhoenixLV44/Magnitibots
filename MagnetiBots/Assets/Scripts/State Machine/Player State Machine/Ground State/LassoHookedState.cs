@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class LassoHooked : GroundedState
 {
-    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
+    public LassoHooked(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
     
     private Ability.Lasso _lassoAbility;
     
@@ -14,7 +14,7 @@ public class LassoHooked : GroundedState
         {
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
-        player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
+        //player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
         Cursor.lockState = CursorLockMode.Locked;
     }
     
@@ -28,15 +28,19 @@ public class LassoHooked : GroundedState
             //Debug.Log("No Lever");
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
-            _lassoAbility.MoveLassoTarget();
+            if (!_lassoAbility.PullMerblesBool)
+            {
+                _lassoAbility.MoveLassoTarget();
+            }
 
-            player.Movement.Move(moveInput);
+            //player.Movement.Move(moveInput);
         }
         else
         {
         }
         if (InputSystem.actions.FindAction("Interact").WasReleasedThisFrame())
         {
+            /*
             if (_lassoAbility.Lever != null)
             {
                 if (_lassoAbility.Lever)
@@ -45,17 +49,17 @@ public class LassoHooked : GroundedState
                 }
                 else
                 {
-                   _lassoAbility.UnhookLasso();
+                   _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
                 }
             }
             else
             {
             }
-                _lassoAbility.UnhookLasso();
+            */
+            
+            _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
         }
-        if (InputSystem.actions.FindAction("Charge").WasPressedThisFrame())
-        {
-        }
+
     }
 
     public override void PhysicsUpdate()

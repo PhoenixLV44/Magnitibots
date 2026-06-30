@@ -19,7 +19,7 @@ namespace Merbles
         public enum FollowTypes { Loose, Snake, Coalition }
         private FollowTypes _followType;
         
-        public enum AbilityEnum{ None, Lasso, Smash, Propeller}
+        public enum AbilityEnum{ None, Lasso, Smash, SuperJump}
 
         private AbilityEnum _currentAbilityEnum = AbilityEnum.None;
         public AbilityEnum CurrentAbilityEnum { get => _currentAbilityEnum; set => _currentAbilityEnum = value; }
@@ -30,9 +30,9 @@ namespace Merbles
         private bool _isCharging = false;
 
         [SerializeField] private float floatingSpeed;
-        private bool floating;
+        private bool _floating;
 
-        public bool Floating => floating;
+        public bool Floating => _floating;
         
         [SerializeField]LayerMask groundLayer;
         [SerializeField] private GameObject chargedParticles;
@@ -65,6 +65,8 @@ namespace Merbles
         {
             _merblePool = pool;
             Charging = false;
+            _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed;
+            floatingSpeed = _agent.speed;
             myBoss.merbleList.Add(this);
             Sentience = true;
             tag = "Merble";
@@ -147,7 +149,7 @@ namespace Merbles
         {
             transform.parent = parent;
             _isCharging = false;
-            floating = false;
+            _floating = false;
             if (_currentAbilityEnum == AbilityEnum.Smash)
             {
                 transform.position = myBoss.transform.position;
@@ -235,7 +237,7 @@ namespace Merbles
 
         public void FloatTowardsObject(Vector3 vectorPos, float index, AbilityEnum currentAbility, float speed = 2.5f)
         {
-            if (currentAbility == AbilityEnum.Lasso || currentAbility == AbilityEnum.Propeller)
+            if (currentAbility == AbilityEnum.Lasso || currentAbility == AbilityEnum.SuperJump)
             {
                 
             }
@@ -257,7 +259,7 @@ namespace Merbles
                     //Debug.Log("FLOATING");
                     transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * speed);
                     break;
-                case AbilityEnum.Propeller:
+                case AbilityEnum.SuperJump:
                     transform.position = Vector3.Lerp(transform.position, vectorPos, Time.deltaTime * speed);
                     break;
                 default:

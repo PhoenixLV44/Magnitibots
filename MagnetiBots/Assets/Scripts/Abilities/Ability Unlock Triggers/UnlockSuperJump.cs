@@ -3,9 +3,9 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-namespace Abilities.Unlock
+namespace Ability.Unlock
 {
-    public class UnlockPropeller : MonoBehaviour
+    public class UnlockSuperJump : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI unlockAbilityText;
 
@@ -19,14 +19,14 @@ namespace Abilities.Unlock
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player")
+            if (other.CompareTag("Player"))
             {
                 Player.Controller controller = other.GetComponent<Player.Controller>();
                 if (!controller.CanUseSmash)
                 {
                     controller.CanUseSmash = true;
                 }
-                controller.CanUsePropeller = true;
+                controller.CanUseSuperJump = true;
                 Player.Respawner respawner = other.GetComponent<Player.Respawner>();
                 respawner.RespawnPosition = transform.position;
                 StartCoroutine(DisplayUnlockText());

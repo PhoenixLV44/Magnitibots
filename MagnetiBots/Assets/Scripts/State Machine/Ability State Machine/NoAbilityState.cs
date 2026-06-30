@@ -22,9 +22,9 @@ namespace Ability
             {
                 stateMachine.ChangeState(stateManager.SmashState);
             }
-            if(InputSystem.actions.FindAction("Activate Propeller").IsPressed())
+            if(InputSystem.actions.FindAction("Activate Super Jump").IsPressed())
             {
-                stateMachine.ChangeState(stateManager.PropellerState);
+                stateMachine.ChangeState(stateManager.SuperJumpState);
             }
         }
     }
