@@ -10,7 +10,7 @@ public class CheatCodes : MonoBehaviour
         {
             Player.Controller controller = FindFirstObjectByType<Player.Controller>();
             controller.CanUseSmash = true;
-            controller.CanUsePropeller = true;
+            controller.CanUseSuperJump = true;
         }
     }
 }

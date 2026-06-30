@@ -11,12 +11,22 @@ namespace Ability
             base.EnterState();
             Debug.Log("Entered Smash State");
         }
+
+        public override void ExitState()
+        {
+            base.ExitState();
+            animator.SetBool("Smash", false);
+        }
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Activate Lasso").IsPressed())
+            if (InputSystem.actions.FindAction("Activate Lasso").IsPressed() && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState)
             {
                 stateMachine.ChangeState(stateManager.LassoState);
+            }
+            if (InputSystem.actions.FindAction("Activate Super Jump").IsPressed() && player.CanUseSuperJump && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
+            {
+                stateMachine.ChangeState(stateManager.SuperJumpState);
             }
         }
     }  

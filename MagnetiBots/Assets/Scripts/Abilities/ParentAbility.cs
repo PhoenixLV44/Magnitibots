@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using Ability.Object;
 using Merbles;
 using System.Collections.Generic;
+using Player;
 
 namespace Ability
 {
@@ -63,6 +64,7 @@ namespace Ability
         public virtual void StartCharging()
         {
             //Debug.Log("Starting charging");
+            //controller.StopJumpCoroutines();
             if (chargeCoroutine != null)
             {
                 if (merbleBoss.MasterList.Count >= 1)

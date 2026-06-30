@@ -3,54 +3,38 @@ using UnityEngine.InputSystem;
 
 public class JumpState: AirState
 {
-    public JumpState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
-    private Ability.StateManager _abilityManager;
-    private Ability.Parent _currentAbility;
+    public JumpState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
+    
     
 
     public override void EnterState()
     {
-        //Debug.Log("Entering Charge State");
-        if (!_abilityManager)
-        {
-            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
-        }
-
-        _currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-
-        if (_currentAbility == player.PropellerAbility && !player.CanUsePropeller)
-        {
-            //_currentAbility.Fire();
-            //stateMachine.ChangeState(stateManager.IdleState);
-        }
-        else
-        {
-        }
-        _currentAbility.StartCharging();
+        base.EnterState();
+        player.Movement.StartCoroutine(player.Movement.Jump());
         Cursor.lockState = CursorLockMode.None;
-        /*player.Movement.CharacterController*/
+
     }
 
     public override void ExitState()
     {
-        _currentAbility.StopCharging();
-        _currentAbility.IsCharging = false;
+
     }
 
     public override void TransitionChecks()
     {
         base.TransitionChecks();
 
-        if (player.LassoHooked)
+        if (!player.Movement.IsRising())
         {
-            stateMachine.ChangeState(stateManager.LassoHookedState);
-        }
-
-        if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
-        {
-            //Debug.Log("AFHUFADSHJF");
-            _currentAbility.Fire();
-            stateMachine.ChangeState(stateManager.IdleState);
+            //Debug.Log("Falling");
+            if (!player.Movement.Grounded && !player.Movement.Hovering)
+            {
+                stateMachine.ChangeState(stateManager.FallState);
+            }
+            else if (!player.Movement.Grounded && player.Movement.Hovering)
+            {
+                stateMachine.ChangeState(stateManager.HoverState);
+            }
         }
     }
 
@@ -58,5 +42,10 @@ public class JumpState: AirState
     {
         base.LogicUpdate();
         stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+    }
+
+    public override void PhysicsUpdate()
+    {
+        stateManager.PlayerMovement.Move(stateManager.PlayerMovement.Submitted[0]);
     }
 }
