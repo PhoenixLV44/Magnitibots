@@ -38,7 +38,7 @@ namespace Ability.Object
             {
                 RaycastHit hit;
 
-                if (Physics.SphereCast(transform.position,0.6f,  transform.forward, out hit, 1, _lassoMask))
+                if (Physics.SphereCast(transform.position,0.6f,  transform.forward, out hit, 1, _lassoMask) && !_lassoAbility.Lever)
                 {
                     if (hit.collider.CompareTag("Lever"))
                     {
@@ -59,7 +59,7 @@ namespace Ability.Object
                 yield return null;
             }
 
-            if (Vector3.Distance(transform.position, startPos) - Vector3.Distance(startPos, target) > 0.01f && !_lassoAbility.Controller.LassoHooked)
+            if (!_lassoAbility.Controller.LassoHooked)
             {
                 _lassoAbility.PullMerblesBool = true;
                 //StartCoroutine(ReturnToStartPosition(startPos, speed));
