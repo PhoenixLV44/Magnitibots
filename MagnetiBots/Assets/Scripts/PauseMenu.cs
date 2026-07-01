@@ -36,9 +36,6 @@ public class PauseMenu : MonoBehaviour
         _settings = ui.rootVisualElement.Q("SettingsButton") as Button;
         _settings.RegisterCallback<ClickEvent>(OnClickSettings);
 
-        _quit = ui.rootVisualElement.Q("QuitButton") as Button;
-        _quit.RegisterCallback<ClickEvent>(OnClickQuit);
-
         _settingsReturn = ui.rootVisualElement.Q("SettingsReturn") as Button;
         _settingsReturn.RegisterCallback<ClickEvent>(OnClickSettingsReturn);
 
@@ -60,7 +57,6 @@ public class PauseMenu : MonoBehaviour
     private void OnDisable()
     {
         _menu.UnregisterCallback<ClickEvent>(OnClickMain);
-        _quit.UnregisterCallback<ClickEvent>(OnClickQuit);
         _settings.UnregisterCallback<ClickEvent>(OnClickSettings);
         _return.UnregisterCallback<ClickEvent>(OnClickReturn);
         _settingsReturn.UnregisterCallback<ClickEvent>(OnClickSettingsReturn);
@@ -109,6 +105,12 @@ public class PauseMenu : MonoBehaviour
     }
     private void OnClickMain(ClickEvent click)
     {
+
+        _pauseContainer.visible = false;
+        Time.timeScale = 1;
+        Globals.Managers.paused = false;
+        InputSystem.actions.actionMaps[0].Enable();
+        InputSystem.actions.actionMaps[2].Enable();
         SceneManager.LoadScene(0);
     }
     private void OnClickSettingsReturn(ClickEvent click)

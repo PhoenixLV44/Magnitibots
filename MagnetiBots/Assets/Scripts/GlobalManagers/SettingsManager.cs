@@ -25,6 +25,8 @@ public class SettingsManager : MonoBehaviour
 
     #region UI References
 
+    GameObject _pauseMenu;
+
     #region regular settings
     VisualElement root;
     Slider BGMVolumeSlider;
@@ -240,5 +242,14 @@ public class SettingsManager : MonoBehaviour
             Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
             MouseSensitivitySlider.value = MouseSensitivity;
         }
+    }
+    public void EnablePause()
+    {
+        _pauseMenu.SetActive(true);
+    }
+    public void DisablePause()
+    {
+        _pauseMenu = GameObject.Find("PauseMenu");
+        _pauseMenu.SetActive(false);
     }
 }
