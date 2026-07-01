@@ -36,7 +36,6 @@ public class AudioManager : MonoBehaviour
             BGM,
             SFX,
             Master,
-            UI
         }
     }
 
@@ -118,10 +117,6 @@ public class AudioManager : MonoBehaviour
                 Globals.Managers.Settings.BGMVolume = value;
                 audioMixer.SetFloat("BGM_Volume", volume);
                 break;
-            case AudioSettings.Destination.UI:
-                Globals.Managers.Settings.UIVolume = value;
-                audioMixer.SetFloat("UI_Volume", volume);
-                break;
             default: break;
         }
     }
@@ -131,7 +126,6 @@ public class AudioManager : MonoBehaviour
         UpdateVolumes(AudioSettings.Destination.BGM, Globals.Managers.Settings.BGMVolume);
         UpdateVolumes(AudioSettings.Destination.Master, Globals.Managers.Settings.MasterVolume);
         UpdateVolumes(AudioSettings.Destination.SFX, Globals.Managers.Settings.SFXVolume);
-        UpdateVolumes(AudioSettings.Destination.UI, Globals.Managers.Settings.UIVolume);
     }
     public void UpdateBGM(string clipName)
     {

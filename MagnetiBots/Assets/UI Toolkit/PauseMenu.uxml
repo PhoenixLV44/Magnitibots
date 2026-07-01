@@ -1,27 +1,116 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet%20-%20Copy.uss?fileID=7433441132597879392&amp;guid=85cfb7ffcf8af0a41a81bbec6ee31218&amp;type=3#MainMenuStyleSheet - Copy"/>
-    <ui:VisualElement name="PauseMenu" style="flex-grow: 1; align-self: center; align-content: center; min-width: 496px; justify-content: space-around; max-height: 458px; background-color: rgb(255, 255, 255); border-top-left-radius: 90px; border-top-right-radius: 90px; border-bottom-left-radius: 90px; border-bottom-right-radius: 90px; align-items: center; -unity-text-align: middle-center; margin-top: 0; top: 25%; left: 25px; visibility: hidden;">
-        <ui:Label text="Game Paused" parse-escape-sequences="false" style="-unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); font-size: 50px; margin-top: 0;"/>
-        <ui:Button text="Menu" name="MainMenu" class="button"/>
-        <ui:Button text="Settings" name="SettingsButton" class="button"/>
-        <ui:Button text="Unpause" name="ReturnButton" class="button"/>
-        <ui:Button text="Quit" name="QuitButton" enable-rich-text="true" class="button"/>
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet%20-%20Copy.uss?fileID=7433441132597879392&amp;guid=85cfb7ffcf8af0a41a81bbec6ee31218&amp;type=3"/>
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
+    <ui:VisualElement name="PauseMenu" style="flex-grow: 1; align-self: center; align-content: center; min-width: 1920px; justify-content: space-around; max-height: 458px; background-color: rgba(255, 255, 255, 0); border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; align-items: center; -unity-text-align: middle-center; margin-top: 0; top: auto; left: auto; visibility: hidden; min-height: 1080px;">
+        <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Bottom).png?fileID=2800000&amp;guid=6642a7330e7bfba47a80705a705ae7c7&amp;type=3#Decal (Bottom)" scale-mode="StretchToFill" picking-mode="Ignore" tabindex="0" style="position: absolute; left: 89px; width: 643px; flex-grow: 1; height: 369px; max-height: 625px; flex-direction: column; top: 653px;"/>
+        <ui:VisualElement style="flex-grow: 0; align-self: center; justify-content: space-between; align-items: flex-start; margin-left: -408px;">
+            <ui:Button text="Continue" name="ReturnButton" class="longPause" style="margin-left: 91px;"/>
+            <ui:Button text="Return to Title" name="MainMenu" class="longPause" style="margin-left: 43px;"/>
+            <ui:Button text="Controls" name="ControlsButton" enable-rich-text="true" class="shortPause"/>
+            <ui:Button text="Settings" name="SettingsButton" class="shortPause" style="margin-left: -50px;"/>
+        </ui:VisualElement>
+        <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Top).png?fileID=2800000&amp;guid=453af966a0d5f8f4bae58a3c9403f40c&amp;type=3#Decal (Top)" scale-mode="StretchToFill" enabled="false" picking-mode="Ignore" style="position: absolute; height: 631px; top: 25px; width: 981px; left: 322px; opacity: 1;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="SettingsMenu" class="SettingsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; width: 1918px; visibility: hidden; align-items: stretch; align-self: auto; align-content: flex-start; position: absolute; height: 1079px;">
-        <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center;"/>
-        <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: row; justify-content: center; align-self: stretch;">
-            <ui:VisualElement name="Volumes" style="width: 960px;">
-                <ui:Label text="Volume" style="-unity-text-align: upper-center; font-size: 50px;"/>
-                <ui:Slider label="Master" value="100" high-value="1" name="MasterVolumeSlider" fill="true" class="settingSlider"/>
-                <ui:Slider label="Music" value="100" high-value="1" name="BGMVolumeSlider" fill="true" class="settingSlider"/>
-                <ui:Slider label="SFX" value="100" high-value="1" name="SFXVolumeSlider" fill="true" class="settingSlider"/>
-                <ui:Slider label="UI" value="100" high-value="1" name="UIVolumeSlider" fill="true" class="settingSlider"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="Cursor" style="flex-grow: 1; flex-direction: column;">
-                <ui:Label text="Cursor" name="Label" style="font-size: 50px; -unity-text-align: upper-center;"/>
-                <ui:Slider label="Sensitivity" value="100" high-value="100" name="MouseSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
+    <ui:VisualElement name="SettingsMenu" class="SettingsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: hidden;">
+        <ui:VisualElement name="UpperBorder" style="align-content: stretch; flex-grow: 1; flex-direction: row-reverse; justify-content: space-around; align-items: stretch; align-self: stretch; max-height: 240px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&amp;guid=0210c0b24bb5f794cb539551372ac845&amp;type=3#Upper Border&quot;);">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Menu%20Title.png?fileID=2800000&amp;guid=c568958e611c85648bb2df5de8fb4e19&amp;type=3#Menu Title&quot;);">
+                <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Red%20Dots.png?fileID=2800000&amp;guid=0d74e67697225fc4799a2321374ad8a0&amp;type=3#Red Dots&quot;); min-height: 56px; min-width: 165px; justify-content: center; align-items: center; align-content: center; margin-top: 3px; margin-right: 182px; margin-left: 26px;"/>
+                <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216);"/>
+                <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Blue%20Dots.png?fileID=2800000&amp;guid=9c09afa930c320542b63f525f2717d8a&amp;type=3#Blue Dots&quot;); justify-content: center; min-height: 56px; min-width: 165px; margin-left: 185px; margin-right: 26px;"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Button text="Return" name="SettingsReturn" class="button" style="margin-bottom: 19px; font-size: 47px;"/>
+        <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 72px; margin-bottom: 155px;">
+            <ui:VisualElement name="MasterVolumeBox" class="SliderBin">
+                <ui:Label text="Master Volume"/>
+                <ui:Slider label="" value="100" high-value="1" name="MasterVolumeSlider" fill="true" show-input-field="false" class="text settingSlider"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="BGMVolumeBox" class="SliderBin">
+                <ui:Label text="Music"/>
+                <ui:Slider label="" value="100" high-value="1" name="BGMVolumeSlider" fill="true" class="settingSlider"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="SFXVolumeBox" class="SliderBin">
+                <ui:Label text="Sound Effects" name=""/>
+                <ui:Slider label="" value="100" high-value="1" name="SFXVolumeSlider" fill="true" class="settingSlider"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Cursor" class="SliderBin">
+                <ui:Label text="Cursor Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true"/>
+                <ui:Slider label="" value="100" high-value="100" name="MouseSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Lower%20Border.png?fileID=2800000&amp;guid=1de941c68f387ee4e9fbcdbdfaa784d3&amp;type=3#Lower Border&quot;); flex-direction: row; min-width: 1920px; max-height: 96px;">
+            <ui:Button text="Close" name="SettingsReturn" class="closeButton" style="top: -35px; left: -5px; background-color: rgba(188, 188, 188, 0); width: 405px; font-size: 54px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 3px; -unity-font-style: bold; padding-top: 18px;"/>
+            <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="right: -1315px; bottom: 52px; width: 152px; height: 119px;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="ControlsMenu" class="ControlsMenu" style="flex-grow: 1; justify-content: space-between; transform-origin: left top; visibility: hidden; display: flex; align-self: stretch; width: 1920px; height: 1080px; align-content: stretch; top: -1px; left: 0;">
+        <ui:VisualElement name="UpperBorder" style="align-content: stretch; flex-grow: 1; flex-direction: row-reverse; justify-content: space-around; align-items: stretch; align-self: stretch; max-height: 196px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&amp;guid=0210c0b24bb5f794cb539551372ac845&amp;type=3#Upper Border&quot;);">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Menu%20Title.png?fileID=2800000&amp;guid=c568958e611c85648bb2df5de8fb4e19&amp;type=3#Menu Title&quot;);">
+                <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Red%20Dots.png?fileID=2800000&amp;guid=0d74e67697225fc4799a2321374ad8a0&amp;type=3#Red Dots&quot;); min-height: 43px; min-width: 121px; justify-content: center; align-items: center; align-content: center; margin-top: 3px; margin-right: 175px; margin-left: 26px;"/>
+                <ui:Label text="Controls" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 84px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216); -unity-text-align: middle-center; -unity-font-style: bold;"/>
+                <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Blue%20Dots.png?fileID=2800000&amp;guid=9c09afa930c320542b63f525f2717d8a&amp;type=3#Blue Dots&quot;); justify-content: center; min-height: 43px; min-width: 121px; margin-left: 165px; margin-right: 26px;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Middle" style="flex-grow: 1; flex-direction: row; margin-bottom: 13px;">
+            <ui:Button text="" class="leftArrow" style="height: 162px; margin-right: 55px; align-items: center; align-self: center; width: 101px; margin-left: 62px;"/>
+            <ui:VisualElement name="ControlsBoxes" style="flex-grow: 1; margin-left: 91px; margin-right: 137px; width: 151px; height: 554px; align-self: center; justify-content: space-between; align-content: stretch; align-items: center;">
+                <ui:VisualElement name="ControlBox" class="ControlBox" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Panel_Short.png?fileID=2800000&amp;guid=37bff469e02030449871349bde006b99&amp;type=3#Panel_Short&quot;); flex-direction: row; justify-content: space-between; align-content: stretch; align-self: stretch; -unity-text-align: middle-center; height: 143px;">
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 0; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Forward" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 0; width: 118px; margin-bottom: 10px;">
+                            <ui:Label text="W" class="controlImageLabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 22px; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Left" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 0; width: 118px; margin-bottom: 10px;">
+                            <ui:Label text="A" class="controlImageLabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ControlBox" class="ControlBox" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Panel_Short.png?fileID=2800000&amp;guid=37bff469e02030449871349bde006b99&amp;type=3#Panel_Short&quot;); flex-direction: row; justify-content: space-between; align-content: stretch; align-self: stretch; -unity-text-align: middle-center; height: 143px;">
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 0; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Backward" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 0; width: 118px; margin-bottom: 10px;">
+                            <ui:Label text="S" class="controlImageLabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 22px; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Right" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 0; width: 118px; margin-bottom: 10px;">
+                            <ui:Label text="D" class="controlImageLabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ControlBox" class="ControlBox" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Panel_Short.png?fileID=2800000&amp;guid=37bff469e02030449871349bde006b99&amp;type=3#Panel_Short&quot;); flex-direction: row; justify-content: space-between; align-content: stretch; align-self: stretch; -unity-text-align: middle-center; height: 143px;">
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 0; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Respawn" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 0; width: 118px; margin-bottom: 10px;">
+                            <ui:Label text="R" class="controlImageLabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 22px; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Jump" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 0; width: 251px; margin-bottom: 10px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Rounded%20Rectangle.png?fileID=2800000&amp;guid=1ef241e7cc5e7f84e92c42eb3b88a75c&amp;type=3#Rounded Rectangle&quot;);">
+                            <ui:Label text="Space" class="controlImageLabel"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="ControlBox" class="ControlBox" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Panel_Short.png?fileID=2800000&amp;guid=37bff469e02030449871349bde006b99&amp;type=3#Panel_Short&quot;); flex-direction: row; justify-content: space-between; align-content: stretch; align-self: stretch; -unity-text-align: middle-center; height: 143px;">
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 0; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Move Camera" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 12px; width: 95px; margin-bottom: 10px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Mouse%20Icon.png?fileID=2800000&amp;guid=8c39b425b207cb04d98e85ba1bae5b64&amp;type=3#Mouse Icon&quot;);"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="Control" class="control" style="flex-grow: 0; flex-direction: row; -unity-text-align: middle-center; justify-content: space-between; align-items: center; align-self: center; align-content: stretch; margin-left: 22px; width: 815px; margin-right: 0; padding-right: 0; height: 81px; margin-bottom: 0;">
+                        <ui:Label text="Charge Ability" style="font-size: 46px; -unity-text-align: middle-left; height: 90px; margin-right: 9px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); letter-spacing: -4px; -unity-font-style: bold;"/>
+                        <ui:VisualElement name="" class="controlImage" style="margin-right: 12px; width: 95px; margin-bottom: 10px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Mouse%20Icon.png?fileID=2800000&amp;guid=8c39b425b207cb04d98e85ba1bae5b64&amp;type=3#Mouse Icon&quot;);"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="" class="rightArrow" style="height: 162px; margin-right: 62px; align-items: center; align-self: center; width: 101px;"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; min-height: 78px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Lower%20Border.png?fileID=2800000&amp;guid=1de941c68f387ee4e9fbcdbdfaa784d3&amp;type=3#Lower Border&quot;); flex-direction: row; max-height: 91px;">
+            <ui:Button text="Close" name="ControlsReturnButton" class="closeButton" style="top: -35px; left: -5px; background-color: rgba(188, 188, 188, 0); width: 405px; font-size: 54px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 3px; -unity-font-style: bold; padding-top: 18px;"/>
+            <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="right: -1315px; bottom: 52px; width: 152px; height: 119px;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

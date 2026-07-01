@@ -59,6 +59,8 @@ public class MainMenu : MonoBehaviour
         _controlsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnControls);
         #endregion
 
+        Globals.Managers.Settings.DisablePause();
+        _mainContainer.visible = true;
         _mainContainer.BringToFront();
 
     }
@@ -78,6 +80,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnClickStart(ClickEvent click)
     {
+        Globals.Managers.Settings.EnablePause();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
