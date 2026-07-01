@@ -14,6 +14,7 @@ namespace Ability
 
         public override void ExitState()
         {
+            base.ExitState();
             ability.StopAllCoroutines();
             ability.enabled = false;
             //Debug.Log("Exited Lasso State");
@@ -22,9 +23,13 @@ namespace Ability
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Activate Smash").IsPressed() && player.CanUseSmash)
+            if (InputSystem.actions.FindAction("Activate Smash").IsPressed() && player.CanUseSmash && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
             {
                 stateMachine.ChangeState(stateManager.SmashState);
+            }
+            if (InputSystem.actions.FindAction("Activate Super Jump").IsPressed() && player.CanUseSuperJump && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
+            {
+                stateMachine.ChangeState(stateManager.SuperJumpState);
             }
         }
     }

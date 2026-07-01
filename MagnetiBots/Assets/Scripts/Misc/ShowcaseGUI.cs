@@ -72,7 +72,7 @@ public class ShowcaseGUI : MonoBehaviour
         {
             GUILayout.Label("WASD to Move, Space to Jump");
             GUILayout.Label("Q and E to Rotate Camera");
-            if (_playerController.CanUsePropeller)
+            if (_playerController.CanUseSuperJump)
             {
                 GUILayout.Label("Hold Space to Charge Propeller");
             }

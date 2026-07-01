@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using Ability.Object;
 using Merbles;
 using System.Collections.Generic;
+using Player;
 
 namespace Ability
 {
@@ -63,14 +64,20 @@ namespace Ability
         public virtual void StartCharging()
         {
             //Debug.Log("Starting charging");
+            //controller.StopJumpCoroutines();
             if (chargeCoroutine != null)
             {
-                StartCoroutine(chargeCoroutine);
+                if (merbleBoss.MasterList.Count >= 1)
+                {
+                    StartCoroutine(chargeCoroutine);
+                    controller.ChargingParticles.SetActive(true);
+                }
             }
             else
             {
                 chargeCoroutine = Charge();
                 StartCoroutine(chargeCoroutine);
+                controller.ChargingParticles.SetActive(true);
             }
         }
 
@@ -82,6 +89,7 @@ namespace Ability
                 //aimingGuide.SetActive(false);
                 currentPowerLevel = basePowerLevel;
                 rangeIndicator.DisableRangeIndicator();
+                controller.ChargingParticles.SetActive(false);
                 StopCoroutine(chargeCoroutine);
             }
         }

@@ -6,20 +6,27 @@ namespace Ability
     public class StateManager : MonoBehaviour
     {
         [SerializeField] private Player.Controller _playerController;
-        public Player.Controller PlayerController {get {return _playerController;} set {_playerController = value;} }
+        public Player.Controller PlayerController {get => _playerController;
+            set => _playerController = value;
+        }
         
         private StateMachine _stateMachine;
-        public StateMachine StateMachine { get => _stateMachine;  }
-        
+        public StateMachine StateMachine => _stateMachine;
+
         [SerializeField] private LassoState _lassoState;
-        public LassoState LassoState {get {return _lassoState;} }
+        public LassoState LassoState => _lassoState;
         [SerializeField] private SmashState _smashState;
-        public SmashState SmashState {get {return _smashState;} }
-        [SerializeField] private PropellerState _propellerState;
-        public PropellerState PropellerState {get {return _propellerState;} }
-        
+        public SmashState SmashState => _smashState;
+        [SerializeField] private SuperJumpState _superJumpState;
+        public SuperJumpState SuperJumpState => _superJumpState;
+
         [SerializeField] private NoAbilityState _noAbilityState;
-        public NoAbilityState NoAbilityState {get {return _noAbilityState;} }
+        public NoAbilityState NoAbilityState => _noAbilityState;
+
+        private Parent _currentAbility;
+        public Parent CurrentAbility {get => _currentAbility;
+            set => _currentAbility = value;
+        }
 
         private void Awake()
         {
@@ -31,12 +38,12 @@ namespace Ability
         {
             _lassoState = new LassoState(_playerController, _stateMachine, this, gameObject.AddComponent<Lasso>());
             _smashState = new SmashState(_playerController, _stateMachine, this, gameObject.AddComponent<Smash>());
-            _propellerState = new PropellerState(_playerController, _stateMachine, this,  gameObject.AddComponent<Propeller>());
+            _superJumpState = new SuperJumpState(_playerController, _stateMachine, this,  gameObject.AddComponent<SuperJump>());
             _noAbilityState = new NoAbilityState(_playerController, _stateMachine, this, gameObject.AddComponent<Parent>());
             
             _lassoState.Ability.enabled = false;
             _smashState.Ability.enabled = false;
-            _propellerState.Ability.enabled = false;
+            _superJumpState.Ability.enabled = false;
             _noAbilityState.Ability.enabled = false;
             _stateMachine.InitializeStateMachine(_lassoState);
         }

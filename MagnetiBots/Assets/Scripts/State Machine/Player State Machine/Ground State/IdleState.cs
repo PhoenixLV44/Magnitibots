@@ -3,24 +3,13 @@ using UnityEngine.InputSystem;
 
 public class IdleState : GroundedState
 {
-    public IdleState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager) : base(pc, stateMachine, stateManager) { }
-    
-    private Ability.StateManager _abilityManager;
-    private Ability.Parent _currentAbility;
+    public IdleState(Player.Controller pc, Player.StateMachine stateMachine, Player.StateManager stateManager, Animator animator) : base(pc, stateMachine, stateManager, animator) { }
 
     public override void EnterState()
     {
         //Debug.Log("Entering Idle State");
-        if (!_abilityManager)
-        {
-            _abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
-            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        }
-        else
-        {
-            //_currentAbility = _abilityManager.StateMachine.CurrentState.Ability;
-        }
-
+        base.EnterState();
+        animator.Play("IdleWalk");
         Cursor.lockState = CursorLockMode.None;
     }
 
@@ -37,17 +26,27 @@ public class IdleState : GroundedState
         {
             stateMachine.ChangeState(stateManager.ChargeState);
         }
-
+        
         if (moveInput != Vector2.zero)
         {
             stateMachine.ChangeState(stateManager.MovementState);
+        }
+
+        if (InputSystem.actions.FindAction("Jump").WasPerformedThisFrame() && !player.Movement.JumpLock)
+        {
+            stateMachine.ChangeState(stateManager.JumpState);
+        }
+
+        if (!player.Movement.Grounded)
+        {
+            stateMachine.ChangeState(stateManager.FallState);
         }
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (stateManager.PlayerMovement != null)
+        if (stateManager.PlayerMovement != null && !player.Interacting)
         {
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
             //Debug.LogError("NOT NULL");
@@ -55,11 +54,6 @@ public class IdleState : GroundedState
         else
         {
             Debug.LogError("No State Manager found!");
-        }
-
-        if (InputSystem.actions.FindAction("Fire").IsPressed())
-        {
-            //_currentAbility.Fire();
         }
     }
 }

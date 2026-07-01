@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -9,9 +10,6 @@ namespace Merbles
     {
         Merbles.Collector collector;
         
-        public int currentMerbles = 0;
-        public int chargingMerbles = 0;
-        public int chargedMerbles = 0;
         public List<Merble> merbleList;
         [SerializeField] private List<Merble> chargedMerblesList;
         public List<Merble> ChargedMerbleList{get => chargedMerblesList; set => chargedMerblesList = value; }
@@ -55,13 +53,13 @@ namespace Merbles
             merbleList.Add(merble.GetComponent<Merble>());
             merble.GetComponent<Merble>().SetPool(Merbles);
             merble.GetComponent<Merble>().SetFollowType(MerbleFollowType);
-            currentMerbles++;
             return merble;
         }
         private void OnGetMerble(GameObject merble)
         {
             merble.GetComponent<Merble>().SetPool(Merbles);
             merble.SetActive(true);
+            merble.GetComponent<Merble>().CollectParticles.SetActive(true);
         }
         private void OnReleaseMerble(GameObject merble)
         {
@@ -81,7 +79,7 @@ namespace Merbles
                     if (!merbleList[i].Charging)
                     {
                         merbleList[i].StartCharge(target);
-                        chargingMerbles++;
+
                         break;
                     }
                 }
@@ -96,7 +94,6 @@ namespace Merbles
             {
                 merbleArray[i].StopCharging();
             }
-            chargingMerbles = 0;
             for (int i = 0; i < merbleList.Count; i++)
             {
                 //_merbles.Get();
@@ -105,7 +102,6 @@ namespace Merbles
                     merbleList[i].StopCharging();
                 }
             }
-            chargedMerbles = 0;
             merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position,transform.position)));
         }
 
@@ -145,5 +141,17 @@ namespace Merbles
                 yield return null;
             }
         }
-    }
+
+        public void CheckForDuplicates(List<Merble> merbleList)
+        {
+            var duplicates = merbleList.GroupBy(x => x).Where(group => group.Count() > 1).Select(group =>  group.Key);
+            if (duplicates.Any())
+            {
+                foreach (var duplicate in duplicates)
+                {
+                    merbleList.Remove(duplicate);
+                }
+            }
+        }
+    }   
 }

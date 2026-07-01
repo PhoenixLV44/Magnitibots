@@ -32,8 +32,8 @@ namespace Player
         private Ability.Smash _smashAbility;
         public Ability.Smash SmashAbility { get { return _smashAbility; } }
         
-        private Ability.Propeller _propellerAbility;
-        public Ability.Propeller PropellerAbility { get { return _propellerAbility; } }
+        private Ability.SuperJump _superJumpAbility;
+        public Ability.SuperJump SuperJumpAbility { get { return _superJumpAbility; } }
         
         private TargetingCursor _targetCursorScript;
         public TargetingCursor TargetCursorScript { get { return _targetCursorScript; } }
@@ -49,7 +49,7 @@ namespace Player
         public Ability.StateManager AbilityStateManager => _abilityStateManager;
             #endregion
             
-        private bool _lassoHooked = false;
+        [SerializeField]private bool _lassoHooked = false;
         public bool  LassoHooked { get => _lassoHooked; set => _lassoHooked = value; }
         
         private Player.PCamera _playerCamera;
@@ -59,22 +59,36 @@ namespace Player
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
         private bool _canUseSmash = false;
         public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
-        private bool _canUsePropeller = false;
-        public bool CanUsePropeller { get => _canUsePropeller; set => _canUsePropeller = value; }
+        private bool _canUseSuperJump = false;
+        public bool CanUseSuperJump { get => _canUseSuperJump; set => _canUseSuperJump = value; }
+        
+        [SerializeField] private GameObject chargingParticles;
+        public GameObject ChargingParticles => chargingParticles;
 
-        [SerializeField] private GameObject _merbleHolder;
-        public GameObject MerbleHolder => _merbleHolder;
+        [SerializeField] private SuperJumpPoint superJumpPoint;
+        
+        Animator _animator;
+        public Animator Animator => _animator;
+        AnimController _animController;
+        public AnimController AnimController => _animController;
+
+        [SerializeField] private GameObject shadow;
+
+        private bool _interacting;
+        public bool Interacting { get => _interacting; set => _interacting = value; }
 
         void Start()
         {
             _movement = gameObject.AddComponent<Player.Movement>();
+            _animator = GetComponent<Animator>();
 
-            _groundChecker = gameObject.AddComponent<Player.GroundChecker>();
-            _groundChecker.checkerMask = groundLayers;
-            _groundChecker.movement = _movement;
+            /*_groundChecker = gameObject.AddComponent<Player.GroundChecker>();
+            _groundChecker.groundMask = groundLayers;
+            _groundChecker.movement = _movement;*/
 
-            _movement.moveSpeed = movementSpeed;
-            _movement.jumpForce = jumpForce;
+            _movement.DefaultMoveSpeed = movementSpeed;
+            _movement.JumpForce = jumpForce;
+            Debug.Log("Default Move Speed: " + _movement.DefaultMoveSpeed);
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
             _merbleBoss.MerbleFollowType = merbleFollowType;
@@ -96,6 +110,20 @@ namespace Player
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
             
             _targetCursorObject = transform.Find("Target Cursor").gameObject;
+            
+            chargingParticles.SetActive(false);
+
+            superJumpPoint.PlayerController = this;
+            superJumpPoint.Movement = _movement;
+            superJumpPoint.MerbleBoss = _merbleBoss;
+
+            _animController = GetComponent<AnimController>();
+            _animController.SetUpController(this, _movement, _playerStateManager, _abilityStateManager, GetComponent<Ability.Lasso>(), GetComponent<Ability.Smash>(),  GetComponent<Ability.SuperJump>(), _animator);
+            
+            Respawner respawner = GetComponent<Respawner>();
+            respawner.Movement = _movement;
+            
+            shadow = transform.GetChild(transform.childCount - 1).gameObject;
         }
 
         // Update is called once per frame
@@ -110,91 +138,62 @@ namespace Player
         }
         void FixedUpdate()
         {
-            _movement.HandleMovement();
-        }
-        public Vector3 channelTarget;
-        IEnumerator ChannelingMerbles(Vector3 changeTarget)
-        {
-            channelTarget = changeTarget;
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, channelTarget).CompareTo(Vector3.Distance(b.transform.position, channelTarget)));
-            while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
+            if (_movement.CharacterController)
             {
-                if (!InputSystem.actions.FindAction("Charge").IsPressed())
-                {
-                    //_merbleBoss.FireMerbles();
-                    break;
-                }
-                _merbleBoss.ChargeMerble(changeTarget);
-                yield return new WaitForSeconds(1);
+                _movement.HandleMovement();
             }
-            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Charge").IsPressed()));
-            //_merbleBoss.FireMerbles();
+            CheckForGround();
+            MoveShadow();
         }
-        public bool jumpLock;
-        public void StartJumpChannel()
+        private void CheckForGround()
         {
-            if (_canUsePropeller && _movement.Grounded)
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position, 0.5f, -Vector3.up, out hit, 0.75f, groundLayers))
             {
-                if (!jumpLock)
+                //Debug.Log("cast did find ground");
+                _movement.Grounded = true;
+            }
+            else
+            {
+                //Debug.Log("cast did not find ground");
+                if(_movement)
                 {
-                    jumpLock = true;
-                    StartCoroutine(JumpChanneling());
+                    _movement.Grounded = false;
+                }
+            }
+        }
+        private void MoveShadow()
+        {
+            RaycastHit hit;
+            if (_movement && shadow)
+            {
+                if (_movement.Grounded)
+                {
+                    shadow.SetActive(false);
+                }
+                else
+                {
+                    if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, groundLayers))
+                    {
+                        Debug.Log("activate shadow");
+                        Vector3 point = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
+                        shadow.SetActive(true);
+                        shadow.transform.position = point;
+                    }
                 }
             }
             else
             {
-                if(_movement.Grounded)
-               {
-                    if (!jumpLock)
-                    {
-                        jumpLock = true;
-                        StartCoroutine(BaseJump());
-                    }
-               }
-            }
-        }
-        IEnumerator BaseJump()
-        {
-            _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-            yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
-            _movement.Jump(0);
-        }
-        IEnumerator JumpChanneling()
-        {
-            {
-                Debug.Log("jump charging");
-                _merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-                while (_merbleBoss.chargedMerbles < _merbleBoss.currentMerbles)
+                if (!_movement)
                 {
-                    if (!InputSystem.actions.FindAction("Jump").IsPressed())
-                    {
-                        _movement.Jump(_merbleBoss.chargedMerbles);
-                        if(_merbleBoss.chargedMerbles>0)
-                        {
-                            _movement.Gliding = true;
-                            yield return new WaitUntil(() => !_movement.Grounded);
-                            Debug.Log("gliding");
-                            yield return new WaitUntil(() => _movement.Grounded);
-                            _movement.Gliding = false;
-                        }
-                        _merbleBoss.FireMerbles();
-                        break;
-                    }
-                    _merbleBoss.ChargeMerble(transform.position);
-                    yield return new WaitForSeconds(1);
+                    Debug.Log("no movement");
                 }
-                yield return new WaitUntil(() => (!InputSystem.actions.FindAction("Jump").IsPressed()));
-                _movement.Jump(_merbleBoss.chargedMerbles);
-                if (_merbleBoss.chargedMerbles > 0)
+
+                if (!shadow)
                 {
-                    _movement.Gliding = true;
-                    yield return new WaitUntil(() => !_movement.Grounded);
-                    Debug.Log("gliding");
-                    yield return new WaitUntil(() => _movement.Grounded);
-                    _movement.Gliding = false;
+                    Debug.Log("no shadow");
                 }
-                _merbleBoss.FireMerbles();
             }
         }
     }
-}
+} 
