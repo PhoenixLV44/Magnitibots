@@ -43,16 +43,25 @@ public class ControlsCarousel : MonoBehaviour
     {
         index++;
         int realindex = index % controlsCarousel.Length;
-        int previousindex = (index-1) % controlsCarousel.Length;
+        if (realindex < 0) { realindex += controlsCarousel.Length; }
+        Debug.Log(realindex);
+        int previousindex = (index - 1) % controlsCarousel.Length;
+        if (previousindex < 0) { previousindex += controlsCarousel.Length; }
         controlsCarousel[previousindex].visible = false;
         controlsCarousel[realindex].visible = true;
+        Globals.Managers.Audio.PlaySFX("UI_Up");
     }
     private void OnClickLeftButton(ClickEvent click)
     {
         index--;
         int realindex = index % controlsCarousel.Length;
+        if (realindex < 0) { realindex += controlsCarousel.Length; }
+        Debug.Log(realindex);
         int previousindex = (index + 1) % controlsCarousel.Length;
+        if(previousindex < 0) { previousindex += controlsCarousel.Length; }
         controlsCarousel[previousindex].visible = false;
         controlsCarousel[realindex].visible = true;
+        
+        Globals.Managers.Audio.PlaySFX("UI_Down");
     }
 }
