@@ -30,7 +30,6 @@
 
 .ControlsMenu {
     position: absolute;
-    visibility: visible;
 }
 
 .settingSlider {
@@ -66,6 +65,14 @@
     top: 0;
     flex-grow: 1;
     height: 44px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
 }
 
 .settingSlider #unity-tracker {
@@ -79,6 +86,14 @@
     flex-grow: 1;
     background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Slider_Empty.png?fileID=2800000&guid=20ab589405fec1243a5fdb641c6e7714&type=3#Slider_Empty");
     background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
 }
 
 .settingSlider #unity-fill {
@@ -86,6 +101,18 @@
     background-color: rgba(0, 0, 0, 0);
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.78);
     height: 45px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
 }
 
 .settingSlider #unity-dragger {
@@ -97,6 +124,14 @@
     align-items: center;
     top: auto;
     left: 24px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
 }
 
 .SliderBin {
@@ -161,6 +196,14 @@
     min-height: 66px;
     align-items: center;
     top: -18px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
 }
 
 .ControlBox {
@@ -213,6 +256,8 @@
 .rightArrow {
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Right%20Arrow.png?fileID=2800000&guid=9f2b01c78be944b418970dfddeb011da&type=3#Right Arrow");
     background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    right: 0;
 }
 
 .rightArrow:active {
@@ -222,6 +267,8 @@
 .leftArrow {
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Left%20Arrow.png?fileID=2800000&guid=2118a95931f16b24b8a54bec0c3a6f07&type=3#Left Arrow");
     background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0;
 }
 
 .leftArrow:active {
@@ -234,4 +281,52 @@
 
 .closeButton:hover {
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button_Hovered.png?fileID=2800000&guid=6b402236f92c6af4a92b2afddfbf6360&type=3#Close Button_Hovered");
+}
+
+.unity-button {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button:hover {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button:active {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button:focus {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
 }

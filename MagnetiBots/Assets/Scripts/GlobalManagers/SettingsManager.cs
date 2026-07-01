@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static AudioManager.AudioSettings;
 
@@ -26,6 +27,7 @@ public class SettingsManager : MonoBehaviour
     #region UI References
 
     GameObject _pauseMenu;
+    GameObject _hud;
 
     #region regular settings
     VisualElement root;
@@ -37,6 +39,7 @@ public class SettingsManager : MonoBehaviour
 
     #region pause settings
     VisualElement pause_root;
+    VisualElement pause_blur;
     Slider pause_BGMVolumeSlider;
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
@@ -73,6 +76,8 @@ public class SettingsManager : MonoBehaviour
         //find UI References
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
 
+        pause_blur = pause_root.Q<Slider>("Blur");
+
         pause_BGMVolumeSlider = pause_root.Q<Slider>("BGMVolumeSlider");
         pause_SFXVolumeSlider = pause_root.Q<Slider>("SFXVolumeSlider");
         pause_MasterVolumeSlider = pause_root.Q<Slider>("MasterVolumeSlider");
@@ -88,7 +93,23 @@ public class SettingsManager : MonoBehaviour
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
         #endregion
 
+        _hud = GameObject.Find("HUD");
+        _pauseMenu = GameObject.Find("PauseMenu");
 
+    }
+    private void Update()
+    {
+        if (_pauseMenu != null)
+        {
+            if (InputSystem.actions.FindAction("MainMenu").triggered && SceneManager.GetActiveScene().buildIndex != 0)
+            {
+                if (!Globals.Managers.paused)
+                {
+                    Globals.Managers.Settings.DisableHUD();
+                    _pauseMenu.GetComponent<PauseMenu>().PauseMe();
+                }
+            }
+        }
     }
     public void LateAwake()
     {
@@ -243,13 +264,23 @@ public class SettingsManager : MonoBehaviour
             MouseSensitivitySlider.value = MouseSensitivity;
         }
     }
+    public void EnableHUD()
+    {
+        _hud.SetActive(true);
+    }
+    public void DisableHUD()
+    {
+        
+        _hud.SetActive(false);
+    }
     public void EnablePause()
     {
         _pauseMenu.SetActive(true);
+        pause_blur.visible = true;
     }
     public void DisablePause()
     {
-        _pauseMenu = GameObject.Find("PauseMenu");
         _pauseMenu.SetActive(false);
+        pause_blur.visible = false;
     }
 }
