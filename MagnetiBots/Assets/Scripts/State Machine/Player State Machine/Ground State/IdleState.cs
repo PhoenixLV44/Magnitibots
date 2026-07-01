@@ -53,7 +53,8 @@ public class IdleState : GroundedState
         }
         else
         {
-            Debug.LogError("No State Manager found!");
+            //stateManager = player.PlayerStateManager;
+            //Debug.LogError("No State Manager found!");
         }
     }
 }
