@@ -204,16 +204,19 @@ namespace Player
             if (!canUseLasso)
             {
                 Debug.Log("can use lasso");
+                Globals.Managers.Settings.UnlockPopup("Lasso");
                 canUseLasso = true;
             }
             else if (!canUseSmash)
             {
                 Debug.Log("can use smash");
+                Globals.Managers.Settings.UnlockPopup("Smash");
                 canUseSmash = true;
             }
             else if (!canUseSuperJump)
             {
                 Debug.Log("can use super jump");
+                Globals.Managers.Settings.UnlockPopup("SuperJump");
                 canUseSuperJump = true;
             }
             _animator.Play("Collect");
