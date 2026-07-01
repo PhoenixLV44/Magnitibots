@@ -1,22 +1,28 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Interactable
 {
     public class ItemRespawner : MonoBehaviour
     {
-        Vector3 initialPosition;
-        Rigidbody rb;
+        private Player.Respawner _playerRespawner;
+        Vector3 _initialPosition;
+        Vector3 _initialRotation;
+        Rigidbody _rb;
 
         private void Start()
         {
-            initialPosition = transform.position;
-            rb = GetComponent<Rigidbody>();
+            _initialPosition = transform.position;
+            _initialRotation = transform.rotation.eulerAngles;
+            _rb = GetComponent<Rigidbody>();
+            StartCoroutine(FindPlayerRespawn());
         }
-        private void Respawn()
+        public void Respawn()
         {
-            transform.position = initialPosition;
-            rb.linearVelocity = Vector3.zero;
+            transform.position = _initialPosition;
+            transform.rotation = Quaternion.Euler(_initialRotation);
+            _rb.linearVelocity = Vector3.zero;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -25,6 +31,16 @@ namespace Interactable
             {
                 Respawn();
             }
+        }
+        IEnumerator FindPlayerRespawn()
+        {
+            while (!_playerRespawner)
+            {
+                _playerRespawner = FindFirstObjectByType<Player.Respawner>();
+                yield return null;
+            }
+            //Debug.Log("Found player respawn");
+            _playerRespawner.ItemRespawners.Add(this);
         }
     }
 }

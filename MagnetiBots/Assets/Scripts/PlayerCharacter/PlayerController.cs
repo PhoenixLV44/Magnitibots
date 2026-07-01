@@ -88,7 +88,7 @@ namespace Player
 
             _movement.DefaultMoveSpeed = movementSpeed;
             _movement.JumpForce = jumpForce;
-            Debug.Log("Default Move Speed: " + _movement.DefaultMoveSpeed);
+            //wdDebug.Log("Default Move Speed: " + _movement.DefaultMoveSpeed);
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
             _merbleBoss.MerbleFollowType = merbleFollowType;
@@ -175,7 +175,7 @@ namespace Player
                 {
                     if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, groundLayers))
                     {
-                        Debug.Log("activate shadow");
+                        //Debug.Log("activate shadow");
                         Vector3 point = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                         shadow.SetActive(true);
                         shadow.transform.position = point;
