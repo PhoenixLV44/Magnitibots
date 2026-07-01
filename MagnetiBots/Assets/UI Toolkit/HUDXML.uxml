@@ -1,0 +1,23 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/hud.uss?fileID=7433441132597879392&amp;guid=512e0e777e692ac47aa878edb7e0bf80&amp;type=3#hud"/>
+    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 1;">
+        <ui:VisualElement name="PowerSelectors" style="flex-grow: 0; top: 0; left: 0; flex-direction: row; width: 443px; height: 182px; align-items: flex-start; margin-left: 11px; margin-top: 10px;">
+            <ui:VisualElement class="power">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Lasso%20Indicator_Inactive.png?fileID=2800000&amp;guid=378a68e07684e6740bff907fb3fb729c&amp;type=3#Lasso Indicator_Inactive" enabled="true" style="flex-grow: 1; align-content: auto; align-items: auto; justify-content: flex-start; align-self: auto; text-shadow: 0 0 0 rgb(0, 0, 0);"/>
+                <ui:Label text="1" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; align-items: auto; align-content: auto; height: 40px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="power">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Smash%20Indicator_Inactive.png?fileID=2800000&amp;guid=2117627c11a1dc74cbb214273307ce32&amp;type=3#Smash Indicator_Inactive" style="flex-grow: 1;"/>
+                <ui:Label text="2" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; height: 40px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="power">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Hover%20Indicator_Inactive.png?fileID=2800000&amp;guid=be832d48c76b7de41acfddf94a7ba8eb&amp;type=3#Hover Indicator_Inactive" style="flex-grow: 1;"/>
+                <ui:Label text="3&#10;" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; height: 40px;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="MerbleCount" style="flex-grow: 1; align-items: flex-end; justify-content: flex-end; position: relative; right: 0; bottom: 0; flex-direction: row;">
+            <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="width: 171px; height: 145px; aspect-ratio: auto;"/>
+            <ui:Label text="x12" style="-unity-text-align: middle-center; margin-bottom: 13px; font-size: 87px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); -unity-font-style: bold;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
