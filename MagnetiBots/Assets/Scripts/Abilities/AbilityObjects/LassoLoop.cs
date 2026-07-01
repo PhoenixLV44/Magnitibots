@@ -61,10 +61,10 @@ namespace Ability.Object
 
             if (Vector3.Distance(transform.position, startPos) - Vector3.Distance(startPos, target) > 0.01f && !_lassoAbility.Controller.LassoHooked)
             {
+                _lassoAbility.PullMerblesBool = true;
+                //StartCoroutine(ReturnToStartPosition(startPos, speed));
+                _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
             }
-            _lassoAbility.PullMerblesBool = true;
-            //StartCoroutine(ReturnToStartPosition(startPos, speed));
-            _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
         }
 
         public IEnumerator ReturnToStartPosition(Vector3 startPos, float speed)
@@ -110,11 +110,11 @@ namespace Ability.Object
                     hookedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
                     hookedObject.transform.localScale = defaultScale;
 
-                    Rigidbody rb = other.GetComponent<Rigidbody>();
-                    if (rb != null)
+                    PuzzleCube puzzleCube = other.GetComponent<PuzzleCube>();
+                    if (puzzleCube != null)
                     {
-                        rb.useGravity = false;
-                        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY |RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                        puzzleCube.FreezeConstraints();
+                        //puzzleCube.ResetTransform();
                     }
                     _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
                     //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);

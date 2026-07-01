@@ -106,10 +106,10 @@ namespace Player
             {
                 _moveSpeed *= _airSpeedMult;
             }
-            else if (!_isGrounded && _isHovering)
+            /*else if (!_isGrounded && _isHovering)
             {
                 _moveSpeed *= _hoverSpeedMult;
-            }
+            }*/
             Vector3 targetVelocity = input * _moveSpeed;
             _submittedMovement = targetVelocity;
         }

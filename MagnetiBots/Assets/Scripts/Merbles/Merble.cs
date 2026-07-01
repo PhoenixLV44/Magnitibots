@@ -123,7 +123,7 @@ namespace Merbles
         }
         IEnumerator Charge(Vector3 target)
         {
-            //Debug.Log("MerbleCharging");
+            Debug.Log(transform.name + "Charging");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
@@ -312,6 +312,7 @@ namespace Merbles
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, _agent.baseOffset + 1, groundLayer))
             {
+                StopCharging();
                 return true;
             }
             else

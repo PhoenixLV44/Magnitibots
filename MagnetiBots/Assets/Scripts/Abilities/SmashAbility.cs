@@ -51,13 +51,13 @@ namespace Ability
             {
                 
                 currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
-                Debug.Log("Current PowerLevel: " + currentPowerLevel);
+                //Debug.Log("Current PowerLevel: " + currentPowerLevel);
                 merbleBoss.merbleList.Sort((a, b) =>
                     Vector3.Distance(a.transform.position, transform.position)
                         .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
                 Merble[] merbleArray = merbleBoss.merbleList.ToArray();
 
-                if (!merbleArray[j].Charging)
+                if (merbleArray.Length > 0)
                 {
                     merbleArray[j].StartCharge(transform.position);
                     if (j < maxPower)
@@ -111,7 +111,7 @@ namespace Ability
             _smashBall.transform.position = newPosition;
             _smashBall.transform.localScale = smashBallScript.BaseScale;
 
-            Vector3 cursorPos = GameObject.Find("PlayerModel").transform.rotation * transform.forward;
+            Vector3 cursorPos = transform.position + GameObject.Find("PlayerModel").transform.forward;
             targetCursor.ActivateCursor(cursorPos);
             smashBallScript.TriggerCollider.enabled = false;
             _smashBall.SetActive(true);
@@ -130,18 +130,18 @@ namespace Ability
             _smashBallRb.linearVelocity = Vector3.zero;
             Merble[] merbleArray = MerbleBoss.ChargedMerbleList.ToArray();
             _smashBall.SetActive(false);
-            /*foreach (var merble in merbleArray)
+            foreach (var merble in merbleArray)
             {
                 if (merble.GroundCheck())
                 {
-                    merble.StopCharging();
+                    //merble.StopCharging();
                     StopCoroutine(MoveMerbles());
                 }
                 else
                 {
                     
                 }
-            }*/
+            }
             _returnMerbles = true;
             
         }
@@ -151,9 +151,9 @@ namespace Ability
             _smashBallRb.useGravity = true;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
             StopCoroutine(moveCursorRoutine);
+            StopCoroutine(chargeCoroutine);
             targetCursor.DeactivateCursor();
             Cursor.lockState = CursorLockMode.None;
-            StopCoroutine(Charge());
             //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             rangeIndicator.DisableRangeIndicator();
             foreach (var b in MerbleBoss.ChargedMerbleList)
@@ -174,6 +174,7 @@ namespace Ability
         private IEnumerator MoveMerbles()
         {
             //_merbleList =  new List<Merbles.Merble>();
+            _returnMerbles = false;
             yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count > 0);
             while(merbleBoss.ChargedMerbleList.Count > 0)
             {
