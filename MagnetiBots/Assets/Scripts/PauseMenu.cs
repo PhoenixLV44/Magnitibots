@@ -41,19 +41,6 @@ public class PauseMenu : MonoBehaviour
 
         _pauseContainer.visible = false;
     }
-    private void Update()
-    {
-        if (ui != null)
-        {
-            if (InputSystem.actions.FindAction("MainMenu").triggered)
-            {
-                if (!Globals.Managers.paused)
-                {
-                    StartCoroutine(PausedMenu());
-                }
-            }
-        }
-    }
     private void OnDisable()
     {
         _menu.UnregisterCallback<ClickEvent>(OnClickMain);
@@ -89,6 +76,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("return");
         _pauseContainer.visible = false;
+        Globals.Managers.Settings.EnableHUD();
         Time.timeScale = 1;
         Globals.Managers.paused = false;
         InputSystem.actions.actionMaps[0].Enable();
@@ -112,10 +100,15 @@ public class PauseMenu : MonoBehaviour
         InputSystem.actions.actionMaps[0].Enable();
         InputSystem.actions.actionMaps[2].Enable();
         SceneManager.LoadScene(0);
+        Globals.Managers.Settings.DisablePause();
     }
     private void OnClickSettingsReturn(ClickEvent click)
     {
         _pauseContainer.visible = true;
         _settingsContainer.visible = false;
+    }
+    public void PauseMe()
+    {
+        StartCoroutine(PausedMenu());
     }
 }

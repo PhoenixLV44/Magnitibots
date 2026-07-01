@@ -26,6 +26,7 @@ public class SettingsManager : MonoBehaviour
     #region UI References
 
     GameObject _pauseMenu;
+    GameObject _hud;
 
     #region regular settings
     VisualElement root;
@@ -88,7 +89,23 @@ public class SettingsManager : MonoBehaviour
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
         #endregion
 
+        _hud = GameObject.Find("HUD");
+        _pauseMenu = GameObject.Find("PauseMenu");
 
+    }
+    private void Update()
+    {
+        if (_pauseMenu != null)
+        {
+            if (InputSystem.actions.FindAction("MainMenu").triggered)
+            {
+                if (!Globals.Managers.paused)
+                {
+                    Globals.Managers.Settings.DisableHUD();
+                    _pauseMenu.GetComponent<PauseMenu>().PauseMe();
+                }
+            }
+        }
     }
     public void LateAwake()
     {
@@ -243,13 +260,21 @@ public class SettingsManager : MonoBehaviour
             MouseSensitivitySlider.value = MouseSensitivity;
         }
     }
+    public void EnableHUD()
+    {
+        _hud.SetActive(true);
+    }
+    public void DisableHUD()
+    {
+        
+        _hud.SetActive(false);
+    }
     public void EnablePause()
     {
         _pauseMenu.SetActive(true);
     }
     public void DisablePause()
     {
-        _pauseMenu = GameObject.Find("PauseMenu");
         _pauseMenu.SetActive(false);
     }
 }
