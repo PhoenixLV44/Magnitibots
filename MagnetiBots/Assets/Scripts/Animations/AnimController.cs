@@ -145,5 +145,9 @@ namespace Player
             _playerController.Interacting = false;
             _animator.SetBool("PullingLever", _playerController.Interacting);
         }
+        public void PlayCollectAnimation()
+        {
+            _animator.SetTrigger("Collect");
+        }
     }
 }
