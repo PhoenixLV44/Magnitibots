@@ -530,6 +530,23 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1648980459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4272138921613419581, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
+  m_PrefabInstance: {fileID: 4589701952206998095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1648980462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648980459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033736f524ebd7241a7bf018a2dbcb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDGUI
 --- !u!1 &2018426933
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +715,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4272138921613419581, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648980462}
   m_SourcePrefab: {fileID: 100100000, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

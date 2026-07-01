@@ -9,3 +9,46 @@
     align-items: center;
     justify-content: flex-start;
 }
+
+.closeButton {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button.png?fileID=2800000&guid=d79714767b2625c44b235a97b856ed3d&type=3#Close Button");
+}
+
+.closeButton:hover {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button_Hovered.png?fileID=2800000&guid=6b402236f92c6af4a92b2afddfbf6360&type=3#Close Button_Hovered");
+}
+
+.powerUnlock {
+    flex-grow: 1;
+    align-self: center;
+    justify-content: center;
+    align-items: flex-start;
+    width: 1920px;
+    height: 1080px;
+}
+
+.powerUnlock.title {
+    align-items: auto;
+    justify-content: flex-end;
+    align-content: auto;
+    flex-grow: 1;
+    align-self: flex-start;
+    width: 658px;
+    position: absolute;
+    height: 137px;
+    top: 127px;
+    left: 148px;
+}
+
+.powerUnlock.panel {
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    width: 1393px;
+    justify-content: center;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    right: 15%;
+    bottom: 6%;
+}
