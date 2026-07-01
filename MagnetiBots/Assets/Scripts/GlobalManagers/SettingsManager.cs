@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static AudioManager.AudioSettings;
 
@@ -25,21 +26,23 @@ public class SettingsManager : MonoBehaviour
 
     #region UI References
 
+    GameObject _pauseMenu;
+    GameObject _hud;
+
     #region regular settings
     VisualElement root;
     Slider BGMVolumeSlider;
     Slider SFXVolumeSlider;
     Slider MasterVolumeSlider;
-    Slider UIVolumeSlider;
     Slider MouseSensitivitySlider;
     #endregion
 
     #region pause settings
     VisualElement pause_root;
+    VisualElement pause_blur;
     Slider pause_BGMVolumeSlider;
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
-    Slider pause_UIVolumeSlider;
     Slider pause_MouseSensitivitySlider;
     #endregion
 
@@ -57,44 +60,56 @@ public class SettingsManager : MonoBehaviour
         BGMVolumeSlider = root.Q<Slider>("BGMVolumeSlider");
         SFXVolumeSlider = root.Q<Slider>("SFXVolumeSlider");
         MasterVolumeSlider = root.Q<Slider>("MasterVolumeSlider");
-        UIVolumeSlider = root.Q<Slider>("UIVolumeSlider");
         MouseSensitivitySlider = root.Q<Slider>("MouseSensitivitySlider");
 
         //register callbacks
         BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
-        UIVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.UI);
 
         BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
-        UIVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.UI);
         #endregion
 
         #region pause settings menu
         //find UI References
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
 
+        pause_blur = pause_root.Q<Slider>("Blur");
+
         pause_BGMVolumeSlider = pause_root.Q<Slider>("BGMVolumeSlider");
         pause_SFXVolumeSlider = pause_root.Q<Slider>("SFXVolumeSlider");
         pause_MasterVolumeSlider = pause_root.Q<Slider>("MasterVolumeSlider");
-        pause_UIVolumeSlider = pause_root.Q<Slider>("UIVolumeSlider");
         pause_MouseSensitivitySlider = pause_root.Q<Slider>("MouseSensitivitySlider");
 
         //register callbacks
         pause_BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
-        pause_UIVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.UI);
 
         pause_BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
-        pause_UIVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.UI);
         #endregion
 
+        _hud = GameObject.Find("HUD");
+        _pauseMenu = GameObject.Find("PauseMenu");
 
+    }
+    private void Update()
+    {
+        if (_pauseMenu != null)
+        {
+            if (InputSystem.actions.FindAction("MainMenu").triggered && SceneManager.GetActiveScene().buildIndex != 0)
+            {
+                if (!Globals.Managers.paused)
+                {
+                    Globals.Managers.Settings.DisableHUD();
+                    _pauseMenu.GetComponent<PauseMenu>().PauseMe();
+                }
+            }
+        }
     }
     public void LateAwake()
     {
@@ -125,9 +140,6 @@ public class SettingsManager : MonoBehaviour
                 break;
             case Destination.BGM:
                 Globals.Managers.Saves.AddData<float>("BGMVolume", BGMVolume);
-                break;
-            case Destination.UI:
-                Globals.Managers.Saves.AddData<float>("UIVolume", UIVolume);
                 break;
             default: break;
         }
@@ -176,18 +188,6 @@ public class SettingsManager : MonoBehaviour
             pause_MasterVolumeSlider.value = MasterVolume;
         }
 
-        //UIVolume
-        if (Globals.Managers.Saves.GetData<float>("UIVolume", out volumeHolder))
-        {
-            UIVolume = volumeHolder;
-            pause_UIVolumeSlider.value = UIVolume;
-        }
-        else
-        {
-            UIVolume = 1;
-            Globals.Managers.Saves.AddData<float>("UIVolume", UIVolume);
-            pause_UIVolumeSlider.value = UIVolume;
-        }
         Globals.Managers.Audio.FullVolumeUpdate();
         #endregion
 
@@ -248,18 +248,6 @@ public class SettingsManager : MonoBehaviour
             MasterVolumeSlider.value = MasterVolume;
         }
 
-        //UIVolume
-        if (Globals.Managers.Saves.GetData<float>("UIVolume", out volumeHolder))
-        {
-            UIVolume = volumeHolder;
-            UIVolumeSlider.value = UIVolume;
-        }
-        else
-        {
-            UIVolume = 1;
-            Globals.Managers.Saves.AddData<float>("UIVolume", UIVolume);
-            UIVolumeSlider.value = UIVolume;
-        }
         Globals.Managers.Audio.FullVolumeUpdate();
         #endregion
 
@@ -271,9 +259,28 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            UIVolume = 1;
+            MouseSensitivity = 1;
             Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
             MouseSensitivitySlider.value = MouseSensitivity;
         }
+    }
+    public void EnableHUD()
+    {
+        _hud.SetActive(true);
+    }
+    public void DisableHUD()
+    {
+        
+        _hud.SetActive(false);
+    }
+    public void EnablePause()
+    {
+        _pauseMenu.SetActive(true);
+        pause_blur.visible = true;
+    }
+    public void DisablePause()
+    {
+        _pauseMenu.SetActive(false);
+        pause_blur.visible = false;
     }
 }
