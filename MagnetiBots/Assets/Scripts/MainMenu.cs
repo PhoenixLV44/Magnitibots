@@ -18,6 +18,7 @@ public class MainMenu : MonoBehaviour
     private Button _returnSettingsButton;
 
     private VisualElement _controlsContainer;
+    private ControlsCarousel _controlsCarousel;
 
     private Button _controlsReturnButton;
 
@@ -54,6 +55,10 @@ public class MainMenu : MonoBehaviour
 
         #region Controls Container and Button
         _controlsContainer = _mainDocument.rootVisualElement.Q("ControlsMenu");
+        _controlsCarousel = gameObject.AddComponent<ControlsCarousel>();
+        _controlsCarousel.container = _controlsContainer;
+        _controlsCarousel.Startup();
+
 
         _controlsReturnButton = _mainDocument.rootVisualElement.Q("ControlsReturnButton") as Button;
         _controlsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnControls);
@@ -96,6 +101,7 @@ public class MainMenu : MonoBehaviour
         _controlsContainer.visible = true;
         _controlsContainer.BringToFront();
         _mainContainer.visible = false;
+        _controlsCarousel.Ready();
     }
 
     private void OnClickQuit(ClickEvent click)
@@ -114,5 +120,6 @@ public class MainMenu : MonoBehaviour
         _mainContainer.visible = true;
         _mainContainer.BringToFront();
         _controlsContainer.visible=false;
+        _controlsCarousel.UnReady();
     }
 }

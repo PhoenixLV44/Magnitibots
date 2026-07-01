@@ -30,7 +30,6 @@
 
 .ControlsMenu {
     position: absolute;
-    visibility: visible;
 }
 
 .settingSlider {
@@ -257,6 +256,8 @@
 .rightArrow {
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Right%20Arrow.png?fileID=2800000&guid=9f2b01c78be944b418970dfddeb011da&type=3#Right Arrow");
     background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    right: 0;
 }
 
 .rightArrow:active {
@@ -266,6 +267,8 @@
 .leftArrow {
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Left%20Arrow.png?fileID=2800000&guid=2118a95931f16b24b8a54bec0c3a6f07&type=3#Left Arrow");
     background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0;
 }
 
 .leftArrow:active {

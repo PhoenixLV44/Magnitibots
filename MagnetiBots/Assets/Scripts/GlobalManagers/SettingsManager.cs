@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static AudioManager.AudioSettings;
 
@@ -38,6 +39,7 @@ public class SettingsManager : MonoBehaviour
 
     #region pause settings
     VisualElement pause_root;
+    VisualElement pause_blur;
     Slider pause_BGMVolumeSlider;
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
@@ -74,6 +76,8 @@ public class SettingsManager : MonoBehaviour
         //find UI References
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
 
+        pause_blur = pause_root.Q<Slider>("Blur");
+
         pause_BGMVolumeSlider = pause_root.Q<Slider>("BGMVolumeSlider");
         pause_SFXVolumeSlider = pause_root.Q<Slider>("SFXVolumeSlider");
         pause_MasterVolumeSlider = pause_root.Q<Slider>("MasterVolumeSlider");
@@ -97,7 +101,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (_pauseMenu != null)
         {
-            if (InputSystem.actions.FindAction("MainMenu").triggered)
+            if (InputSystem.actions.FindAction("MainMenu").triggered && SceneManager.GetActiveScene().buildIndex != 0)
             {
                 if (!Globals.Managers.paused)
                 {
@@ -272,9 +276,11 @@ public class SettingsManager : MonoBehaviour
     public void EnablePause()
     {
         _pauseMenu.SetActive(true);
+        pause_blur.visible = true;
     }
     public void DisablePause()
     {
         _pauseMenu.SetActive(false);
+        pause_blur.visible = false;
     }
 }
