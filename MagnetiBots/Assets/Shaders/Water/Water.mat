@@ -53,12 +53,16 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Wace_Freq: 1.5
-    - _WaterDepth: 2
-    - _Wave_Amplitude: 0.2
-    - _Wave_Speed: 0.5
+    - _Specular_Size: 109.97
+    - _Specular_Speed: 1.47
+    - _Specular_Thickness: 5.28
+    - _Wace_Freq: 0.005
+    - _WaterDepth: 0.53
+    - _Wave_Amplitude: 0.005
+    - _Wave_Speed: 0.8
     m_Colors:
     - _Deep_Color: {r: 0.10760058, g: 0.5849056, b: 0.56055504, a: 1}
     - _Shallow_Color: {r: 0.3372549, g: 0.8392157, b: 0.7072481, a: 1}
+    - _Specular_Color: {r: 0.7122642, g: 0.9946907, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
