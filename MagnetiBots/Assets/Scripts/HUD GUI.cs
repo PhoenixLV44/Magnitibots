@@ -5,7 +5,10 @@ using UnityEngine.UIElements;
 
 public class HUDGUI : MonoBehaviour
 {
+    private Player.Controller controller;
+    
     private UIDocument ui;
+    private VisualElement HUDContainer;
 
     private Button unlockReturn;
 
@@ -22,10 +25,14 @@ public class HUDGUI : MonoBehaviour
     private VisualElement blur;
 
     private Label merbleCount;
+    private VisualElement merbleUI;
 
     private void Start()
-    {
+    {   
         ui = GetComponent<UIDocument>();
+        unlockContainer = ui.rootVisualElement.Q("Unlocks");
+        HUDContainer = ui.rootVisualElement.Q("MainHUD");
+
         unlockReturn = ui.rootVisualElement.Q("UnlocksReturnButton") as Button;
         unlockReturn.RegisterCallback<ClickEvent>(OnCLickUnlockReturn);
 
@@ -33,15 +40,20 @@ public class HUDGUI : MonoBehaviour
         blur.visible = false;
         unlockContainer.visible = false;
 
-        lassoUnlock = ui.rootVisualElement.Q("LassoUnlock");
-        smashUnlock = ui.rootVisualElement.Q("SmashUnlock");
-        jumpUnlock = ui.rootVisualElement.Q("JumpUnlock");
+        lassoUnlock = unlockContainer.Q("LassoUnlock");
+        smashUnlock = unlockContainer.Q("SmashUnlock");
+        jumpUnlock = unlockContainer.Q("JumpUnlock");
 
-        lassoPower = ui.rootVisualElement.Q("LassoPower");
-        smashPower = ui.rootVisualElement.Q("SmashPower");
-        jumpPower = ui.rootVisualElement.Q("SuperJumpPower");
+        lassoPower = HUDContainer.Q("LassoPower");
+        smashPower = HUDContainer.Q("SmashPower");
+        jumpPower = HUDContainer.Q("SuperJumpPower");
 
-        merbleCount = ui.rootVisualElement.Q("MerbleCounter") as Label;
+        merbleCount = HUDContainer.Q("MerbleCounter") as Label;
+        merbleUI = HUDContainer.Q("Merbles");
+    }
+    private void OnLevelWasLoaded(int level)
+    {
+        controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
     }
     public void UnlockPopup(string ability)
     {
@@ -51,12 +63,15 @@ public class HUDGUI : MonoBehaviour
         {
             case "Lasso":
                 lassoUnlock.visible = true;
+                lassoPower.visible = true;
                 break;
             case "SuperJump":
                 jumpUnlock.visible = true;
+                jumpPower.visible = true;
                 break;
             case "Smash":
                 smashUnlock.visible = true;
+                smashPower.visible = true;
                 break;
             default:
                 UnPauseGame();
@@ -86,19 +101,18 @@ public class HUDGUI : MonoBehaviour
     }
     private void OnCLickUnlockReturn(ClickEvent click)
     {
-
+        UnPauseGame();
     }
     public void UpdateGUI()
     {
-        //this needs to be attached to wherever the current merble count is
-        merbleCount.text = "9999";
-
-        /* 
-         * 
-         * if(ability.isunlocked){
-         * reveal ui for it
-         * }
-         *
-         */
+        merbleUI.visible = true;
+        if (controller != null)
+        {
+            if (controller.MerbleBoss.MasterList != null)
+            {
+                int realcount = controller.MerbleBoss.MasterList.Count + 1;
+                merbleCount.text = "x" + realcount.ToString();
+            }
+        }
     }
 }

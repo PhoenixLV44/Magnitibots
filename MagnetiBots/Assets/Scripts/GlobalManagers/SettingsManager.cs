@@ -268,6 +268,10 @@ public class SettingsManager : MonoBehaviour
     {
         _hud.SetActive(true);
     }
+    public void UpdateHUD()
+    {
+        _hud.GetComponent<HUDGUI>().UpdateGUI();
+    }
     public void DisableHUD()
     {
         
