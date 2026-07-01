@@ -82,6 +82,7 @@ public class HUDGUI : MonoBehaviour
     {
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
+        Time.timeScale = 0.01f;
         Debug.Log("pause");
         Globals.Managers.paused = true;
         blur.visible = true;
@@ -96,6 +97,7 @@ public class HUDGUI : MonoBehaviour
         }
         InputSystem.actions.actionMaps[0].Enable();
         InputSystem.actions.actionMaps[2].Enable();
+        Time.timeScale = 1;
         Debug.Log("pause");
         Globals.Managers.paused = false;
     }
