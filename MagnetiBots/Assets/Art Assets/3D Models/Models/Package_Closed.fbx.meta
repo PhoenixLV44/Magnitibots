@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: ef3d5f4f7b4e74344a8ade7b44244827
+guid: aacbd34e839703a48b4d764a49728fe1
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__MAT_Package
+    second: {fileID: 2100000, guid: 5f85f7f2debdbc947b72966e371fa85e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -92,15 +97,15 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: Ctrl_Main
+    rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 953d6ace7f983bd49b24fce2cdc87141, type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 2
+  avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
