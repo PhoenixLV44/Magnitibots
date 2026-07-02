@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Merbles;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +21,9 @@ namespace Player
         Merbles.Boss _boss;
         
         [SerializeField] LayerMask respawnMask;
+        
+        List<Interactable.ItemRespawner> _itemRespawners = new List<Interactable.ItemRespawner>();
+        public List<Interactable.ItemRespawner> ItemRespawners{get => _itemRespawners; set => _itemRespawners = value; }
 
         private void Start()
         {
@@ -54,6 +58,11 @@ namespace Player
             _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
             
+            _playerController.AbilityStateManager.CurrentAbility.StopCharging();
+            _playerController.AbilityStateManager.CurrentAbility.StopAllCoroutines();
+            _playerController.MerbleBoss.FireMerbles();
+            _playerController.PlayerStateManager.StateMachine.ChangeState(_playerController.PlayerStateManager.IdleState);
+            
             foreach (var merble in _boss.MasterList)
             {
                 Vector2 rng = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
@@ -63,7 +72,13 @@ namespace Player
                 merble.transform.position = newMerblePos;
                 merble.gameObject.SetActive(true);
             }
+
+            foreach (var item in _itemRespawners)
+            {
+                item.Respawn();
+            }
             _movement.CharacterController.enabled = true;
+            
         }
         private void OnTriggerEnter(Collider other)
         {

@@ -57,10 +57,13 @@ namespace Player
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
-        private bool _canUseSmash = false;
-        public bool CanUseSmash { get => _canUseSmash; set => _canUseSmash = value; }
-        private bool _canUseSuperJump = false;
-        public bool CanUseSuperJump { get => _canUseSuperJump; set => _canUseSuperJump = value; }
+        [SerializeField] private bool canUseLasso;
+        public bool CanUseLasso { get => canUseLasso; set => canUseLasso = value; }
+        
+        [SerializeField] private bool canUseSmash = false;
+        public bool CanUseSmash { get => canUseSmash; set => canUseSmash = value; }
+        [SerializeField] private bool canUseSuperJump = false;
+        public bool CanUseSuperJump { get => canUseSuperJump; set => canUseSuperJump = value; }
         
         [SerializeField] private GameObject chargingParticles;
         public GameObject ChargingParticles => chargingParticles;
@@ -88,7 +91,7 @@ namespace Player
 
             _movement.DefaultMoveSpeed = movementSpeed;
             _movement.JumpForce = jumpForce;
-            Debug.Log("Default Move Speed: " + _movement.DefaultMoveSpeed);
+            //wdDebug.Log("Default Move Speed: " + _movement.DefaultMoveSpeed);
 
             _merbleBoss = gameObject.AddComponent<Merbles.Boss>();
             _merbleBoss.MerbleFollowType = merbleFollowType;
@@ -175,7 +178,7 @@ namespace Player
                 {
                     if (Physics.Raycast(transform.position, Vector3.down, out hit, 100, groundLayers))
                     {
-                        Debug.Log("activate shadow");
+                        //Debug.Log("activate shadow");
                         Vector3 point = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                         shadow.SetActive(true);
                         shadow.transform.position = point;
@@ -194,6 +197,29 @@ namespace Player
                     Debug.Log("no shadow");
                 }
             }
+        }
+
+        public void UnlockNewAbility()
+        {
+            if (!canUseLasso)
+            {
+                Debug.Log("can use lasso");
+                Globals.Managers.Settings.UnlockPopup("Lasso");
+                canUseLasso = true;
+            }
+            else if (!canUseSmash)
+            {
+                Debug.Log("can use smash");
+                Globals.Managers.Settings.UnlockPopup("Smash");
+                canUseSmash = true;
+            }
+            else if (!canUseSuperJump)
+            {
+                Debug.Log("can use super jump");
+                Globals.Managers.Settings.UnlockPopup("SuperJump");
+                canUseSuperJump = true;
+            }
+            _animator.Play("Collect");
         }
     }
 } 

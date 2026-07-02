@@ -268,6 +268,10 @@ public class SettingsManager : MonoBehaviour
     {
         _hud.SetActive(true);
     }
+    public void UpdateHUD()
+    {
+        _hud.GetComponent<HUDGUI>().UpdateGUI();
+    }
     public void DisableHUD()
     {
         
@@ -282,5 +286,9 @@ public class SettingsManager : MonoBehaviour
     {
         _pauseMenu.SetActive(false);
         pause_blur.visible = false;
+    }
+    public void UnlockPopup(string ability)
+    {
+        _hud.GetComponent<HUDGUI>().UnlockPopup(ability);
     }
 }

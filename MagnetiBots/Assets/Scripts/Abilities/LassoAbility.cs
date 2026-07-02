@@ -156,9 +156,12 @@ namespace Ability
 
                         if (child.CompareTag("LassoTarget"))
                         {
-                            Rigidbody rb = loopedObject.GetComponent<Rigidbody>();
-                            rb.useGravity = true;
-                            rb.constraints = RigidbodyConstraints.None;
+                            PuzzleCube puzzleCube = loopedObject.GetComponent<PuzzleCube>();
+                            if (puzzleCube != null)
+                            {
+                                //puzzleCube.ResetTransform();
+                                puzzleCube.UnfreezeConstraints();
+                            }
                         }
                         else if (child.CompareTag("Lever"))
                         {
