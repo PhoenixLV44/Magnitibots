@@ -80,6 +80,7 @@ namespace Ability
                     !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[i].StartCharge(transform.position);
+                    Globals.Managers.Audio.PlaySFX("ChargeMerble");
                 }
             }
 
@@ -114,6 +115,7 @@ namespace Ability
             isCharging = false;
             if (merbleBoss.ChargedMerbleList.Count >= 1)
             {
+                Globals.Managers.Audio.PlaySFX("ThrowLasso");
                 GameObject playerModel = transform.Find("PlayerModel").gameObject;
                 Vector3 target = transform.position;
                 target += playerModel.transform.forward * (baseRange * merbleBoss.ChargedMerbleList.Count);

@@ -43,6 +43,7 @@ namespace Ability
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[i].StartCharge(transform.position);
+                    Globals.Managers.Audio.PlaySFX("ChargeMerble");
                 }
             }
 
@@ -148,6 +149,7 @@ namespace Ability
         private void DropBall()
         {
             //Debug.Log("DropBall");
+            Globals.Managers.Audio.PlaySFXHere("ThrowRock", _smashBall.transform);
             _smashBallRb.useGravity = true;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
             StopCoroutine(moveCursorRoutine);

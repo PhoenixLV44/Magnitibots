@@ -137,4 +137,19 @@ public class AudioManager : MonoBehaviour
         sfxSource.clip = data.sfx[clipName];
         sfxSource.Play();
     }
+    public void PlaySFXHere(string clipName, Transform transform)
+    {
+        AudioSource.PlayClipAtPoint(data.sfx[clipName], transform.position);
+    }
+    public void PlaySFXRandom(string clipName, Transform transform, int max)
+    {
+        string newName = String.Concat(clipName, UnityEngine.Random.Range(1, max+1));
+        AudioSource.PlayClipAtPoint(data.sfx[newName], transform.position);
+    }
 }
+
+/* Sounds Taken from Pixabay:
+ * freesound_community
+ * floraphonic
+ * Mori_sound
+ */
