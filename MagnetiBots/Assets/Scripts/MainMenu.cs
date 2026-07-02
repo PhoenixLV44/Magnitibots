@@ -65,13 +65,13 @@ public class MainMenu : MonoBehaviour
         #endregion
 
         
-        Globals.Managers.Settings.DisableHUD();
         _mainContainer.visible = true;
         _mainContainer.BringToFront();
 
     }
     private void Start()
     {
+        Globals.Managers.Settings.DisableHUD();
         Globals.Managers.Audio.UpdateBGM("BambooMarimba");
     }
     private void OnDisable()
