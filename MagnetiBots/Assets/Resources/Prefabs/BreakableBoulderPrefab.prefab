@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9167505189913421678}
   - component: {fileID: 6599964104281114793}
   - component: {fileID: 7399906060869087496}
+  - component: {fileID: 2552108015501471080}
   m_Layer: 12
   m_Name: BreakableBoulderPrefab
   m_TagString: SmashTarget
@@ -149,3 +150,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ability.Object.SmashableTarget
   healthLevel: 0
   health: 0
+--- !u!208 &2552108015501471080
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8373070103844153539}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.010000001, y: 0.010000001, z: 0.010000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.010000001}
+  m_TimeToStationary: 0.5
