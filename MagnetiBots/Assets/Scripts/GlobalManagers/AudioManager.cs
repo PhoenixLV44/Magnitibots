@@ -26,8 +26,8 @@ public class AudioManager : MonoBehaviour
 
     AudioMixer audioMixer;
 
-    float maxVolume = -20;
-    float minVolume = -80;
+    float maxVolume = 0;
+    float minVolume = -40;
 
     public static class AudioSettings 
     {
@@ -152,4 +152,7 @@ public class AudioManager : MonoBehaviour
  * freesound_community
  * floraphonic
  * Mori_sound
+ * 
+ * BGM By;
+ * Jean-Paul-V
  */

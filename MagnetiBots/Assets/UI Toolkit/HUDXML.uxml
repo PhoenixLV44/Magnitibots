@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/hud.uss?fileID=7433441132597879392&amp;guid=512e0e777e692ac47aa878edb7e0bf80&amp;type=3#hud"/>
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement name="Unlocks" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px; visibility: hidden;">
-            <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(1.57); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: visible;"/>
+            <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(1.57); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: hidden;"/>
             <ui:VisualElement name="HoverUnlock" style="visibility: hidden;">
                 <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Hover).png?fileID=2800000&amp;guid=f869cb1e87b7d0a4ebfdcac0ef8af6a2&amp;type=3#Title (Hover)" scale-mode="StretchToFill" class="title powerUnlock"/>
                 <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Hover).png?fileID=2800000&amp;guid=a2dd246aafc39fa47affec63cb7693eb&amp;type=3#Panel (Hover)" class="panel powerUnlock"/>

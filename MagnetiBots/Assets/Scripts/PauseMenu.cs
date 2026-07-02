@@ -83,8 +83,10 @@ public class PauseMenu : MonoBehaviour
         {
             if (InputSystem.actions.FindAction("MainMenu").IsPressed())
             {
+                Debug.Log("return");
+                _blur.visible = false;
                 _pauseContainer.visible = false;
-                _blur.visible= false;
+                Globals.Managers.Settings.EnableHUD();
                 Time.timeScale = 1;
                 Globals.Managers.paused = false;
                 InputSystem.actions.actionMaps[0].Enable();
@@ -126,7 +128,6 @@ public class PauseMenu : MonoBehaviour
         InputSystem.actions.actionMaps[0].Enable();
         InputSystem.actions.actionMaps[2].Enable();
         SceneManager.LoadScene(0);
-        Globals.Managers.Settings.DisablePause();
     }
     private void OnClickSettingsReturn(ClickEvent click)
     {

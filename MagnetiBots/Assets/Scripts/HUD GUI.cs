@@ -53,7 +53,10 @@ public class HUDGUI : MonoBehaviour
     }
     private void OnLevelWasLoaded(int level)
     {
-        controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
+        if (level != 0)
+        {
+            controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
+        }
     }
     public void UnlockPopup(string ability)
     {
