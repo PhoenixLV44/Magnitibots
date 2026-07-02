@@ -97,10 +97,12 @@ public class HUDGUI : MonoBehaviour
         Debug.Log("pause");
         Globals.Managers.paused = true;
         blur.visible = true;
+        unlockReturn.visible = true;
     }
     private void UnPauseGame()
     {
         unlockContainer.visible = false;
+        unlockReturn.visible = false;
         blur.visible = false;
         foreach (VisualElement ve in unlockContainer.Children().ToArray())
         {
