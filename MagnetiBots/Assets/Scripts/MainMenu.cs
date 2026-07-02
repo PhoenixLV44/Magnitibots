@@ -72,7 +72,7 @@ public class MainMenu : MonoBehaviour
     }
     private void Start()
     {
-        Globals.Managers.Audio.UpdateBGM("ImportantPlaceholderMusic");
+        Globals.Managers.Audio.UpdateBGM("BambooMarimba");
     }
     private void OnDisable()
     {
