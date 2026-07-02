@@ -35,6 +35,7 @@ namespace Ability.Object
         {
             if (_canTakeDamage)
             {
+                Globals.Managers.Audio.PlaySFXRandom("RockSmashing", transform, 4);
                 int damageInt = Mathf.RoundToInt(damage);
                 health -= damageInt;
                 Debug.Log("Health: " + health + " Damage: " + damageInt);
