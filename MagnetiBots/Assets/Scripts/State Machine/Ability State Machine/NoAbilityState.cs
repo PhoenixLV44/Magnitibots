@@ -14,7 +14,7 @@ namespace Ability
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Activate Lasso").IsPressed())
+            if (player.CanUseLasso)
             {
                 stateMachine.ChangeState(stateManager.LassoState);
             }
