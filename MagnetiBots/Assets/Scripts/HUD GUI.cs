@@ -28,7 +28,11 @@ public class HUDGUI : MonoBehaviour
     private VisualElement merbleUI;
 
     private void Start()
-    {   
+    {
+        Startup();
+    }
+    private void Startup()
+    {
         ui = GetComponent<UIDocument>();
         unlockContainer = ui.rootVisualElement.Q("Unlocks");
         HUDContainer = ui.rootVisualElement.Q("MainHUD");
@@ -56,6 +60,7 @@ public class HUDGUI : MonoBehaviour
         if (level != 0)
         {
             controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
+            Startup();
         }
     }
     public void UnlockPopup(string ability)
@@ -65,14 +70,17 @@ public class HUDGUI : MonoBehaviour
         switch (ability)
         {
             case "Lasso":
+                Debug.Log("unlock lasso");
                 lassoUnlock.visible = true;
                 lassoPower.visible = true;
                 break;
             case "SuperJump":
+                Debug.Log("unlock SuperJump");
                 jumpUnlock.visible = true;
                 jumpPower.visible = true;
                 break;
             case "Smash":
+                Debug.Log("unlock Smash");
                 smashUnlock.visible = true;
                 smashPower.visible = true;
                 break;
@@ -89,10 +97,12 @@ public class HUDGUI : MonoBehaviour
         Debug.Log("pause");
         Globals.Managers.paused = true;
         blur.visible = true;
+        unlockReturn.visible = true;
     }
     private void UnPauseGame()
     {
         unlockContainer.visible = false;
+        unlockReturn.visible = false;
         blur.visible = false;
         foreach (VisualElement ve in unlockContainer.Children().ToArray())
         {

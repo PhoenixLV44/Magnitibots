@@ -626,10 +626,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1152
   movementSpeed: 7.5
-  jumpForce: 110
+  jumpForce: 120
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
   merbleFollowType: 0
   _lassoHooked: 0
+  canUseLasso: 0
+  canUseSmash: 0
+  canUseSuperJump: 0
   chargingParticles: {fileID: 5113423678552748251}
   superJumpPoint: {fileID: 4496413624167517707}
   shadow: {fileID: 0}
