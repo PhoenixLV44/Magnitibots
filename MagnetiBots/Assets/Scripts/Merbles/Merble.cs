@@ -125,7 +125,7 @@ namespace Merbles
         }
         IEnumerator Charge(Vector3 target)
         {
-            Debug.Log(transform.name + "Charging");
+            //Debug.Log(transform.name + "Charging");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
