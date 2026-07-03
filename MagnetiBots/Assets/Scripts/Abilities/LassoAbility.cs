@@ -139,13 +139,13 @@ namespace Ability
 
         public void MoveLassoTarget()
         {
-            targetCursor.MoveObjectToCursor(_lassoLoopObject, this);
+            targetCursor.ObjectToMove = _lassoLoopObject;
         }
 
         public IEnumerator UnhookLasso()
         {
-            targetCursor.DeactivateCursor();
-            Cursor.lockState = CursorLockMode.None;
+            //targetCursor.DeactivateCursor();
+            /*Cursor.lockState = CursorLockMode.None;
 
             _loopScript.BoxCollider.enabled = false;
             StartCoroutine(_loopScript.ReturnToStartPosition(_returnPoint.transform.position, 10));
@@ -176,6 +176,10 @@ namespace Ability
                         break;
                     }
                 }
+            }*/
+            while (!targetCursor.AtPlayer)
+            {
+                
             }
 
             rangeIndicator.DisableRangeIndicator();

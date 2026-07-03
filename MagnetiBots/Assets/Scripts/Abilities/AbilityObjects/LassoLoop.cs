@@ -25,11 +25,11 @@ namespace Ability.Object
 
         public void StartMovement(Vector3 startPos,Vector3 target, float speed = 10)
         {
-            StartCoroutine(MoveFoward(startPos, target, speed));
+            _moveFowardCoroutine = MoveFoward(startPos, target, speed);
+            StartCoroutine(_moveFowardCoroutine);
         }
         private IEnumerator MoveFoward(Vector3 startPos,Vector3 target, float speed = 10)
         {
-            _moveFowardCoroutine =  MoveFoward(startPos, target, speed);
             _lassoAbility.PullMerblesBool = false;
             //Debug.Log("Start Position: " + startPos + " | Target Position: " + target);
             transform.position = startPos;
@@ -104,7 +104,7 @@ namespace Ability.Object
                     transform.position = hookedObject.transform.position;
                     Vector3 defaultScale = transform.localScale.y == 1? hookedObject.transform.localScale: new Vector3(hookedObject.transform.localScale.x, hookedObject.transform.localScale.y * 2, hookedObject.transform.localScale.z);
 
-                    _lassoAbility.TargetCursor.ActivateCursor(transform.position);
+                    _lassoAbility.TargetCursor.ChangeCursorPosition(transform.position);
                     hookedObject.transform.parent = transform;
 
                     hookedObject.transform.rotation = Quaternion.Euler(0, 0, 0);

@@ -35,11 +35,8 @@ namespace Player
         private Ability.SuperJump _superJumpAbility;
         public Ability.SuperJump SuperJumpAbility { get { return _superJumpAbility; } }
         
-        private TargetingCursor _targetCursorScript;
-        public TargetingCursor TargetCursorScript { get { return _targetCursorScript; } }
-        
-        private GameObject _targetCursorObject;
-        public GameObject TargetCursorObject => _targetCursorObject;
+        private TargetingCursor _targetCursor;
+        public TargetingCursor TargetCursor { get { return _targetCursor; } }
             #endregion
 
         #region States
@@ -99,7 +96,7 @@ namespace Player
             _merbleBoss.defaultCapacity = 0;
             _merbleBoss.maxSize = 10;
             
-            _targetCursorScript = gameObject.AddComponent<TargetingCursor>();
+            _targetCursor = gameObject.AddComponent<TargetingCursor>();
             
             _playerStateManager = gameObject.AddComponent<Player.StateManager>();
             _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
@@ -111,8 +108,6 @@ namespace Player
             _abilityStateManager.PlayerController = this;
             
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
-            
-            _targetCursorObject = transform.Find("Target Cursor").gameObject;
             
             chargingParticles.SetActive(false);
 
@@ -127,6 +122,8 @@ namespace Player
             respawner.Movement = _movement;
             
             shadow = transform.GetChild(transform.childCount - 1).gameObject;
+            
+            //_targetCursor.Cursor.transform.position = new Vector3(transform.position.x, transform.position.y -1, transform.position.z) + _movement.Model.transform.forward;
         }
 
         // Update is called once per frame

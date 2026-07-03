@@ -121,9 +121,9 @@ namespace Player
         {
             //Debug.Log(input[1]);
 
-            if (_controller.TargetCursorObject.activeSelf)
+            if (_controller.TargetCursor.Cursor.activeSelf)
             {
-                Vector3 lookTarget = _controller.TargetCursorObject.transform.position;
+                Vector3 lookTarget = _controller.TargetCursor.Cursor.transform.position;
                 lookTarget.y = transform.position.y;
                 _model.LookAt(lookTarget);
             }

@@ -7,7 +7,7 @@ public class HoverState : AirState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Entered HoverState");
+        Debug.Log("Entered HoverState"); 
     }
 
     public override void ExitState()
