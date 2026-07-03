@@ -46,7 +46,7 @@ public class HUDGUI : MonoBehaviour
 
         lassoUnlock = unlockContainer.Q("LassoUnlock");
         smashUnlock = unlockContainer.Q("SmashUnlock");
-        jumpUnlock = unlockContainer.Q("JumpUnlock");
+        jumpUnlock = unlockContainer.Q("SuperJumpUnlock");
 
         lassoPower = HUDContainer.Q("LassoPower");
         smashPower = HUDContainer.Q("SmashPower");
@@ -91,9 +91,10 @@ public class HUDGUI : MonoBehaviour
     }
     private void PauseGame()
     {
+        HUDContainer.visible = false;
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
-        Time.timeScale = 0.01f;
+        Time.timeScale = 0.001f;
         Debug.Log("pause");
         Globals.Managers.paused = true;
         blur.visible = true;
@@ -101,8 +102,8 @@ public class HUDGUI : MonoBehaviour
     }
     private void UnPauseGame()
     {
+        HUDContainer.visible = true;
         unlockContainer.visible = false;
-        unlockReturn.visible = false;
         blur.visible = false;
         foreach (VisualElement ve in unlockContainer.Children().ToArray())
         {
@@ -120,7 +121,7 @@ public class HUDGUI : MonoBehaviour
     }
     public void UpdateGUI()
     {
-        merbleUI.visible = true;
+        HUDContainer.visible = true;
         if (controller != null)
         {
             if (controller.MerbleBoss.MasterList != null)
