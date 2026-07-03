@@ -35,6 +35,7 @@ namespace Ability
                 if (merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[0].StartCharge(transform.position);
+                    Globals.Managers.Audio.PlaySFX("ChargeMerble");
                 }
                 yield return new WaitForSeconds(0.5f);
             }
@@ -47,6 +48,7 @@ namespace Ability
             controller.ChargingParticles.SetActive(false);
             
             StartCoroutine(_playerMovement.Jump(jumpPowerMult));
+            Globals.Managers.Audio.PlaySFX("SuperJump");
             if (merbleBoss.ChargedMerbleList.Count > 5)
             {
                 _playerMovement.Hovering = true;

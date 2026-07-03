@@ -26,8 +26,8 @@ public class AudioManager : MonoBehaviour
 
     AudioMixer audioMixer;
 
-    float maxVolume = -20;
-    float minVolume = -80;
+    float maxVolume = 0;
+    float minVolume = -40;
 
     public static class AudioSettings 
     {
@@ -36,7 +36,6 @@ public class AudioManager : MonoBehaviour
             BGM,
             SFX,
             Master,
-            UI
         }
     }
 
@@ -118,10 +117,6 @@ public class AudioManager : MonoBehaviour
                 Globals.Managers.Settings.BGMVolume = value;
                 audioMixer.SetFloat("BGM_Volume", volume);
                 break;
-            case AudioSettings.Destination.UI:
-                Globals.Managers.Settings.UIVolume = value;
-                audioMixer.SetFloat("UI_Volume", volume);
-                break;
             default: break;
         }
     }
@@ -131,7 +126,6 @@ public class AudioManager : MonoBehaviour
         UpdateVolumes(AudioSettings.Destination.BGM, Globals.Managers.Settings.BGMVolume);
         UpdateVolumes(AudioSettings.Destination.Master, Globals.Managers.Settings.MasterVolume);
         UpdateVolumes(AudioSettings.Destination.SFX, Globals.Managers.Settings.SFXVolume);
-        UpdateVolumes(AudioSettings.Destination.UI, Globals.Managers.Settings.UIVolume);
     }
     public void UpdateBGM(string clipName)
     {
@@ -143,4 +137,22 @@ public class AudioManager : MonoBehaviour
         sfxSource.clip = data.sfx[clipName];
         sfxSource.Play();
     }
+    public void PlaySFXHere(string clipName, Transform transform)
+    {
+        AudioSource.PlayClipAtPoint(data.sfx[clipName], transform.position);
+    }
+    public void PlaySFXRandom(string clipName, Transform transform, int max)
+    {
+        string newName = String.Concat(clipName, UnityEngine.Random.Range(1, max+1));
+        AudioSource.PlayClipAtPoint(data.sfx[newName], transform.position);
+    }
 }
+
+/* Sounds Taken from Pixabay:
+ * freesound_community
+ * floraphonic
+ * Mori_sound
+ * 
+ * BGM By;
+ * Jean-Paul-V
+ */

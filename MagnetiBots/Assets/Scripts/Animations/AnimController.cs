@@ -39,6 +39,9 @@ namespace Player
         [Tooltip("Animation called 'Pull_Mid'")]
         [SerializeField] private AnimationClip pullLeverAnimation; //Player_Pull_Mid
         public AnimationClip PullLeverAnimation => pullLeverAnimation;
+
+        private bool _charging;
+        public bool Charging {get => _charging; set => _charging = value;}
         
 
         public void SetUpController(Controller playerController, Movement playerMovement, Player.StateManager playerStateManager, Ability.StateManager abilityStateManager, Lasso lasso, Smash smash,
@@ -66,15 +69,8 @@ namespace Player
             {
                 //
             }
-
-            if (_playerMovement.Hovering)
-            {
-                _animator.SetBool("Hovering", true);
-            }
-            else
-            {
-                _animator.SetBool("Hovering", false);
-            }
+            
+            _animator.SetBool("Hovering", _playerMovement.Hovering);
 
             switch (_abilityStateManager.CurrentAbility)
             {
@@ -110,6 +106,7 @@ namespace Player
             {
                 _animator.SetBool("LassoHooked", false);
             }
+            _animator.SetBool("Charging",  _charging);
         }
 
         private void ChangeWalkBlendTree()
@@ -147,6 +144,10 @@ namespace Player
             yield return new WaitForSeconds(1);
             _playerController.Interacting = false;
             _animator.SetBool("PullingLever", _playerController.Interacting);
+        }
+        public void PlayCollectAnimation()
+        {
+            _animator.SetTrigger("Collect");
         }
     }
 }

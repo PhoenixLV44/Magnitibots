@@ -56,7 +56,7 @@ namespace Ability
             set => _pullMerblesBool = value;
         }
             
-        private Transform _lassoPoint;
+        private Transform _returnPoint;
 
         private void Start()
         {
@@ -80,6 +80,7 @@ namespace Ability
                     !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[i].StartCharge(transform.position);
+                    Globals.Managers.Audio.PlaySFX("ChargeMerble");
                 }
             }
 
@@ -114,6 +115,7 @@ namespace Ability
             isCharging = false;
             if (merbleBoss.ChargedMerbleList.Count >= 1)
             {
+                Globals.Managers.Audio.PlaySFX("ThrowLasso");
                 GameObject playerModel = transform.Find("PlayerModel").gameObject;
                 Vector3 target = transform.position;
                 target += playerModel.transform.forward * (baseRange * merbleBoss.ChargedMerbleList.Count);
@@ -122,7 +124,7 @@ namespace Ability
                 _lassoLoopObject.transform.rotation = playerModel.transform.rotation;
                 _lassoLoopObject.transform.parent = null;
                 _lassoLoopObject.SetActive(true);
-                _loopScript.StartMovement(_lassoPoint.position, target);
+                _loopScript.StartMovement(_returnPoint.position, target);
                 StartCoroutine(merbleLineCoroutine);
                 controller.Animator.Play("Throw");
             }
@@ -143,7 +145,7 @@ namespace Ability
             Cursor.lockState = CursorLockMode.None;
 
             _loopScript.BoxCollider.enabled = false;
-            StartCoroutine(_loopScript.ReturnToStartPosition(_lassoPoint.transform.position, 10));
+            StartCoroutine(_loopScript.ReturnToStartPosition(_returnPoint.transform.position, 10));
             _pullMerblesBool = true;
             if (_lassoLoopObject.transform.childCount > 0)
             {
@@ -156,9 +158,12 @@ namespace Ability
 
                         if (child.CompareTag("LassoTarget"))
                         {
-                            Rigidbody rb = loopedObject.GetComponent<Rigidbody>();
-                            rb.useGravity = true;
-                            rb.constraints = RigidbodyConstraints.None;
+                            PuzzleCube puzzleCube = loopedObject.GetComponent<PuzzleCube>();
+                            if (puzzleCube != null)
+                            {
+                                //puzzleCube.ResetTransform();
+                                puzzleCube.UnfreezeConstraints();
+                            }
                         }
                         else if (child.CompareTag("Lever"))
                         {
@@ -193,7 +198,7 @@ namespace Ability
             merbleLineCoroutine = MerbleLine();
             _loopScript = _lassoLoopObject.AddComponent<Object.LassoLoop>();
             _loopScript.LassoAbility = this;
-            _lassoPoint = GameObject.Find("LassoPoint").transform;
+            _returnPoint = GameObject.Find("ReturnPoint").transform;
         }
 
         public void PullLever()
@@ -226,7 +231,7 @@ namespace Ability
             while (true)
             {
                 //Debug.Log("Merble Line");
-                _lassoLoopObject.transform.LookAt(_lassoPoint);
+                _lassoLoopObject.transform.LookAt(_returnPoint);
                 _lassoLoopObject.transform.rotation = Quaternion.Euler(0, _lassoLoopObject.transform.eulerAngles.y, 0);
                 chargedMerbleList = merbleBoss.ChargedMerbleList;
                 merbleList = merbleBoss.merbleList;
@@ -236,7 +241,7 @@ namespace Ability
                     Vector3.Distance(a.transform.position, transform.position)
                         .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
 
-                float distance = Vector3.Distance(_lassoPoint.position, _lassoLoopObject.transform.position);
+                float distance = Vector3.Distance(_returnPoint.position, _lassoLoopObject.transform.position);
                 merbleBoss.merbleList = merbleList;
 
                 float chargedCount = chargedMerbleList.Count;
@@ -271,7 +276,7 @@ namespace Ability
                     }
                 }
 
-                float verticleDistance = _lassoLoopObject.transform.position.y - _lassoPoint.transform.position.y;
+                float verticleDistance = _lassoLoopObject.transform.position.y - _returnPoint.transform.position.y;
 
                 foreach (var merble in chargedMerbleList)
                 {

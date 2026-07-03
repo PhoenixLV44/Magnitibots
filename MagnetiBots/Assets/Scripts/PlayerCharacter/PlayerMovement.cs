@@ -106,10 +106,10 @@ namespace Player
             {
                 _moveSpeed *= _airSpeedMult;
             }
-            else if (!_isGrounded && _isHovering)
+            /*else if (!_isGrounded && _isHovering)
             {
                 _moveSpeed *= _hoverSpeedMult;
-            }
+            }*/
             Vector3 targetVelocity = input * _moveSpeed;
             _submittedMovement = targetVelocity;
         }
@@ -140,7 +140,7 @@ namespace Player
             _controller.Animator.Play("Jump");
             yield return new WaitForSecondsRealtime(_controller.AnimController.JumpAnimLength);
             _jumpLock = true;
-            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce + (_jumpForce * Mathf.Log(jumpModifier));
+            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * (jumpModifier / (jumpModifier / 2f));
             //jumpPower = jumpForce + (1 * jumpModifier);
             //Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;

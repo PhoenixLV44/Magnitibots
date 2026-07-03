@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,12 +13,20 @@ namespace Interactable
         public bool  PlayerInRange => _playerInRange;
         private Canvas _canvas;
         private Player.Controller controller;
+
+        Renderer _renderer;
+        Material _material;
+        [SerializeField] Texture _activatedLever;
+        [SerializeField] Texture _deactivatedLever;
         private void Start()
         {
             delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);
             _canvas = GetComponentInChildren<Canvas>();
             _canvas.worldCamera = Camera.main;
             _canvas.gameObject.SetActive(false);
+            _renderer = GetComponent<Renderer>();
+            _material = GetComponent<Material>();
+            //_deactivatedLever;
         }
         public override void ActivateObject()
         {

@@ -1,3 +1,4 @@
+using Ability;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +23,7 @@ public class IdleState : GroundedState
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
 
-        if (InputSystem.actions.FindAction("Charge").IsPressed())
+        if (InputSystem.actions.FindAction("Charge").IsPressed() && player.AbilityStateManager.StateMachine.CurrentState != player.AbilityStateManager.NoAbilityState)
         {
             stateMachine.ChangeState(stateManager.ChargeState);
         }
@@ -53,7 +54,8 @@ public class IdleState : GroundedState
         }
         else
         {
-            Debug.LogError("No State Manager found!");
+            //stateManager = player.PlayerStateManager;
+            //Debug.LogError("No State Manager found!");
         }
     }
 }

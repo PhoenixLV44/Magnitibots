@@ -45,7 +45,7 @@ namespace Ability
             _smashState.Ability.enabled = false;
             _superJumpState.Ability.enabled = false;
             _noAbilityState.Ability.enabled = false;
-            _stateMachine.InitializeStateMachine(_lassoState);
+            _stateMachine.InitializeStateMachine(_noAbilityState);
         }
 
         private void Update()

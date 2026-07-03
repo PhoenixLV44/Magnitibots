@@ -22,6 +22,11 @@ namespace Interactable
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag("LassoTarget"))
+            {
+                PuzzleCube cube = other.GetComponent<PuzzleCube>();
+                cube.FreezeConstraints();
+            }
             ActivateObject();
         }
 

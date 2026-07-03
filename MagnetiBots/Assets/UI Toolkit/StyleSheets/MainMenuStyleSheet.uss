@@ -25,25 +25,308 @@
 
 .MainMenu {
     position: absolute;
+    top: 0;
 }
 
 .ControlsMenu {
     position: absolute;
-    visibility: visible;
 }
 
 .settingSlider {
-    align-self: auto;
     align-items: center;
     font-size: 39px;
-    margin-top: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
     -unity-text-align: upper-center;
-    align-content: auto;
+    align-content: center;
     max-width: none;
     right: auto;
     left: auto;
-    min-width: 836px;
+    justify-content: flex-start;
+    flex-grow: 1;
+    align-self: center;
+    background-image: url("project://database/Assets/Art%20Assets/UI/Main%20Menu/Slider_Empty.png?fileID=2800000&guid=2abab9060ebcb8c43a9c00c39b4d5aff&type=3#Slider_Empty");
+    min-width: auto;
+    min-height: auto;
+}
+
+.text {
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&guid=82db8662a4d71c74eaee21d3daa362c5&type=3#Zyzol");
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
+.settingSlider #unity-drag-container {
+    justify-content: space-around;
+    align-content: center;
+    align-self: center;
+    align-items: stretch;
+    background-image: url("project://database/Assets/Art%20Assets/UI/Main%20Menu/Slider_Empty.png?fileID=2800000&guid=2abab9060ebcb8c43a9c00c39b4d5aff&type=3#Slider_Empty");
+    position: relative;
+    top: 0;
+    flex-grow: 1;
+    height: 44px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.settingSlider #unity-tracker {
+    opacity: 1;
+    position: relative;
+    justify-content: flex-start;
+    align-self: auto;
+    top: 0;
+    align-content: auto;
+    align-items: auto;
+    flex-grow: 1;
+    background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Slider_Empty.png?fileID=2800000&guid=20ab589405fec1243a5fdb641c6e7714&type=3#Slider_Empty");
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.settingSlider #unity-fill {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Slider_Full.png?fileID=2800000&guid=14986454c742c01409963a51d6d61d77&type=3#Slider_Full");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.78);
+    height: 45px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.settingSlider #unity-dragger {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Mrble.png?fileID=2800000&guid=447c319236f244445a18e5c57355201e&type=3#Mrble");
+    flex-grow: 1;
+    min-width: 79px;
+    background-color: rgba(255, 255, 255, 0);
+    min-height: 66px;
+    align-items: center;
+    top: auto;
+    left: 0;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.SliderBin {
+    flex-grow: 1;
+    flex-direction: row;
+    background-image: url("project://database/Assets/Art%20Assets/UI/Main%20Menu/Panel_Long.png?fileID=2800000&guid=1af5a7cc2af8a2c4bb136c57ec48c4f7&type=3#Panel_Long");
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 5px;
+    margin-top: 14px;
+    margin-left: 300px;
+    margin-right: 300px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.SliderBin Label {
+    font-size: 31px;
+    -unity-text-align: middle-left;
+    min-width: 371px;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&guid=82db8662a4d71c74eaee21d3daa362c5&type=3#Zyzol");
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    -unity-font-style: bold;
+    letter-spacing: -9px;
+}
+
+.mainButton:hover {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Title%20Screen/Main%20Menu%20Button_Hovered.png?fileID=2800000&guid=aec544fc3f04c4f46bac030de2f4cb12&type=3#Main Menu Button_Hovered");
+}
+
+.mainButton {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Title%20Screen/Main%20Menu%20Button.png?fileID=2800000&guid=e15f053f4c674184db514e117e142229&type=3#Main Menu Button");
+    flex-grow: 0;
+    width: 462px;
+    height: 122px;
+    font-size: 71px;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&guid=344cd985bcb249a46a569eea7590cc62&type=3#Zyzol-Bold");
+    -unity-text-outline-width: 3px;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-color: rgb(0, 0, 0);
+    -unity-text-align: lower-center;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mainButton.exit {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mainButton.exit:hover {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Title%20Screen/Main%20Menu%20Close%20Button_Hovered.png?fileID=2800000&guid=622a81e903d04a84daa0ea6bee0b22d5&type=3#Main Menu Close Button_Hovered");
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.settingSlider #unity-dragger:active {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Mrble_Pressed.png?fileID=2800000&guid=8cfcf81050a281f4ca5710bbe9894393&type=3#Mrble_Pressed");
+    flex-grow: 1;
+    min-width: 79px;
+    background-color: rgba(255, 255, 255, 0);
+    min-height: 66px;
+    align-items: center;
+    top: -18px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.ControlBox {
+    width: 1285px;
+    margin-bottom: 6px;
+    align-self: stretch;
+    justify-content: space-around;
+    align-items: auto;
+    align-content: auto;
+    padding-left: 35px;
+    padding-right: 28px;
+}
+
+.controlImage {
+    flex-grow: 0;
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Rounded%20Square.png?fileID=2800000&guid=90fb9d525ab6fa146bbaf9dc26be04ce&type=3#Rounded Square");
+    height: 118px;
+    width: 134px;
+    margin-left: 0;
+    margin-right: -104px;
+}
+
+.controlImageLabel {
+    font-size: 61px;
+    flex-grow: 1;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&guid=344cd985bcb249a46a569eea7590cc62&type=3#Zyzol-Bold");
+    margin-top: 19px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: space-between;
+    align-self: center;
+    align-content: stretch;
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 5px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
+.control {
+    margin-bottom: 15px;
+    padding-right: 0;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.rightArrow {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Right%20Arrow.png?fileID=2800000&guid=9f2b01c78be944b418970dfddeb011da&type=3#Right Arrow");
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    right: 0;
+}
+
+.rightArrow:active {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Right%20Arrow_Pressed.png?fileID=2800000&guid=e7e55720669eb3b4b86ae3f981600d8d&type=3#Right Arrow_Pressed");
+}
+
+.leftArrow {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Left%20Arrow.png?fileID=2800000&guid=2118a95931f16b24b8a54bec0c3a6f07&type=3#Left Arrow");
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0;
+}
+
+.leftArrow:active {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Left%20Arrow_Pressed.png?fileID=2800000&guid=7664c8288cd637d49a6aab60ef9412aa&type=3#Left Arrow_Pressed");
+}
+
+.closeButton {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button.png?fileID=2800000&guid=d79714767b2625c44b235a97b856ed3d&type=3#Close Button");
+}
+
+.closeButton:hover {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button_Hovered.png?fileID=2800000&guid=6b402236f92c6af4a92b2afddfbf6360&type=3#Close Button_Hovered");
+}
+
+.unity-button {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button:hover {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button:active {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-button:focus {
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background-color: rgba(0, 0, 0, 0);
 }
