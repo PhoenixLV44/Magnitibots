@@ -18,14 +18,6 @@ namespace Ability
             {
                 stateMachine.ChangeState(stateManager.LassoState);
             }
-            if (InputSystem.actions.FindAction("Activate Smash").IsPressed())
-            {
-                stateMachine.ChangeState(stateManager.SmashState);
-            }
-            if(InputSystem.actions.FindAction("Activate Super Jump").IsPressed())
-            {
-                stateMachine.ChangeState(stateManager.SuperJumpState);
-            }
         }
     }
 }
