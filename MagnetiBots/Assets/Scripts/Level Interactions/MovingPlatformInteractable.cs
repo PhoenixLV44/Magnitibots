@@ -6,17 +6,25 @@ namespace Interactable
 {
     public class MovingPlatform : InteractableObject
     {
+        private GameObject _platform;
         [SerializeField] private Vector3 startPosition;
         [SerializeField] private Vector3 endPosition;
         [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private bool useMainCamPos = true;
+        GameObject _cutsceneCamera;
+        GameObject _mainCamera;
 
         private void Start()
         {
+            _mainCamera = GameObject.Find("CameraPivotPoint").transform.GetChild(0).gameObject;
+            _platform = transform.GetChild(0).gameObject;
+            _cutsceneCamera = transform.GetChild(1).gameObject;
+            _cutsceneCamera.SetActive(false);
             if (startPosition == Vector3.zero)
-                startPosition = transform.position;
+                startPosition = _platform.transform.position;
             
             else
-                transform.position = startPosition;
+                _platform.transform.position = startPosition;
         }
 
         public override void ActivateObject()
@@ -31,14 +39,28 @@ namespace Interactable
 
         private IEnumerator MovePlatform(Vector3 firstPos, Vector3 secondPos)
         {
+            Player.Controller player = FindObjectOfType<Player.Controller>();
+            player.Interacting = true;
+            if (useMainCamPos)
+            {
+                _cutsceneCamera.transform.position = _mainCamera.transform.position;
+                _cutsceneCamera.transform.LookAt(_platform.transform);
+            }
+            _cutsceneCamera.SetActive(true);
+            _mainCamera.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
             float time = 0;
             while (time < 1)
             {
-                transform.position = Vector3.Slerp(firstPos, secondPos, time);
+                _platform.transform.position = Vector3.Slerp(firstPos, secondPos, time);
                 time += (Time.deltaTime *  moveSpeed);
+                time = Mathf.Clamp(time, 0, 1);
+                _cutsceneCamera.transform.LookAt(_platform.transform);
                 yield return null;
             }
-
+            yield return new WaitForSeconds(0.5f);
+            _mainCamera.SetActive(true);
+            _cutsceneCamera.SetActive(false);
             Debug.Log("Done Moving");
         }
     }

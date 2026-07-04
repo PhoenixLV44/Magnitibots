@@ -23,4 +23,10 @@ public class FallState : AirState
             stateMachine.ChangeState(stateManager.HoverState);
         }
     }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        player.Movement.Move(player.Movement.Submitted[0]);
+    }
 }

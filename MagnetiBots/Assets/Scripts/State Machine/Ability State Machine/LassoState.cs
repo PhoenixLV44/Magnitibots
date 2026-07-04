@@ -10,6 +10,7 @@ namespace Ability
         {
             base.EnterState();
             //Debug.Log("Entered Lasso State");
+            player.TargetCursor.CurrentAbility = ability;
         }
 
         public override void ExitState()

@@ -73,6 +73,7 @@ namespace Merbles
             Sentience = true;
             tag = "Merble";
             _agent.enabled = true;
+            collectParticles.SetActive(true);
         }
         public void SetFollowType(FollowTypes type)
         {
@@ -125,7 +126,7 @@ namespace Merbles
         }
         IEnumerator Charge(Vector3 target)
         {
-            Debug.Log(transform.name + "Charging");
+            //Debug.Log(transform.name + "Charging");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
