@@ -164,11 +164,16 @@ namespace Ability.Object
                 GameObject hitObject = hit.collider.gameObject;
                 if (_currentAbility == GetComponent<Lasso>() && GetComponent<Lasso>().LoopedObject)
                 {
-                    if (hitObject == GetComponent<Lasso>().LoopedObject)
+                    PuzzleCube hitParent = hitObject.transform.parent.GetComponent<PuzzleCube>();
+                    
+                    Lasso lasso = GetComponent<Lasso>();
+                    
+                    if (hitObject == lasso.LoopedObject || hitParent)
                     {
                         Debug.Log("Next hit");
                         break;
                     }
+                    
                 }
                 if (hit.point.y > highestPoint.y)
                 {

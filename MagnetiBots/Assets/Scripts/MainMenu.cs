@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -122,5 +124,13 @@ public class MainMenu : MonoBehaviour
         _mainContainer.BringToFront();
         _controlsContainer.visible=false;
         _controlsCarousel.UnReady();
+    }
+
+    private void Update()
+    {
+        if (InputSystem.actions.FindAction("Unlock Abilities").IsPressed())
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 }
