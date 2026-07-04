@@ -13,7 +13,7 @@ public class MovementState : GroundedState
         base.EnterState();
         currentAbility = abilityManager.StateMachine.CurrentState.Ability;
         //animator.Play("Walk");
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
     }
     public override void ExitState()
     {

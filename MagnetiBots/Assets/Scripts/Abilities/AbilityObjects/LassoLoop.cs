@@ -14,7 +14,7 @@ namespace Ability.Object
         private BoxCollider _boxCollider;
         public BoxCollider BoxCollider => _boxCollider;
         
-        private IEnumerator _moveFowardCoroutine;
+        private IEnumerator _moveForwardCoroutine;
 
         private void Start()
         {
@@ -25,10 +25,10 @@ namespace Ability.Object
 
         public void StartMovement(Vector3 startPos,Vector3 target, float speed = 10)
         {
-            _moveFowardCoroutine = MoveFoward(startPos, target, speed);
-            StartCoroutine(_moveFowardCoroutine);
+            _moveForwardCoroutine = MoveForward(startPos, target, speed);
+            StartCoroutine(_moveForwardCoroutine);
         }
-        private IEnumerator MoveFoward(Vector3 startPos,Vector3 target, float speed = 10)
+        private IEnumerator MoveForward(Vector3 startPos,Vector3 target, float speed = 10)
         {
             _lassoAbility.PullMerblesBool = false;
             //Debug.Log("Start Position: " + startPos + " | Target Position: " + target);
@@ -61,37 +61,15 @@ namespace Ability.Object
 
             if (!_lassoAbility.Controller.LassoHooked)
             {
-                _lassoAbility.PullMerblesBool = true;
+                //_lassoAbility.PullMerblesBool = true;
                 //StartCoroutine(ReturnToStartPosition(startPos, speed));
-                _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
+                StartCoroutine(_lassoAbility.UnhookLasso());
             }
-        }
-
-        public IEnumerator ReturnToStartPosition(Vector3 startPos, float speed)
-        {
-            yield return new WaitUntil(() => _lassoAbility.PullMerblesBool);
-            _lassoAbility.TargetCursor.DeactivateCursor();
-            StopCoroutine(_moveFowardCoroutine);
-            _lassoAbility.Controller.Animator.Play("Pull");
-            yield return new WaitForSeconds(_lassoAbility.Controller.AnimController.PullAnimLength / 2);
-            while (Vector3.Distance(transform.position, startPos) > 0.1f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, startPos, speed * Time.deltaTime);
-                yield return null;
-            }
-            _lassoAbility.MerbleBoss.FireMerbles();
-            _lassoAbility.PullMerblesBool = false;
-            _lassoAbility.StopCoroutine(_lassoAbility.merbleLineCoroutine);
-            if (!_lassoAbility.Controller.LassoHooked)
-            {
-                
-            }
-            //gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            StopCoroutine(_moveFowardCoroutine);
+            StopCoroutine(_moveForwardCoroutine);
             if (!_lassoAbility.Controller.LassoHooked)
             {
                 if (other.CompareTag("LassoTarget"))

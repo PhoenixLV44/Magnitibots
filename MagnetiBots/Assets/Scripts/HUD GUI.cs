@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class HUDGUI : MonoBehaviour
 {
@@ -93,6 +94,7 @@ public class HUDGUI : MonoBehaviour
     {
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0.01f;
         Debug.Log("pause");
         Globals.Managers.paused = true;
@@ -104,6 +106,7 @@ public class HUDGUI : MonoBehaviour
         unlockContainer.visible = false;
         unlockReturn.visible = false;
         blur.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         foreach (VisualElement ve in unlockContainer.Children().ToArray())
         {
             ve.visible = false;

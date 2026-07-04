@@ -5,7 +5,6 @@ using System.Linq;
 using Merbles;
 using UnityEngine;
 
-
 namespace Ability
 {
     public class Lasso : Parent
@@ -147,9 +146,11 @@ namespace Ability
             //targetCursor.DeactivateCursor();
             /*Cursor.lockState = CursorLockMode.None;
 
-            _loopScript.BoxCollider.enabled = false;
             StartCoroutine(_loopScript.ReturnToStartPosition(_returnPoint.transform.position, 10));
+            */
             _pullMerblesBool = true;
+            targetCursor.CanMoveCursor = false;
+            _loopScript.BoxCollider.enabled = false;
             if (_lassoLoopObject.transform.childCount > 0)
             {
                 foreach (Transform child in _lassoLoopObject.transform)
@@ -172,25 +173,32 @@ namespace Ability
                         {
                             PullLever();
                         }
+
                         loopedObject.transform.parent = null;
                         break;
                     }
                 }
-            }*/
-            while (!targetCursor.AtPlayer)
-            {
-                
             }
+            controller.Animator.Play("Pull");
+            yield return new WaitForSeconds(controller.AnimController.PullAnimLength / 2);
+            while (Vector3.Distance(_lassoLoopObject.transform.position, controller.ReturnPoint.transform.position) > 0.1f)
+            {
+                _lassoLoopObject.transform.position = Vector3.MoveTowards(_lassoLoopObject.transform.position,controller.ReturnPoint.transform.position, 10 * Time.deltaTime);
+                targetCursor.SetRayCastPosition(_lassoLoopObject.transform.position);
+                yield return null;
+            }
+            //StartCoroutine(targetCursor.ReturnToPlayer(20));
 
+            //yield return  new WaitUntil(() => !_pullMerblesBool);
             rangeIndicator.DisableRangeIndicator();
-
-            yield return  new WaitUntil(() => !_pullMerblesBool);
             Debug.Log("Please Work");
             _lassoLoopObject.transform.parent = transform;
             _lassoLoopObject.SetActive(false);
             controller.LassoHooked = false;
             StopCoroutine(merbleLineCoroutine);
             merbleBoss.FireMerbles();
+            _pullMerblesBool = false;
+            targetCursor.CanMoveCursor = true;
         }
 
         protected override void InitializeAbility()

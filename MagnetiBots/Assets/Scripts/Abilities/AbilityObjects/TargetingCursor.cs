@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,34 +25,42 @@ namespace Ability.Object
         public Parent CurrentAbility { get => _currentAbility; set => _currentAbility = value; }
         private Transform _returnPoint;
 
-        private bool _atPlayer;
-        public bool  AtPlayer { get => _atPlayer; }
+        private bool _canMoveCursor = true;
+        public bool  CanMoveCursor {get => _canMoveCursor; set => _canMoveCursor = value; }
+        
+        Player.Controller _player;
+        
 
         private void Start()
         {
-            _cursor = transform.Find("Target Cursor").gameObject;
-            _raycastPoint = transform.Find("CursorRaycast").gameObject;
+            _raycastPoint = transform.GetChild(1).gameObject;
+            _cursor = _raycastPoint.transform.GetChild(0).gameObject;
             _rangeIndicator = GetComponent<RangeIndicator>();
             _groundLayers = GetComponent<Player.Controller>().groundLayers;
 
             //_cursor.SetActive(false);
             
-            _returnPoint = transform.Find("ReturnPoint");
+            _returnPoint = GetComponent<Player.Controller>().ReturnPoint;
+            _raycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 26, transform.position.z) + GetComponent<Player.Movement>().Model.transform.forward;
         }
 
         private void Update()
         {
-            if (!_objectToMove.activeSelf)
+            if (_objectToMove && !_objectToMove.activeSelf)
             {
                 _objectToMove = null;
             }
-            if (!_objectToMove)
+
+            if (_canMoveCursor && !Globals.Managers.paused)
             {
-                MoveCursor();
-            }
-            else
-            {
-                MoveObjectToCursor();
+                if (!_objectToMove)
+                {
+                    MoveCursor();
+                }
+                else if(_objectToMove)
+                {
+                    MoveObjectToCursor();
+                }
             }
         }
 
@@ -82,7 +91,7 @@ namespace Ability.Object
             return cursorMovement;
         }
 
-        public Vector3 MoveCursor()
+        private Vector3 MoveCursor()
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             Vector3 cursorMovement = GetCursorDelta();
@@ -94,6 +103,8 @@ namespace Ability.Object
             
             MoveCursorInRange();
             
+            _cursor.transform.position = HandleRaycast();
+            
             return _cursor.transform.position;
         }
         
@@ -101,54 +112,106 @@ namespace Ability.Object
         {
             Vector3 playerPosition = transform.position;
             
-            Vector3 cursorPosition = _cursor.transform.position;
+            Vector3 cursorPosition = _raycastPoint.transform.position;
             playerPosition.y = cursorPosition.y;
             
             float distance = Vector3.Distance(playerPosition, cursorPosition);
 
-            float range = _rangeIndicator.gameObject.activeSelf ? _rangeIndicator.CurrentRange : 10;
+            float range = _rangeIndicator.gameObject.activeSelf ? _rangeIndicator.CurrentRange : 5f;
             //Debug.Log("range: " + range);
             if (range == 0)
             {
-                range = 15;
+                range = 5f;
             }
             if (distance > range)
             {
-                _cursor.transform.position =
-                    Vector3.MoveTowards(cursorPosition, playerPosition, distance - range);
+                Vector3 targetPos = transform.position;
+                targetPos.y = transform.position.y + 50;
+                _raycastPoint.transform.position = Vector3.MoveTowards(cursorPosition, targetPos, distance - range);
+                _cursor.transform.position = HandleRaycast();
             }
         }
 
-        public void MoveObjectToCursor()
+        private void MoveObjectToCursor()
         {
             Vector3 targetPosition = MoveCursor();
+            float height = transform.position.y;
             //Debug.Log("Cursor Target Position: " + targetPosition);
+            if (_cursor.transform.position.y < transform.position.y)
+            {
+                height =  _currentAbility == GetComponent<Lasso>()? transform.position.y + 1.5f: transform.position.y + 6;
+            }
+            else
+            {
+                height =  _currentAbility == GetComponent<Lasso>()? _cursor.transform.position.y + 1.5f: _cursor.transform.position.y + 6;
+            }
+            targetPosition.y = height;
             Vector3 currentPosition = _objectToMove.transform.position;
-            targetPosition.y =  _currentAbility == GetComponent<Lasso>()? _cursor.transform.parent.position.y + 1: _cursor.transform.parent.position.y + 6;
             float distance = Vector3.Distance(targetPosition, currentPosition);
             
             _objectToMove.transform.position = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
         }
 
-        public void ReturnToPlayer()
+        public IEnumerator ReturnToPlayer(float speed = 10)
         {
+            _canMoveCursor = false;
+            _cursor.SetActive(false);
+            Vector3 targetPos = _returnPoint.transform.position;
             
+            Vector3 currentRaycastPos = _raycastPoint.transform.position;
+            targetPos.y = currentRaycastPos.y;
+            while (Vector3.Distance(currentRaycastPos, targetPos) > 0.1f)
+            {
+                _raycastPoint.transform.position = Vector3.MoveTowards(_raycastPoint.transform.position, _returnPoint.position, speed * Time.deltaTime);
+                currentRaycastPos = new Vector2(_raycastPoint.transform.position.x, _raycastPoint.transform.position.z);
+                yield return null;
+            }
+            _cursor.transform.position = HandleRaycast();
+            _cursor.SetActive(true);
+            _canMoveCursor = true;
         }
 
         private Vector3 HandleRaycast()
         {
             RaycastHit[] hits;
+            Vector3 returnPos;
             hits = Physics.RaycastAll(_raycastPoint.transform.position, Vector3.down, 250f, _groundLayers);
+            Vector3 highestPoint = hits[0].point;
+            foreach (RaycastHit hit in hits)
+            {
+                GameObject hitObject = hit.collider.gameObject;
+                if (hitObject.CompareTag("LassoTarget"))
+                {
+                    if (hitObject.transform.parent.name == "Lasso Loop")
+                    {
+                        Debug.Log("Next hit");
+                        break;
+                    }
+                }
+                if (hit.point.y > highestPoint.y)
+                {
+                    highestPoint = hit.point;
+                }
+            }
             if (hits.Length > 0)
             {
-                return hits[0].point;
+                returnPos = highestPoint;
+                returnPos.y += 0.1f;
+                return returnPos;
             }
             else
             {
                 Debug.LogWarning("No Raycast Hit");
-                return Vector3.zero;
+                return transform.position;
             }
         }
-        
+        public void SetRayCastPosition(Vector3 position)
+        {
+            float originalY = position.y;
+            position.y = _raycastPoint.transform.position.y;
+            _raycastPoint.transform.position = position;
+            position.y = originalY - 1;
+            _cursor.transform.position = position;
+        }
     }
 }

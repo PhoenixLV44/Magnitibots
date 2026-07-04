@@ -54,6 +54,8 @@ namespace Player
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
+        
+        
         [SerializeField] private bool canUseLasso;
         public bool CanUseLasso { get => canUseLasso; set => canUseLasso = value; }
         
@@ -62,6 +64,8 @@ namespace Player
         [SerializeField] private bool canUseSuperJump = false;
         public bool CanUseSuperJump { get => canUseSuperJump; set => canUseSuperJump = value; }
         
+        [SerializeField] private Transform returnPoint;
+        public  Transform ReturnPoint =>  returnPoint;
         [SerializeField] private GameObject chargingParticles;
         public GameObject ChargingParticles => chargingParticles;
 
@@ -123,7 +127,7 @@ namespace Player
             
             shadow = transform.GetChild(transform.childCount - 1).gameObject;
             
-            //_targetCursor.Cursor.transform.position = new Vector3(transform.position.x, transform.position.y -1, transform.position.z) + _movement.Model.transform.forward;
+            //_targetCursor.RaycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 25, transform.position.z) + _movement.Model.transform.forward;
         }
 
         // Update is called once per frame
@@ -138,7 +142,7 @@ namespace Player
         }
         void FixedUpdate()
         {
-            if (_movement.CharacterController)
+            if (_movement.CharacterController && !Globals.Managers.paused)
             {
                 _movement.HandleMovement();
             }
