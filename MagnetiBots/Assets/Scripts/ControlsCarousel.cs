@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 public class ControlsCarousel : MonoBehaviour
@@ -14,7 +16,10 @@ public class ControlsCarousel : MonoBehaviour
     {
         VisualElement dangit = container.Children().ToArray()[0];
         Debug.Log(dangit.name);
-        controlsCarousel = dangit.Children().ToArray().Take(5).ToArray();
+        System.Exception except;
+        List<VisualElement>carouselList = dangit.Children().ToArray().Take(6).ToList();
+        carouselList.RemoveAt(0);
+        controlsCarousel = carouselList.ToArray();
         Debug.Log(controlsCarousel.Length);
         buttonLeft = container.Q("ControlsButtonLeft") as Button;
         buttonRight = container.Q("ControlsButtonRight") as Button;

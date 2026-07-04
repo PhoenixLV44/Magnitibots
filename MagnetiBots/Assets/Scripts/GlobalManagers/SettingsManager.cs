@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
@@ -47,6 +49,11 @@ public class SettingsManager : MonoBehaviour
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
     Slider pause_MouseSensitivitySlider;
+    #endregion
+
+    #region Transitions
+    UIDocument sceneTransition;
+
     #endregion
 
     #endregion
@@ -103,6 +110,8 @@ public class SettingsManager : MonoBehaviour
 
         _pauseMenu = GameObject.Find("PauseMenu");
 
+        sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
+        sceneTransition.rootVisualElement.visible = false;
     }
     private void Update()
     {
@@ -298,5 +307,28 @@ public class SettingsManager : MonoBehaviour
     public void UnlockPopup(string ability)
     {
         _hud.GetComponent<HUDGUI>().UnlockPopup(ability);
+    }
+    public void TransitionScene()
+    {
+        StartCoroutine(Fader(true));
+    }
+    public void FadeAway()
+    {
+        StartCoroutine(Fader(false));
+    }
+    private IEnumerator Fader(bool needLoad)
+    {
+        sceneTransition.rootVisualElement.visible = true;
+        sceneTransition.rootVisualElement.schedule.Execute(() => sceneTransition.rootVisualElement.Q("Blackout").AddToClassList("transitionOn"));
+        yield return new WaitForSecondsRealtime(1);
+        Debug.Log("loading...");
+        if (needLoad)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        Debug.Log("ready!");
+        sceneTransition.rootVisualElement.schedule.Execute(() => sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn"));
+        yield return new WaitForSecondsRealtime(1);
+        sceneTransition.rootVisualElement.visible = false;
     }
 }

@@ -54,6 +54,7 @@ namespace Player
 
         public void Respawn()
         {
+            Globals.Managers.Settings.FadeAway();
             Debug.Log("Respawn");
             _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
