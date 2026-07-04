@@ -7,10 +7,14 @@ namespace Interactable
     public class MovingPlatform : InteractableObject
     {
         private GameObject _platform;
+        
         [SerializeField] private Vector3 startPosition;
-        [SerializeField] private Vector3 endPosition;
+        public Vector3 StartPosition => startPosition;
+        [SerializeField]private Vector3 endPosition;
+        public Vector3 EndPosition => endPosition;
+        
         [SerializeField] private float moveSpeed = 5;
-        [SerializeField] private bool useMainCamPos = true;
+        
         GameObject _cutsceneCamera;
         GameObject _mainCamera;
 
@@ -21,10 +25,10 @@ namespace Interactable
             _cutsceneCamera = transform.GetChild(1).gameObject;
             _cutsceneCamera.SetActive(false);
             if (startPosition == Vector3.zero)
-                startPosition = _platform.transform.position;
+                startPosition = _platform.transform.localPosition;
             
             else
-                _platform.transform.position = startPosition;
+                _platform.transform.localPosition = startPosition;
         }
 
         public override void ActivateObject()
@@ -41,27 +45,27 @@ namespace Interactable
         {
             Player.Controller player = FindObjectOfType<Player.Controller>();
             player.Interacting = true;
-            if (useMainCamPos)
+            if (_cutsceneCamera)
             {
-                _cutsceneCamera.transform.position = _mainCamera.transform.position;
                 _cutsceneCamera.transform.LookAt(_platform.transform);
+                _cutsceneCamera.SetActive(true);
+                _mainCamera.SetActive(false);
             }
-            _cutsceneCamera.SetActive(true);
-            _mainCamera.SetActive(false);
             yield return new WaitForSeconds(0.5f);
             float time = 0;
             while (time < 1)
             {
-                _platform.transform.position = Vector3.Slerp(firstPos, secondPos, time);
+                _platform.transform.localPosition = Vector3.Slerp(firstPos, secondPos, time);
                 time += (Time.deltaTime *  moveSpeed);
                 time = Mathf.Clamp(time, 0, 1);
-                _cutsceneCamera.transform.LookAt(_platform.transform);
                 yield return null;
             }
+            _platform.transform.localPosition = secondPos;
             yield return new WaitForSeconds(0.5f);
             _mainCamera.SetActive(true);
             _cutsceneCamera.SetActive(false);
-            Debug.Log("Done Moving");
+            player.Interacting = false;
+            //Debug.Log("Done Moving");
         }
     }
 }
