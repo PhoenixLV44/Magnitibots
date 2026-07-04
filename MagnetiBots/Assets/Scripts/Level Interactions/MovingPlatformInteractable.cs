@@ -10,12 +10,13 @@ namespace Interactable
         [SerializeField] private Vector3 startPosition;
         [SerializeField] private Vector3 endPosition;
         [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private bool useMainCamPos = true;
         GameObject _cutsceneCamera;
         GameObject _mainCamera;
 
         private void Start()
         {
-            _mainCamera = GameObject.Find("CameraPivotPoint");
+            _mainCamera = GameObject.Find("CameraPivotPoint").transform.GetChild(0).gameObject;
             _platform = transform.GetChild(0).gameObject;
             _cutsceneCamera = transform.GetChild(1).gameObject;
             _cutsceneCamera.SetActive(false);
@@ -40,6 +41,11 @@ namespace Interactable
         {
             Player.Controller player = FindObjectOfType<Player.Controller>();
             player.Interacting = true;
+            if (useMainCamPos)
+            {
+                _cutsceneCamera.transform.position = _mainCamera.transform.position;
+                _cutsceneCamera.transform.LookAt(_platform.transform);
+            }
             _cutsceneCamera.SetActive(true);
             _mainCamera.SetActive(false);
             yield return new WaitForSeconds(0.5f);
@@ -49,6 +55,7 @@ namespace Interactable
                 _platform.transform.position = Vector3.Slerp(firstPos, secondPos, time);
                 time += (Time.deltaTime *  moveSpeed);
                 time = Mathf.Clamp(time, 0, 1);
+                _cutsceneCamera.transform.LookAt(_platform.transform);
                 yield return null;
             }
             yield return new WaitForSeconds(0.5f);
