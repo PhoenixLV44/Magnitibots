@@ -18,7 +18,7 @@ public class PuzzleCube : MonoBehaviour
     {
         if (_rb != null)
         {
-            _rb.useGravity = false;
+            ChangeGravity(false);
             _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY |RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
     }
@@ -27,8 +27,19 @@ public class PuzzleCube : MonoBehaviour
     {
         if (_rb != null)
         {
-            _rb.useGravity = true;
             _rb.constraints = RigidbodyConstraints.None;
+        }
+    }
+
+    public void ChangeGravity(bool value)
+    {
+        if (_rb)
+        {
+            _rb.useGravity = value;
+            if (value)
+            {
+                _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            }
         }
     }
     public void ResetTransform()

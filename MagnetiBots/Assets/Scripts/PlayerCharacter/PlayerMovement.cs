@@ -125,7 +125,16 @@ namespace Player
             {
                 Vector3 lookTarget = _controller.TargetCursor.Cursor.transform.position;
                 lookTarget.y = transform.position.y;
-                _model.LookAt(lookTarget);
+                if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                {
+                    _model.LookAt(lookTarget);
+                }
+                else
+                {
+                    lookTarget.x *= 2;
+                    lookTarget.z *= 2;
+                    _model.LookAt(lookTarget);
+                }
             }
             else
             {

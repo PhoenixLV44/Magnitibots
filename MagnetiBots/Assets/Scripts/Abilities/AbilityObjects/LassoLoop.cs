@@ -30,10 +30,8 @@ namespace Ability.Object
         }
         private IEnumerator MoveForward(Vector3 startPos,Vector3 target, float speed = 10)
         {
-            _lassoAbility.PullMerblesBool = false;
             //Debug.Log("Start Position: " + startPos + " | Target Position: " + target);
             transform.position = startPos;
-            _lassoAbility.LoopBeingThrown = true;
             while (Vector3.Distance(transform.position, target) > 0.1f)
             {
                 RaycastHit hit;
@@ -50,6 +48,7 @@ namespace Ability.Object
                         pos.y = _lassoAbility.transform.position.y;
                         transform.position = pos;
                         _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
+                        _lassoAbility.LoopedObject = hit.collider.gameObject;
                         //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                         yield break;
                     }
@@ -82,7 +81,7 @@ namespace Ability.Object
                     transform.position = hookedObject.transform.position;
                     Vector3 defaultScale = transform.localScale.y == 1? hookedObject.transform.localScale: new Vector3(hookedObject.transform.localScale.x, hookedObject.transform.localScale.y * 2, hookedObject.transform.localScale.z);
 
-                    _lassoAbility.TargetCursor.ChangeCursorPosition(transform.position);
+                    _lassoAbility.TargetCursor.SetRayCastPosition(transform.position);
                     hookedObject.transform.parent = transform;
 
                     hookedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -94,10 +93,13 @@ namespace Ability.Object
                         puzzleCube.FreezeConstraints();
                         //puzzleCube.ResetTransform();
                     }
-                    _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
+
+                    float rangeMult = _lassoAbility.MerbleBoss.MasterList.Count >= _lassoAbility.MaxPowerLevel ? _lassoAbility.MaxPowerLevel : _lassoAbility.MerbleBoss.MasterList.Count;
+                    _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * rangeMult) * 2);
                     //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                     _boxCollider.enabled = true;
                     //StartCoroutine(_lassoAbility.MoveLassoTarget());
+                    _lassoAbility.LoopedObject = other.gameObject;
                 }
                 else if (other.CompareTag("Lever"))
                 {
@@ -109,7 +111,8 @@ namespace Ability.Object
                 }
                 else
                 {
-                    _lassoAbility.PullMerblesBool = true;
+                    StopCoroutine(_moveForwardCoroutine);
+                    StartCoroutine(_lassoAbility.UnhookLasso());
                 }
             }
             else

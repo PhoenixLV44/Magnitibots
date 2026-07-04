@@ -151,25 +151,7 @@ namespace Ability.Object
             
             _objectToMove.transform.position = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
         }
-
-        public IEnumerator ReturnToPlayer(float speed = 10)
-        {
-            _canMoveCursor = false;
-            _cursor.SetActive(false);
-            Vector3 targetPos = _returnPoint.transform.position;
-            
-            Vector3 currentRaycastPos = _raycastPoint.transform.position;
-            targetPos.y = currentRaycastPos.y;
-            while (Vector3.Distance(currentRaycastPos, targetPos) > 0.1f)
-            {
-                _raycastPoint.transform.position = Vector3.MoveTowards(_raycastPoint.transform.position, _returnPoint.position, speed * Time.deltaTime);
-                currentRaycastPos = new Vector2(_raycastPoint.transform.position.x, _raycastPoint.transform.position.z);
-                yield return null;
-            }
-            _cursor.transform.position = HandleRaycast();
-            _cursor.SetActive(true);
-            _canMoveCursor = true;
-        }
+        
 
         private Vector3 HandleRaycast()
         {
@@ -180,9 +162,9 @@ namespace Ability.Object
             foreach (RaycastHit hit in hits)
             {
                 GameObject hitObject = hit.collider.gameObject;
-                if (hitObject.CompareTag("LassoTarget"))
+                if (_currentAbility == GetComponent<Lasso>() && GetComponent<Lasso>().LoopedObject)
                 {
-                    if (hitObject.transform.parent.name == "Lasso Loop")
+                    if (hitObject == GetComponent<Lasso>().LoopedObject)
                     {
                         Debug.Log("Next hit");
                         break;

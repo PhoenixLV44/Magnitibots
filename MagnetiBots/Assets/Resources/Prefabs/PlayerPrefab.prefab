@@ -628,7 +628,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -775,10 +775,10 @@ MonoBehaviour:
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}
   merbleFollowType: 0
   _lassoHooked: 0
-  returnPoint: {fileID: 5245915394468783996}
   canUseLasso: 0
   canUseSmash: 0
   canUseSuperJump: 0
+  returnPoint: {fileID: 5245915394468783996}
   chargingParticles: {fileID: 5113423678552748251}
   superJumpPoint: {fileID: 4496413624167517707}
   shadow: {fileID: 0}
