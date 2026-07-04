@@ -68,6 +68,8 @@ namespace Player
         public  Transform ReturnPoint =>  returnPoint;
         [SerializeField] private GameObject chargingParticles;
         public GameObject ChargingParticles => chargingParticles;
+        [SerializeField] private GameObject hoverParticles;
+        public  GameObject HoverParticles => hoverParticles;
 
         [SerializeField] private SuperJumpPoint superJumpPoint;
         

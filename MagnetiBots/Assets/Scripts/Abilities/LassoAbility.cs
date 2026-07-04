@@ -102,8 +102,8 @@ namespace Ability
                 _lassoLoop.transform.parent = null;
                 _lassoLoop.SetActive(true);
                 _loopScript.StartMovement(_returnPoint.position, target);
-                StartCoroutine(merbleLineCoroutine);
                 controller.Animator.Play("Throw");
+                StartCoroutine(merbleLineCoroutine);
             }
 
             //StopCoroutine(Charge());
@@ -207,8 +207,9 @@ namespace Ability
 
         private IEnumerator MerbleLine()
         {
-            List<Merbles.Merble> chargedMerbleList;
-            List<Merbles.Merble> merbleList;
+            List<Merble> chargedMerbleList;
+            List<Merble> unchargedMerbleList;
+            List<Merble> masterList;
             Vector2 distanceBetweenMerblesMinMax = new Vector2(1, 2);
             StopCharging();
             float speed = targetCursor.ObjectSpeed + 0.5f;
@@ -218,15 +219,15 @@ namespace Ability
                 _lassoLoop.transform.LookAt(_returnPoint);
                 _lassoLoop.transform.rotation = Quaternion.Euler(0, _lassoLoop.transform.eulerAngles.y, 0);
                 chargedMerbleList = merbleBoss.ChargedMerbleList;
-                merbleList = merbleBoss.merbleList;
+                unchargedMerbleList = merbleBoss.merbleList;
+                
 
-
-                merbleList.Sort((a, b) =>
+                unchargedMerbleList.Sort((a, b) =>
                     Vector3.Distance(a.transform.position, transform.position)
                         .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
 
                 float distance = Vector3.Distance(_returnPoint.position, _lassoLoop.transform.position);
-                merbleBoss.merbleList = merbleList;
+                merbleBoss.merbleList = unchargedMerbleList;
 
                 float chargedCount = chargedMerbleList.Count;
 
@@ -242,21 +243,21 @@ namespace Ability
                     int i = chargedMerbleList.Count;
                     //yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count > i);
                     chargedMerbleList = merbleBoss.ChargedMerbleList;
-                    merbleList = merbleBoss.merbleList;
+                    unchargedMerbleList = merbleBoss.merbleList;
                     /*if (!chargedMerbleList.Contains(merbleList[0]))
                     {
                     }*/
                 }
                 else if (distance / chargedCount < 1.5f)
                 {
-                    if (!merbleList.Contains(chargedMerbleList.Last()))
+                    if (!unchargedMerbleList.Contains(chargedMerbleList.Last()))
                     {
                         chargedMerbleList.Last().StopCharging();
 
                         int i = chargedMerbleList.Count;
                         //yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count < i);
                         chargedMerbleList = merbleBoss.ChargedMerbleList;
-                        merbleList = merbleBoss.merbleList;
+                        unchargedMerbleList = merbleBoss.merbleList;
                     }
                 }
 

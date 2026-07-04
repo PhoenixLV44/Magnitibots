@@ -73,6 +73,7 @@ namespace Merbles
             Sentience = true;
             tag = "Merble";
             _agent.enabled = true;
+            collectParticles.SetActive(true);
         }
         public void SetFollowType(FollowTypes type)
         {
