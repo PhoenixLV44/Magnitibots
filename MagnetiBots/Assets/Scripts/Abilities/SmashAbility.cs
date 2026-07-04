@@ -92,8 +92,7 @@ namespace Ability
             _smashBall.GetComponent<SmashBall>().SmashAbility = this;
             _smashBall.name = "SmashBall";
             _smashBallRb = _smashBall.GetComponent<Rigidbody>();
-
-            moveCursorRoutine = MoveCursor();
+            
             _returnPoint = GameObject.Find("ReturnPoint").transform;
             DeactivateBall();
         }
@@ -113,7 +112,8 @@ namespace Ability
             _smashBall.transform.localScale = smashBallScript.BaseScale;
 
             Vector3 cursorPos = transform.position + GameObject.Find("PlayerModel").transform.forward;
-            targetCursor.ActivateCursor(cursorPos);
+            targetCursor.ChangeCursorPosition(cursorPos);
+            targetCursor.ObjectToMove = _smashBall;
             smashBallScript.TriggerCollider.enabled = false;
             _smashBall.SetActive(true);
 
@@ -161,16 +161,6 @@ namespace Ability
             foreach (var b in MerbleBoss.ChargedMerbleList)
             {
                 //StartCoroutine(b.UseGravity());
-            }
-        }
-        private IEnumerator MoveCursor()
-        {
-            while (true)
-            {
-                //Debug.Log("Move Cursor");
-                //targetCursor.MoveCursor();
-                targetCursor.MoveObjectToCursor(_smashBall, this);
-                yield return null;
             }
         }
         private IEnumerator MoveMerbles()

@@ -10,6 +10,7 @@ namespace Ability
         {
             base.EnterState();
             Debug.Log("No Ability State");
+            player.TargetCursor.CurrentAbility = ability;
         }
         public override void TransitionChecks()
         {

@@ -14,7 +14,7 @@ namespace Ability.Object
         private BoxCollider _boxCollider;
         public BoxCollider BoxCollider => _boxCollider;
         
-        private IEnumerator _moveFowardCoroutine;
+        private IEnumerator _moveForwardCoroutine;
 
         private void Start()
         {
@@ -25,15 +25,13 @@ namespace Ability.Object
 
         public void StartMovement(Vector3 startPos,Vector3 target, float speed = 10)
         {
-            StartCoroutine(MoveFoward(startPos, target, speed));
+            _moveForwardCoroutine = MoveForward(startPos, target, speed);
+            StartCoroutine(_moveForwardCoroutine);
         }
-        private IEnumerator MoveFoward(Vector3 startPos,Vector3 target, float speed = 10)
+        private IEnumerator MoveForward(Vector3 startPos,Vector3 target, float speed = 10)
         {
-            _moveFowardCoroutine =  MoveFoward(startPos, target, speed);
-            _lassoAbility.PullMerblesBool = false;
             //Debug.Log("Start Position: " + startPos + " | Target Position: " + target);
             transform.position = startPos;
-            _lassoAbility.LoopBeingThrown = true;
             while (Vector3.Distance(transform.position, target) > 0.1f)
             {
                 RaycastHit hit;
@@ -50,6 +48,7 @@ namespace Ability.Object
                         pos.y = _lassoAbility.transform.position.y;
                         transform.position = pos;
                         _lassoAbility.Controller.RangeIndicator.DisableRangeIndicator();
+                        _lassoAbility.LoopedObject = hit.collider.gameObject;
                         //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                         yield break;
                     }
@@ -61,37 +60,15 @@ namespace Ability.Object
 
             if (!_lassoAbility.Controller.LassoHooked)
             {
-                _lassoAbility.PullMerblesBool = true;
+                //_lassoAbility.PullMerblesBool = true;
                 //StartCoroutine(ReturnToStartPosition(startPos, speed));
-                _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
+                StartCoroutine(_lassoAbility.UnhookLasso());
             }
-        }
-
-        public IEnumerator ReturnToStartPosition(Vector3 startPos, float speed)
-        {
-            yield return new WaitUntil(() => _lassoAbility.PullMerblesBool);
-            _lassoAbility.TargetCursor.DeactivateCursor();
-            StopCoroutine(_moveFowardCoroutine);
-            _lassoAbility.Controller.Animator.Play("Pull");
-            yield return new WaitForSeconds(_lassoAbility.Controller.AnimController.PullAnimLength / 2);
-            while (Vector3.Distance(transform.position, startPos) > 0.1f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, startPos, speed * Time.deltaTime);
-                yield return null;
-            }
-            _lassoAbility.MerbleBoss.FireMerbles();
-            _lassoAbility.PullMerblesBool = false;
-            _lassoAbility.StopCoroutine(_lassoAbility.merbleLineCoroutine);
-            if (!_lassoAbility.Controller.LassoHooked)
-            {
-                
-            }
-            //gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            StopCoroutine(_moveFowardCoroutine);
+            StopCoroutine(_moveForwardCoroutine);
             if (!_lassoAbility.Controller.LassoHooked)
             {
                 if (other.CompareTag("LassoTarget"))
@@ -104,7 +81,7 @@ namespace Ability.Object
                     transform.position = hookedObject.transform.position;
                     Vector3 defaultScale = transform.localScale.y == 1? hookedObject.transform.localScale: new Vector3(hookedObject.transform.localScale.x, hookedObject.transform.localScale.y * 2, hookedObject.transform.localScale.z);
 
-                    _lassoAbility.TargetCursor.ActivateCursor(transform.position);
+                    _lassoAbility.TargetCursor.SetRayCastPosition(transform.position);
                     hookedObject.transform.parent = transform;
 
                     hookedObject.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -116,10 +93,13 @@ namespace Ability.Object
                         puzzleCube.FreezeConstraints();
                         //puzzleCube.ResetTransform();
                     }
-                    _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * _lassoAbility.MaxPowerLevel) * 2);
+
+                    float rangeMult = _lassoAbility.MerbleBoss.MasterList.Count >= _lassoAbility.MaxPowerLevel ? _lassoAbility.MaxPowerLevel : _lassoAbility.MerbleBoss.MasterList.Count;
+                    _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * rangeMult) * 2);
                     //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
                     _boxCollider.enabled = true;
                     //StartCoroutine(_lassoAbility.MoveLassoTarget());
+                    _lassoAbility.LoopedObject = other.gameObject;
                 }
                 else if (other.CompareTag("Lever"))
                 {
@@ -131,7 +111,8 @@ namespace Ability.Object
                 }
                 else
                 {
-                    _lassoAbility.PullMerblesBool = true;
+                    StopCoroutine(_moveForwardCoroutine);
+                    StartCoroutine(_lassoAbility.UnhookLasso());
                 }
             }
             else

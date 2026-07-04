@@ -16,7 +16,10 @@ namespace Merbles
                 hitMerble.SetPool(boss.Merbles);
                 hitMerble.SetFollowType(boss.MerbleFollowType);
                 hitMerble.GetComponent<NavMeshAgent>().avoidancePriority = 10+boss.MasterList.Count;
-                Globals.Managers.Settings.UpdateHUD();
+                if (FindFirstObjectByType<Globals>() != null)
+                {
+                    Globals.Managers.Settings.UpdateHUD();
+                }
             }
         }
     }

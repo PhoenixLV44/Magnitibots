@@ -30,6 +30,7 @@ public class RangeIndicator : MonoBehaviour
 
     public void DisableRangeIndicator()
     {
+        _currentRange = 0;
         _rangeIndicator.SetActive(false);
     }
 }
