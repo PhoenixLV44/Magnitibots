@@ -138,6 +138,8 @@ namespace Player
                 //_merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
+            
+            Cursor.lockState = !Globals.Managers.paused ? CursorLockMode.Locked : CursorLockMode.None;
         }
         void FixedUpdate()
         {
