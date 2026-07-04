@@ -67,6 +67,7 @@ public class MainMenu : MonoBehaviour
         
         _mainContainer.visible = true;
         _mainContainer.BringToFront();
+        _controlsContainer.visible = false;
 
     }
     private void Start()
@@ -87,7 +88,7 @@ public class MainMenu : MonoBehaviour
     private void OnClickStart(ClickEvent click)
     {
         Globals.Managers.Settings.EnableHUD();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Globals.Managers.Settings.TransitionScene();
     }
 
     private void OnClickSettings(ClickEvent click)
