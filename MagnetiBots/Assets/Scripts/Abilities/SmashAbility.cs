@@ -182,7 +182,6 @@ namespace Ability
                     {
                         var merble = merbleBoss.ChargedMerbleList[i];
                         float distance = Vector3.Distance(merble.transform.position, _returnPoint == Vector3.zero ? _defaultReturnPoint.position : _returnPoint);
-                        Debug.Log(merble.transform.name + " Distance: " + distance);
                         if (!merble.GroundCheck() || distance > 0.25f)
                         {
                             Debug.Log("Ground check is false;");
@@ -190,24 +189,15 @@ namespace Ability
                             {
                                 merble.FloatTowardsObject(_defaultReturnPoint.position, i,
                                     Merble.AbilityEnum.Smash, speed);
-                                if (merble.GroundCheck())
-                                {
-                                    merble.StopCharging();
-                                }
                             }
                             else
                             {
                                 merble.FloatTowardsObject(_returnPoint, i, Merble.AbilityEnum.Smash, speed);
-                                if (merble.GroundCheck())
-                                {
-                                    merble.StopCharging();
-                                }
                             }
 
                         }
                         else if(merble.GroundCheck() || distance < 0.25f)
                         {
-                            Debug.Log("STOP CHARGING");
                             merble.StopCharging();
                         }
                     }

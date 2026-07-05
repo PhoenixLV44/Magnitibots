@@ -315,7 +315,7 @@ namespace Merbles
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, _agent.baseOffset + 1, groundLayer))
             {
-                Debug.Log(hit.transform.name);
+                //Debug.Log(hit.transform.name);
                 StopCharging();
                 return true;
             }

@@ -30,9 +30,15 @@ namespace Ability.Object
             {
                 SmashableTarget target = other.GetComponent<SmashableTarget>();
                 target.DecreaseHealth(_powerLevel);
+                
+                
                 if (target.Health <= 0)
                 {
-                    Destroy(target.gameObject);
+                    target.Rock.SetActive(false);
+                    foreach (var boxCollider in target.Colliders)
+                    {
+                        boxCollider.enabled = false;
+                    }
                 }
                 else
                 {  
@@ -86,7 +92,7 @@ namespace Ability.Object
                     _smashAbility.DeactivateBall();
                     _smashAbility.ReturnMerbles = true;
                     _smashAbility.ReturnPoint = hitInfo.point;
-                    Debug.Log(hitInfo.point);
+                    //Debug.Log(hitInfo.point);
                     //_smashAbility.MerbleBoss.FireMerbles();
                 }
             }
