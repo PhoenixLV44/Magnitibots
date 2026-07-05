@@ -8151,6 +8151,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1904239598716891395, guid: 5e34c2426c5be9d418a581b9b9c7bc4e, type: 3}
   m_PrefabInstance: {fileID: 95565632}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &95565634 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8129679782580297357, guid: 5e34c2426c5be9d418a581b9b9c7bc4e, type: 3}
+  m_PrefabInstance: {fileID: 95565632}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &95586879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128286,6 +128291,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2950607595604242418, guid: 8c914ebbdb578514eaf1e728e671b24a, type: 3}
   m_PrefabInstance: {fileID: 1597193261}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1597193263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6470356998134485321, guid: 8c914ebbdb578514eaf1e728e671b24a, type: 3}
+  m_PrefabInstance: {fileID: 1597193261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1597773898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150678,6 +150688,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 272963557}
     m_Modifications:
+    - target: {fileID: 1397348836463487972, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      propertyPath: m_EndTransform
+      value: 
+      objectReference: {fileID: 95565634}
+    - target: {fileID: 1397348836463487972, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      propertyPath: m_AutoUpdatePosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196991406181262792, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2603047964752242959, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x2 Variant
@@ -150722,16 +150744,59 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3759299291732523433, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      propertyPath: m_Mass
+      value: 500
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1849906171361556791, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1724790644419819980, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1865726136}
   m_SourcePrefab: {fileID: 100100000, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
 --- !u!4 &1865726133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3410406865051071413, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
   m_PrefabInstance: {fileID: 1865726132}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1865726134 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8425111315627821498, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+  m_PrefabInstance: {fileID: 1865726132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1865726135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1724790644419819980, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+  m_PrefabInstance: {fileID: 1865726132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1865726136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865726135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshLink
+  m_SerializedVersion: 1
+  m_AgentTypeID: 0
+  m_StartPoint: {x: 0, y: 0, z: -2.5}
+  m_EndPoint: {x: 0, y: 0, z: 2.5}
+  m_StartTransform: {fileID: 1865726134}
+  m_EndTransform: {fileID: 1597193263}
+  m_Activated: 1
+  m_Width: 0
+  m_CostModifier: 1
+  m_IsOverridingCost: 0
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 1
+  m_Area: 0
 --- !u!64 &1868385564
 MeshCollider:
   m_ObjectHideFlags: 0

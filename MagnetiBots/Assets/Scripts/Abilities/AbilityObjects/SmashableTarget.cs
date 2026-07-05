@@ -16,6 +16,14 @@ namespace Ability.Object
         [SerializeField] private int health;
         public int Health => health;
         private bool _canTakeDamage = true;
+        
+        private ParticleSystem _dustParticles;
+        public ParticleSystem DustParticles => _dustParticles;
+        private GameObject _rock;
+        public GameObject Rock => _rock;
+        
+        [SerializeField] BoxCollider[] colliders;
+        public BoxCollider[] Colliders => colliders;
         private void Start()
         {
             switch (healthLevel)
@@ -30,21 +38,29 @@ namespace Ability.Object
                     health = 3;
                     break;
             }
+            _rock = transform.GetChild(0).gameObject;
+            _dustParticles = transform.GetChild(1).GetComponent<ParticleSystem>();
         }
         public void DecreaseHealth(float damage)
         {
             if (_canTakeDamage)
             {
+                _canTakeDamage = false;
+                StartCoroutine(EndHitStun());
                 Globals.Managers.Audio.PlaySFXRandom("RockSmashing", transform, 4);
                 int damageInt = Mathf.RoundToInt(damage);
                 health -= damageInt;
                 Debug.Log("Health: " + health + " Damage: " + damageInt);
+                _dustParticles.Play();
                 if (damageInt <= 0)
                 {
-                    //gameObject.SetActive(false);
+                    Debug.Log("Dead");
+                    _rock.SetActive(false);
+                    foreach (var boxCollider in colliders)
+                    {
+                        boxCollider.enabled = false;
+                    }
                 }
-                _canTakeDamage = false;
-                StartCoroutine(EndHitStun());
             }
 
         }

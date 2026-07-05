@@ -39,7 +39,7 @@ namespace Interactable
         private IEnumerator ActivatePlatforms()
         {
             StopCoroutine(DeactivatePlatforms());
-            Player.Controller player = FindObjectOfType<Player.Controller>();
+            Player.Controller player = FindFirstObjectByType<Player.Controller>();
             player.Interacting = true;
             if (cutsceneCamera)
             {

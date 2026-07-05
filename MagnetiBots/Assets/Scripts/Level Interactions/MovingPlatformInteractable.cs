@@ -47,7 +47,7 @@ namespace Interactable
 
         private IEnumerator MovePlatform(Vector3 firstPos, Vector3 secondPos)
         {
-            Player.Controller player = FindObjectOfType<Player.Controller>();
+            Player.Controller player = FindFirstObjectByType<Player.Controller>();
             player.Interacting = true;
             if (_cutsceneCamera)
             {

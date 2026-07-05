@@ -55,7 +55,7 @@ MonoBehaviour:
   m_CostModifier: 1
   m_IsOverridingCost: 0
   m_Bidirectional: 1
-  m_AutoUpdatePosition: 0
+  m_AutoUpdatePosition: 1
   m_Area: 0
 --- !u!1001 &2616700042965430424
 PrefabInstance:
@@ -222,6 +222,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5921449820795420952, guid: 3732a6fd8ac6df84786ebae316e118f9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6195916155522391527, guid: 3732a6fd8ac6df84786ebae316e118f9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7134913263617628005, guid: 3732a6fd8ac6df84786ebae316e118f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -31.241806
@@ -265,6 +273,10 @@ PrefabInstance:
     - target: {fileID: 7516399351893495263, guid: 3732a6fd8ac6df84786ebae316e118f9, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x2 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8681754807495744889, guid: 3732a6fd8ac6df84786ebae316e118f9, type: 3}
+      propertyPath: m_Mass
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
