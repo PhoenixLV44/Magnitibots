@@ -12,6 +12,7 @@ namespace Ability
             /*player.TargetCursor.CurrentAbility = ability;*/
             //Debug.Log("Entered Super Jump State");
             //animator.SetBool("SuperJump", true);
+            Globals.Managers.Settings.UpdateHUD();
         }
 
         public override void ExitState()

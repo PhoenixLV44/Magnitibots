@@ -10,8 +10,9 @@ namespace Ability
         {
             base.EnterState();
             //Debug.Log("Entered Lasso State");
+            Globals.Managers.Settings.UpdateHUD();
             /*player.TargetCursor.CurrentAbility = ability;
-            Globals.Managers.Settings.UpdateHUD();*/
+            */
         }
 
         public override void ExitState()
@@ -28,12 +29,16 @@ namespace Ability
             if (InputSystem.actions.FindAction("Activate Smash").IsPressed() && player.CanUseSmash && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
             {
                 stateMachine.ChangeState(stateManager.SmashState);
+                /*
                 Globals.Managers.Settings.UpdateHUD();
+            */
             }
             if (InputSystem.actions.FindAction("Activate Super Jump").IsPressed() && player.CanUseSuperJump && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
             {
                 stateMachine.ChangeState(stateManager.SuperJumpState);
+                /*
                 Globals.Managers.Settings.UpdateHUD();
+            */
             }
         }
     }

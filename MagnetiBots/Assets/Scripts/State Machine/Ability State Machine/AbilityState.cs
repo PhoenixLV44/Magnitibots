@@ -35,8 +35,11 @@ namespace Ability
             ability.enabled = true;
             ability.IsCharging = false;
             stateManager.CurrentAbility = ability;
-            player.TargetCursor.CurrentAbility = ability;
-            Globals.Managers.Settings.UpdateHUD();
+            if (player.TargetCursor)
+            {
+                player.TargetCursor.CurrentAbility = ability;
+            }
+            //Globals.Managers.Settings.UpdateHUD();
             //animationController.SetBool(animationName, true);
         }
         public virtual void ExitState()

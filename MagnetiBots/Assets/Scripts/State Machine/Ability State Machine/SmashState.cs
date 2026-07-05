@@ -11,6 +11,7 @@ namespace Ability
             base.EnterState();
             //Debug.Log("Entered Smash State");
             /*player.TargetCursor.CurrentAbility = ability;*/
+            Globals.Managers.Settings.UpdateHUD();
         }
 
         public override void ExitState()

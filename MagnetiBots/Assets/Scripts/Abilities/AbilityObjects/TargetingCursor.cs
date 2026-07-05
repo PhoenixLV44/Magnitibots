@@ -41,7 +41,10 @@ namespace Ability.Object
             //_cursor.SetActive(false);
             
             _returnPoint = GetComponent<Player.Controller>().ReturnPoint;
-            _raycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 26, transform.position.z) + GetComponent<Player.Movement>().Model.transform.forward;
+            if (_player.Movement)
+            {
+                _raycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 26, transform.position.z) + GetComponent<Player.Movement>().Model.transform.forward;
+            }
         }
 
         private void Update()
