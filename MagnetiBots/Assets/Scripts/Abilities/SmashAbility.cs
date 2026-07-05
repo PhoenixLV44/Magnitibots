@@ -61,10 +61,6 @@ namespace Ability
                 if (merbleArray.Length > 0)
                 {
                     merbleArray[j].StartCharge(transform.position);
-                    if (j < maxPower)
-                    {
-                        //j++;
-                    }
                 }
 
                 yield return new WaitForSecondsRealtime(chargeTimer);
@@ -151,17 +147,11 @@ namespace Ability
             //Debug.Log("DropBall");
             Globals.Managers.Audio.PlaySFXHere("ThrowRock", _smashBall.transform);
             _smashBallRb.useGravity = true;
+            targetCursor.ObjectToMove = null;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
-            StopCoroutine(moveCursorRoutine);
             StopCoroutine(chargeCoroutine);
-            targetCursor.DeactivateCursor();
-            Cursor.lockState = CursorLockMode.None;
-            //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             rangeIndicator.DisableRangeIndicator();
-            foreach (var b in MerbleBoss.ChargedMerbleList)
-            {
-                //StartCoroutine(b.UseGravity());
-            }
+
         }
         private IEnumerator MoveMerbles()
         {
