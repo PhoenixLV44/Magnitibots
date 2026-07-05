@@ -70,7 +70,7 @@ namespace Ability.Object
 
         private void OnDisable()
         {
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
             StopAllCoroutines();
         }
         

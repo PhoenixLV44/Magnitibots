@@ -146,12 +146,12 @@ namespace Player
         float _submittedJump = 0;
         public IEnumerator Jump(int jumpModifier = 0)
         {
+            _jumpLock = true;
             _controller.Animator.Play("Jump");
             yield return new WaitForSecondsRealtime(_controller.AnimController.JumpAnimLength);
-            _jumpLock = true;
             float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * (jumpModifier / (jumpModifier / 2f));
             //jumpPower = jumpForce + (1 * jumpModifier);
-            //Debug.Log("jumping with power " + jumpPower);
+            Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
         }
         

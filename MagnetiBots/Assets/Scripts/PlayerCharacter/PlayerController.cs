@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using Ability.Object;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -85,6 +86,10 @@ namespace Player
 
         void Start()
         {
+            if (!Globals.Managers)
+            {
+                SceneManager.LoadScene(0);
+            }
             _movement = gameObject.AddComponent<Player.Movement>();
             _animator = GetComponent<Animator>();
 

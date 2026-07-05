@@ -23,12 +23,12 @@ public class JumpState: AirState
     public override void TransitionChecks()
     {
         base.TransitionChecks();
-        if (player.Movement.Grounded)
-        {
-            stateMachine.ChangeState(stateManager.IdleState);
-        }
         if (!player.Movement.IsRising())
         {
+            if (player.Movement.Grounded)
+            {
+                stateMachine.ChangeState(stateManager.IdleState);
+            }
             //Debug.Log("Falling");
             if (!player.Movement.Grounded && !player.Movement.Hovering)
             {
