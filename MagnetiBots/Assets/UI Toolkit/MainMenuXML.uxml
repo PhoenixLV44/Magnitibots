@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="ControlsMenu" src="project://database/Assets/UI%20Toolkit/ControlsMenu.uxml?fileID=9197481963319205126&amp;guid=9c3956b9c7ed9a04bbc4a12f330b32a5&amp;type=3#ControlsMenu"/>
-    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3"/>
     <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-direction: row; align-self: center; align-content: center; align-items: center; justify-content: center; position: absolute; margin-top: 0; flex-grow: 1; width: 1920px; height: 1080px; left: 0; right: 0; bottom: 0;">
         <ui:VisualElement name="VisualElement" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); background-color: rgb(255, 255, 255);"/>
         <ui:Image scale-mode="ScaleToFit" source="project://database/Assets/Art%20Assets/UI/Main%20Menu/Logo_Final2.png?fileID=2800000&amp;guid=2ba1af0bc62a6944e80fcc53d51e0c6a&amp;type=3#Logo_Final2" style="height: 808px; width: 520px; flex-grow: 1; margin-bottom: 209px; margin-left: 64px; margin-right: 43px;"/>
@@ -43,7 +43,7 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="ControlsMenu" name="ControlsMenu" style="visibility: hidden;"/>
-    <ui:VisualElement name="CreditsMenu" class="SettingsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: visible;">
+    <ui:VisualElement name="CreditsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: visible;">
         <ui:VisualElement style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); background-color: rgb(255, 255, 255);"/>
         <ui:VisualElement name="UpperBorder" style="align-content: stretch; flex-grow: 1; flex-direction: row-reverse; justify-content: space-around; align-items: stretch; align-self: stretch; max-height: 196px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&amp;guid=0210c0b24bb5f794cb539551372ac845&amp;type=3#Upper Border&quot;); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;">
             <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Menu%20Title%201.png?fileID=2800000&amp;guid=b2f813ba251c8454dbe8ad23bae158bb&amp;type=3#Menu Title 1&quot;); -unity-text-align: middle-center; justify-content: center;">
@@ -68,13 +68,11 @@
                 <ui:VisualElement name="Nick" class="teamMember">
                     <ui:Label text="Nicholas Smith"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="Lexi" class="teamMember">
-                    <ui:Label text="Lexi Vye"/>
-                </ui:VisualElement>
+                <ui:VisualElement name="Lexi" class="teamMember"/>
             </ui:VisualElement>
             <ui:VisualElement name="SourcedAssets" style="flex-grow: 1;">
                 <ui:Label text="With Help From.." name="Label" class="text" style="font-size: 72px; -unity-text-align: middle-center; -unity-text-outline-width: 6px; -unity-font-style: bold; letter-spacing: -7px;"/>
-                <ui:ListView allow-add="false" allow-remove="false" name="SourcesList" show-add-remove-footer="false" selection-type="None" binding-source-selection-mode="Manual"/>
+                <ui:ListView allow-add="false" allow-remove="false" name="SourcesList" show-add-remove-footer="false" selection-type="None" binding-source-selection-mode="Manual" data-source="project://database/Assets/Scripts/UI/SourcesList.asset?fileID=11400000&amp;guid=351a46c66b520c645bc42f09931069d6&amp;type=2#SourcesList" data-source-path="sources"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Lower%20Border.png?fileID=2800000&amp;guid=761b7bf0e469841429019df4244ba07b&amp;type=3#Lower Border&quot;); width: 1920px; position: absolute; bottom: 0; height: 83px;">

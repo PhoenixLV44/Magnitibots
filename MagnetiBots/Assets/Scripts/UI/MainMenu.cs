@@ -78,7 +78,6 @@ public class MainMenu : MonoBehaviour
         _creditsContainer = _mainDocument.rootVisualElement.Q("CreditsMenu");
         _creditsReturnButton = _mainDocument.rootVisualElement.Q("CreditsReturnButton") as Button;
         _creditsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnCredits);
-        //_creditsContainer.Q("SourcesList");
         #endregion
 
         _mainContainer.visible = true;
