@@ -16,6 +16,13 @@ public class HUDGUI : MonoBehaviour
     private VisualElement smashPower;
     private VisualElement jumpPower;
 
+    [SerializeField] Texture lassoInactive;
+    [SerializeField] Texture lassoActive;
+    [SerializeField] Texture smashInactive;
+    [SerializeField] Texture smashActive;
+    [SerializeField] Texture hoverInactive;
+    [SerializeField] Texture hoverActive;
+ 
     private VisualElement unlockContainer;
 
     private VisualElement lassoUnlock;
@@ -119,6 +126,7 @@ public class HUDGUI : MonoBehaviour
     {
         UnPauseGame();
     }
+    Image[] arr;
     public void UpdateGUI()
     {
         HUDContainer.visible = true;
@@ -129,6 +137,34 @@ public class HUDGUI : MonoBehaviour
                 int realcount = controller.MerbleBoss.MasterList.Count + 1;
                 merbleCount.text = "x" + realcount.ToString();
             }
+        }
+        
+        switch (controller.AbilityStateManager.CurrentAbility)
+        {
+            case Ability.Smash:
+                arr = lassoPower.Children().ToArray() as Image[];
+                arr[0].image = lassoInactive;
+                arr = smashPower.Children().ToArray() as Image[];
+                arr[0].image = smashActive;
+                arr = jumpPower.Children().ToArray() as Image[];
+                arr[0].image = hoverInactive;
+                break;
+            case Ability.Lasso:
+                arr = smashPower.Children().ToArray() as Image[];
+                arr[0].image = smashInactive;
+                arr = jumpPower.Children().ToArray() as Image[];
+                arr[0].image = hoverInactive;
+                arr = lassoPower.Children().ToArray() as Image[];
+                arr[0].image = lassoActive;
+                break;
+            case Ability.SuperJump:
+                arr = lassoPower.Children().ToArray() as Image[];
+                arr[0].image = lassoInactive;
+                arr = smashPower.Children().ToArray() as Image[];
+                arr[0].image = smashInactive;
+                arr = jumpPower.Children().ToArray() as Image[];
+                arr[0].image = hoverActive;
+                break;
         }
     }
 }
