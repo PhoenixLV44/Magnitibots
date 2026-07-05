@@ -151,7 +151,7 @@ namespace Player
             _jumpLock = true;
             float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * (jumpModifier / (jumpModifier / 2f));
             //jumpPower = jumpForce + (1 * jumpModifier);
-            //Debug.Log("jumping with power " + jumpPower);
+            Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
         }
         
