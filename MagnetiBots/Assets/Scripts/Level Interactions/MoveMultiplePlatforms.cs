@@ -8,14 +8,21 @@ namespace Interactable
     {
         [SerializeField] private MovingPlatform[] platforms;
         [SerializeField] private GameObject cutsceneCamera;
-        private GameObject _mainCamera;
+        [SerializeField] private GameObject mainCamera;
         [SerializeField] private float delay = 0.5f;
 
         void Start()
         {
-            
-            cutsceneCamera = GetComponentInChildren<Camera>().gameObject;
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+            if (!cutsceneCamera)
+            {
+                cutsceneCamera = transform.GetChild(transform.childCount - 1).gameObject;
+            }
+
+            if (!mainCamera)
+            {
+                mainCamera = GameObject.Find("CameraPivotPoint").transform.GetChild(0).gameObject;
+            }
             cutsceneCamera.SetActive(false);
         }
 
@@ -37,7 +44,7 @@ namespace Interactable
             if (cutsceneCamera)
             {
                 cutsceneCamera.SetActive(true);
-                _mainCamera.SetActive(false);
+                mainCamera.SetActive(false);
             }
 
             foreach (var platform in platforms)
@@ -45,11 +52,9 @@ namespace Interactable
                 platform.ActivateObject();
                 yield return new WaitForSecondsRealtime(delay);
             }
-            yield return new WaitUntil(() => platforms[platforms.Length - 1].transform.localPosition == platforms[platforms.Length - 1].EndPosition);
-            
             yield return new WaitForSecondsRealtime(delay);
             
-            _mainCamera.SetActive(true);
+            mainCamera.SetActive(true);
             cutsceneCamera.SetActive(false);
             player.Interacting = false;
             //Debug.Log("Done Moving");

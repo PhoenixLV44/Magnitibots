@@ -22,7 +22,11 @@ namespace Interactable
         {
             _mainCamera = GameObject.Find("CameraPivotPoint").transform.GetChild(0).gameObject;
             _platform = transform.GetChild(0).gameObject;
-            _cutsceneCamera = transform.GetChild(1).gameObject;
+            _cutsceneCamera = transform.GetChild(transform.childCount - 1).gameObject;
+            if (!_cutsceneCamera)
+            {
+                Debug.LogError(transform.name + " Cutscene camera not found");
+            }
             _cutsceneCamera.SetActive(false);
             if (startPosition == Vector3.zero)
                 startPosition = _platform.transform.localPosition;
@@ -47,7 +51,7 @@ namespace Interactable
             player.Interacting = true;
             if (_cutsceneCamera)
             {
-                _cutsceneCamera.transform.LookAt(_platform.transform);
+               // _cutsceneCamera.transform.LookAt(_platform.transform);
                 _cutsceneCamera.SetActive(true);
                 _mainCamera.SetActive(false);
             }

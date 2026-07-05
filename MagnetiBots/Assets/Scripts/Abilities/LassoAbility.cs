@@ -174,7 +174,7 @@ namespace Ability
         protected override void InitializeAbility()
         {
             base.InitializeAbility();
-            baseRange = 1.5f;
+            baseRange = 2f;
             basePowerLevel = 1;
             maxPowerLevel = 15;
             _lassoLoop = transform.Find("Lasso Loop").gameObject;

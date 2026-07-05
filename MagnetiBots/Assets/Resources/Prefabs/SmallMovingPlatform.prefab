@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6957153685868665883}
-  - component: {fileID: 7894932888379767172}
+  - component: {fileID: 14213088468777769}
   m_Layer: 7
   m_Name: SmallMovingPlatform
   m_TagString: Untagged
@@ -31,10 +31,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4051700262484110460}
-  - {fileID: 1787200700130332483}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &7894932888379767172
+--- !u!114 &14213088468777769
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,52 +42,51 @@ MonoBehaviour:
   m_GameObject: {fileID: 2016228399882613727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3c1b775d78cf474b8356db73a6cdbd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9035095bc76099c41b0ca6e02f3ac246, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Interactable.MovingPlatform
+  m_EditorClassIdentifier: Assembly-CSharp::Interactable.SmallMovingPlatform
   startPosition: {x: 0, y: 0, z: 0}
-  endPosition: {x: -115.15001, y: 23, z: 47}
+  endPosition: {x: 0, y: 0, z: 0}
   moveSpeed: 5
-  useMainCamPos: 1
 --- !u!1001 &2253999851209779368
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6957153685868665883}
+    m_TransformParent: {fileID: 4051700262484110460}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00000023841858
+      value: -0.25000003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.5000002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071079
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.70710576
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       propertyPath: m_LocalRotation.y
@@ -219,7 +217,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1787200700130332483}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 354cdb61fcbb5984987f18ad8da632db, type: 3}
       insertIndex: -1

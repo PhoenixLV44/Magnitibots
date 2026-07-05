@@ -36,18 +36,26 @@ namespace Interactable
         }
         public override void ActivateObject()
         {
-            if (_leverCatToy)
+            if (_pullalble)
             {
-                Debug.Log("Activating Lever");
-                _leverCatToy.ChangeColor();
-            }
-            base.ActivateObject();
-            if (_playerInRange)
-            {
-                _controller.Interacting = true;
-                _controller.Movement.ChangeModelRotation(transform.position);
-                _controller.Animator.SetBool("PullingLever", true);
-                StartCoroutine(_controller.AnimController.PullingLeverAnim());
+                if (_leverCatToy)
+                {
+                    Debug.Log("Activating Lever");
+                    _leverCatToy.ChangeColor();
+                }
+                base.ActivateObject();
+                if (_playerInRange)
+                {
+                    _controller.Interacting = true;
+                    _controller.Movement.ChangeModelRotation(transform.position);
+                    _controller.Animator.SetBool("PullingLever", true);
+                    StartCoroutine(_controller.AnimController.PullingLeverAnim());
+                }
+
+                if (!canBeDeactivated)
+                {
+                    _pullalble = false;
+                }
             }
             Debug.Log("Pull lever");
         }
