@@ -44,7 +44,7 @@ namespace Ability.Object
             {
                 Debug.Log("Ground");
                 _smashAbility.DeactivateBall();
-                _smashAbility.MerbleBoss.FireMerbles();
+                //_smashAbility.MerbleBoss.FireMerbles();
             }
             else if (!other.CompareTag("Ground") && !other.CompareTag("SmashTarget") && rb.linearVelocity.y < 0)
             {
@@ -82,9 +82,12 @@ namespace Ability.Object
             {
                 if (hitInfo.collider.CompareTag("Ground"))
                 {
-                    Debug.Log("Ground");
+                    //Debug.Log("Ground");
                     _smashAbility.DeactivateBall();
-                    _smashAbility.MerbleBoss.FireMerbles();
+                    _smashAbility.ReturnMerbles = true;
+                    _smashAbility.ReturnPoint = hitInfo.point;
+                    Debug.Log(hitInfo.point);
+                    //_smashAbility.MerbleBoss.FireMerbles();
                 }
             }
         }
