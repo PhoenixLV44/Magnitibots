@@ -10,7 +10,7 @@ namespace Ability
         {
             base.EnterState();
             //Debug.Log("Entered Smash State");
-            player.TargetCursor.CurrentAbility = ability;
+            /*player.TargetCursor.CurrentAbility = ability;*/
         }
 
         public override void ExitState()
