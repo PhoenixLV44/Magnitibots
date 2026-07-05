@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -14,15 +16,18 @@ public class MainMenu : MonoBehaviour
     private Button _settingsButton;
     private Button _quitButton;
     private Button _controlsButton;
+    private Button _creditsButton;
 
     private VisualElement _settingsContainer;
-
     private Button _returnSettingsButton;
 
     private VisualElement _controlsContainer;
     private ControlsCarousel _controlsCarousel;
-
     private Button _controlsReturnButton;
+
+    private VisualElement _creditsContainer;
+    public List<string> sources;
+    private Button _creditsReturnButton;
 
     private void Awake()
     {
@@ -41,6 +46,9 @@ public class MainMenu : MonoBehaviour
 
         _settingsButton = _mainDocument.rootVisualElement.Q("SettingsButton") as Button;
         _settingsButton.RegisterCallback<ClickEvent>(OnClickSettings);
+
+        _creditsButton = _mainDocument.rootVisualElement.Q("CreditsButton") as Button;
+        _creditsButton.RegisterCallback<ClickEvent>(OnClickCredits);
 
         _quitButton = _mainDocument.rootVisualElement.Q("QuitButton") as Button;
         _quitButton.RegisterCallback<ClickEvent>(OnClickQuit);
@@ -66,7 +74,13 @@ public class MainMenu : MonoBehaviour
         _controlsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnControls);
         #endregion
 
-        
+        #region Credits Container and Buttons
+        _creditsContainer = _mainDocument.rootVisualElement.Q("CreditsMenu");
+        _creditsReturnButton = _mainDocument.rootVisualElement.Q("CreditsReturnButton") as Button;
+        _creditsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnCredits);
+        //_creditsContainer.Q("SourcesList");
+        #endregion
+
         _mainContainer.visible = true;
         _mainContainer.BringToFront();
         _controlsContainer.visible = false;
@@ -106,7 +120,18 @@ public class MainMenu : MonoBehaviour
         _mainContainer.visible = false;
         _controlsCarousel.Ready();
     }
-
+    private void OnClickCredits(ClickEvent click)
+    {
+        _creditsContainer.visible = true;
+        _creditsContainer.BringToFront();
+        _mainContainer.visible = false;
+    }
+    private void OnClickReturnCredits(ClickEvent click)
+    {
+        _mainContainer.visible = true;
+        _mainContainer.BringToFront();
+        _creditsContainer.visible = false;
+    }
     private void OnClickQuit(ClickEvent click)
     {
         Application.Quit();
