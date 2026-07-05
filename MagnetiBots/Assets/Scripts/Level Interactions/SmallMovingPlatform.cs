@@ -6,24 +6,24 @@ namespace Interactable
 {
     public class SmallMovingPlatform : MovingPlatform
     {
-        private GameObject _platform;
+        /*private GameObject _platform;
         
         [SerializeField] private Vector3 startPosition;
         public Vector3 StartPosition => startPosition;
-        [SerializeField]private Vector3 endPosition;
+        [SerializeField] private Vector3 endPosition;
         public Vector3 EndPosition => endPosition;
         
-        [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private float moveSpeed = 5;*/
         
 
         private void Start()
         {
-            _platform = transform.GetChild(0).gameObject;
+            platform = transform.GetChild(0).gameObject;
             if (startPosition == Vector3.zero)
-                startPosition = _platform.transform.localPosition;
+                startPosition = platform.transform.localPosition;
             
             else
-                _platform.transform.localPosition = startPosition;
+                platform.transform.localPosition = startPosition;
         }
 
         public override void ActivateObject()
@@ -44,12 +44,12 @@ namespace Interactable
             float time = 0;
             while (time < 1)
             {
-                _platform.transform.localPosition = Vector3.Slerp(firstPos, secondPos, time);
+                platform.transform.localPosition = Vector3.Slerp(firstPos, secondPos, time);
                 time += (Time.deltaTime *  moveSpeed);
                 time = Mathf.Clamp(time, 0, 1);
                 yield return null;
             }
-            _platform.transform.localPosition = secondPos;
+            platform.transform.localPosition = secondPos;
             yield return new WaitForSeconds(0.5f);
             //Debug.Log("Done Moving");
         }
