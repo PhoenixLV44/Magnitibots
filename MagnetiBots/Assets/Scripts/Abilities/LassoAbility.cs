@@ -37,6 +37,19 @@ namespace Ability
             InitializeAbility();
         }
 
+        public override void StopCharging()
+        {
+            if (chargeCoroutine != null)
+            {
+                //Debug.Log("Stopping charging");
+                //aimingGuide.SetActive(false);
+                currentPowerLevel = basePowerLevel;
+                rangeIndicator.DisableRangeIndicator();
+                controller.ChargingParticles.SetActive(false);
+                //StopCoroutine(chargeCoroutine);
+            }
+        }
+
         public override IEnumerator Charge()
         {
             currentPowerLevel = 0;
@@ -107,6 +120,7 @@ namespace Ability
             }
 
             //StopCoroutine(Charge());
+            StopCoroutine(chargeCoroutine);
             merbleBoss.FireMerbles();
             currentPowerLevel = 0;
         }
@@ -211,7 +225,7 @@ namespace Ability
             List<Merble> unchargedMerbleList;
             List<Merble> masterList;
             Vector2 distanceBetweenMerblesMinMax = new Vector2(1, 2);
-            StopCharging();
+            //StopCharging();
             float speed = targetCursor.ObjectSpeed + 0.5f;
             while (true)
             {
