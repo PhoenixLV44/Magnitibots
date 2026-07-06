@@ -165,7 +165,7 @@ namespace Merbles
                 }
                 yield return null;
             }
-            Debug.Log("ListCleared");
+            //Debug.Log("ListCleared");
         }
     }   
 }
