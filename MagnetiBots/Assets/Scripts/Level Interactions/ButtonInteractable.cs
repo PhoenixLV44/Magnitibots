@@ -13,6 +13,7 @@ namespace Interactable
         public override void ActivateObject()
         {
             base.ActivateObject();
+            Globals.Managers.Audio.PlaySFXHere("UI_WoodClick", transform);
         }
 
         public override void DeactivateObject()

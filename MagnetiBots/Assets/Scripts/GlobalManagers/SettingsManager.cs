@@ -310,25 +310,46 @@ public class SettingsManager : MonoBehaviour
     }
     public void TransitionScene()
     {
-        StartCoroutine(Fader(true));
+        StartCoroutine(Fader("Load"));
     }
-    public void FadeAway()
+    public void FadeAway(string action = "")
     {
-        StartCoroutine(Fader(false));
+        StartCoroutine(Fader());
     }
-    private IEnumerator Fader(bool needLoad)
+    private IEnumerator Fader(string action = "")
     {
         sceneTransition.rootVisualElement.visible = true;
-        sceneTransition.rootVisualElement.schedule.Execute(() => sceneTransition.rootVisualElement.Q("Blackout").AddToClassList("transitionOn"));
+        sceneTransition.rootVisualElement.BringToFront();
+        sceneTransition.rootVisualElement.Q("Blackout").AddToClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
         Debug.Log("loading...");
-        if (needLoad)
+        if (action == "Load")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         Debug.Log("ready!");
-        sceneTransition.rootVisualElement.schedule.Execute(() => sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn"));
+        yield return new WaitForSecondsRealtime(2);
+        StartCoroutine(FadeIn());
+    }
+    private IEnumerator FadeIn()
+    {
+        Debug.Log("check this out!");
+        sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
+        
+        sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
+        Globals.Managers.Settings.EnableHUD();
+        Debug.Log("done!");
+    }
+    bool wait = true;
+    private void FadeOutCallback(GeometryChangedEvent ev)
+    {
+        if (wait)
+        {
+            wait = false;
+            sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
+            sceneTransition.rootVisualElement.Q("Blackout").UnregisterCallback<GeometryChangedEvent>(FadeOutCallback);
+        }
     }
 }
