@@ -209,9 +209,9 @@ namespace Player
             }
         }
 
-        public void UnlockNewAbility()
+        public void UnlockNewAbility(UnlockAbilityPackage.AbilityType abilityType)
         {
-            if (!canUseLasso)
+            if (abilityType == UnlockAbilityPackage.AbilityType.Lasso)
             {
                 Debug.Log("can use lasso");
                 if (FindFirstObjectByType<Globals>() != null)
@@ -220,7 +220,7 @@ namespace Player
                 }
                 canUseLasso = true;
             }
-            else if (!canUseSmash)
+            else if (abilityType == UnlockAbilityPackage.AbilityType.Smash)
             {
                 Debug.Log("can use smash");
                 if (FindFirstObjectByType<Globals>() != null)
@@ -228,7 +228,7 @@ namespace Player
                     Globals.Managers.Settings.UnlockPopup("Smash");
                 }                canUseSmash = true;
             }
-            else if (!canUseSuperJump)
+            else if (abilityType == UnlockAbilityPackage.AbilityType.SuperJump)
             {
                 Debug.Log("can use super jump");
                 if (FindFirstObjectByType<Globals>() != null)

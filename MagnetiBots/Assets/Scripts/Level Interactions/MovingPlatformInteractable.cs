@@ -56,7 +56,7 @@ namespace Interactable
                 _mainCamera.SetActive(false);
             }
             yield return new WaitForSeconds(0.5f);
-            Globals.Managers.Audio.PlaySFXHere("movingPlatformSfx2", transform);
+            Globals.Managers.Audio.PlaySFXHere("movingPlatformsSfx", transform);
             float time = 0;
             while (time < 1)
             {

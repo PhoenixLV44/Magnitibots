@@ -9,6 +9,8 @@ public class UnlockAbilityPackage : MonoBehaviour
     private float _clipLength;
     Player.Controller _player;
     [SerializeField] private float rotationSpeed;
+    public enum AbilityType {Lasso, Smash, SuperJump}
+    [SerializeField] private AbilityType abilityType;
 
     private void Start()
     {
@@ -29,8 +31,8 @@ public class UnlockAbilityPackage : MonoBehaviour
         if (other.tag == "Player")
         {
             _player = other.GetComponent<Player.Controller>();
-            _player.UnlockNewAbility();
-            _animator.SetTrigger("Open");
+            _player.UnlockNewAbility(abilityType);
+            //_animator.SetTrigger("Open");
             StartCoroutine(DeleteObject());
         }
     }
