@@ -15,7 +15,14 @@ public class LassoHooked : GroundedState
             _lassoAbility = stateManager.gameObject.GetComponent<Ability.Lasso>();
         }
         //player.Movement.moveSpeed = player.Movement.moveSpeed / 1.5f;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        _lassoAbility.MerbleBoss.FireMerbles();
+        _lassoAbility.StopCoroutine(_lassoAbility.ChargeCoroutine);
     }
     
     public override void LogicUpdate()

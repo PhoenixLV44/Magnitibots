@@ -55,7 +55,7 @@ namespace Interactable
                 _cutsceneCamera.SetActive(true);
                 _mainCamera.SetActive(false);
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             Globals.Managers.Audio.PlaySFXHere("movingPlatformsSfx", transform);
             float time = 0;
             while (time < 1)
@@ -66,7 +66,7 @@ namespace Interactable
                 yield return null;
             }
             platform.transform.localPosition = secondPos;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             _mainCamera.SetActive(true);
             _cutsceneCamera.SetActive(false);
             player.Interacting = false;

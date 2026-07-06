@@ -26,6 +26,7 @@ namespace Interactable
             if (other.CompareTag("LassoTarget"))
             {
                 PuzzleCube cube = other.GetComponent<PuzzleCube>();
+                cube.GetComponent<ItemRespawner>().enabled = false;
                 cube.FreezeConstraints();
             }
             ActivateObject();
@@ -33,6 +34,10 @@ namespace Interactable
 
         private void OnTriggerExit(Collider other)
         {
+            if (other.CompareTag("LassoTarget"))
+            {
+                other.GetComponent<ItemRespawner>().enabled = true;
+            }
             DeactivateObject();
         }
     }
