@@ -6,17 +6,33 @@ namespace Interactable
 {
     public class MovingPlatform : InteractableObject
     {
-        [SerializeField] private Vector3 startPosition;
-        [SerializeField] private Vector3 endPosition;
-        [SerializeField] private float moveSpeed = 5;
+        protected GameObject platform;
+        
+        [SerializeField] protected Vector3 startPosition;
+        public Vector3 StartPosition => startPosition;
+        [SerializeField]protected Vector3 endPosition;
+        public Vector3 EndPosition => endPosition;
+        
+        [SerializeField] protected float moveSpeed = 5;
+        
+        GameObject _cutsceneCamera;
+        GameObject _mainCamera;
 
         private void Start()
         {
+            _mainCamera = GameObject.Find("CameraPivotPoint").transform.GetChild(0).gameObject;
+            platform = transform.GetChild(0).gameObject;
+            _cutsceneCamera = transform.GetChild(transform.childCount - 1).gameObject;
+            if (!_cutsceneCamera)
+            {
+                Debug.LogError(transform.name + " Cutscene camera not found");
+            }
+            _cutsceneCamera.SetActive(false);
             if (startPosition == Vector3.zero)
-                startPosition = transform.position;
+                startPosition = platform.transform.localPosition;
             
             else
-                transform.position = startPosition;
+                platform.transform.localPosition = startPosition;
         }
 
         public override void ActivateObject()
@@ -31,15 +47,30 @@ namespace Interactable
 
         private IEnumerator MovePlatform(Vector3 firstPos, Vector3 secondPos)
         {
+            Player.Controller player = FindFirstObjectByType<Player.Controller>();
+            player.Interacting = true;
+            if (_cutsceneCamera)
+            {
+               // _cutsceneCamera.transform.LookAt(_platform.transform);
+                _cutsceneCamera.SetActive(true);
+                _mainCamera.SetActive(false);
+            }
+            yield return new WaitForSeconds(0.5f);
+            Globals.Managers.Audio.PlaySFXHere("movingPlatformsSfx", transform);
             float time = 0;
             while (time < 1)
             {
-                transform.position = Vector3.Slerp(firstPos, secondPos, time);
+                platform.transform.localPosition = Vector3.Slerp(firstPos, secondPos, time);
                 time += (Time.deltaTime *  moveSpeed);
+                time = Mathf.Clamp(time, 0, 1);
                 yield return null;
             }
-
-            Debug.Log("Done Moving");
+            platform.transform.localPosition = secondPos;
+            yield return new WaitForSeconds(0.5f);
+            _mainCamera.SetActive(true);
+            _cutsceneCamera.SetActive(false);
+            player.Interacting = false;
+            //Debug.Log("Done Moving");
         }
     }
 }

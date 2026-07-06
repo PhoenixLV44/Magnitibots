@@ -121,11 +121,20 @@ namespace Player
         {
             //Debug.Log(input[1]);
 
-            if (_controller.TargetCursorObject.activeSelf)
+            if (_controller.TargetCursor.Cursor.activeSelf)
             {
-                Vector3 lookTarget = _controller.TargetCursorObject.transform.position;
+                Vector3 lookTarget = _controller.TargetCursor.Cursor.transform.position;
                 lookTarget.y = transform.position.y;
-                _model.LookAt(lookTarget);
+                if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                {
+                    _model.LookAt(lookTarget);
+                }
+                else
+                {
+                    lookTarget.x *= 2;
+                    lookTarget.z *= 2;
+                    _model.LookAt(lookTarget);
+                }
             }
             else
             {
@@ -137,12 +146,12 @@ namespace Player
         float _submittedJump = 0;
         public IEnumerator Jump(int jumpModifier = 0)
         {
-            _controller.Animator.Play("Jump");
-            yield return new WaitForSecondsRealtime(_controller.AnimController.JumpAnimLength);
             _jumpLock = true;
-            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce + (_jumpForce * Mathf.Log(jumpModifier));
+            _controller.Animator.Play("Jump");
+            yield return new WaitForSecondsRealtime(0.1f);
+            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * ((jumpModifier) / (jumpModifier / 2f));
             //jumpPower = jumpForce + (1 * jumpModifier);
-            //Debug.Log("jumping with power " + jumpPower);
+            Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
         }
         
@@ -249,6 +258,10 @@ namespace Player
             if (intendedTotalDistance.y < 0 && _isHovering)
             {
                 _gravityOn = false;
+            }
+            if (_submitted != null)
+            {
+                Look(_submitted[1]);
             }
         }
 

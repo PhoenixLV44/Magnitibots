@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &632402741151556942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4700943883729604404}
+  - component: {fileID: 518916317984453145}
+  m_Layer: 0
+  m_Name: SceneTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4700943883729604404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632402741151556942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2940940760225890349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &518916317984453145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632402741151556942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: d378117bc4dfbd744932a2bdac5405f9, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 43caa3e4b73556044aea3833265383d4, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1 &4272138921613419581
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +65,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5307030708468751772}
   - component: {fileID: 7274376147549478977}
+  - component: {fileID: 2721341819485074792}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -47,7 +103,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: d378117bc4dfbd744932a2bdac5405f9, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: c3926a9b45c87324388a7200098ce255, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -55,6 +111,24 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &2721341819485074792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4272138921613419581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 033736f524ebd7241a7bf018a2dbcb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDGUI
+  lassoInactive: {fileID: 2800000, guid: 378a68e07684e6740bff907fb3fb729c, type: 3}
+  lassoActive: {fileID: 2800000, guid: 348088ff6d5dfd7438b5d1f5ed32599e, type: 3}
+  smashInactive: {fileID: 2800000, guid: 2117627c11a1dc74cbb214273307ce32, type: 3}
+  smashActive: {fileID: 2800000, guid: 3d7fc66a66bc13b4ea3e7500933f9f74, type: 3}
+  hoverInactive: {fileID: 2800000, guid: be832d48c76b7de41acfddf94a7ba8eb, type: 3}
+  hoverActive: {fileID: 2800000, guid: 470285eb3cffd9c4cb1fe818344d6212, type: 3}
 --- !u!1 &5121154105342812595
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +161,7 @@ Transform:
   m_Children:
   - {fileID: 2829244000968368593}
   - {fileID: 5307030708468751772}
+  - {fileID: 4700943883729604404}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7932650604383562682
@@ -150,7 +225,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: d378117bc4dfbd744932a2bdac5405f9, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: e1a3bcc2f421e1041ae5a2fdd1a1e982, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920

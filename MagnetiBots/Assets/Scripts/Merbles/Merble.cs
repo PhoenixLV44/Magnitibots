@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 namespace Merbles
 {
@@ -40,6 +42,9 @@ namespace Merbles
         public GameObject CollectParticles => collectParticles;
 
         [SerializeField] private Transform parent;
+
+        Coroutine charge;
+        Coroutine beep;
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -71,6 +76,8 @@ namespace Merbles
             Sentience = true;
             tag = "Merble";
             _agent.enabled = true;
+            collectParticles.SetActive(true);
+            beep = StartCoroutine(BeepBoop());
         }
         public void SetFollowType(FollowTypes type)
         {
@@ -118,12 +125,12 @@ namespace Merbles
         {
             if (!myBoss.ChargedMerbleList.Contains(this))
             {
-                StartCoroutine(Charge(target));
+                charge = StartCoroutine(Charge(target));
             }
         }
         IEnumerator Charge(Vector3 target)
         {
-            Debug.Log(transform.name + "Charging");
+            //Debug.Log(transform.name + "Charging");
             _isCharging = true;
             _agent.isStopped = false;
             _agent.destination = target;
@@ -171,7 +178,7 @@ namespace Merbles
             }
             myBoss.CheckForDuplicates(myBoss.merbleList);
             _currentAbilityEnum = AbilityEnum.None;
-            StopAllCoroutines();
+            StopCoroutine(charge);
         }
 
         public void SnakeMovement()
@@ -312,6 +319,7 @@ namespace Merbles
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, _agent.baseOffset + 1, groundLayer))
             {
+                //Debug.Log(hit.transform.name);
                 StopCharging();
                 return true;
             }
@@ -321,9 +329,21 @@ namespace Merbles
             }
         }
 
-        private void ChangeSentience(bool value)
+        private void OnTriggerEnter(Collider other)
         {
-            
+            if (other.CompareTag("RespawnPlane"))
+            {
+                
+            }
+        }
+        private IEnumerator BeepBoop()
+        {
+            if(Random.Range(1,20) == 1)
+            {
+                Globals.Managers.Audio.PlaySFXRandom("RobotAmbiance", transform, 11,0.5f);
+            }
+            yield return new WaitForSeconds(1);
+            beep = StartCoroutine(BeepBoop());
         }
     }
 }

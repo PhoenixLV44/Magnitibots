@@ -14,8 +14,13 @@ namespace Ability
         private Rigidbody _smashBallRb;
 
         private IEnumerator moveCursorRoutine;
-        private Transform _returnPoint;
+        private Transform _defaultReturnPoint;
+        public Transform DefaultReturnPoint => _defaultReturnPoint;
+        private Vector3 _returnPoint;
+        public Vector3 ReturnPoint {get => _returnPoint; set => _returnPoint = value; }
         private bool _returnMerbles;
+        public bool ReturnMerbles {get => _returnMerbles; set => _returnMerbles = value; }
+        private bool _dropMerbles;
         private void Start()
         {
             InitializeAbility();
@@ -43,6 +48,7 @@ namespace Ability
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[i].StartCharge(transform.position);
+                    Globals.Managers.Audio.PlaySFX("ChargeMerble");
                 }
             }
 
@@ -60,10 +66,6 @@ namespace Ability
                 if (merbleArray.Length > 0)
                 {
                     merbleArray[j].StartCharge(transform.position);
-                    if (j < maxPower)
-                    {
-                        //j++;
-                    }
                 }
 
                 yield return new WaitForSecondsRealtime(chargeTimer);
@@ -75,6 +77,7 @@ namespace Ability
             base.StartCharging();
             ActivateBall();
             StartCoroutine(moveCursorRoutine);
+            _dropMerbles = false;
         }
 
         public override void Fire()
@@ -91,9 +94,8 @@ namespace Ability
             _smashBall.GetComponent<SmashBall>().SmashAbility = this;
             _smashBall.name = "SmashBall";
             _smashBallRb = _smashBall.GetComponent<Rigidbody>();
-
-            moveCursorRoutine = MoveCursor();
-            _returnPoint = GameObject.Find("ReturnPoint").transform;
+            
+            _defaultReturnPoint = GameObject.Find("ReturnPoint").transform;
             DeactivateBall();
         }
         
@@ -112,7 +114,8 @@ namespace Ability
             _smashBall.transform.localScale = smashBallScript.BaseScale;
 
             Vector3 cursorPos = transform.position + GameObject.Find("PlayerModel").transform.forward;
-            targetCursor.ActivateCursor(cursorPos);
+            targetCursor.ChangeCursorPosition(cursorPos);
+            targetCursor.ObjectToMove = _smashBall;
             smashBallScript.TriggerCollider.enabled = false;
             _smashBall.SetActive(true);
 
@@ -121,7 +124,7 @@ namespace Ability
             StartCoroutine(MoveMerbles());
 
             _returnMerbles = false;
-
+            _returnPoint = Vector3.zero;
             //StartCoroutine(MoveCursor());
         }
 
@@ -148,28 +151,14 @@ namespace Ability
         private void DropBall()
         {
             //Debug.Log("DropBall");
+            Globals.Managers.Audio.PlaySFXHere("ThrowRock", _smashBall.transform);
+            _dropMerbles = true;
             _smashBallRb.useGravity = true;
+            targetCursor.ObjectToMove = null;
             _smashBall.GetComponent<SmashBall>().TriggerCollider.enabled = true;
-            StopCoroutine(moveCursorRoutine);
             StopCoroutine(chargeCoroutine);
-            targetCursor.DeactivateCursor();
-            Cursor.lockState = CursorLockMode.None;
-            //targetCursor.transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             rangeIndicator.DisableRangeIndicator();
-            foreach (var b in MerbleBoss.ChargedMerbleList)
-            {
-                //StartCoroutine(b.UseGravity());
-            }
-        }
-        private IEnumerator MoveCursor()
-        {
-            while (true)
-            {
-                //Debug.Log("Move Cursor");
-                //targetCursor.MoveCursor();
-                targetCursor.MoveObjectToCursor(_smashBall, this);
-                yield return null;
-            }
+
         }
         private IEnumerator MoveMerbles()
         {
@@ -178,25 +167,38 @@ namespace Ability
             yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count > 0);
             while(merbleBoss.ChargedMerbleList.Count > 0)
             {
+                float speed = 2f;
                 if (!_returnMerbles)
                 {
                     List<Merble> merbleList = merbleBoss.ChargedMerbleList;
                     for (int i = 0; i < merbleList.Count; i++)
                     {
-                        merbleList[i].FloatTowardsObject(_smashBall.transform.position, i, Merble.AbilityEnum.Smash, 1.5f);
+                        merbleList[i].FloatTowardsObject(_smashBall.transform.position, i, Merble.AbilityEnum.Smash, speed);
                     }
                 }
                 else
                 {
                     for(int i = 0 ; i < merbleBoss.ChargedMerbleList.Count; i++)
                     {
-                        if (!merbleBoss.ChargedMerbleList[i].GroundCheck())
+                        var merble = merbleBoss.ChargedMerbleList[i];
+                        float distance = Vector3.Distance(merble.transform.position, _returnPoint == Vector3.zero ? _defaultReturnPoint.position : _returnPoint);
+                        if (!merble.GroundCheck() || distance > 0.25f)
                         {
-                            merbleBoss.ChargedMerbleList[i].FloatTowardsObject(_returnPoint.position, i, Merble.AbilityEnum.Smash, 1.5f);
+                            Debug.Log("Ground check is false;");
+                            if (_returnPoint == Vector3.zero)
+                            {
+                                merble.FloatTowardsObject(_defaultReturnPoint.position, i,
+                                    Merble.AbilityEnum.Smash, speed);
+                            }
+                            else
+                            {
+                                merble.FloatTowardsObject(_returnPoint, i, Merble.AbilityEnum.Smash, speed);
+                            }
+
                         }
-                        else
+                        else if(merble.GroundCheck() || distance < 0.25f)
                         {
-                            merbleBoss.ChargedMerbleList[i].StopCharging();
+                            merble.StopCharging();
                         }
                     }
                 }

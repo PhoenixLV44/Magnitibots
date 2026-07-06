@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
@@ -27,7 +29,10 @@ public class SettingsManager : MonoBehaviour
     #region UI References
 
     GameObject _pauseMenu;
+
     GameObject _hud;
+    VisualElement _hudRoot;
+    VisualElement _hudblur;
 
     #region regular settings
     VisualElement root;
@@ -44,6 +49,11 @@ public class SettingsManager : MonoBehaviour
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
     Slider pause_MouseSensitivitySlider;
+    #endregion
+
+    #region Transitions
+    UIDocument sceneTransition;
+
     #endregion
 
     #endregion
@@ -76,7 +86,7 @@ public class SettingsManager : MonoBehaviour
         //find UI References
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
 
-        pause_blur = pause_root.Q<Slider>("Blur");
+        pause_blur = pause_root.Q<VisualElement>("Blur");
 
         pause_BGMVolumeSlider = pause_root.Q<Slider>("BGMVolumeSlider");
         pause_SFXVolumeSlider = pause_root.Q<Slider>("SFXVolumeSlider");
@@ -94,8 +104,14 @@ public class SettingsManager : MonoBehaviour
         #endregion
 
         _hud = GameObject.Find("HUD");
+
+        _hudRoot = _hud.GetComponent<UIDocument>().rootVisualElement;
+        _hudblur = _hudRoot.Q<VisualElement>("Blur");
+
         _pauseMenu = GameObject.Find("PauseMenu");
 
+        sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
+        sceneTransition.rootVisualElement.visible = false;
     }
     private void Update()
     {
@@ -267,15 +283,16 @@ public class SettingsManager : MonoBehaviour
     public void EnableHUD()
     {
         _hud.SetActive(true);
+        _hudblur.visible = false;
     }
-    public void UpdateHUD()
+    public void UpdateHUD(string ability = "nada")
     {
-        _hud.GetComponent<HUDGUI>().UpdateGUI();
+        _hud.GetComponent<HUDGUI>().UpdateGUI(ability);
     }
     public void DisableHUD()
     {
-        
         _hud.SetActive(false);
+        _hudblur.visible = false;
     }
     public void EnablePause()
     {
@@ -290,5 +307,49 @@ public class SettingsManager : MonoBehaviour
     public void UnlockPopup(string ability)
     {
         _hud.GetComponent<HUDGUI>().UnlockPopup(ability);
+    }
+    public void TransitionScene()
+    {
+        StartCoroutine(Fader("Load"));
+    }
+    public void FadeAway(string action = "")
+    {
+        StartCoroutine(Fader());
+    }
+    private IEnumerator Fader(string action = "")
+    {
+        sceneTransition.rootVisualElement.visible = true;
+        sceneTransition.rootVisualElement.BringToFront();
+        sceneTransition.rootVisualElement.Q("Blackout").AddToClassList("transitionOn");
+        yield return new WaitForSecondsRealtime(1);
+        Debug.Log("loading...");
+        if (action == "Load")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("ready!");
+            yield return new WaitForSecondsRealtime(2);
+        }
+        StartCoroutine(FadeIn());
+    }
+    private IEnumerator FadeIn()
+    {
+        Debug.Log("check this out!");
+        sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
+        yield return new WaitForSecondsRealtime(1);
+        
+        sceneTransition.rootVisualElement.SendToBack();
+        sceneTransition.rootVisualElement.visible = false;
+        Globals.Managers.Settings.EnableHUD();
+        Debug.Log("done!");
+    }
+    bool wait = true;
+    private void FadeOutCallback(GeometryChangedEvent ev)
+    {
+        if (wait)
+        {
+            wait = false;
+            sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
+            sceneTransition.rootVisualElement.Q("Blackout").UnregisterCallback<GeometryChangedEvent>(FadeOutCallback);
+        }
     }
 }

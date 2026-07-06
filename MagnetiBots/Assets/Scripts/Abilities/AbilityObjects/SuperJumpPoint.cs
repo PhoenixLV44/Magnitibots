@@ -25,10 +25,13 @@ public class SuperJumpPoint : MonoBehaviour
     }
     private bool _isCharging;
     public bool IsCharging { get; set; }
+    
+    [SerializeField] private GameObject hoverParticles;
+    public GameObject HoverParticles => hoverParticles;
     private void Start()
     {
         //_moveMerblesCoroutine = MoveMerbles();
-        _merblePoints = new Transform[transform.childCount];
+        _merblePoints = new Transform[transform.childCount - 1];
         for (int i = 0; i < _merblePoints.Length; i++)
         {
             _merblePoints[i] = transform.GetChild(i);
@@ -53,6 +56,7 @@ public class SuperJumpPoint : MonoBehaviour
             {
                 _rotationSpeed = _movement.CharacterController.velocity.magnitude;
             }
+            hoverParticles.SetActive(_movement.Hovering);
         }
         transform.Rotate(0, _rotationSpeed, 0 * Time.deltaTime);
     }

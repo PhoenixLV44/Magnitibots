@@ -11,7 +11,7 @@ public class JumpState: AirState
     {
         base.EnterState();
         player.Movement.StartCoroutine(player.Movement.Jump());
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
 
     }
 
@@ -23,9 +23,12 @@ public class JumpState: AirState
     public override void TransitionChecks()
     {
         base.TransitionChecks();
-
         if (!player.Movement.IsRising())
         {
+            if (player.Movement.Grounded)
+            {
+                stateMachine.ChangeState(stateManager.IdleState);
+            }
             //Debug.Log("Falling");
             if (!player.Movement.Grounded && !player.Movement.Hovering)
             {
@@ -41,7 +44,7 @@ public class JumpState: AirState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+        //stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
     }
 
     public override void PhysicsUpdate()

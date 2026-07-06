@@ -16,6 +16,18 @@
     align-items: center;
     margin-top: 44px;
     margin-bottom: 20px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .SettingsMenu {
@@ -123,7 +135,7 @@
     min-height: 66px;
     align-items: center;
     top: auto;
-    left: 24px;
+    left: 0;
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -141,8 +153,8 @@
     justify-content: center;
     padding-left: 30px;
     padding-right: 30px;
-    margin-bottom: 5px;
-    margin-top: 14px;
+    margin-bottom: 3px;
+    margin-top: 0;
     margin-left: 300px;
     margin-right: 300px;
     padding-top: 10px;
@@ -150,15 +162,15 @@
 }
 
 .SliderBin Label {
-    font-size: 31px;
+    font-size: 39px;
     -unity-text-align: middle-left;
     min-width: 371px;
-    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&guid=82db8662a4d71c74eaee21d3daa362c5&type=3#Zyzol");
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&guid=344cd985bcb249a46a569eea7590cc62&type=3#Zyzol-Bold");
     color: rgb(255, 255, 255);
-    -unity-text-outline-width: 3px;
+    -unity-text-outline-width: 4px;
     -unity-text-outline-color: rgb(0, 0, 0);
     -unity-font-style: bold;
-    letter-spacing: -9px;
+    letter-spacing: -8px;
 }
 
 .mainButton:hover {
@@ -168,7 +180,7 @@
 .mainButton {
     background-image: url("project://database/Assets/Art%20Assets/UI/Title%20Screen/Main%20Menu%20Button.png?fileID=2800000&guid=e15f053f4c674184db514e117e142229&type=3#Main Menu Button");
     flex-grow: 0;
-    width: 462px;
+    width: 599px;
     height: 122px;
     font-size: 71px;
     -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&guid=344cd985bcb249a46a569eea7590cc62&type=3#Zyzol-Bold");
@@ -177,6 +189,7 @@
     -unity-text-outline-color: rgb(0, 0, 0);
     -unity-text-align: lower-center;
     background-color: rgba(0, 0, 0, 0);
+    padding-bottom: 18px;
 }
 
 .mainButton.exit {
@@ -186,6 +199,18 @@
 .mainButton.exit:hover {
     background-image: url("project://database/Assets/Art%20Assets/UI/Title%20Screen/Main%20Menu%20Close%20Button_Hovered.png?fileID=2800000&guid=622a81e903d04a84daa0ea6bee0b22d5&type=3#Main Menu Close Button_Hovered");
     background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .settingSlider #unity-dragger:active {
@@ -220,8 +245,8 @@
 .controlImage {
     flex-grow: 0;
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Rounded%20Square.png?fileID=2800000&guid=90fb9d525ab6fa146bbaf9dc26be04ce&type=3#Rounded Square");
-    height: 118px;
-    width: 134px;
+    height: 105px;
+    width: 111px;
     margin-left: 0;
     margin-right: -104px;
 }
@@ -247,9 +272,9 @@
 }
 
 .control {
-    margin-bottom: 15px;
+    margin-bottom: 0;
     padding-right: 0;
-    margin-right: 0;
+    margin-right: 58px;
     margin-left: 0;
 }
 
@@ -260,8 +285,8 @@
     right: 0;
 }
 
-.rightArrow:active {
-    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Right%20Arrow_Pressed.png?fileID=2800000&guid=e7e55720669eb3b4b86ae3f981600d8d&type=3#Right Arrow_Pressed");
+.rightArrow:hover {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Right%20Arrow_Hovered.png?fileID=2800000&guid=4d0ce619301b4174d8432b8906da1f53&type=3#Right Arrow_Hovered");
 }
 
 .leftArrow {
@@ -271,16 +296,40 @@
     left: 0;
 }
 
-.leftArrow:active {
-    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Left%20Arrow_Pressed.png?fileID=2800000&guid=7664c8288cd637d49a6aab60ef9412aa&type=3#Left Arrow_Pressed");
+.leftArrow:hover {
+    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Left%20Arrow_Hovered.png?fileID=2800000&guid=f7a268b5630d367409b68798dee4c65b&type=3#Left Arrow_Hovered");
 }
 
 .closeButton {
-    background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button.png?fileID=2800000&guid=d79714767b2625c44b235a97b856ed3d&type=3#Close Button");
+    background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Close%20Button%201.png?fileID=2800000&guid=c844645919c26f34ea39fc2cd1c72150&type=3#Close Button 1");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .closeButton:hover {
     background-image: url("project://database/Assets/Art%20Assets/UI/Controls/Close%20Button_Hovered.png?fileID=2800000&guid=6b402236f92c6af4a92b2afddfbf6360&type=3#Close Button_Hovered");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .unity-button {
@@ -329,4 +378,100 @@
     border-top-width: 0;
     border-bottom-width: 0;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.controlRight {
+    margin-bottom: 0;
+    padding-right: 0;
+    margin-right: 40px;
+    margin-left: 0;
+}
+
+.abilityPanel {
+    align-self: center;
+    align-items: center;
+    height: 700px;
+    width: 1321px;
+    padding-bottom: 58px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.abilityHeader {
+    align-content: stretch;
+    flex-grow: 1;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: stretch;
+    align-self: stretch;
+    max-height: 196px;
+    background-image: url("project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&guid=0210c0b24bb5f794cb539551372ac845&type=3#Upper Border");
+    padding-bottom: 20px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.carouselBox {
+    flex-grow: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    visibility: hidden;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+    right: 0;
+    bottom: 0;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.carouselBox.left {
+    translate: -1920px 0;
+}
+
+.carouselBox.right {
+    translate: 1920px 0;
+}
+
+.carouselBox.middle {
+    translate: 0 0;
+}
+
+.teamMember {
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&guid=82db8662a4d71c74eaee21d3daa362c5&type=3#Zyzol");
+    font-size: 47px;
 }

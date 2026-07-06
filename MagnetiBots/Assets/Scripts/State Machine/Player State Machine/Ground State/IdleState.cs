@@ -1,3 +1,4 @@
+using Ability;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,7 +11,7 @@ public class IdleState : GroundedState
         //Debug.Log("Entering Idle State");
         base.EnterState();
         animator.Play("IdleWalk");
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
     }
 
     public override void TransitionChecks()
@@ -22,7 +23,7 @@ public class IdleState : GroundedState
             stateMachine.ChangeState(stateManager.LassoHookedState);
         }
 
-        if (InputSystem.actions.FindAction("Charge").IsPressed())
+        if (InputSystem.actions.FindAction("Charge").IsPressed() && player.AbilityStateManager.StateMachine.CurrentState != player.AbilityStateManager.NoAbilityState)
         {
             stateMachine.ChangeState(stateManager.ChargeState);
         }
@@ -46,9 +47,9 @@ public class IdleState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (stateManager.PlayerMovement != null && !player.Interacting)
+        if (player.Movement != null && !player.Interacting)
         {
-            stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
+            //player.Movement.Look(player.Movement.Submitted[1]);
             //Debug.LogError("NOT NULL");
         }
         else

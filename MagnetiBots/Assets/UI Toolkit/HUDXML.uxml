@@ -1,44 +1,44 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/hud.uss?fileID=7433441132597879392&amp;guid=512e0e777e692ac47aa878edb7e0bf80&amp;type=3#hud"/>
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/hud.uss?fileID=7433441132597879392&amp;guid=512e0e777e692ac47aa878edb7e0bf80&amp;type=3#hud"/>
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement name="Unlocks" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px; visibility: hidden;">
-            <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(1.57); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: visible;"/>
-            <ui:VisualElement name="HoverUnlock" style="visibility: hidden;">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Hover).png?fileID=2800000&amp;guid=f869cb1e87b7d0a4ebfdcac0ef8af6a2&amp;type=3#Title (Hover)" scale-mode="StretchToFill" class="title powerUnlock"/>
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Hover).png?fileID=2800000&amp;guid=a2dd246aafc39fa47affec63cb7693eb&amp;type=3#Panel (Hover)" class="panel powerUnlock"/>
+            <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(1.57); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: hidden;"/>
+            <ui:VisualElement name="HoverUnlock" picking-mode="Ignore" style="visibility: hidden;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Hover).png?fileID=2800000&amp;guid=f869cb1e87b7d0a4ebfdcac0ef8af6a2&amp;type=3#Title (Hover)" scale-mode="StretchToFill" picking-mode="Ignore" class="title powerUnlock"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Hover).png?fileID=2800000&amp;guid=a2dd246aafc39fa47affec63cb7693eb&amp;type=3#Panel (Hover)" picking-mode="Ignore" class="panel powerUnlock"/>
             </ui:VisualElement>
-            <ui:VisualElement name="LassoUnlock" style="visibility: hidden;">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Lasso).png?fileID=2800000&amp;guid=1ec5e376a2b85004d8c7925cfb58ad23&amp;type=3#Title (Lasso)" scale-mode="StretchToFill" class="title powerUnlock"/>
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Lasso).png?fileID=2800000&amp;guid=df116e0e1eb76ea4db0d9a90b55bb857&amp;type=3#Panel (Lasso)" class="panel powerUnlock"/>
+            <ui:VisualElement name="LassoUnlock" picking-mode="Ignore" style="visibility: hidden;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Lasso).png?fileID=2800000&amp;guid=1ec5e376a2b85004d8c7925cfb58ad23&amp;type=3#Title (Lasso)" scale-mode="StretchToFill" picking-mode="Ignore" class="title powerUnlock"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Lasso).png?fileID=2800000&amp;guid=df116e0e1eb76ea4db0d9a90b55bb857&amp;type=3#Panel (Lasso)" picking-mode="Ignore" class="panel powerUnlock"/>
             </ui:VisualElement>
-            <ui:VisualElement name="SmashUnlock" style="visibility: hidden;">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Smash).png?fileID=2800000&amp;guid=03f8f084723d2fd4cbe1b4fe239f43f6&amp;type=3#Title (Smash)" scale-mode="StretchToFill" class="title powerUnlock"/>
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Smash).png?fileID=2800000&amp;guid=47676d1d4628bde40931ab36b241c973&amp;type=3#Panel (Smash)" class="panel powerUnlock"/>
+            <ui:VisualElement name="SmashUnlock" picking-mode="Ignore" style="visibility: hidden;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Smash).png?fileID=2800000&amp;guid=03f8f084723d2fd4cbe1b4fe239f43f6&amp;type=3#Title (Smash)" scale-mode="StretchToFill" picking-mode="Ignore" class="title powerUnlock"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Smash).png?fileID=2800000&amp;guid=47676d1d4628bde40931ab36b241c973&amp;type=3#Panel (Smash)" picking-mode="Ignore" class="panel powerUnlock"/>
             </ui:VisualElement>
-            <ui:VisualElement name="SuperJumpUnlock" style="visibility: hidden;">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Super%20Jump).png?fileID=2800000&amp;guid=ef5979b76c1dbe54b8386e1c4f7c952c&amp;type=3#Title (Super Jump)" scale-mode="StretchToFill" class="title powerUnlock"/>
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Super%20Jump).png?fileID=2800000&amp;guid=2db2a345f50aa8d4fa522d05fd7f6d3d&amp;type=3#Panel (Super Jump)" class="panel powerUnlock"/>
+            <ui:VisualElement name="SuperJumpUnlock" picking-mode="Ignore" style="visibility: hidden;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Super%20Jump).png?fileID=2800000&amp;guid=ef5979b76c1dbe54b8386e1c4f7c952c&amp;type=3#Title (Super Jump)" scale-mode="StretchToFill" picking-mode="Ignore" class="title powerUnlock"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Super%20Jump).png?fileID=2800000&amp;guid=2db2a345f50aa8d4fa522d05fd7f6d3d&amp;type=3#Panel (Super Jump)" picking-mode="Ignore" class="panel powerUnlock"/>
             </ui:VisualElement>
             <ui:Button text="Close" name="UnlocksReturnButton" class="closeButton" style="top: auto; left: -5px; background-color: rgba(188, 188, 188, 0); width: 405px; font-size: 54px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 3px; -unity-font-style: bold; padding-top: 18px; bottom: 1%; position: absolute;"/>
         </ui:VisualElement>
         <ui:VisualElement picking-mode="Ignore" name="MainHUD" style="flex-grow: 1;">
             <ui:VisualElement name="PowerSelectors" style="flex-grow: 0; top: 0; left: 0; flex-direction: row; width: 443px; height: 182px; align-items: flex-start; margin-left: 11px; margin-top: 10px;">
                 <ui:VisualElement name="LassoPower" class="power" style="visibility: hidden;">
-                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Lasso%20Indicator_Inactive.png?fileID=2800000&amp;guid=378a68e07684e6740bff907fb3fb729c&amp;type=3#Lasso Indicator_Inactive" enabled="true" style="flex-grow: 1; align-content: auto; align-items: auto; justify-content: flex-start; align-self: auto; text-shadow: 0 0 0 rgb(0, 0, 0);"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Lasso%20Indicator_Inactive.png?fileID=2800000&amp;guid=378a68e07684e6740bff907fb3fb729c&amp;type=3#Lasso Indicator_Inactive" enabled="true" name="LassoImage" style="flex-grow: 1; align-content: auto; align-items: auto; justify-content: flex-start; align-self: auto; text-shadow: 0 0 0 rgb(0, 0, 0);"/>
                     <ui:Label text="1" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; align-items: auto; align-content: auto; height: 40px;"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="SmashPower" class="power" style="visibility: hidden;">
-                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Smash%20Indicator_Inactive.png?fileID=2800000&amp;guid=2117627c11a1dc74cbb214273307ce32&amp;type=3#Smash Indicator_Inactive" style="flex-grow: 1;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Smash%20Indicator_Inactive.png?fileID=2800000&amp;guid=2117627c11a1dc74cbb214273307ce32&amp;type=3#Smash Indicator_Inactive" name="SmashImage" style="flex-grow: 1;"/>
                     <ui:Label text="2" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; height: 40px;"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="SuperJumpPower" class="power" style="visibility: hidden;">
-                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Hover%20Indicator_Inactive.png?fileID=2800000&amp;guid=be832d48c76b7de41acfddf94a7ba8eb&amp;type=3#Hover Indicator_Inactive" style="flex-grow: 1;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Hover%20Indicator_Inactive.png?fileID=2800000&amp;guid=be832d48c76b7de41acfddf94a7ba8eb&amp;type=3#Hover Indicator_Inactive" name="SuperJumpImage" style="flex-grow: 1;"/>
                     <ui:Label text="3&#10;" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; height: 40px;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="Merbles" style="flex-grow: 1; align-items: flex-end; justify-content: flex-end; position: relative; right: 0; bottom: 0; flex-direction: row; visibility: hidden;">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="width: 171px; height: 145px; aspect-ratio: auto;"/>
-                <ui:Label text="x12" name="MerbleCounter" style="-unity-text-align: middle-center; margin-bottom: 13px; font-size: 87px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); -unity-font-style: bold;"/>
+            <ui:VisualElement name="Merbles" style="flex-grow: 1; align-items: flex-end; justify-content: flex-end; position: relative; right: 25px; bottom: 25px; flex-direction: row; visibility: hidden;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="width: 148px; height: 132px; aspect-ratio: auto;"/>
+                <ui:Label text="x12" name="MerbleCounter" style="-unity-text-align: middle-center; margin-bottom: 15px; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); -unity-font-style: bold;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

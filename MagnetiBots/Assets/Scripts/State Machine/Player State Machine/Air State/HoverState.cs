@@ -1,3 +1,4 @@
+using Ability;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ public class HoverState : AirState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("Entered HoverState");
+        Debug.Log("Entered HoverState"); 
     }
 
     public override void ExitState()
@@ -25,6 +26,7 @@ public class HoverState : AirState
 
         if (InputSystem.actions.FindAction("Jump").IsPressed() || InputSystem.actions.FindAction("Charge").IsPressed())
         {
+            player.GetComponent<SuperJump>().StopHovering();
             stateMachine.ChangeState(stateManager.FallState);
         }
     }

@@ -37,7 +37,7 @@ namespace Player
                 abilityManager = stateManager.gameObject.GetComponent<Ability.StateManager>();
             }
 
-            if (abilityManager)
+            if (abilityManager && abilityManager.CurrentAbility)
             {
                 currentAbility = abilityManager.StateMachine.CurrentState.Ability;
             }

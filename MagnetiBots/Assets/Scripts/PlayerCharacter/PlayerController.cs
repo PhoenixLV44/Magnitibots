@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using Ability.Object;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -35,11 +36,8 @@ namespace Player
         private Ability.SuperJump _superJumpAbility;
         public Ability.SuperJump SuperJumpAbility { get { return _superJumpAbility; } }
         
-        private TargetingCursor _targetCursorScript;
-        public TargetingCursor TargetCursorScript { get { return _targetCursorScript; } }
-        
-        private GameObject _targetCursorObject;
-        public GameObject TargetCursorObject => _targetCursorObject;
+        private TargetingCursor _targetCursor;
+        public TargetingCursor TargetCursor { get { return _targetCursor; } }
             #endregion
 
         #region States
@@ -57,6 +55,8 @@ namespace Player
         
         private RangeIndicator _rangeIndicator;
         public RangeIndicator RangeIndicator { get { return _rangeIndicator; } }
+        
+        
         [SerializeField] private bool canUseLasso;
         public bool CanUseLasso { get => canUseLasso; set => canUseLasso = value; }
         
@@ -65,8 +65,12 @@ namespace Player
         [SerializeField] private bool canUseSuperJump = false;
         public bool CanUseSuperJump { get => canUseSuperJump; set => canUseSuperJump = value; }
         
+        [SerializeField] private Transform returnPoint;
+        public  Transform ReturnPoint =>  returnPoint;
         [SerializeField] private GameObject chargingParticles;
         public GameObject ChargingParticles => chargingParticles;
+        [SerializeField] private GameObject hoverParticles;
+        public  GameObject HoverParticles => hoverParticles;
 
         [SerializeField] private SuperJumpPoint superJumpPoint;
         
@@ -82,6 +86,10 @@ namespace Player
 
         void Start()
         {
+            if (!Globals.Managers)
+            {
+                SceneManager.LoadScene(0);
+            }
             _movement = gameObject.AddComponent<Player.Movement>();
             _animator = GetComponent<Animator>();
 
@@ -99,7 +107,7 @@ namespace Player
             _merbleBoss.defaultCapacity = 0;
             _merbleBoss.maxSize = 10;
             
-            _targetCursorScript = gameObject.AddComponent<TargetingCursor>();
+            _targetCursor = gameObject.AddComponent<TargetingCursor>();
             
             _playerStateManager = gameObject.AddComponent<Player.StateManager>();
             _abilityStateManager = gameObject.AddComponent<Ability.StateManager>();
@@ -111,8 +119,6 @@ namespace Player
             _abilityStateManager.PlayerController = this;
             
             _rangeIndicator = gameObject.AddComponent<RangeIndicator>();
-            
-            _targetCursorObject = transform.Find("Target Cursor").gameObject;
             
             chargingParticles.SetActive(false);
 
@@ -127,6 +133,8 @@ namespace Player
             respawner.Movement = _movement;
             
             shadow = transform.GetChild(transform.childCount - 1).gameObject;
+            
+            //_targetCursor.RaycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 25, transform.position.z) + _movement.Model.transform.forward;
         }
 
         // Update is called once per frame
@@ -138,10 +146,12 @@ namespace Player
                 //_merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             }
             _movement.adjustedMovement = Quaternion.Euler(0,_playerCamera.PivotPoint.transform.localEulerAngles.y,0);
+            
+            Cursor.lockState = !Globals.Managers.paused ? CursorLockMode.Locked : CursorLockMode.None;
         }
         void FixedUpdate()
         {
-            if (_movement.CharacterController)
+            if (_movement.CharacterController && !Globals.Managers.paused)
             {
                 _movement.HandleMovement();
             }
@@ -199,25 +209,32 @@ namespace Player
             }
         }
 
-        public void UnlockNewAbility()
+        public void UnlockNewAbility(UnlockAbilityPackage.AbilityType abilityType)
         {
-            if (!canUseLasso)
+            if (abilityType == UnlockAbilityPackage.AbilityType.Lasso)
             {
                 Debug.Log("can use lasso");
-                Globals.Managers.Settings.UnlockPopup("Lasso");
+                if (FindFirstObjectByType<Globals>() != null)
+                {
+                    Globals.Managers.Settings.UnlockPopup("Lasso");
+                }
                 canUseLasso = true;
             }
-            else if (!canUseSmash)
+            else if (abilityType == UnlockAbilityPackage.AbilityType.Smash)
             {
                 Debug.Log("can use smash");
-                Globals.Managers.Settings.UnlockPopup("Smash");
-                canUseSmash = true;
+                if (FindFirstObjectByType<Globals>() != null)
+                {
+                    Globals.Managers.Settings.UnlockPopup("Smash");
+                }                canUseSmash = true;
             }
-            else if (!canUseSuperJump)
+            else if (abilityType == UnlockAbilityPackage.AbilityType.SuperJump)
             {
                 Debug.Log("can use super jump");
-                Globals.Managers.Settings.UnlockPopup("SuperJump");
-                canUseSuperJump = true;
+                if (FindFirstObjectByType<Globals>() != null)
+                {
+                    Globals.Managers.Settings.UnlockPopup("SuperJump");
+                }                canUseSuperJump = true;
             }
             _animator.Play("Collect");
         }

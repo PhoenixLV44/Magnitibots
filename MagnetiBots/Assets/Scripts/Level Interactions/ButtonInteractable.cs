@@ -13,6 +13,7 @@ namespace Interactable
         public override void ActivateObject()
         {
             base.ActivateObject();
+            Globals.Managers.Audio.PlaySFXHere("UI_WoodClick", transform);
         }
 
         public override void DeactivateObject()
@@ -22,6 +23,11 @@ namespace Interactable
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.CompareTag("LassoTarget"))
+            {
+                PuzzleCube cube = other.GetComponent<PuzzleCube>();
+                cube.FreezeConstraints();
+            }
             ActivateObject();
         }
 

@@ -98,6 +98,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fbdd1a7b068706468d2926f2d2fbe6c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2371215876718045507}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fbdd1a7b068706468d2926f2d2fbe6c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6195916155522391527}
   m_SourcePrefab: {fileID: 100100000, guid: 4fbdd1a7b068706468d2926f2d2fbe6c, type: 3}
 --- !u!1 &7516399351893495263 stripped
 GameObject:
@@ -192,7 +195,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7516399351893495263}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.10700001, y: 0.11100001, z: 0.108}
@@ -213,3 +216,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7df593e75abd3c4fb37581e3cdc55f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleCube
+--- !u!114 &6195916155522391527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7516399351893495263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

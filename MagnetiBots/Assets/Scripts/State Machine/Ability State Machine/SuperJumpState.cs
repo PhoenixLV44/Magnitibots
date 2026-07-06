@@ -9,8 +9,10 @@ namespace Ability
         public override void EnterState()
         {
             base.EnterState();
-            Debug.Log("Entered Super Jump State");
+            /*player.TargetCursor.CurrentAbility = ability;*/
+            //Debug.Log("Entered Super Jump State");
             //animator.SetBool("SuperJump", true);
+            Globals.Managers.Settings.UpdateHUD("SuperJump");
         }
 
         public override void ExitState()
