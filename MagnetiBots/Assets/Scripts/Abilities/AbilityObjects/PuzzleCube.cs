@@ -18,6 +18,7 @@ public class PuzzleCube : MonoBehaviour
     {
         if (_rb != null)
         {
+            _rb.linearVelocity = Vector3.zero;
             ChangeGravity(false);
             _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY |RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }

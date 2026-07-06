@@ -50,7 +50,6 @@ MonoBehaviour:
   interactionObjects: []
   delayBetweenObjects: 0
   canBeDeactivated: 0
-  canvas: {fileID: 8323517872627512707}
 --- !u!136 &6962055658659196927
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -243,8 +242,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press E to Pull
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 305b9e0d43e41564f989712883a08cb2, type: 2}
+  m_sharedMaterial: {fileID: 5228068675462637459, guid: 305b9e0d43e41564f989712883a08cb2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -422,10 +421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732306cbb9a6c5d4d8e093ff66d9c1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactable.LeverCatToy
-  interactionObjects: []
-  delayBetweenObjects: 0
-  canBeDeactivated: 0
-  canvas: {fileID: 0}
   blueMaterial: {fileID: 2100000, guid: d717bf123d95e254aa5d633057c727b1, type: 2}
   redMaterial: {fileID: 2100000, guid: c13ef812cd77a924fa30dae093766017, type: 2}
 --- !u!4 &3468243419433997106 stripped

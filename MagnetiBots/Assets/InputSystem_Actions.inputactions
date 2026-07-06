@@ -1192,6 +1192,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Load Level Two",
+                    "type": "Button",
+                    "id": "a1e038f0-a7c2-4343-b47a-6a093550b610",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1203,6 +1212,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Unlock Abilities",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "193f1160-0812-4ccb-b4e1-e4853fcb0b1e",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Load Level Two",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
