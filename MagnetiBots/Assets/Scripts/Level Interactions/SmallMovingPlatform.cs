@@ -33,7 +33,7 @@ namespace Interactable
 
         public override void DeactivateObject()
         {
-            StartCoroutine(MovePlatform(endPosition, startPosition));
+            //StartCoroutine(MovePlatform(endPosition, startPosition));
         }
 
         private IEnumerator MovePlatform(Vector3 firstPos, Vector3 secondPos)

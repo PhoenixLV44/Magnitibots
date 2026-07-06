@@ -7,7 +7,7 @@ namespace Interactable
     {
         private void Awake()
         {
-            canBeDeactivated = true;
+            canBeDeactivated = false;
         }
 
         public override void ActivateObject()
