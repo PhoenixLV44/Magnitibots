@@ -84,6 +84,7 @@ namespace Ability
 
         public void StopHovering()
         {
+            Debug.Log("STOP Hovering");
             _playerMovement.Hovering = false;
             //_hoverParticles.SetActive(false);
         }
