@@ -81,15 +81,15 @@ public class HUDGUI : MonoBehaviour
                 lassoUnlock.visible = true;
                 lassoPower.visible = true;
                 break;
-            case "SuperJump":
-                Debug.Log("unlock SuperJump");
-                jumpUnlock.visible = true;
-                jumpPower.visible = true;
-                break;
             case "Smash":
                 Debug.Log("unlock Smash");
                 smashUnlock.visible = true;
                 smashPower.visible = true;
+                break;
+            case "SuperJump":
+                Debug.Log("unlock SuperJump");
+                jumpUnlock.visible = true;
+                jumpPower.visible = true;
                 break;
             default:
                 UnPauseGame();

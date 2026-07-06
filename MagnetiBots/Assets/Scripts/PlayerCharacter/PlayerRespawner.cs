@@ -1,7 +1,7 @@
-using System;
+
+using System.Collections;
 using System.Collections.Generic;
-using Merbles;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -43,7 +43,7 @@ namespace Player
             }
             if (_respawnInput.WasPressedThisFrame())
             {
-                Respawn();
+                StartCoroutine(Respawn());
             }
         }
 
@@ -52,9 +52,10 @@ namespace Player
             CheckForRespawn();
         }
 
-        public void Respawn()
+        public IEnumerator Respawn()
         {
             Globals.Managers.Settings.FadeAway();
+            yield return new WaitForSecondsRealtime(1);
             Debug.Log("Respawn");
             _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
@@ -95,7 +96,7 @@ namespace Player
             if (Physics.SphereCast((transform.position), 0.5f, -Vector3.up, out hit, 1.5f, respawnMask))
             {
                 //Debug.Log("Respawn Raycast");
-                Respawn();
+                StartCoroutine(Respawn());
             }
         }
     }

@@ -346,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SuperJumpPoint
   defaultRotationSpeed: 1.5
+  hoverParticles: {fileID: 4543870952805358197}
 --- !u!1 &6002625688513940789
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller
   groundLayers:
     serializedVersion: 2
-    m_Bits: 33920
+    m_Bits: 38016
   movementSpeed: 7.5
   jumpForce: 120
   merblePrefab: {fileID: 321817351679022367, guid: 5f04af7789169334fa8830e6b1e7cbee, type: 3}

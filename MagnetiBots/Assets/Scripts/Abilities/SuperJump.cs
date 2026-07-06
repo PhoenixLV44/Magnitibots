@@ -12,6 +12,8 @@ namespace Ability
         private Transform[]  _merblePoints;
         IEnumerator _moveMerblesCoroutine;
         
+        GameObject _hoverParticles;
+        
         private void Start()
         {
             activateInput = InputSystem.actions.FindAction("Activate Super Jump");
@@ -52,6 +54,7 @@ namespace Ability
             if (merbleBoss.ChargedMerbleList.Count > 5)
             {
                 _playerMovement.Hovering = true;
+                _hoverParticles.SetActive(true);
             }
             StopCharging();
             
@@ -79,6 +82,12 @@ namespace Ability
             }
         }
 
+        public void StopHovering()
+        {
+            _playerMovement.Hovering = false;
+            //_hoverParticles.SetActive(false);
+        }
+
         public override void StopCharging()
         {
             base.StopCharging();
@@ -90,6 +99,8 @@ namespace Ability
             _superJumpPoint = transform.GetComponentInChildren<SuperJumpPoint>();
             maxPowerLevel = 10;
             _moveMerblesCoroutine = MoveMerbles();
+            _hoverParticles = _superJumpPoint.HoverParticles;
+            _hoverParticles.SetActive(false);
         }
 
         private IEnumerator MoveMerbles()
