@@ -126,44 +126,49 @@ public class HUDGUI : MonoBehaviour
     {
         UnPauseGame();
     }
-    Image[] arr;
-    public void UpdateGUI()
+    public void UpdateGUI(string ability = "nada")
     {
         HUDContainer.visible = true;
         if (controller != null)
         {
-            if (controller.MerbleBoss.MasterList != null)
+            if (controller.MerbleBoss.MasterList != null && ability == "nada")
             {
-                int realcount = controller.MerbleBoss.MasterList.Count + 1;
-                merbleCount.text = "x" + realcount.ToString();
+                if (controller.MerbleBoss.MasterList.Count+1 != 0)
+                {
+                    merbleUI.visible = true;
+                    int realcount = controller.MerbleBoss.MasterList.Count + 1;
+                    merbleCount.text = "x" + realcount.ToString();
+                }
             }
         }
-        
-        switch (controller.AbilityStateManager.CurrentAbility)
+        Image img;
+        switch (ability)
         {
-            case Ability.Smash:
-                arr = lassoPower.Children().ToArray() as Image[];
-                arr[0].image = lassoInactive;
-                arr = smashPower.Children().ToArray() as Image[];
-                arr[0].image = smashActive;
-                arr = jumpPower.Children().ToArray() as Image[];
-                arr[0].image = hoverInactive;
+            case "Smash":
+                img = lassoPower.Q("LassoImage") as Image;
+                img.image = lassoInactive;
+                img = smashPower.Q("SmashImage") as Image;
+                img.image = smashActive;
+                img = jumpPower.Q("SuperJumpImage") as Image;
+                img.image = hoverInactive;
                 break;
-            case Ability.Lasso:
-                arr = smashPower.Children().ToArray() as Image[];
-                arr[0].image = smashInactive;
-                arr = jumpPower.Children().ToArray() as Image[];
-                arr[0].image = hoverInactive;
-                arr = lassoPower.Children().ToArray() as Image[];
-                arr[0].image = lassoActive;
+            case "Lasso":
+                img = lassoPower.Q("LassoImage") as Image;
+                img.image = lassoActive;
+                img = smashPower.Q("SmashImage") as Image;
+                img.image = smashInactive;
+                img = jumpPower.Q("SuperJumpImage") as Image;
+                img.image = hoverInactive;
                 break;
-            case Ability.SuperJump:
-                arr = lassoPower.Children().ToArray() as Image[];
-                arr[0].image = lassoInactive;
-                arr = smashPower.Children().ToArray() as Image[];
-                arr[0].image = smashInactive;
-                arr = jumpPower.Children().ToArray() as Image[];
-                arr[0].image = hoverActive;
+            case "SuperJump":
+                img = lassoPower.Q("LassoImage") as Image;
+                img.image = lassoInactive;
+                img = smashPower.Q("SmashImage") as Image;
+                img.image = smashInactive;
+                img = jumpPower.Q("SuperJumpImage") as Image;
+                img.image = hoverActive;
+                break;
+            default:
                 break;
         }
     }

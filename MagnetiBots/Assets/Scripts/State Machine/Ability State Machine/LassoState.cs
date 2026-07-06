@@ -10,7 +10,7 @@ namespace Ability
         {
             base.EnterState();
             //Debug.Log("Entered Lasso State");
-            //Globals.Managers.Settings.UpdateHUD();
+            Globals.Managers.Settings.UpdateHUD("Lasso");
             /*player.TargetCursor.CurrentAbility = ability;
             */
         }
