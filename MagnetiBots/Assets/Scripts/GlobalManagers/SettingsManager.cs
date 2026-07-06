@@ -285,9 +285,9 @@ public class SettingsManager : MonoBehaviour
         _hud.SetActive(true);
         _hudblur.visible = false;
     }
-    public void UpdateHUD()
+    public void UpdateHUD(string ability = "nada")
     {
-        _hud.GetComponent<HUDGUI>().UpdateGUI();
+        _hud.GetComponent<HUDGUI>().UpdateGUI(ability);
     }
     public void DisableHUD()
     {

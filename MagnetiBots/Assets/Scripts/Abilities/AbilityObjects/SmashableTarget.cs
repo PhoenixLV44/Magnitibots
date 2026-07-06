@@ -47,7 +47,7 @@ namespace Ability.Object
             {
                 _canTakeDamage = false;
                 StartCoroutine(EndHitStun());
-                Globals.Managers.Audio.PlaySFXRandom("RockSmashing", transform, 4);
+                Globals.Managers.Audio.PlaySFXRandom("RockSmashing", transform, 4,1);
                 int damageInt = Mathf.RoundToInt(damage);
                 health -= damageInt;
                 Debug.Log("Health: " + health + " Damage: " + damageInt);

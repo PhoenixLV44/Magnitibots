@@ -42,6 +42,7 @@ namespace Interactable
                 {
                     Debug.Log("Activating Lever");
                     _leverCatToy.ChangeColor();
+                    Globals.Managers.Audio.PlaySFXHere("leverSfx", _leverCatToy.transform);
                 }
                 base.ActivateObject();
                 if (_playerInRange)

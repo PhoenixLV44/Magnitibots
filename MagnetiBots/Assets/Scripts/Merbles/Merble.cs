@@ -42,6 +42,9 @@ namespace Merbles
         public GameObject CollectParticles => collectParticles;
 
         [SerializeField] private Transform parent;
+
+        Coroutine charge;
+        Coroutine beep;
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -74,6 +77,7 @@ namespace Merbles
             tag = "Merble";
             _agent.enabled = true;
             collectParticles.SetActive(true);
+            beep = StartCoroutine(BeepBoop());
         }
         public void SetFollowType(FollowTypes type)
         {
@@ -121,7 +125,7 @@ namespace Merbles
         {
             if (!myBoss.ChargedMerbleList.Contains(this))
             {
-                StartCoroutine(Charge(target));
+                charge = StartCoroutine(Charge(target));
             }
         }
         IEnumerator Charge(Vector3 target)
@@ -174,7 +178,7 @@ namespace Merbles
             }
             myBoss.CheckForDuplicates(myBoss.merbleList);
             _currentAbilityEnum = AbilityEnum.None;
-            StopAllCoroutines();
+            StopCoroutine(charge);
         }
 
         public void SnakeMovement()
@@ -331,6 +335,15 @@ namespace Merbles
             {
                 
             }
+        }
+        private IEnumerator BeepBoop()
+        {
+            if(Random.Range(1,6) == 1)
+            {
+                Globals.Managers.Audio.PlaySFXRandom("RobotAmbiance", transform, 11,0.5f);
+            }
+            yield return new WaitForSeconds(1);
+            beep = StartCoroutine(BeepBoop());
         }
     }
 }
