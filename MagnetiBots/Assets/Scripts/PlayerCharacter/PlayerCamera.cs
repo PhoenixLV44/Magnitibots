@@ -42,7 +42,7 @@ namespace Player
         {
             if (_rotateCamera.IsPressed())
             {
-                Vector3 cameraRotationDelta = _moveCamera.ReadValue<Vector2>() * (rotationSpeed * Time.deltaTime);
+                Vector3 cameraRotationDelta = _moveCamera.ReadValue<Vector2>() * (rotationSpeed * Time.deltaTime * Globals.Managers.Settings.MouseSensitivity);
                 Vector3 newCameraRotation = _pivotPoint.transform.rotation.eulerAngles;
                 
                 newCameraRotation.x += cameraRotationDelta.y;
