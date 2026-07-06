@@ -326,9 +326,9 @@ public class SettingsManager : MonoBehaviour
         if (action == "Load")
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Debug.Log("ready!");
+            yield return new WaitForSecondsRealtime(2);
         }
-        Debug.Log("ready!");
-        yield return new WaitForSecondsRealtime(2);
         StartCoroutine(FadeIn());
     }
     private IEnumerator FadeIn()

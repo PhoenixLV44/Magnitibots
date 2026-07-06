@@ -102,6 +102,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnClickStart(ClickEvent click)
     {
+        Globals.Managers.Settings.EnableHUD();
         Globals.Managers.Settings.TransitionScene();
     }
 
