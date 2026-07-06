@@ -40,6 +40,7 @@ namespace Interactable
         {
             //Player.Controller player = FindObjectOfType<Player.Controller>();
             //player.Interacting = true;
+            Globals.Managers.Audio.PlaySFXHere("movingPlatformSfx", transform);
             yield return new WaitForSeconds(0.5f);
             float time = 0;
             while (time < 1)

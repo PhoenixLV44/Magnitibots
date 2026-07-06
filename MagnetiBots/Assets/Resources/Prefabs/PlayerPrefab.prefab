@@ -682,6 +682,7 @@ GameObject:
   - component: {fileID: 5303230749335911064}
   - component: {fileID: 6838911463744903436}
   - component: {fileID: 3189105818622406482}
+  - component: {fileID: 2306530822053734629}
   m_Layer: 6
   m_Name: PlayerPrefab
   m_TagString: Player
@@ -863,6 +864,14 @@ MonoBehaviour:
   jumpAnimation: {fileID: -594449180013613936, guid: 4c629730b6a46e74d9bbbf0afce4d040, type: 3}
   pullAnimation: {fileID: 6573946197381652903, guid: daa92bb5f8046f546b5700f6bd693ab9, type: 3}
   pullLeverAnimation: {fileID: 9095636634084129537, guid: a71d4815c7d475b4981f00cab2590116, type: 3}
+--- !u!81 &2306530822053734629
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043479003321384820}
+  m_Enabled: 1
 --- !u!1 &8220365761828623867
 GameObject:
   m_ObjectHideFlags: 0
