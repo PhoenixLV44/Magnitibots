@@ -259,7 +259,10 @@ namespace Player
             {
                 _gravityOn = false;
             }
-            Look(_submitted[1]);
+            if (_submitted != null)
+            {
+                Look(_submitted[1]);
+            }
         }
 
         private Vector3 _previousPosition;
