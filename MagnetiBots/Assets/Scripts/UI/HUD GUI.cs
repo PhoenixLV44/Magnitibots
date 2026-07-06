@@ -73,6 +73,7 @@ public class HUDGUI : MonoBehaviour
     public void UnlockPopup(string ability)
     {
         PauseGame();
+        Globals.Managers.Audio.PlaySFX("TahDa");
         unlockContainer.visible = true;
         switch (ability)
         {

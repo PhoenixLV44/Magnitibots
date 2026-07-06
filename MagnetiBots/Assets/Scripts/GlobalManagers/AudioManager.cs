@@ -139,12 +139,12 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFXHere(string clipName, Transform transform)
     {
-        AudioSource.PlayClipAtPoint(data.sfx[clipName], transform.position);
+        AudioSource.PlayClipAtPoint(data.sfx[clipName], transform.position, Globals.Managers.Settings.SFXVolume);
     }
-    public void PlaySFXRandom(string clipName, Transform transform, int max)
+    public void PlaySFXRandom(string clipName, Transform transform, int max, float volumeModifier)
     {
         string newName = String.Concat(clipName, UnityEngine.Random.Range(1, max+1));
-        AudioSource.PlayClipAtPoint(data.sfx[newName], transform.position);
+        AudioSource.PlayClipAtPoint(data.sfx[newName], transform.position, volumeModifier*Globals.Managers.Settings.SFXVolume);
     }
 }
 

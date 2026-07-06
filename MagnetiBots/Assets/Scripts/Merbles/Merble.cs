@@ -340,7 +340,7 @@ namespace Merbles
         {
             if(Random.Range(1,6) == 1)
             {
-                Globals.Managers.Audio.PlaySFXRandom("RobotAmbiance", transform, 11);
+                Globals.Managers.Audio.PlaySFXRandom("RobotAmbiance", transform, 11,0.5f);
             }
             yield return new WaitForSeconds(1);
             beep = StartCoroutine(BeepBoop());
