@@ -148,7 +148,7 @@ namespace Player
         {
             _jumpLock = true;
             _controller.Animator.Play("Jump");
-            yield return new WaitForSecondsRealtime(_controller.AnimController.JumpAnimLength);
+            yield return new WaitForSecondsRealtime(0.1f);
             float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * ((jumpModifier) / (jumpModifier / 2f));
             //jumpPower = jumpForce + (1 * jumpModifier);
             Debug.Log("jumping with power " + jumpPower);

@@ -338,7 +338,7 @@ namespace Merbles
         }
         private IEnumerator BeepBoop()
         {
-            if(Random.Range(1,6) == 1)
+            if(Random.Range(1,20) == 1)
             {
                 Globals.Managers.Audio.PlaySFXRandom("RobotAmbiance", transform, 11,0.5f);
             }
