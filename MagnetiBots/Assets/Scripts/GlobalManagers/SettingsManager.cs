@@ -106,7 +106,7 @@ public class SettingsManager : MonoBehaviour
         _hud = GameObject.Find("HUD");
 
         _hudRoot = _hud.GetComponent<UIDocument>().rootVisualElement;
-        _hudblur = _hudRoot.Q<VisualElement>("Blur");
+        _hudblur = _hudRoot.Q<VisualElement>("Unlocks").Q<VisualElement>("Blur");
 
         _pauseMenu = GameObject.Find("PauseMenu");
 
@@ -283,6 +283,7 @@ public class SettingsManager : MonoBehaviour
     public void EnableHUD()
     {
         _hud.SetActive(true);
+        _hud.GetComponent<HUDGUI>().Startup();
         _hudblur.visible = false;
     }
     public void UpdateHUD(string ability = "nada")
@@ -297,6 +298,7 @@ public class SettingsManager : MonoBehaviour
     public void EnablePause()
     {
         _pauseMenu.SetActive(true);
+        _pauseMenu.GetComponent<PauseMenu>().Startup();
         pause_blur.visible = true;
     }
     public void DisablePause()
@@ -343,13 +345,4 @@ public class SettingsManager : MonoBehaviour
         Debug.Log("done!");
     }
     bool wait = true;
-    private void FadeOutCallback(GeometryChangedEvent ev)
-    {
-        if (wait)
-        {
-            wait = false;
-            sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
-            sceneTransition.rootVisualElement.Q("Blackout").UnregisterCallback<GeometryChangedEvent>(FadeOutCallback);
-        }
-    }
 }
