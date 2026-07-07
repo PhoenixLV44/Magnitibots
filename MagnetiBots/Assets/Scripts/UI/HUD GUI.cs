@@ -38,7 +38,7 @@ public class HUDGUI : MonoBehaviour
     {
         Startup();
     }
-    private void Startup()
+    public void Startup()
     {
         ui = GetComponent<UIDocument>();
         unlockContainer = ui.rootVisualElement.Q("Unlocks");
@@ -74,7 +74,6 @@ public class HUDGUI : MonoBehaviour
     {
         PauseGame();
         Globals.Managers.Audio.PlaySFX("TahDa");
-        unlockContainer.visible = true;
         switch (ability)
         {
             case "Lasso":
@@ -99,7 +98,10 @@ public class HUDGUI : MonoBehaviour
     }
     private void PauseGame()
     {
-        HUDContainer.visible = false;
+        HUDContainer.visible = true;
+        unlockContainer.visible = true;
+        unlockContainer.BringToFront();
+        Globals.Managers.Settings.DisablePause();
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
         Time.timeScale = 0.001f;
@@ -121,6 +123,8 @@ public class HUDGUI : MonoBehaviour
         InputSystem.actions.actionMaps[2].Enable();
         Time.timeScale = 1;
         Debug.Log("pause");
+        unlockContainer.SendToBack();
+        Globals.Managers.Settings.EnablePause();
         Globals.Managers.paused = false;
     }
     private void OnCLickUnlockReturn(ClickEvent click)
@@ -129,7 +133,6 @@ public class HUDGUI : MonoBehaviour
     }
     public void UpdateGUI(string ability = "nada")
     {
-        HUDContainer.visible = true;
         if (controller != null)
         {
             if (controller.MerbleBoss.MasterList != null && ability == "nada")

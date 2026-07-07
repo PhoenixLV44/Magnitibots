@@ -27,9 +27,11 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
+        Startup();
+    }
+    public void Startup()
+    {
         ui = GetComponent<UIDocument>();
-
-        
 
         _pauseContainer = ui.rootVisualElement.Q("PauseMenu");
         _settingsContainer = ui.rootVisualElement.Q("SettingsMenu");
@@ -86,6 +88,7 @@ public class PauseMenu : MonoBehaviour
                 Debug.Log("return");
                 _blur.visible = false;
                 _pauseContainer.visible = false;
+                _pauseContainer.SendToBack();
                 Globals.Managers.Settings.EnableHUD();
                 Time.timeScale = 1;
                 Globals.Managers.paused = false;
@@ -101,6 +104,7 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("return");
         _blur.visible = false;
         _pauseContainer.visible = false;
+        _pauseContainer.SendToBack();
         Globals.Managers.Settings.EnableHUD();
         Time.timeScale = 1;
         Globals.Managers.paused = false;
