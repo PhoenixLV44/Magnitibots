@@ -103,6 +103,7 @@ namespace Merbles
                 }
             }
             merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position,transform.position)));
+            StartCoroutine(ClearChargedList());
         }
 
         IEnumerator AssignMasterList()
@@ -152,6 +153,19 @@ namespace Merbles
                     merbleList.Remove(duplicate);
                 }
             }
+        }
+
+        IEnumerator ClearChargedList()
+        {
+            while (chargedMerblesList.Count > 0)
+            {
+                foreach (var merble in chargedMerblesList)
+                {
+                    merble.StopCharging();
+                }
+                yield return null;
+            }
+            //Debug.Log("ListCleared");
         }
     }   
 }

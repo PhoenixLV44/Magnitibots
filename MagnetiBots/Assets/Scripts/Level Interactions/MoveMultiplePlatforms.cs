@@ -46,13 +46,13 @@ namespace Interactable
                 cutsceneCamera.SetActive(true);
                 mainCamera.SetActive(false);
             }
-
+            yield return new  WaitForSecondsRealtime(delay);
             foreach (var platform in platforms)
             {
                 platform.ActivateObject();
                 yield return new WaitForSecondsRealtime(delay);
             }
-            yield return new WaitForSecondsRealtime(delay);
+            yield return new WaitForSecondsRealtime(1);
             
             mainCamera.SetActive(true);
             cutsceneCamera.SetActive(false);

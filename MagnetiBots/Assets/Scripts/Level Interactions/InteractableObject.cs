@@ -5,7 +5,9 @@ namespace Interactable
     public class InteractableObject : MonoBehaviour
     {
         protected bool activated = false;
-        public bool Activated => activated;
+        public bool Activated {get => activated;
+            set => activated = value;
+        }
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {

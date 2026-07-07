@@ -173,7 +173,7 @@ namespace Ability.Object
                     
                     if (hitObject == lasso.LoopedObject || hitParent)
                     {
-                        Debug.Log("Next hit");
+                        //Debug.Log("Next hit");
                         break;
                     }
                     

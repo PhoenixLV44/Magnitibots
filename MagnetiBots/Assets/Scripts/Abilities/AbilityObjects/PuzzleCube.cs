@@ -48,5 +48,14 @@ public class PuzzleCube : MonoBehaviour
         transform.localScale = _defaultScale;
         transform.localEulerAngles = _defaultRotation;
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Button"))
+        {
+            FreezeConstraints();
+            ChangeGravity(true);
+        }
+    }
 }
 
