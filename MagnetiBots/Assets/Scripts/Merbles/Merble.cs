@@ -31,7 +31,7 @@ namespace Merbles
         public bool Charging { get { return _isCharging; } set { _isCharging = value; } }
         private bool _isCharging = false;
 
-        [SerializeField] private float floatingSpeed;
+        [SerializeField] private float _defaultAcceleration;
         private bool _floating;
 
         public bool Floating => _floating;
@@ -45,11 +45,12 @@ namespace Merbles
 
         Coroutine charge;
         Coroutine beep;
+        
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _agent.enabled = false;
-            floatingSpeed = _agent.speed;
+            _defaultAcceleration = _agent.acceleration;
             _rb = GetComponent<Rigidbody>();
             if (transform.parent != null)
             {
@@ -71,7 +72,6 @@ namespace Merbles
             _merblePool = pool;
             Charging = false;
             _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed;
-            floatingSpeed = _agent.speed;
             myBoss.merbleList.Add(this);
             Sentience = true;
             tag = "Merble";
@@ -118,6 +118,25 @@ namespace Merbles
                             LooseMovement();
                             break;
                     }
+                }
+
+                _agent.speed = GetComponent<Renderer>().isVisible ? myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed : myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed * 2;
+                if ((!GetComponent<Renderer>().isVisible &&
+                     Vector3.Distance(transform.position, myBoss.transform.position) > 10) || Vector3.Distance(transform.position, myBoss.transform.position) > 20)
+                {
+                    _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed * 2;
+                    _agent.acceleration = _defaultAcceleration * 2;
+                    _agent.stoppingDistance = 5;
+                }
+                else
+                {
+                    _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed;
+                    _agent.acceleration = _defaultAcceleration;
+                    _agent.stoppingDistance = 1;
+                }
+                if (_agent.enabled)
+                {
+                    //Debug.Log("Agent" + transform.name+ " Speed: " + _agent.speed);
                 }
             }
         }

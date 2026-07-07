@@ -12,14 +12,7 @@ public class EndLevel : MonoBehaviour
         if (other.tag == "Player")
         {
             float sceneIndex = SceneManager.GetActiveScene().buildIndex;
-            if (sceneIndex == 1)
-            {
-                SceneManager.LoadScene(2);   
-            }
-            else
-            {
-                SceneManager.LoadScene(0);
-            }
+            Globals.Managers.Settings.TransitionScene();
         }
     }
     

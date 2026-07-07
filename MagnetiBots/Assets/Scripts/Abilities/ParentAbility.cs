@@ -30,6 +30,7 @@ namespace Ability
         protected Player.Controller controller;
         public Player.Controller Controller => controller;
         protected IEnumerator chargeCoroutine;
+        public IEnumerator ChargeCoroutine => chargeCoroutine;
         protected TargetingCursor targetCursor;
         public TargetingCursor TargetCursor => targetCursor;
         protected GameObject targetCursorObject;

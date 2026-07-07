@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class MainMenu : MonoBehaviour
 {
@@ -88,6 +89,7 @@ public class MainMenu : MonoBehaviour
     {
         Globals.Managers.Settings.DisableHUD();
         Globals.Managers.Audio.UpdateBGM("BambooMarimba");
+        Cursor.lockState = CursorLockMode.None;
     }
     private void OnDisable()
     {

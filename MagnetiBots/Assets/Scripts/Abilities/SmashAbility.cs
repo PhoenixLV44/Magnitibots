@@ -76,8 +76,9 @@ namespace Ability
         {
             base.StartCharging();
             ActivateBall();
-            StartCoroutine(moveCursorRoutine);
+            //StartCoroutine(moveCursorRoutine);
             _dropMerbles = false;
+            controller.Animator.Play("Arm_Up");
         }
 
         public override void Fire()

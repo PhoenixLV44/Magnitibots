@@ -1,4 +1,4 @@
-
+using System.Collections;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +19,8 @@ namespace Interactable
         [SerializeField] private Material redMaterial;*/
         private LeverCatToy _leverCatToy;
         private GameObject _mainCamera;
+
+        [SerializeField] private bool actInSeries = false;
         private void Start()
         {
             delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);
@@ -33,6 +35,8 @@ namespace Interactable
             }
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             //_deactivatedLever;
+            if(interactionObjects.Length <= 1)
+                actInSeries = false;
         }
         public override void ActivateObject()
         {
@@ -106,6 +110,40 @@ namespace Interactable
             else
             {
                 _canvas.gameObject.SetActive(false);
+            }
+        }
+        protected override IEnumerator TriggerAction(bool activation)
+        {
+            while (true)
+            {
+                if (!actInSeries)
+                {
+                    foreach (var obj in interactionObjects)
+                    {
+                        if (activation)
+                            obj.ActivateObject();
+
+                        else
+                            obj.DeactivateObject();
+
+                        if (delayBetweenObjects != 0)
+                            yield return new WaitForSeconds(delayBetweenObjects);
+                    }
+                }
+                else
+                {
+                    bool alreadyActivated = false;
+                    foreach (var obj in interactionObjects)
+                    {
+                        if (!alreadyActivated && !obj.Activated)
+                        {
+                            obj.ActivateObject();
+                            obj.Activated = true;
+                            yield break;
+                        }
+                    }
+                }
+                yield break;
             }
         }
     }

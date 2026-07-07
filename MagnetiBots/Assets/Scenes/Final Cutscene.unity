@@ -12160,6 +12160,66 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbf0f7de87b70d64393367c679ec5fcf, type: 3}
+--- !u!1001 &1366231055
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.161553
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.653
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.66009
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.098337665
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9951531
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 168.713
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_Name
+      value: KittyCat_Rigged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1541220529}
+  m_SourcePrefab: {fileID: 100100000, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
 --- !u!1001 &1368945017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14081,6 +14141,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b768c9a0378c7914c82361d371580e64, type: 3}
+--- !u!1 &1541220528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+  m_PrefabInstance: {fileID: 1366231055}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1541220529
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541220528}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ab65ab47ee145549ab4e55432be2a48, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1543634129
 GameObject:
   m_ObjectHideFlags: 0
@@ -19216,3 +19303,4 @@ SceneRoots:
   - {fileID: 791033791}
   - {fileID: 728748877}
   - {fileID: 1332752283}
+  - {fileID: 1366231055}

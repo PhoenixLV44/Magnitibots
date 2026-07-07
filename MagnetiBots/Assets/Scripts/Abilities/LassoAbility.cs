@@ -169,6 +169,9 @@ namespace Ability
             merbleBoss.FireMerbles();
 
             targetCursor.CanMoveCursor = true;
+            
+            yield return new WaitForSecondsRealtime(2);
+            merbleBoss.FireMerbles();
         }
 
         protected override void InitializeAbility()
