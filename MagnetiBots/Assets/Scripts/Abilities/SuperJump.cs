@@ -31,8 +31,8 @@ namespace Ability
         {
             controller.ChargingParticles.SetActive(true);
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-            yield return new WaitForSecondsRealtime(0.5f);
-            while (merbleBoss.ChargedMerbleList.Count <= 10)
+            yield return new WaitForSecondsRealtime(2f);
+            while (merbleBoss.ChargedMerbleList.Count < 10)
             {
                 if (merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
                 {
@@ -48,14 +48,17 @@ namespace Ability
             int jumpPowerMult = merbleBoss.ChargedMerbleList.Count;
             
             controller.ChargingParticles.SetActive(false);
-            
-            StartCoroutine(_playerMovement.Jump(jumpPowerMult));
-            Globals.Managers.Audio.PlaySFX("SuperJump");
-            if (merbleBoss.ChargedMerbleList.Count > 5)
+
+            if (merbleBoss.ChargedMerbleList.Count > 0)
             {
-                _playerMovement.Hovering = true;
-                _hoverParticles.SetActive(true);
+                StartCoroutine(_playerMovement.Jump(jumpPowerMult));
+                if (merbleBoss.ChargedMerbleList.Count > 5)
+                {
+                    _playerMovement.Hovering = true;
+                    _hoverParticles.SetActive(true);
+                }
             }
+            Globals.Managers.Audio.PlaySFX("SuperJump");
             StopCharging();
             
         }

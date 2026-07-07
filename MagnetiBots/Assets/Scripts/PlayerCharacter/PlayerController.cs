@@ -73,6 +73,7 @@ namespace Player
         public  GameObject HoverParticles => hoverParticles;
 
         [SerializeField] private SuperJumpPoint superJumpPoint;
+        public  SuperJumpPoint SuperJumpPoint => superJumpPoint;
         
         Animator _animator;
         public Animator Animator => _animator;

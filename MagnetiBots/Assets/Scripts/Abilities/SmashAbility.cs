@@ -39,10 +39,11 @@ namespace Ability
             currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
-            
+            WaitForSecondsRealtime wait = new WaitForSecondsRealtime(chargeTimer);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             //Debug.Log("MAX POWER: " + maxPower);
+            yield return wait;
             for (int i = 0; i < 5; i++)
             {
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
@@ -68,7 +69,7 @@ namespace Ability
                     merbleArray[j].StartCharge(transform.position);
                 }
 
-                yield return new WaitForSecondsRealtime(chargeTimer);
+                yield return wait;
             }
         }
 
