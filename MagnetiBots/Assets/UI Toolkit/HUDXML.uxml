@@ -3,7 +3,7 @@
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement name="Unlocks" style="flex-grow: 1; position: absolute; width: 1920px; height: 1080px; visibility: hidden;">
             <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(1.57); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: hidden;"/>
-            <ui:VisualElement name="LassoUnlock" picking-mode="Ignore" style="visibility: hidden;">
+            <ui:VisualElement name="LassoUnlock" picking-mode="Ignore">
                 <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Title%20(Lasso).png?fileID=2800000&amp;guid=1ec5e376a2b85004d8c7925cfb58ad23&amp;type=3#Title (Lasso)" scale-mode="StretchToFill" picking-mode="Ignore" class="title powerUnlock"/>
                 <ui:Image source="project://database/Assets/Art%20Assets/UI/Ability%20Unlock/Panel%20(Lasso).png?fileID=2800000&amp;guid=df116e0e1eb76ea4db0d9a90b55bb857&amp;type=3#Panel (Lasso)" picking-mode="Ignore" class="panel powerUnlock"/>
             </ui:VisualElement>
