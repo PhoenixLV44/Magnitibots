@@ -339,7 +339,7 @@ public class SettingsManager : MonoBehaviour
         
         sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
-        Globals.Managers.Settings.EnableHUD();
+        
         Debug.Log("done!");
     }
     bool wait = true;
