@@ -31,7 +31,7 @@ namespace Ability
         {
             controller.ChargingParticles.SetActive(true);
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-
+            yield return new WaitForSecondsRealtime(0.5f);
             while (merbleBoss.ChargedMerbleList.Count <= 10)
             {
                 if (merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)

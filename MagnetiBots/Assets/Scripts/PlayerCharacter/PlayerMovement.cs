@@ -52,6 +52,9 @@ namespace Player
             public bool Grounded { get => _isGrounded; set => _isGrounded = value; }
             [SerializeField] private bool _jumpLock;
             public bool JumpLock { get => _jumpLock; set => _jumpLock = value; }
+
+            private bool _canLook = true;
+            public bool CanLook { get => _canLook; set => _canLook = value; }
             
         #endregion
 
@@ -138,8 +141,8 @@ namespace Player
             }
             else
             {
-                input = adjustedMovement * input;
-                _model.rotation = Quaternion.LookRotation(input, Vector3.up);
+                /*input = adjustedMovement * input;
+                _model.rotation = Quaternion.LookRotation(input, Vector3.up);*/
             }
         }
         
@@ -259,7 +262,7 @@ namespace Player
             {
                 _gravityOn = false;
             }
-            if (_submitted != null)
+            if (_submitted != null && _canLook)
             {
                 Look(_submitted[1]);
             }

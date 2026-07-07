@@ -36,7 +36,7 @@ public class LassoHooked : GroundedState
             //Debug.Log("No Lever");
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
 
-            if (_lassoAbility.TargetCursor.CanMoveCursor)
+            if (_lassoAbility.TargetCursor.CanMoveCursor && player.TargetCursor.RaycastPoint.activeSelf)
             {
                 _lassoAbility.MoveLassoTarget();
             }
