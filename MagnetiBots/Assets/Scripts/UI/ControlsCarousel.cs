@@ -17,7 +17,7 @@ public class ControlsCarousel : MonoBehaviour
     {
         VisualElement dangit = container.Children().ToArray()[0];
         Debug.Log(dangit.name);
-        List<VisualElement>carouselList = dangit.Children().ToArray().Take(6).ToList();
+        List<VisualElement>carouselList = dangit.Children().ToArray().Take(5).ToList();
         carouselList.RemoveAt(0);
         controlsCarousel = carouselList.ToArray();
         Debug.Log(controlsCarousel.Length);
