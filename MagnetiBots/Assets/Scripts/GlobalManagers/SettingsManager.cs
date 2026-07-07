@@ -327,7 +327,15 @@ public class SettingsManager : MonoBehaviour
         Debug.Log("loading...");
         if (action == "Load")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            int index = SceneManager.GetActiveScene().buildIndex;
+            if (index + 1 != SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(index + 1);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
             Debug.Log("ready!");
             yield return new WaitForSecondsRealtime(2);
         }
