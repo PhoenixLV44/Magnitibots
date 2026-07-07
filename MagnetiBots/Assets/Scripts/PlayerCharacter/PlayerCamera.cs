@@ -12,7 +12,7 @@ namespace Player
         
         private InputAction _rotateCamera;
         private InputAction _moveCamera;
-        [SerializeField] private float rotationSpeed = 50f;
+        [SerializeField] private float rotationSpeed = 33f;
         
         [Tooltip("xAxisLimits is the rotational limits for the x-axis of the _pivotPoint. The x value is the minimum and the y value is the maximum.")]
         [SerializeField] private Vector2 xAxisLimits;
@@ -42,7 +42,7 @@ namespace Player
         {
             if (_rotateCamera.IsPressed())
             {
-                Vector3 cameraRotationDelta = _moveCamera.ReadValue<Vector2>() * (rotationSpeed * Time.deltaTime * Globals.Managers.Settings.MouseSensitivity);
+                Vector3 cameraRotationDelta = _moveCamera.ReadValue<Vector2>() * (rotationSpeed * Time.deltaTime);
                 Vector3 newCameraRotation = _pivotPoint.transform.rotation.eulerAngles;
                 
                 newCameraRotation.x += cameraRotationDelta.y;
