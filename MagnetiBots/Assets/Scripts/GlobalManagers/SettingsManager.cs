@@ -61,12 +61,12 @@ public class SettingsManager : MonoBehaviour
     float _mouseSens;
     public float MouseSensitivity { get { return _mouseSens; } set { _mouseSens = value; } }
 
-    private void Awake()
+    private void SettingsMenuSetup()
     {
         #region regular settings menu
         //find UI References
         root = GameObject.Find("MainMenu").GetComponent<UIDocument>().rootVisualElement;
-        
+
         BGMVolumeSlider = root.Q<Slider>("BGMVolumeSlider");
         SFXVolumeSlider = root.Q<Slider>("SFXVolumeSlider");
         MasterVolumeSlider = root.Q<Slider>("MasterVolumeSlider");
@@ -81,6 +81,20 @@ public class SettingsManager : MonoBehaviour
         SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
         #endregion
+    }
+    public void SettingsMenuUnregister()
+    {
+        BGMVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
+        SFXVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
+        MasterVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
+
+        BGMVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
+        SFXVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
+        MasterVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
+    }
+    private void Awake()
+    {
+        SettingsMenuSetup();
 
         #region pause settings menu
         //find UI References
@@ -111,7 +125,7 @@ public class SettingsManager : MonoBehaviour
         _pauseMenu = GameObject.Find("PauseMenu");
 
         sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
-        sceneTransition.rootVisualElement.visible = false;
+        
     }
     private void Update()
     {
@@ -129,6 +143,7 @@ public class SettingsManager : MonoBehaviour
     }
     public void LateAwake()
     {
+        sceneTransition.rootVisualElement.visible = false;
         UpdateSettingsSliders();
         UpdatePauseSliders();
     }
@@ -314,6 +329,10 @@ public class SettingsManager : MonoBehaviour
     {
         StartCoroutine(Fader("Load"));
     }
+    public void TransitionCredits()
+    {
+        StartCoroutine(Fader("Credits"));
+    }
     public void FadeAway(string action = "")
     {
         StartCoroutine(Fader());
@@ -324,33 +343,30 @@ public class SettingsManager : MonoBehaviour
         sceneTransition.rootVisualElement.BringToFront();
         sceneTransition.rootVisualElement.Q("Blackout").AddToClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
-        Debug.Log("loading...");
-        if (action == "Load")
+        switch (action)
         {
-            int index = SceneManager.GetActiveScene().buildIndex;
-            if (index + 1 != SceneManager.sceneCountInBuildSettings)
-            {
-                SceneManager.LoadScene(index + 1);
-            }
-            else
-            {
+            case "Load":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                yield return new WaitForSecondsRealtime(2);
+                break;
+            case "Credits":
                 SceneManager.LoadScene(0);
-            }
-            Debug.Log("ready!");
-            yield return new WaitForSecondsRealtime(2);
+                SettingsMenuSetup();
+                GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
+                yield return new WaitForSecondsRealtime(2);
+                break;
+            default:
+                break;
         }
         StartCoroutine(FadeIn());
     }
     private IEnumerator FadeIn()
     {
-        Debug.Log("check this out!");
         sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
         
         sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
-        
-        Debug.Log("done!");
     }
     bool wait = true;
 }

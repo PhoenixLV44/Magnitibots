@@ -26,7 +26,6 @@ public class MainMenu : MonoBehaviour
     private Button _controlsReturnButton;
 
     private VisualElement _creditsContainer;
-    public List<string> sources;
     private Button _creditsReturnButton;
 
     private void Awake()
@@ -104,6 +103,7 @@ public class MainMenu : MonoBehaviour
     private void OnClickStart(ClickEvent click)
     {
         Globals.Managers.Settings.EnableHUD();
+        Globals.Managers.Settings.SettingsMenuUnregister();
         Globals.Managers.Settings.TransitionScene();
     }
 
@@ -121,6 +121,10 @@ public class MainMenu : MonoBehaviour
         _controlsCarousel.Ready();
     }
     private void OnClickCredits(ClickEvent click)
+    {
+        GoToCredits();
+    }
+    public void GoToCredits()
     {
         _creditsContainer.visible = true;
         _creditsContainer.BringToFront();
