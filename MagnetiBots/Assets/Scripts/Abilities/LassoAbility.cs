@@ -31,10 +31,54 @@ namespace Ability
         public IEnumerator merbleLineCoroutine;
             
         private Transform _returnPoint;
+        [SerializeField] private bool lassoLaunched;
+
+        private SuperJumpPoint _chargePoint;
+        private Transform[] _merblePoints;
 
         private void Start()
         {
             InitializeAbility();
+        }
+        protected override void InitializeAbility()
+        {
+            base.InitializeAbility();
+            baseRange = 2f;
+            basePowerLevel = 1;
+            maxPowerLevel = 15;
+            _lassoLoop = transform.Find("Lasso Loop").gameObject;
+            _lassoLoop.SetActive(false);
+            _layerMask = LayerMask.GetMask("LassoTarget");
+            //merbleLineCoroutine = MerbleLine();
+            _loopScript = _lassoLoop.AddComponent<Object.LassoLoop>();
+            _loopScript.LassoAbility = this;
+            _returnPoint = GameObject.Find("ReturnPoint").transform;
+            _chargePoint = transform.GetComponentInChildren<SuperJumpPoint>();
+            _merblePoints = _chargePoint.MerblePoints;
+        }
+
+        public override void StartCharging()
+        {
+            //base.StartCharging();
+            if (merbleBoss.MasterList.Count >= 1)
+            {
+                StartCoroutine(Charge());
+                controller.ChargingParticles.SetActive(true);
+            }
+            StartCoroutine(MerbleLine());
+        }
+
+        public override void StopCharging()
+        {
+            if (chargeCoroutine != null)
+            {
+                //Debug.Log("Stopping charging");
+                //aimingGuide.SetActive(false);
+                //currentPowerLevel = basePowerLevel;
+                //rangeIndicator.DisableRangeIndicator();
+                controller.ChargingParticles.SetActive(false);
+                StopCoroutine(chargeCoroutine);
+            }
         }
 
         public override IEnumerator Charge()
@@ -42,7 +86,8 @@ namespace Ability
             currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
-
+            //lassoLaunched = false;
+            isCharging = true;
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) =>
                 Vector3.Distance(a.transform.position, transform.position)
@@ -59,9 +104,9 @@ namespace Ability
             }
 
             int j = 0;
-            while (true)
+            while (isCharging)
             {
-                //Debug.Log("Charging");
+                Debug.Log("Charging FROM CHARGE");
                 currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
                 //Debug.Log("Current PowerLevel: " + currentPowerLevel);
                 rangeIndicator.ChangeRangeSize((baseRange * currentPowerLevel * 2));
@@ -71,13 +116,9 @@ namespace Ability
                         .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
                 Merble[] merbleArray = merbleBoss.merbleList.ToArray();
 
-                if (merbleArray.Length > 0)
+                if (currentPowerLevel < maxPower)
                 {
                     merbleArray[j].StartCharge(transform.position);
-                    if (j < maxPower)
-                    {
-                        //j++;
-                    }
                 }
 
                 yield return new WaitForSecondsRealtime(chargeTimer);
@@ -103,12 +144,14 @@ namespace Ability
                 _lassoLoop.SetActive(true);
                 _loopScript.StartMovement(_returnPoint.position, target);
                 controller.Animator.Play("Throw");
-                StartCoroutine(merbleLineCoroutine);
+                //StartCoroutine(merbleLineCoroutine);
             }
-
+            //StopCharging();
+            StopCoroutine(Charge());
+            lassoLaunched = true;
             //StopCoroutine(Charge());
-            merbleBoss.FireMerbles();
-            currentPowerLevel = 0;
+            //merbleBoss.FireMerbles();
+            //currentPowerLevel = 0;
         }
 
         public void MoveLassoTarget()
@@ -118,23 +161,22 @@ namespace Ability
 
         public IEnumerator UnhookLasso()
         {
-            targetCursor.CanMoveCursor = false;
             _loopScript.BoxCollider.enabled = false;
-            
+            targetCursor.CanMoveCursor = false;
+            Vector3 pos = _lassoLoop.transform.position;
             PuzzleCube puzzleCube = null;
-            
             controller.Animator.Play("Pull");
             yield return new WaitForSeconds(controller.AnimController.PullAnimLength / 2);
+            _lassoLoop.transform.position = pos;
+            //targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
             
             if (_loopedObject)
             {
-                _lassoLoop.transform.parent = transform;
                 if (_loopedObject.CompareTag("LassoTarget"))
                 {
                     puzzleCube = _loopedObject.GetComponent<PuzzleCube>();
                     if (puzzleCube)
                     {
-                        //puzzleCube.ResetTransform();
                         Debug.Log("Dropping Puzzle Cube");
                         puzzleCube.ChangeGravity(true);
                     }
@@ -153,6 +195,7 @@ namespace Ability
                 targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
                 yield return null;
             }
+            _lassoLoop.transform.parent = transform;
 
             if (puzzleCube)
             {
@@ -165,29 +208,17 @@ namespace Ability
             
             controller.LassoHooked = false;
             
-            StopCoroutine(merbleLineCoroutine);
+            StopCoroutine(MerbleLine());
             merbleBoss.FireMerbles();
-
+            //StopCharging();
+            StopCoroutine(Charge());
             targetCursor.CanMoveCursor = true;
+            lassoLaunched = false;
             
-            yield return new WaitForSecondsRealtime(2);
-            merbleBoss.FireMerbles();
+            /*yield return new WaitForSecondsRealtime(2);
+            merbleBoss.FireMerbles();*/
         }
-
-        protected override void InitializeAbility()
-        {
-            base.InitializeAbility();
-            baseRange = 2f;
-            basePowerLevel = 1;
-            maxPowerLevel = 15;
-            _lassoLoop = transform.Find("Lasso Loop").gameObject;
-            _lassoLoop.SetActive(false);
-            _layerMask = LayerMask.GetMask("LassoTarget");
-            merbleLineCoroutine = MerbleLine();
-            _loopScript = _lassoLoop.AddComponent<Object.LassoLoop>();
-            _loopScript.LassoAbility = this;
-            _returnPoint = GameObject.Find("ReturnPoint").transform;
-        }
+        
 
         public void PullLever()
         {
@@ -210,33 +241,55 @@ namespace Ability
 
         private IEnumerator MerbleLine()
         {
+            Debug.Log("Merble Line");
             List<Merble> chargedMerbleList;
             List<Merble> unchargedMerbleList;
             List<Merble> masterList;
             Vector2 distanceBetweenMerblesMinMax = new Vector2(1, 2);
             StopCharging();
             float speed = targetCursor.ObjectSpeed + 0.5f;
-            while (true)
+            lassoLaunched = false;
+            while (!lassoLaunched)
             {
-                //Debug.Log("Merble Line");
-                _lassoLoop.transform.LookAt(_returnPoint);
-                _lassoLoop.transform.rotation = Quaternion.Euler(0, _lassoLoop.transform.eulerAngles.y, 0);
                 chargedMerbleList = merbleBoss.ChargedMerbleList;
                 unchargedMerbleList = merbleBoss.merbleList;
+                unchargedMerbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                if (chargedMerbleList.Count > 0)
+                {
+                    for (int i = 0; i < chargedMerbleList.Count; i++)
+                    {
+                        chargedMerbleList[i].FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.Lasso);
+                    }
+                }
+                yield return null;
+            }
+
+            while (lassoLaunched)
+            {
+                chargedMerbleList = merbleBoss.ChargedMerbleList;
+                unchargedMerbleList = merbleBoss.merbleList;
+                unchargedMerbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                _lassoLoop.transform.LookAt(_returnPoint);
+                _lassoLoop.transform.rotation = Quaternion.Euler(0, _lassoLoop.transform.eulerAngles.y, 0);
                 
-
-                unchargedMerbleList.Sort((a, b) =>
-                    Vector3.Distance(a.transform.position, transform.position)
-                        .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-
+                int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
+                if (chargedMerbleList.Count < maxPower)
+                {
+                    Debug.Log("CHARGING FROM MERBLE LINE");
+                    unchargedMerbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                    if (unchargedMerbleList.Count > 0)
+                    {
+                        for (int i = 0; i < maxPower - merbleBoss.ChargedMerbleList.Count; i++)
+                        {
+                            merbleBoss.merbleList[i].StartCharge(transform.position);
+                        }
+                    }
+                }
                 float distance = Vector3.Distance(_returnPoint.position, _lassoLoop.transform.position);
                 merbleBoss.merbleList = unchargedMerbleList;
+                
 
-                float chargedCount = chargedMerbleList.Count;
-
-                //Debug.Log("DISTANCE/CHARGECOUNT = " + distance/chargedCount);
-
-                if (distance / chargedCount > 1.5f)
+                /*if (distance / chargedCount > 1.5f)
                 {
                     if (merbleBoss.merbleList.Count > 0)
                     {
@@ -249,8 +302,9 @@ namespace Ability
                     unchargedMerbleList = merbleBoss.merbleList;
                     /*if (!chargedMerbleList.Contains(merbleList[0]))
                     {
-                    }*/
+                    }#1#
                 }
+                
                 else if (distance / chargedCount < 1.5f)
                 {
                     if (!unchargedMerbleList.Contains(chargedMerbleList.Last()))
@@ -263,10 +317,37 @@ namespace Ability
                         unchargedMerbleList = merbleBoss.merbleList;
                     }
                 }
+                */
+                int merblesNeeded = Mathf.CeilToInt(distance / baseRange);
+                
+                float distanceBetweenMerbles = distance/(float)merblesNeeded;
 
-                float verticleDistance = _lassoLoop.transform.position.y - _returnPoint.transform.position.y;
+                float verticalDistance = _lassoLoop.transform.position.y - _returnPoint.transform.position.y;
 
-                foreach (var merble in chargedMerbleList)
+                for (int i = 0; i < chargedMerbleList.Count; i++)
+                {
+                    Merble merble = chargedMerbleList[i];
+                    float count = chargedMerbleList.Count;
+                    float divisor = i / count;
+                    Vector3 pos = _lassoLoop.transform.position;
+                    if (i < merblesNeeded)
+                    {
+                        if (i == 0)
+                            pos += _lassoLoop.transform.forward * (distanceBetweenMerbles);
+                        else
+                            pos += _lassoLoop.transform.forward * (distanceBetweenMerbles * (i + 1));
+
+                        pos.y = _lassoLoop.transform.position.y -
+                                (verticalDistance * (divisor));
+                    }
+                    else
+                    {
+                        int j = i - merblesNeeded;
+                        pos = _merblePoints[j].transform.position;
+                    }
+                    merble.FloatTowardsObject(pos, i, Merble.AbilityEnum.Lasso, speed);
+                }
+                /*foreach (var merble in chargedMerbleList)
                 {
                     merble.transform.parent = _lassoLoop.transform;
                     float index = chargedMerbleList.IndexOf(merble);
@@ -276,15 +357,15 @@ namespace Ability
                     Vector3 pos = _lassoLoop.transform.position;
 
                     if (index == 0)
-                        pos += _lassoLoop.transform.forward * (1.5f);
+                        pos += _lassoLoop.transform.forward * (distanceBetweenMerbles);
                     else
-                        pos += _lassoLoop.transform.forward * (1.5f * (index + 1));
+                        pos += _lassoLoop.transform.forward * (distanceBetweenMerbles * (index + 1));
 
                     pos.y = _lassoLoop.transform.position.y -
-                            (verticleDistance * (divisor));
+                            (verticalDistance * (divisor));
 
                     merble.FloatTowardsObject(pos, index, Merble.AbilityEnum.Lasso, speed);
-                }
+                }*/
 
                 yield return null;
             }
