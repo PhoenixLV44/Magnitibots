@@ -14,16 +14,16 @@ public class Globals : MonoBehaviour
         {
             _gInstance = this;
             DontDestroyOnLoad(gameObject);
+
+            _sInstance = gameObject.AddComponent<SaveManager>();
+            _aInstance = gameObject.AddComponent<AudioManager>();
+            _setInstance = gameObject.AddComponent<SettingsManager>();
+
+            Saves.LateAwake();
+            Settings.LateAwake();
+            Audio.LateAwake();
         }
         #endregion
-
-        _sInstance = gameObject.AddComponent<SaveManager>();
-        _aInstance = gameObject.AddComponent<AudioManager>();
-        _setInstance = gameObject.AddComponent<SettingsManager>();
-
-        Saves.LateAwake();
-        Settings.LateAwake();
-        Audio.LateAwake();
     }
 
     #region Saving
