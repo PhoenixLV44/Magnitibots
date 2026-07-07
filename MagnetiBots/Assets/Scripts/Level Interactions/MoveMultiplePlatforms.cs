@@ -41,6 +41,7 @@ namespace Interactable
             StopCoroutine(DeactivatePlatforms());
             Player.Controller player = FindFirstObjectByType<Player.Controller>();
             player.Interacting = true;
+            yield return new WaitForSeconds(delay);
             if (cutsceneCamera)
             {
                 cutsceneCamera.SetActive(true);
