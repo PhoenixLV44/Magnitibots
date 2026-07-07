@@ -231,7 +231,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: d378117bc4dfbd744932a2bdac5405f9, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 7b89e324fd4e9a64085ca954029028b2, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -266,7 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2152070a413b09e408f31b14ed52f233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
-  sources: []
 --- !u!1 &638541426
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,6 +581,18 @@ PrefabInstance:
     - target: {fileID: 5121154105342812595, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
       propertyPath: m_Name
       value: KingOfGlobals
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307004649600773665, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307004649600773665, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7274376147549478977, guid: d0b74be6ba501df43833fd618f6e444d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

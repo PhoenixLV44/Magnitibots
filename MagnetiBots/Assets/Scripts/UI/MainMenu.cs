@@ -79,14 +79,17 @@ public class MainMenu : MonoBehaviour
         _creditsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnCredits);
         #endregion
 
-        _mainContainer.visible = true;
-        _mainContainer.BringToFront();
-        _controlsContainer.visible = false;
-
+        
+        if(Globals.Managers.Settings.waitMenu)
+        {
+            _mainContainer.visible = false;
+        }
     }
     private void Start()
     {
+        _controlsContainer.visible = false;
         Globals.Managers.Settings.DisableHUD();
+        Globals.Managers.Settings.DisablePause();
         Globals.Managers.Audio.UpdateBGM("BambooMarimba");
         Cursor.lockState = CursorLockMode.None;
     }
@@ -103,6 +106,7 @@ public class MainMenu : MonoBehaviour
     private void OnClickStart(ClickEvent click)
     {
         Globals.Managers.Settings.EnableHUD();
+        Globals.Managers.Settings.EnablePause();
         Globals.Managers.Settings.SettingsMenuUnregister();
         Globals.Managers.Settings.TransitionScene();
     }

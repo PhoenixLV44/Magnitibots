@@ -53,7 +53,7 @@ public class SettingsManager : MonoBehaviour
 
     #region Transitions
     UIDocument sceneTransition;
-
+    public bool waitMenu = false;
     #endregion
 
     #endregion
@@ -350,10 +350,16 @@ public class SettingsManager : MonoBehaviour
                 yield return new WaitForSecondsRealtime(2);
                 break;
             case "Credits":
+                Globals.Managers.Settings.DisableHUD();
+                Globals.Managers.Settings.DisablePause();
+                waitMenu = true;
                 SceneManager.LoadScene(0);
-                SettingsMenuSetup();
-                GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
+                sceneTransition.rootVisualElement.BringToFront();
                 yield return new WaitForSecondsRealtime(2);
+                sceneTransition.rootVisualElement.BringToFront();
+                SettingsMenuSetup();
+                root.Q("MainMenu").visible = true;
+                GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
                 break;
             default:
                 break;
