@@ -48,6 +48,11 @@ public class MovementState : GroundedState
         {
             stateManager.PlayerMovement.Look(stateManager.PlayerMovement.Submitted[1]);
         }
+
+        if (!player.Movement.Hovering && player.MerbleBoss.ChargedMerbleList.Count > 0)
+        {
+            player.MerbleBoss.FireMerbles();
+        }
     }
 
     public override void PhysicsUpdate()

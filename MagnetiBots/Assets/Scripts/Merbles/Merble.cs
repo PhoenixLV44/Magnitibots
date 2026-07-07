@@ -120,22 +120,22 @@ namespace Merbles
                     }
                 }
 
-                _agent.speed = GetComponent<Renderer>().isVisible ? myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed : myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed * 2;
-                if ((!GetComponent<Renderer>().isVisible &&
-                     Vector3.Distance(transform.position, myBoss.transform.position) > 10) || Vector3.Distance(transform.position, myBoss.transform.position) > 20)
-                {
-                    _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed * 2;
-                    _agent.acceleration = _defaultAcceleration * 2;
-                    _agent.stoppingDistance = 5;
-                }
-                else
-                {
-                    _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed;
-                    _agent.acceleration = _defaultAcceleration;
-                    _agent.stoppingDistance = 1;
-                }
                 if (_agent.enabled)
                 {
+                    _agent.speed = GetComponent<Renderer>().isVisible ? myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed : myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed * 2;
+                    if ((!GetComponent<Renderer>().isVisible &&
+                         Vector3.Distance(transform.position, myBoss.transform.position) > 10) || Vector3.Distance(transform.position, myBoss.transform.position) > 20)
+                    {
+                        _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed * 2;
+                        _agent.acceleration = _defaultAcceleration * 2;
+                        _agent.stoppingDistance = 5;
+                    }
+                    else
+                    {
+                        _agent.speed = myBoss.GetComponent<Player.Controller>().Movement.DefaultMoveSpeed;
+                        _agent.acceleration = _defaultAcceleration;
+                        _agent.stoppingDistance = 1;
+                    }
                     //Debug.Log("Agent" + transform.name+ " Speed: " + _agent.speed);
                 }
             }
