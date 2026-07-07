@@ -163,13 +163,7 @@ namespace Ability
         {
             _loopScript.BoxCollider.enabled = false;
             targetCursor.CanMoveCursor = false;
-            Vector3 pos = _lassoLoop.transform.position;
             PuzzleCube puzzleCube = null;
-            controller.Animator.Play("Pull");
-            yield return new WaitForSeconds(controller.AnimController.PullAnimLength / 2);
-            _lassoLoop.transform.position = pos;
-            //targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
-            
             if (_loopedObject)
             {
                 if (_loopedObject.CompareTag("LassoTarget"))
@@ -189,6 +183,12 @@ namespace Ability
                 _loopedObject.transform.parent = null;
                 _loopedObject = null;
             }
+            Vector3 pos = _lassoLoop.transform.position;
+            controller.Animator.Play("Pull");
+            yield return new WaitForSeconds(controller.AnimController.PullAnimLength / 2);
+            _lassoLoop.transform.position = pos;
+            //targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
+            
             while (Vector3.Distance(_lassoLoop.transform.position, controller.ReturnPoint.transform.position) > 0.1f)
             {
                 _lassoLoop.transform.position = Vector3.MoveTowards(_lassoLoop.transform.position,controller.ReturnPoint.transform.position, 10 * Time.deltaTime);
@@ -214,7 +214,7 @@ namespace Ability
             StopCoroutine(Charge());
             targetCursor.CanMoveCursor = true;
             lassoLaunched = false;
-            
+            StopAllCoroutines();
             /*yield return new WaitForSecondsRealtime(2);
             merbleBoss.FireMerbles();*/
         }
