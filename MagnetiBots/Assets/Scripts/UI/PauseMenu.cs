@@ -75,6 +75,7 @@ public class PauseMenu : MonoBehaviour
     }
     IEnumerator PausedMenu()
     {
+        Globals.Managers.Settings.DisableHUD();
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
         Globals.Managers.paused = true;

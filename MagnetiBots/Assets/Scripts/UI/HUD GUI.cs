@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class HUDGUI : MonoBehaviour
@@ -61,10 +62,13 @@ public class HUDGUI : MonoBehaviour
 
         merbleCount = HUDContainer.Q("MerbleCounter") as Label;
         merbleUI = HUDContainer.Q("Merbles");
+        HUDContainer.visible = true;
+        UpdateGUI();
     }
     private void OnLevelWasLoaded(int level)
     {
-        if (level != 0)
+        string name = SceneManager.GetSceneByBuildIndex(level).name;
+        if (name == "TutorialLevel"||name == "SecondLevelFix")
         {
             controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
             Startup();
@@ -135,14 +139,31 @@ public class HUDGUI : MonoBehaviour
     {
         if (controller != null)
         {
-            if (controller.MerbleBoss.MasterList != null && ability == "nada")
+            if (controller.MerbleBoss.MasterList != null)
             {
-                if (controller.MerbleBoss.MasterList.Count+1 != 0)
+                if (ability == "pickup")
                 {
                     merbleUI.visible = true;
                     int realcount = controller.MerbleBoss.MasterList.Count + 1;
                     merbleCount.text = "x" + realcount.ToString();
                 }
+                else if (ability == "nada" && controller.MerbleBoss.MasterList.Count>1)
+                {
+                    merbleUI.visible = true;
+                    merbleCount.text = "x" + controller.MerbleBoss.MasterList.Count.ToString();
+                }
+            }
+            if (controller.CanUseLasso)
+            {
+                lassoPower.visible = true;
+            }
+            if (controller.CanUseSmash)
+            {
+                smashPower.visible = true;
+            }
+            if (controller.CanUseSuperJump)
+            {
+                jumpPower.visible = true;
             }
         }
         Image img;
