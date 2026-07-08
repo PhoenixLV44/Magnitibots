@@ -75,8 +75,7 @@ namespace Ability.Object
                 {
                     Debug.Log("LassoTarget");
                     _lassoAbility.Controller.LassoHooked = true;
-                    GameObject hookedObject = other.GetComponent<ItemRespawner>() ? other.gameObject : other.transform.parent.gameObject;
-
+                    GameObject hookedObject = other.gameObject;
 
                     transform.position = hookedObject.transform.position;
                     Vector3 defaultScale = transform.localScale.y == 1? hookedObject.transform.localScale: new Vector3(hookedObject.transform.localScale.x, hookedObject.transform.localScale.y * 2, hookedObject.transform.localScale.z);
@@ -96,9 +95,9 @@ namespace Ability.Object
 
                     float rangeMult = _lassoAbility.MerbleBoss.MasterList.Count >= _lassoAbility.MaxPowerLevel ? _lassoAbility.MaxPowerLevel : _lassoAbility.MerbleBoss.MasterList.Count;
                     _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * rangeMult) * 2);
-                    //_lassoAbility.StartCoroutine(_lassoAbility.MerbleLineCoroutine);
+
                     _boxCollider.enabled = true;
-                    //StartCoroutine(_lassoAbility.MoveLassoTarget());
+
                     _lassoAbility.LoopedObject = other.gameObject;
                 }
                 else if (other.CompareTag("Lever"))

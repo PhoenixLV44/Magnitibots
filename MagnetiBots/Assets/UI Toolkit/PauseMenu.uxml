@@ -2,50 +2,52 @@
     <ui:Template name="ControlsMenu" src="project://database/Assets/UI%20Toolkit/ControlsMenu.uxml?fileID=9197481963319205126&amp;guid=9c3956b9c7ed9a04bbc4a12f330b32a5&amp;type=3#ControlsMenu"/>
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet%20-%20Copy.uss?fileID=7433441132597879392&amp;guid=85cfb7ffcf8af0a41a81bbec6ee31218&amp;type=3#MainMenuStyleSheet - Copy"/>
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
-    <ui:VisualElement name="PauseMenu" style="flex-grow: 1; align-self: center; align-content: center; min-width: 1920px; justify-content: space-around; max-height: 458px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; align-items: center; -unity-text-align: middle-center; margin-top: 0; top: auto; left: auto; min-height: 1080px;">
-        <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(11.02); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: hidden;"/>
-        <ui:VisualElement style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 2px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Pause/Rounded%20Checker%20Pattern.png?fileID=2800000&amp;guid=69359e212f2a9744d8032690b35b897a&amp;type=3#Rounded Checker Pattern&quot;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.043); background-repeat: repeat repeat; background-size: 6% 10%;"/>
-        <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Bottom)%2002.png?fileID=2800000&amp;guid=2b4c97716b5daec44bbbe84951c6b2a2&amp;type=3#Decal (Bottom) 02" scale-mode="StretchToFill" picking-mode="Ignore" tabindex="0" style="position: absolute; left: 89px; width: 398px; flex-grow: 1; height: 365px; max-height: 625px; flex-direction: column; top: 656px; translate: 1px -1px;"/>
-        <ui:VisualElement style="flex-grow: 0; align-self: center; justify-content: space-between; align-items: flex-start; margin-left: -408px;">
-            <ui:Button text="Continue" name="ReturnButton" class="longPause" style="margin-left: 91px;"/>
-            <ui:Button text="Return to Title" name="MainMenu" class="longPause" style="margin-left: 43px;"/>
-            <ui:Button text="Controls" name="ControlsButton" enable-rich-text="true" class="shortPause"/>
-            <ui:Button text="Settings" name="SettingsButton" class="shortPause" style="margin-left: -50px;"/>
+    <ui:VisualElement style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+        <ui:VisualElement name="PauseMenu" style="flex-grow: 1; align-self: center; align-content: center; min-width: 1920px; justify-content: space-around; max-height: 458px; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; align-items: center; -unity-text-align: middle-center; margin-top: 0; top: auto; left: auto; min-height: 1080px;">
+            <ui:VisualElement picking-mode="Ignore" name="Blur" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0); position: absolute; width: 1920px; height: 1080px; opacity: 1; filter: blur(11.02); background-image: url(&quot;project://database/Assets/Art%20Assets/UI/PauseView.renderTexture?fileID=8400000&amp;guid=c5f8850cfbaa76240a2c98e9c67b04b4&amp;type=2#PauseView&quot;); top: 0; visibility: hidden;"/>
+            <ui:VisualElement style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 2px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Pause/Rounded%20Checker%20Pattern.png?fileID=2800000&amp;guid=69359e212f2a9744d8032690b35b897a&amp;type=3#Rounded Checker Pattern&quot;); -unity-background-image-tint-color: rgba(255, 255, 255, 0.043); background-repeat: repeat repeat; background-size: 6% 10%;"/>
+            <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Bottom)%2002.png?fileID=2800000&amp;guid=2b4c97716b5daec44bbbe84951c6b2a2&amp;type=3#Decal (Bottom) 02" scale-mode="StretchToFill" picking-mode="Ignore" tabindex="0" style="position: absolute; left: 89px; width: 398px; flex-grow: 1; height: 365px; max-height: 625px; flex-direction: column; top: 656px; translate: 1px -1px;"/>
+            <ui:VisualElement style="flex-grow: 0; align-self: center; justify-content: space-between; align-items: flex-start; margin-left: -408px;">
+                <ui:Button text="Continue" name="ReturnButton" class="longPause" style="margin-left: 91px;"/>
+                <ui:Button text="Return to Title" name="MainMenu" class="longPause" style="margin-left: 43px;"/>
+                <ui:Button text="Controls" name="ControlsButton" enable-rich-text="true" class="shortPause"/>
+                <ui:Button text="Settings" name="SettingsButton" class="shortPause" style="margin-left: -50px;"/>
+            </ui:VisualElement>
+            <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Top).png?fileID=2800000&amp;guid=453af966a0d5f8f4bae58a3c9403f40c&amp;type=3#Decal (Top)" scale-mode="StretchToFill" enabled="false" picking-mode="Ignore" style="position: absolute; height: 603px; top: 53px; width: 904px; left: 399px; opacity: 1;"/>
+            <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Bottom)%2001.png?fileID=2800000&amp;guid=3f1781dc8c513754cb5555a5a9768b0c&amp;type=3#Decal (Bottom) 01" scale-mode="StretchToFill" picking-mode="Ignore" style="position: absolute; width: 247px; left: 487px; height: 277px; top: 704px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;"/>
         </ui:VisualElement>
-        <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Top).png?fileID=2800000&amp;guid=453af966a0d5f8f4bae58a3c9403f40c&amp;type=3#Decal (Top)" scale-mode="StretchToFill" enabled="false" picking-mode="Ignore" style="position: absolute; height: 603px; top: 53px; width: 904px; left: 399px; opacity: 1;"/>
-        <ui:Image source="project://database/Assets/Art%20Assets/UI/Pause/Decal%20(Bottom)%2001.png?fileID=2800000&amp;guid=3f1781dc8c513754cb5555a5a9768b0c&amp;type=3#Decal (Bottom) 01" scale-mode="StretchToFill" style="position: absolute; width: 247px; left: 487px; height: 277px; top: 704px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;"/>
+        <ui:VisualElement name="SettingsMenu" class="SettingsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: hidden;">
+            <ui:VisualElement style="flex-grow: 1; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgb(255, 255, 255);"/>
+            <ui:VisualElement name="UpperBorder" style="align-content: stretch; flex-grow: 1; flex-direction: row-reverse; justify-content: space-around; align-items: stretch; align-self: stretch; max-height: 240px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&amp;guid=0210c0b24bb5f794cb539551372ac845&amp;type=3#Upper Border&quot;);">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Menu%20Title.png?fileID=2800000&amp;guid=c568958e611c85648bb2df5de8fb4e19&amp;type=3#Menu Title&quot;);">
+                    <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Red%20Dots.png?fileID=2800000&amp;guid=0d74e67697225fc4799a2321374ad8a0&amp;type=3#Red Dots&quot;); min-height: 56px; min-width: 165px; justify-content: center; align-items: center; align-content: center; margin-top: 3px; margin-right: 182px; margin-left: 26px;"/>
+                    <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216);"/>
+                    <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Blue%20Dots.png?fileID=2800000&amp;guid=9c09afa930c320542b63f525f2717d8a&amp;type=3#Blue Dots&quot;); justify-content: center; min-height: 56px; min-width: 165px; margin-left: 185px; margin-right: 26px;"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 72px; margin-bottom: 155px;">
+                <ui:VisualElement name="MasterVolumeBox" class="SliderBin">
+                    <ui:Label text="Master Volume"/>
+                    <ui:Slider label="" value="100" high-value="1" name="MasterVolumeSlider" fill="true" show-input-field="false" class="text settingSlider"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="BGMVolumeBox" class="SliderBin">
+                    <ui:Label text="Music"/>
+                    <ui:Slider label="" value="100" high-value="1" name="BGMVolumeSlider" fill="true" class="settingSlider"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="SFXVolumeBox" class="SliderBin">
+                    <ui:Label text="Sound Effects" name=""/>
+                    <ui:Slider label="" value="100" high-value="1" name="SFXVolumeSlider" fill="true" class="settingSlider"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Cursor" class="SliderBin">
+                    <ui:Label text="Cursor Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true"/>
+                    <ui:Slider label="" value="100" high-value="100" name="MouseSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Lower%20Border.png?fileID=2800000&amp;guid=1de941c68f387ee4e9fbcdbdfaa784d3&amp;type=3#Lower Border&quot;); flex-direction: row; min-width: 1920px; max-height: 96px;">
+                <ui:Button text="Close" name="SettingsReturn" class="closeButton" style="top: -35px; left: -5px; background-color: rgba(188, 188, 188, 0); width: 405px; font-size: 54px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 3px; -unity-font-style: bold; padding-top: 18px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="right: -1315px; bottom: 52px; width: 152px; height: 119px;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Instance template="ControlsMenu" name="ControlsMenu" class="ControlsMenu" style="visibility: hidden;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="SettingsMenu" class="SettingsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: hidden;">
-        <ui:VisualElement style="flex-grow: 1; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgb(255, 255, 255);"/>
-        <ui:VisualElement name="UpperBorder" style="align-content: stretch; flex-grow: 1; flex-direction: row-reverse; justify-content: space-around; align-items: stretch; align-self: stretch; max-height: 240px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&amp;guid=0210c0b24bb5f794cb539551372ac845&amp;type=3#Upper Border&quot;);">
-            <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Menu%20Title.png?fileID=2800000&amp;guid=c568958e611c85648bb2df5de8fb4e19&amp;type=3#Menu Title&quot;);">
-                <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Red%20Dots.png?fileID=2800000&amp;guid=0d74e67697225fc4799a2321374ad8a0&amp;type=3#Red Dots&quot;); min-height: 56px; min-width: 165px; justify-content: center; align-items: center; align-content: center; margin-top: 3px; margin-right: 182px; margin-left: 26px;"/>
-                <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216);"/>
-                <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Blue%20Dots.png?fileID=2800000&amp;guid=9c09afa930c320542b63f525f2717d8a&amp;type=3#Blue Dots&quot;); justify-content: center; min-height: 56px; min-width: 165px; margin-left: 185px; margin-right: 26px;"/>
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 72px; margin-bottom: 155px;">
-            <ui:VisualElement name="MasterVolumeBox" class="SliderBin">
-                <ui:Label text="Master Volume"/>
-                <ui:Slider label="" value="100" high-value="1" name="MasterVolumeSlider" fill="true" show-input-field="false" class="text settingSlider"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="BGMVolumeBox" class="SliderBin">
-                <ui:Label text="Music"/>
-                <ui:Slider label="" value="100" high-value="1" name="BGMVolumeSlider" fill="true" class="settingSlider"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="SFXVolumeBox" class="SliderBin">
-                <ui:Label text="Sound Effects" name=""/>
-                <ui:Slider label="" value="100" high-value="1" name="SFXVolumeSlider" fill="true" class="settingSlider"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="Cursor" class="SliderBin">
-                <ui:Label text="Cursor Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true"/>
-                <ui:Slider label="" value="100" high-value="100" name="MouseSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
-            </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Lower%20Border.png?fileID=2800000&amp;guid=1de941c68f387ee4e9fbcdbdfaa784d3&amp;type=3#Lower Border&quot;); flex-direction: row; min-width: 1920px; max-height: 96px;">
-            <ui:Button text="Close" name="SettingsReturn" class="closeButton" style="top: -35px; left: -5px; background-color: rgba(188, 188, 188, 0); width: 405px; font-size: 54px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 3px; -unity-font-style: bold; padding-top: 18px;"/>
-            <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="right: -1315px; bottom: 52px; width: 152px; height: 119px;"/>
-        </ui:VisualElement>
-    </ui:VisualElement>
-    <ui:Instance template="ControlsMenu" name="ControlsMenu" class="ControlsMenu" style="visibility: hidden;"/>
 </ui:UXML>

@@ -1069,6 +1069,17 @@
                     "action": "MainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf8a893b-3209-45bf-817f-213e23a4fd0b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -1201,6 +1212,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LoadFinalCutscene",
+                    "type": "Button",
+                    "id": "419ae877-9b28-42e6-a5ba-e0fd3005929e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1223,6 +1243,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Load Level Two",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "232f14e6-1bd2-47ed-a2ad-09ff0e8b7685",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LoadFinalCutscene",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

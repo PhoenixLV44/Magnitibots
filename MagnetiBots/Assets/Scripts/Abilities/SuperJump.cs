@@ -31,10 +31,13 @@ namespace Ability
         {
             controller.ChargingParticles.SetActive(true);
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-
-            while (merbleBoss.ChargedMerbleList.Count <= 10)
+            int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
+            yield return new WaitForSecondsRealtime(0.5f);
+            merbleBoss.merbleList[0].StartCharge(transform.position);
+            yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count >= 1);
+            while (merbleBoss.ChargedMerbleList.Count < maxPower)
             {
-                if (merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
+                if (merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[0].StartCharge(transform.position);
                     Globals.Managers.Audio.PlaySFX("ChargeMerble");
@@ -48,14 +51,17 @@ namespace Ability
             int jumpPowerMult = merbleBoss.ChargedMerbleList.Count;
             
             controller.ChargingParticles.SetActive(false);
-            
-            StartCoroutine(_playerMovement.Jump(jumpPowerMult));
-            Globals.Managers.Audio.PlaySFX("SuperJump");
-            if (merbleBoss.ChargedMerbleList.Count > 5)
+
+            if (merbleBoss.ChargedMerbleList.Count > 1)
             {
-                _playerMovement.Hovering = true;
-                _hoverParticles.SetActive(true);
+                StartCoroutine(_playerMovement.Jump(jumpPowerMult));
+                if (merbleBoss.ChargedMerbleList.Count > 5)
+                {
+                    _playerMovement.Hovering = true;
+                    _hoverParticles.SetActive(true);
+                }
             }
+            Globals.Managers.Audio.PlaySFX("SuperJump");
             StopCharging();
             
         }
@@ -86,6 +92,8 @@ namespace Ability
         {
             Debug.Log("STOP Hovering");
             _playerMovement.Hovering = false;
+            _hoverParticles.SetActive(false);
+            _playerMovement.GravityOn = true;
             //_hoverParticles.SetActive(false);
         }
 
@@ -120,6 +128,7 @@ namespace Ability
         private IEnumerator CheckForGround()
         {
             yield return new WaitUntil((() => !_playerMovement.Grounded));
+            yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => _playerMovement.Grounded);
             if(_playerMovement.Hovering)
                 _playerMovement.Hovering = false;

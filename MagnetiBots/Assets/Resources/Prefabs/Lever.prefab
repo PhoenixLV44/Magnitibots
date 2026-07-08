@@ -50,6 +50,7 @@ MonoBehaviour:
   interactionObjects: []
   delayBetweenObjects: 0
   canBeDeactivated: 0
+  actInSeries: 0
 --- !u!136 &6962055658659196927
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -69,10 +70,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2.86
+  m_Radius: 1.26
+  m_Height: 4.3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.62, z: 0}
 --- !u!1 &7411638818521818160
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +404,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7082748700177806338, guid: 333626e632bdd674aa672228ec14105b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4348999639872389943}
+    - targetCorrespondingSourceObject: {fileID: -7082748700177806338, guid: 333626e632bdd674aa672228ec14105b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8929317897459062654}
   m_SourcePrefab: {fileID: 100100000, guid: 333626e632bdd674aa672228ec14105b, type: 3}
 --- !u!1 &3034882902119989031 stripped
 GameObject:
@@ -423,6 +427,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Interactable.LeverCatToy
   blueMaterial: {fileID: 2100000, guid: d717bf123d95e254aa5d633057c727b1, type: 2}
   redMaterial: {fileID: 2100000, guid: c13ef812cd77a924fa30dae093766017, type: 2}
+--- !u!136 &8929317897459062654
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3034882902119989031}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030681185
+  m_Height: 0.26474667
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.13037333, z: 0}
 --- !u!4 &3468243419433997106 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 333626e632bdd674aa672228ec14105b, type: 3}

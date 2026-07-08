@@ -62,6 +62,8 @@ public class PauseMenu : MonoBehaviour
         _settingsReturn.RegisterCallback<ClickEvent>(OnClickSettingsReturn);
 
         _pauseContainer.visible = false;
+
+        Globals.Managers.Settings.PauseMenuSetup();
     }
     private void OnDisable()
     {
@@ -79,11 +81,12 @@ public class PauseMenu : MonoBehaviour
         Globals.Managers.paused = true;
         _blur.visible = true;
         _pauseContainer.visible = true;
+        Globals.Managers.Settings.UpdatePauseSliders();
         //Time.timeScale = 0.01f;
         InputSystem.actions.FindAction("MainMenu").Reset();
         while (Globals.Managers.paused)
         {
-            if (InputSystem.actions.FindAction("MainMenu").IsPressed())
+            if (InputSystem.actions.FindAction("MainMenu").IsPressed() && _pauseContainer.visible)
             {
                 Debug.Log("return");
                 _blur.visible = false;
@@ -113,6 +116,7 @@ public class PauseMenu : MonoBehaviour
     }
     private void OnClickSettings(ClickEvent click)
     {
+        
         _pauseContainer.visible = false;
         _settingsContainer.visible = true;
     }

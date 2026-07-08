@@ -28,6 +28,8 @@ namespace Ability.Object
             triggerCollider.enabled = false;
             if (other.CompareTag("SmashTarget"))
             {
+                //Globals.Managers.Audio.PlaySFXHere("ThrowRock", transform);
+
                 SmashableTarget target = other.GetComponent<SmashableTarget>();
                 target.DecreaseHealth(_powerLevel);
                 
@@ -48,14 +50,16 @@ namespace Ability.Object
             }
             else if (other.CompareTag("Ground") && rb.linearVelocity.y < 0)
             {
+                //Globals.Managers.Audio.PlaySFXHere("ThrowRock", transform);
                 Debug.Log("Ground");
                 _smashAbility.DeactivateBall();
                 //_smashAbility.MerbleBoss.FireMerbles();
             }
             else if (!other.CompareTag("Ground") && !other.CompareTag("SmashTarget") && rb.linearVelocity.y < 0)
-            {
+            {                
                 _smashAbility.DeactivateBall();
             }
+            Globals.Managers.Audio.PlaySFXHere("ThrowRock", transform);
         }
 
         public void IncreasePowerLevel(float newPowerLevel)

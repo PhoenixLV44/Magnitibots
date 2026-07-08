@@ -57,18 +57,19 @@
     align-content: auto;
     flex-grow: 1;
     align-self: flex-start;
-    width: 658px;
+    width: 580px;
     position: absolute;
-    height: 137px;
+    height: 122px;
     top: 127px;
     left: 148px;
+    margin-left: 34px;
 }
 
 .powerUnlock.panel {
     align-items: center;
     align-self: center;
     align-content: center;
-    width: 1393px;
+    width: 1227px;
     justify-content: center;
     position: absolute;
     top: 20%;
@@ -87,6 +88,8 @@
     border-bottom-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    height: 735px;
+    margin-top: 162px;
 }
 
 .unity-button {
