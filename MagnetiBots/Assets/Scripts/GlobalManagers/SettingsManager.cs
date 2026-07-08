@@ -199,7 +199,6 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
-            Debug.Log("dang");
             BGMVolume = volumeHolder;
             pause_BGMVolumeSlider.value = BGMVolume;
         }
@@ -359,10 +358,10 @@ public class SettingsManager : MonoBehaviour
         switch (action)
         {
             case "Load":
-                EnableHUD();
-                EnablePause();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + index);
                 yield return new WaitForSecondsRealtime(2);
+                EnableHUD();
+                EnablePause();
                 break;
             case "Credits":
                 Globals.Managers.Settings.DisableHUD();
@@ -383,6 +382,7 @@ public class SettingsManager : MonoBehaviour
     }
     private IEnumerator FadeIn()
     {
+
         sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
 

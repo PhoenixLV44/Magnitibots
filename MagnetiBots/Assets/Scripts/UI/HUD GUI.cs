@@ -135,12 +135,14 @@ public class HUDGUI : MonoBehaviour
     }
     public void UpdateGUI(string ability = "nada")
     {
+        Debug.Log("this is gui "+ability);
         if (controller != null)
         {
             if (controller.MerbleBoss.MasterList != null)
             {
                 if (ability == "pickup")
                 {
+                    Debug.Log("this is pickup");
                     merbleUI.visible = true;
                     int realcount = controller.MerbleBoss.MasterList.Count + 1;
                     merbleCount.text = "x" + realcount.ToString();
@@ -150,6 +152,10 @@ public class HUDGUI : MonoBehaviour
                     merbleUI.visible = true;
                     merbleCount.text = "x" + controller.MerbleBoss.MasterList.Count.ToString();
                 }
+            }
+            else
+            {
+                Debug.Log("oops");
             }
             if (controller.CanUseLasso)
             {
