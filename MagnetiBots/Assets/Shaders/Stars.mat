@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8283835893199924972
+--- !u!114 &-1803812388199846583
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_SkyBox
-  m_Shader: {fileID: -6465566751694194690, guid: 49209a989692409428428abd15db1c6e, type: 3}
+  m_Name: Stars
+  m_Shader: {fileID: -6465566751694194690, guid: 0aec44521e30f6d48a10e2a7fe0ade5b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -51,14 +51,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _HorizonBlend: 0
-    - _NadirBlend: 0
+    - _Blink_Speed: 0.001
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ZenithBlend: 0
+    - _Star_Power: 70
+    - _Stars_Density: 200
     m_Colors:
-    - _GroundColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HorizonColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SkyColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Star_Color: {r: 54.88553, g: 35.288498, b: 16.31032, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
