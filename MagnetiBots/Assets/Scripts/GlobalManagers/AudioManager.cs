@@ -101,13 +101,8 @@ public class AudioManager : MonoBehaviour
         switch (destination)
         {
             case AudioSettings.Destination.Master:
-                Debug.Log(volume);
                 Globals.Managers.Settings.MasterVolume = value;
-                if (audioMixer.SetFloat("Master_Volume", volume))
-                {
-                    Debug.Log("yippee!");
-                }
-                ;
+                audioMixer.SetFloat("Master_Volume", volume);
                 break;
             case AudioSettings.Destination.SFX:
                 Globals.Managers.Settings.SFXVolume = value;

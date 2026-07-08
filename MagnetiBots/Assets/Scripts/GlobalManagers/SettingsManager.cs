@@ -165,7 +165,6 @@ public class SettingsManager : MonoBehaviour
     }
     public void ChangeVolumeCallback(ChangeEvent<float> evt, Destination destination)
     {
-        Debug.Log("grahh");
         Globals.Managers.Audio.UpdateVolumes(destination, evt.newValue);
     }
     public void SensitivityCallback(ChangeEvent<float> evt)
@@ -182,7 +181,6 @@ public class SettingsManager : MonoBehaviour
         {
             case Destination.Master:
                 Globals.Managers.Saves.AddData<float>("MasterVolume", MasterVolume);
-                Debug.Log("ding");
                 break;
             case Destination.SFX:
                 Globals.Managers.Saves.AddData<float>("SFXVolume", SFXVolume);
@@ -262,7 +260,6 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
-            Debug.Log("dong");
             BGMVolume = volumeHolder;
             BGMVolumeSlider.value = BGMVolume;
         }
