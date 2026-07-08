@@ -154,6 +154,7 @@ namespace Ability
         {
             //Debug.Log("DropBall");
             Globals.Managers.Audio.PlaySFXHere("ThrowRock", _smashBall.transform);
+            //controller.Animator.Play("IdleWalk");
             _dropMerbles = true;
             _smashBallRb.useGravity = true;
             targetCursor.ObjectToMove = null;

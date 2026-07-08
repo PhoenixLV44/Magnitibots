@@ -10,7 +10,7 @@ public class IdleState : GroundedState
     {
         //Debug.Log("Entering Idle State");
         base.EnterState();
-        animator.Play("Idle");
+        animator.Play("IdleWalk");
         //Cursor.lockState = CursorLockMode.None;
     }
 

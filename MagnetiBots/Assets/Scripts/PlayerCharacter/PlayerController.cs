@@ -166,6 +166,7 @@ namespace Player
             {
                 //Debug.Log("cast did find ground");
                 _movement.Grounded = true;
+                _animator.SetBool("Grounded", true);
             }
             else
             {
@@ -173,6 +174,7 @@ namespace Player
                 if(_movement)
                 {
                     _movement.Grounded = false;
+                    _animator.SetBool("Grounded", false);
                 }
             }
         }
