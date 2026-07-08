@@ -89,6 +89,7 @@ namespace Ability
             rangeIndicator.DisableRangeIndicator();
             //lassoLaunched = false;
             isCharging = true;
+            controller.ChargingParticles.SetActive(true);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) =>
                 Vector3.Distance(a.transform.position, transform.position)
