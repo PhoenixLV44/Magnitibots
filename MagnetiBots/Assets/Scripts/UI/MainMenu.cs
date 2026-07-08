@@ -88,6 +88,7 @@ public class MainMenu : MonoBehaviour
         _controlsContainer.visible = false;
         Globals.Managers.Settings.DisableHUD();
         Globals.Managers.Settings.DisablePause();
+        Globals.Managers.Settings.SettingsMenuSetup();
         Globals.Managers.Audio.UpdateBGM("BambooMarimba");
         Cursor.lockState = CursorLockMode.None;
     }
