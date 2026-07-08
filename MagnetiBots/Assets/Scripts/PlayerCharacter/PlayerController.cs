@@ -73,6 +73,7 @@ namespace Player
         public  GameObject HoverParticles => hoverParticles;
 
         [SerializeField] private SuperJumpPoint superJumpPoint;
+        public  SuperJumpPoint SuperJumpPoint => superJumpPoint;
         
         Animator _animator;
         public Animator Animator => _animator;
@@ -165,6 +166,7 @@ namespace Player
             {
                 //Debug.Log("cast did find ground");
                 _movement.Grounded = true;
+                _animator.SetBool("Grounded", true);
             }
             else
             {
@@ -172,6 +174,7 @@ namespace Player
                 if(_movement)
                 {
                     _movement.Grounded = false;
+                    _animator.SetBool("Grounded", false);
                 }
             }
         }

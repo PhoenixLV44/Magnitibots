@@ -1,24 +1,24 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="ControlsMenu" src="project://database/Assets/UI%20Toolkit/ControlsMenu.uxml?fileID=9197481963319205126&amp;guid=9c3956b9c7ed9a04bbc4a12f330b32a5&amp;type=3#ControlsMenu"/>
-    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
+    <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3"/>
     <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-direction: row; align-self: center; align-content: center; align-items: center; justify-content: center; position: absolute; margin-top: 0; flex-grow: 1; width: 1920px; height: 1080px; left: 0; right: 0; bottom: 0;">
         <ui:VisualElement name="VisualElement" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); background-color: rgb(255, 255, 255);"/>
         <ui:Image scale-mode="ScaleToFit" source="project://database/Assets/Art%20Assets/UI/Main%20Menu/Logo_Final2.png?fileID=2800000&amp;guid=2ba1af0bc62a6944e80fcc53d51e0c6a&amp;type=3#Logo_Final2" style="height: 808px; width: 520px; flex-grow: 1; margin-bottom: 209px; margin-left: 64px; margin-right: 43px;"/>
         <ui:VisualElement name="Buttons" style="flex-grow: 0; justify-content: space-between; align-content: center; align-self: center; align-items: center; margin-top: 66px; margin-bottom: 131px; margin-right: 80px;">
             <ui:Button text="" name="StartButton" class="mainButton" style="background-color: rgba(188, 188, 188, 0);">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_01.png?fileID=2800000&amp;guid=8b38ff1205887c0488e8b0338e6eea95&amp;type=3#MainMenuText_01" style="height: 82px; width: 163px; margin-top: 10px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_01.png?fileID=2800000&amp;guid=8b38ff1205887c0488e8b0338e6eea95&amp;type=3#MainMenuText_01" picking-mode="Ignore" style="height: 82px; width: 163px; margin-top: 10px;"/>
             </ui:Button>
             <ui:Button text="" name="SettingsButton" class="mainButton">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_02.png?fileID=2800000&amp;guid=7bad462372aa8eb488142821f37b61ba&amp;type=3#MainMenuText_02" style="height: 84px; width: 323px; margin-top: 12px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_02.png?fileID=2800000&amp;guid=7bad462372aa8eb488142821f37b61ba&amp;type=3#MainMenuText_02" picking-mode="Ignore" style="height: 84px; width: 323px; margin-top: 12px;"/>
             </ui:Button>
             <ui:Button text="" name="ControlsButton" class="mainButton">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_03.png?fileID=2800000&amp;guid=fb80120e95ac4fc4c8d32a0dfcac341e&amp;type=3#MainMenuText_03" scale-mode="StretchToFill" style="width: 336px; height: 67px; margin-bottom: 4px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_03.png?fileID=2800000&amp;guid=fb80120e95ac4fc4c8d32a0dfcac341e&amp;type=3#MainMenuText_03" scale-mode="StretchToFill" picking-mode="Ignore" style="width: 336px; height: 67px; margin-bottom: 4px;"/>
             </ui:Button>
             <ui:Button text="" name="CreditsButton" class="mainButton">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_05.png?fileID=2800000&amp;guid=145015bf1ce810a4682d90752aef7878&amp;type=3#MainMenuText_05" scale-mode="StretchToFill" style="width: 290px; height: 68px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_05.png?fileID=2800000&amp;guid=145015bf1ce810a4682d90752aef7878&amp;type=3#MainMenuText_05" scale-mode="StretchToFill" picking-mode="Ignore" style="width: 290px; height: 68px;"/>
             </ui:Button>
             <ui:Button text="" name="QuitButton" class="mainButton exit">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_04.png?fileID=2800000&amp;guid=4dd52e00f77b65f46840a3a5538eab8e&amp;type=3#MainMenuText_04" scale-mode="StretchToFill" style="width: 172px; height: 65px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_04.png?fileID=2800000&amp;guid=4dd52e00f77b65f46840a3a5538eab8e&amp;type=3#MainMenuText_04" scale-mode="StretchToFill" picking-mode="Ignore" style="width: 172px; height: 65px;"/>
             </ui:Button>
         </ui:VisualElement>
     </ui:VisualElement>
@@ -48,7 +48,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Lower%20Border.png?fileID=2800000&amp;guid=761b7bf0e469841429019df4244ba07b&amp;type=3#Lower Border&quot;); width: 1920px; position: absolute; bottom: 0; height: 83px;">
-            <ui:Button text="Close" name="ReturnButton" emoji-fallback-support="false" enable-rich-text="true" class="button closeButton" style="-unity-text-align: middle-center; white-space: nowrap; background-color: rgba(255, 255, 255, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-background-scale-mode: scale-to-fit; width: 429px; height: 115px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-generator: standard; -unity-text-auto-size: none; font-size: 71px; letter-spacing: 0; align-self: flex-start; align-content: flex-start; justify-content: flex-end; align-items: flex-start; position: absolute; bottom: 0; margin-left: 0; margin-right: 0; top: auto; left: 0; right: auto;"/>
+            <ui:Button text="" name="ReturnButton" emoji-fallback-support="false" enable-rich-text="true" class="button closeButton" style="-unity-text-align: middle-center; white-space: nowrap; background-color: rgba(255, 255, 255, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-background-scale-mode: scale-to-fit; width: 429px; height: 115px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-generator: standard; -unity-text-auto-size: none; font-size: 71px; letter-spacing: 0; align-self: flex-start; align-content: flex-start; justify-content: center; align-items: center; position: absolute; bottom: 0; margin-left: 0; margin-right: 0; top: auto; left: 0; right: auto;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Close.png?fileID=2800000&amp;guid=5ac41b61e37b2174d90f1463d111eadf&amp;type=3#Close" scale-mode="StretchToFill" picking-mode="Ignore" style="min-width: 172px; min-height: 55px; width: 194px; margin-bottom: 12px;"/>
+            </ui:Button>
             <ui:Image source="project://database/Assets/Art%20Assets/UI/Settings/Mrble.png?fileID=2800000&amp;guid=447c319236f244445a18e5c57355201e&amp;type=3#Mrble" scale-mode="StretchToFill" style="position: absolute; right: 29px; bottom: 20px; flex-grow: 1; width: 147px; aspect-ratio: 1.25;"/>
         </ui:VisualElement>
     </ui:VisualElement>
@@ -61,7 +63,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="CreditsContainers" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 30px; margin-bottom: 145px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-            <ui:VisualElement name="OurTeam" style="flex-grow: 1;">
+            <ui:VisualElement name="OurTeam" style="flex-grow: 1; min-width: 1007px;">
                 <ui:Label text="Our Team" class="text" style="font-size: 72px; -unity-text-align: middle-center; -unity-text-outline-width: 6px; -unity-font-style: bold; letter-spacing: -7px;"/>
                 <ui:VisualElement name="Kaiden" class="teamMember">
                     <ui:Label text="Kaiden Davis"/>
@@ -84,7 +86,11 @@
             </ui:VisualElement>
             <ui:VisualElement name="SourcedAssets" style="flex-grow: 1;">
                 <ui:Label text="With Help From.." name="Label" class="text" style="font-size: 72px; -unity-text-align: middle-center; -unity-text-outline-width: 6px; -unity-font-style: bold; letter-spacing: -7px;"/>
-                <ui:ListView allow-add="false" allow-remove="false" name="SourcesList" show-add-remove-footer="false" selection-type="None" binding-source-selection-mode="Manual" data-source="project://database/Assets/Scripts/UI/SourcesList.asset?fileID=11400000&amp;guid=351a46c66b520c645bc42f09931069d6&amp;type=2#SourcesList" data-source-path="sources"/>
+                <ui:ListView name="SourcesList" binding-source-selection-mode="AutoAssign" data-source="project://database/Assets/Scripts/UI/SourcesList.asset?fileID=11400000&amp;guid=351a46c66b520c645bc42f09931069d6&amp;type=2#SourcesList" item-template="project://database/Assets/UI%20Toolkit/SourceTemplate.uxml?fileID=9197481963319205126&amp;guid=485d516f890dec343b03e7c8f4fcded6&amp;type=3#SourceTemplate" selection-type="None" focusable="false" virtualization-method="DynamicHeight">
+                    <Bindings>
+                        <ui:DataBinding property="itemsSource" data-source-path="sourceList"/>
+                    </Bindings>
+                </ui:ListView>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Lower%20Border.png?fileID=2800000&amp;guid=761b7bf0e469841429019df4244ba07b&amp;type=3#Lower Border&quot;); width: 1920px; position: absolute; bottom: 0; height: 83px;">

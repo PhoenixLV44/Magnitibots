@@ -15,7 +15,7 @@ namespace Ability.Object
         private LayerMask _groundLayers;
         private RangeIndicator _rangeIndicator;
         [SerializeField] private float cursorSpeed = 0.75f;
-        [SerializeField] private float objectSpeed = 5;
+        [SerializeField] private float objectSpeed = 7.5f;
         public float ObjectSpeed => objectSpeed;
 
         private GameObject _objectToMove;
@@ -37,13 +37,13 @@ namespace Ability.Object
             _cursor = _raycastPoint.transform.GetChild(0).gameObject;
             _rangeIndicator = GetComponent<RangeIndicator>();
             _groundLayers = GetComponent<Player.Controller>().groundLayers;
-
+            _player  = GetComponent<Player.Controller>();
             //_cursor.SetActive(false);
             
             _returnPoint = GetComponent<Player.Controller>().ReturnPoint;
             if (_player.Movement)
             {
-                _raycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 26, transform.position.z) + GetComponent<Player.Movement>().Model.transform.forward;
+               ActivateCursor();
             }
         }
 
@@ -54,7 +54,7 @@ namespace Ability.Object
                 _objectToMove = null;
             }
 
-            if (_canMoveCursor && !Globals.Managers.paused)
+            if (_canMoveCursor || Globals.Managers.paused)
             {
                 if (!_objectToMove)
                 {
@@ -70,18 +70,25 @@ namespace Ability.Object
         public void ChangeCursorPosition(Vector3 position)
         {
             _cursor.transform.position = new Vector3(position.x, transform.position.y - 1, position.z);
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             if (!_cursor.activeSelf)
             {
                 _cursor.SetActive(true);
             }
         }
 
+        public void ActivateCursor()
+        {
+            _raycastPoint.SetActive(true);
+            _raycastPoint.transform.position = new Vector3(_player.ReturnPoint.transform.position.x, _player.ReturnPoint.transform.position.y + 25, _player.ReturnPoint.transform.position.z);
+            _canMoveCursor = true;
+        }
+
         public void DeactivateCursor()
         {
             //_targetCursor.transform.position = transform.position;
-            UnityEngine.Cursor.lockState = CursorLockMode.None;
-            _cursor.SetActive(false);
+            //UnityEngine.Cursor.lockState = CursorLockMode.None;
+            _raycastPoint.SetActive(false);
         }
 
         public Vector3 GetCursorDelta()
@@ -90,13 +97,16 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
-            
-            return cursorMovement;
+            cursorMovement = Globals.Managers.Settings.MouseSensitivity > 0 ?  cursorMovement * Globals.Managers.Settings.MouseSensitivity : cursorMovement;
+            if(_canMoveCursor)
+                return cursorMovement;
+            else
+                return Vector3.zero;
         }
 
         private Vector3 MoveCursor()
         {
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             Vector3 cursorMovement = GetCursorDelta();
             
             Quaternion cameraRotation = GetComponent<Player.Movement>().adjustedMovement;
@@ -150,9 +160,9 @@ namespace Ability.Object
             }
             targetPosition.y = height;
             Vector3 currentPosition = _objectToMove.transform.position;
-            float distance = Vector3.Distance(targetPosition, currentPosition);
+            float distance = Vector3.Distance(targetPosition, currentPosition) > 1 ? 1 :  Vector3.Distance(targetPosition, currentPosition);
             
-            _objectToMove.transform.position = Vector3.Lerp(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
+            _objectToMove.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
         }
         
 
@@ -165,20 +175,20 @@ namespace Ability.Object
             foreach (RaycastHit hit in hits)
             {
                 GameObject hitObject = hit.collider.gameObject;
-                if (_currentAbility == GetComponent<Lasso>() && GetComponent<Lasso>().LoopedObject)
+                /*if (_currentAbility == GetComponent<Lasso>() && GetComponent<Lasso>().LoopedObject)
                 {
                     PuzzleCube hitParent = hitObject.transform.parent.GetComponent<PuzzleCube>();
                     
                     Lasso lasso = GetComponent<Lasso>();
                     
-                    if (hitObject == lasso.LoopedObject || hitParent)
-                    {
-                        //Debug.Log("Next hit");
-                        break;
-                    }
                     
+                }*/
+                if (hitObject == GetComponent<Lasso>().LoopedObject )
+                {
+                    //Debug.Log("Next hit");
+                    //break;
                 }
-                if (hit.point.y > highestPoint.y)
+                else if (hit.point.y > highestPoint.y)
                 {
                     highestPoint = hit.point;
                 }

@@ -39,10 +39,11 @@ namespace Ability
             currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
-            
+            WaitForSecondsRealtime wait = new WaitForSecondsRealtime(chargeTimer);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             //Debug.Log("MAX POWER: " + maxPower);
+            yield return wait;
             for (int i = 0; i < 5; i++)
             {
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
@@ -68,7 +69,7 @@ namespace Ability
                     merbleArray[j].StartCharge(transform.position);
                 }
 
-                yield return new WaitForSecondsRealtime(chargeTimer);
+                yield return wait;
             }
         }
 
@@ -83,7 +84,7 @@ namespace Ability
 
         public override void Fire()
         {
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
             DropBall();
         }
 
@@ -111,7 +112,7 @@ namespace Ability
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
             newPosition = controller.Movement.adjustedMovement * newPosition;
             newPosition.y = transform.position.y + 5;
-            _smashBall.transform.position = newPosition;
+            _smashBall.transform.position = controller.ReturnPoint.position;
             _smashBall.transform.localScale = smashBallScript.BaseScale;
 
             Vector3 cursorPos = transform.position + GameObject.Find("PlayerModel").transform.forward;
@@ -153,6 +154,7 @@ namespace Ability
         {
             //Debug.Log("DropBall");
             Globals.Managers.Audio.PlaySFXHere("ThrowRock", _smashBall.transform);
+            //controller.Animator.Play("IdleWalk");
             _dropMerbles = true;
             _smashBallRb.useGravity = true;
             targetCursor.ObjectToMove = null;

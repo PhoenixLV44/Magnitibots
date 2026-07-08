@@ -26,12 +26,11 @@ public class MainMenu : MonoBehaviour
     private Button _controlsReturnButton;
 
     private VisualElement _creditsContainer;
-    public List<string> sources;
     private Button _creditsReturnButton;
 
-    private void Awake()
+    private void Start()
     {
-        
+
         _mainDocument = GetComponent<UIDocument>();
 
         #region MainMenu Container and Buttons
@@ -80,14 +79,16 @@ public class MainMenu : MonoBehaviour
         _creditsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnCredits);
         #endregion
 
-        _mainContainer.visible = true;
-        _mainContainer.BringToFront();
-        _controlsContainer.visible = false;
 
-    }
-    private void Start()
-    {
+        if (Globals.Managers.Settings.waitMenu)
+        {
+            _mainContainer.visible = false;
+        }
+
+        _controlsContainer.visible = false;
         Globals.Managers.Settings.DisableHUD();
+        Globals.Managers.Settings.DisablePause();
+        Globals.Managers.Settings.SettingsMenuSetup();
         Globals.Managers.Audio.UpdateBGM("BambooMarimba");
         Cursor.lockState = CursorLockMode.None;
     }
@@ -104,6 +105,8 @@ public class MainMenu : MonoBehaviour
     private void OnClickStart(ClickEvent click)
     {
         Globals.Managers.Settings.EnableHUD();
+        Globals.Managers.Settings.EnablePause();
+        Globals.Managers.Settings.SettingsMenuUnregister();
         Globals.Managers.Settings.TransitionScene();
     }
 
@@ -121,6 +124,10 @@ public class MainMenu : MonoBehaviour
         _controlsCarousel.Ready();
     }
     private void OnClickCredits(ClickEvent click)
+    {
+        GoToCredits();
+    }
+    public void GoToCredits()
     {
         _creditsContainer.visible = true;
         _creditsContainer.BringToFront();

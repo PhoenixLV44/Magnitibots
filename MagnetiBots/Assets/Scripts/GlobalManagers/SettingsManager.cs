@@ -45,6 +45,7 @@ public class SettingsManager : MonoBehaviour
     #region pause settings
     VisualElement pause_root;
     VisualElement pause_blur;
+    VisualElement pause_settingsMenu;
     Slider pause_BGMVolumeSlider;
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
@@ -53,7 +54,7 @@ public class SettingsManager : MonoBehaviour
 
     #region Transitions
     UIDocument sceneTransition;
-
+    public bool waitMenu = false;
     #endregion
 
     #endregion
@@ -61,12 +62,12 @@ public class SettingsManager : MonoBehaviour
     float _mouseSens;
     public float MouseSensitivity { get { return _mouseSens; } set { _mouseSens = value; } }
 
-    private void Awake()
+    public void SettingsMenuSetup()
     {
         #region regular settings menu
         //find UI References
         root = GameObject.Find("MainMenu").GetComponent<UIDocument>().rootVisualElement;
-        
+
         BGMVolumeSlider = root.Q<Slider>("BGMVolumeSlider");
         SFXVolumeSlider = root.Q<Slider>("SFXVolumeSlider");
         MasterVolumeSlider = root.Q<Slider>("MasterVolumeSlider");
@@ -76,31 +77,56 @@ public class SettingsManager : MonoBehaviour
         BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
+        MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(SensitivityCallback);
 
         BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
+        MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveSensitivityCallback);
         #endregion
+        UpdateSettingsSliders();
+    }
+    public void SettingsMenuUnregister()
+    {
+        BGMVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
+        SFXVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
+        MasterVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
+        MouseSensitivitySlider.UnregisterCallback<ChangeEvent<float>>(SensitivityCallback);
 
-        #region pause settings menu
-        //find UI References
+        BGMVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
+        SFXVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
+        MasterVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
+        MouseSensitivitySlider.UnregisterCallback<FocusOutEvent>(SaveSensitivityCallback);
+    }
+    public void PauseMenuSetup()
+    {
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
-
+        pause_settingsMenu = pause_root.Q("SettingsMenu");
         pause_blur = pause_root.Q<VisualElement>("Blur");
 
-        pause_BGMVolumeSlider = pause_root.Q<Slider>("BGMVolumeSlider");
-        pause_SFXVolumeSlider = pause_root.Q<Slider>("SFXVolumeSlider");
-        pause_MasterVolumeSlider = pause_root.Q<Slider>("MasterVolumeSlider");
-        pause_MouseSensitivitySlider = pause_root.Q<Slider>("MouseSensitivitySlider");
+        pause_BGMVolumeSlider = pause_settingsMenu.Q<Slider>("BGMVolumeSlider");
+        pause_SFXVolumeSlider = pause_settingsMenu.Q<Slider>("SFXVolumeSlider");
+        pause_MasterVolumeSlider = pause_settingsMenu.Q<Slider>("MasterVolumeSlider");
+        pause_MouseSensitivitySlider = pause_settingsMenu.Q<Slider>("MouseSensitivitySlider");
 
         //register callbacks
         pause_BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
+        pause_MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(SensitivityCallback);
 
         pause_BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
+        pause_MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveSensitivityCallback);
+        UpdatePauseSliders();
+    }
+    private void Awake()
+    {
+        
+        #region pause settings menu
+        //find UI References
+
         #endregion
 
         _hud = GameObject.Find("HUD");
@@ -111,7 +137,7 @@ public class SettingsManager : MonoBehaviour
         _pauseMenu = GameObject.Find("PauseMenu");
 
         sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
-        sceneTransition.rootVisualElement.visible = false;
+        
     }
     private void Update()
     {
@@ -129,8 +155,9 @@ public class SettingsManager : MonoBehaviour
     }
     public void LateAwake()
     {
-        UpdateSettingsSliders();
-        UpdatePauseSliders();
+        sceneTransition.rootVisualElement.visible = false;
+        SettingsMenuSetup();
+        PauseMenuSetup();
     }
     private void Start()
     {
@@ -138,11 +165,16 @@ public class SettingsManager : MonoBehaviour
     }
     public void ChangeVolumeCallback(ChangeEvent<float> evt, Destination destination)
     {
+        Debug.Log("grahh");
         Globals.Managers.Audio.UpdateVolumes(destination, evt.newValue);
     }
     public void SensitivityCallback(ChangeEvent<float> evt)
     {
         MouseSensitivity = evt.newValue;
+    }
+    public void SaveSensitivityCallback(FocusOutEvent evt)
+    {
+        Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
     }
     public void SaveVolumeCallback(FocusOutEvent evt, AudioManager.AudioSettings.Destination dinger)
     {
@@ -150,6 +182,7 @@ public class SettingsManager : MonoBehaviour
         {
             case Destination.Master:
                 Globals.Managers.Saves.AddData<float>("MasterVolume", MasterVolume);
+                Debug.Log("ding");
                 break;
             case Destination.SFX:
                 Globals.Managers.Saves.AddData<float>("SFXVolume", SFXVolume);
@@ -160,7 +193,7 @@ public class SettingsManager : MonoBehaviour
             default: break;
         }
     }
-    private void UpdatePauseSliders()
+    public void UpdatePauseSliders()
     {
         float volumeHolder;
 
@@ -168,6 +201,7 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
+            Debug.Log("dang");
             BGMVolume = volumeHolder;
             pause_BGMVolumeSlider.value = BGMVolume;
         }
@@ -211,13 +245,13 @@ public class SettingsManager : MonoBehaviour
         if (Globals.Managers.Saves.GetData<float>("MouseSensitivity", out volumeHolder))
         {
             MouseSensitivity = volumeHolder;
-            MouseSensitivitySlider.value = MouseSensitivity;
+            pause_MouseSensitivitySlider.value = MouseSensitivity;
         }
         else
         {
             UIVolume = 1;
             Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
-            MouseSensitivitySlider.value = MouseSensitivity;
+            pause_MouseSensitivitySlider.value = MouseSensitivity;
         }
     }
     private void UpdateSettingsSliders()
@@ -228,6 +262,7 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
+            Debug.Log("dong");
             BGMVolume = volumeHolder;
             BGMVolumeSlider.value = BGMVolume;
         }
@@ -299,12 +334,10 @@ public class SettingsManager : MonoBehaviour
     {
         _pauseMenu.SetActive(true);
         _pauseMenu.GetComponent<PauseMenu>().Startup();
-        pause_blur.visible = true;
     }
     public void DisablePause()
     {
         _pauseMenu.SetActive(false);
-        pause_blur.visible = false;
     }
     public void UnlockPopup(string ability)
     {
@@ -314,35 +347,49 @@ public class SettingsManager : MonoBehaviour
     {
         StartCoroutine(Fader("Load"));
     }
-    public void FadeAway(string action = "")
+    public void TransitionCredits()
     {
-        StartCoroutine(Fader());
+        StartCoroutine(Fader("Credits"));
     }
-    private IEnumerator Fader(string action = "")
+    public void FadeAway(string action = "", int index = 1)
+    {
+        StartCoroutine(Fader(action, index));
+    }
+    private IEnumerator Fader(string action = "", int index = 1)
     {
         sceneTransition.rootVisualElement.visible = true;
         sceneTransition.rootVisualElement.BringToFront();
         sceneTransition.rootVisualElement.Q("Blackout").AddToClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
-        Debug.Log("loading...");
-        if (action == "Load")
+        switch (action)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            Debug.Log("ready!");
-            yield return new WaitForSecondsRealtime(2);
+            case "Load":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + index);
+                yield return new WaitForSecondsRealtime(2);
+                break;
+            case "Credits":
+                Globals.Managers.Settings.DisableHUD();
+                Globals.Managers.Settings.DisablePause();
+                waitMenu = true;
+                SceneManager.LoadScene(0);
+                sceneTransition.rootVisualElement.BringToFront();
+                yield return new WaitForSecondsRealtime(2);
+                sceneTransition.rootVisualElement.BringToFront();
+                SettingsMenuSetup();
+                root.Q("MainMenu").visible = true;
+                GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
+                break;
+            default:
+                break;
         }
         StartCoroutine(FadeIn());
     }
     private IEnumerator FadeIn()
     {
-        Debug.Log("check this out!");
         sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
-        
+
         sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
-        
-        Debug.Log("done!");
     }
-    bool wait = true;
 }

@@ -18,5 +18,10 @@ public class CheatCodes : MonoBehaviour
         {
             SceneManager.LoadScene(2);
         }
+
+        if (InputSystem.actions.FindAction("LoadFinalCutscene").IsPressed())
+        {
+            SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+        }
     }
 }

@@ -49,6 +49,7 @@ namespace Interactable
         {
             Player.Controller player = FindFirstObjectByType<Player.Controller>();
             player.Interacting = true;
+            yield return new WaitForSeconds(player.AnimController.PullLeverAnimation.length);
             if (_cutsceneCamera)
             {
                // _cutsceneCamera.transform.LookAt(_platform.transform);

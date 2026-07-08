@@ -147,10 +147,10 @@ MonoBehaviour:
   merbleMask:
     serializedVersion: 2
     m_Bits: 0
-  floatingSpeed: 0
+  _defaultAcceleration: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1152
+    m_Bits: 128
   chargedParticles: {fileID: 6465802662704224753}
   collectParticles: {fileID: 6928872482681762475}
   parent: {fileID: 0}

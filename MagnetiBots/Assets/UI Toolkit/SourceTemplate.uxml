@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <ui:Label text="peepee" name="SourceName" style="font-size: 40px; flex-shrink: 1; flex-grow: 1; left: 0; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;);">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="name" binding-mode="ToTarget"/>
+            </Bindings>
+        </ui:Label>
+        <ui:Label text="poopoo" name="SourceContribution" style="-unity-text-align: upper-right; font-size: 40px; right: 0; flex-grow: 1; flex-shrink: 1; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;);">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="contribution" binding-mode="ToTarget"/>
+            </Bindings>
+        </ui:Label>
+    </ui:VisualElement>
+</ui:UXML>

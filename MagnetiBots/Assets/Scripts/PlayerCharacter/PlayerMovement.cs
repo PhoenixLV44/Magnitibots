@@ -46,12 +46,16 @@ namespace Player
 
         #region Bools
             bool _gravityOn;
+            public bool GravityOn { get => _gravityOn; set => _gravityOn = value; }
             bool _isHovering;
             public bool Hovering { get => _isHovering; set => _isHovering = value; }
             bool _isGrounded;
             public bool Grounded { get => _isGrounded; set => _isGrounded = value; }
             [SerializeField] private bool _jumpLock;
             public bool JumpLock { get => _jumpLock; set => _jumpLock = value; }
+
+            private bool _canLook = true;
+            public bool CanLook { get => _canLook; set => _canLook = value; }
             
         #endregion
 
@@ -123,23 +127,42 @@ namespace Player
 
             if (_controller.TargetCursor.Cursor.activeSelf)
             {
-                Vector3 lookTarget = _controller.TargetCursor.Cursor.transform.position;
-                lookTarget.y = transform.position.y;
-                if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                Vector3 lookTarget;
+                if (!_controller.TargetCursor.ObjectToMove)
                 {
-                    _model.LookAt(lookTarget);
+                    lookTarget = _controller.TargetCursor.Cursor.transform.position;
+                    lookTarget.y = transform.position.y;
+                    if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                    {
+                        _model.LookAt(lookTarget);
+                    }
+                    else
+                    {
+                        lookTarget.x *= 2;
+                        lookTarget.z *= 2;
+                        _model.LookAt(lookTarget);
+                    }
                 }
                 else
                 {
-                    lookTarget.x *= 2;
-                    lookTarget.z *= 2;
-                    _model.LookAt(lookTarget);
+                    lookTarget = _controller.TargetCursor.ObjectToMove.transform.position;
+                    lookTarget.y = transform.position.y;
+                    if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                    {
+                        _model.LookAt(lookTarget);
+                    }
+                    else
+                    {
+                        lookTarget.x *= 2;
+                        lookTarget.z *= 2;
+                        _model.LookAt(lookTarget);
+                    }
                 }
             }
             else
             {
-                input = adjustedMovement * input;
-                _model.rotation = Quaternion.LookRotation(input, Vector3.up);
+                /*input = adjustedMovement * input;
+                _model.rotation = Quaternion.LookRotation(input, Vector3.up);*/
             }
         }
         
@@ -149,7 +172,20 @@ namespace Player
             _jumpLock = true;
             _controller.Animator.Play("Jump");
             yield return new WaitForSecondsRealtime(0.1f);
-            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * ((jumpModifier) / (jumpModifier / 2f));
+            float jumpPower = _jumpForce /*= jumpModifier == 0? _jumpForce: _jumpForce  * ((jumpModifier) / (jumpModifier / 2f))*/;
+            if (jumpModifier == 0)
+            {
+                jumpPower = _jumpForce;
+            }
+            else if(jumpModifier is >= 1 and < 5)
+            {
+                jumpPower = _jumpForce * ((jumpModifier) / (jumpModifier / 1.5f));
+            }
+            else
+            {
+                jumpPower = _jumpForce * ((jumpModifier) / (jumpModifier / 2f));
+            }
+            jumpPower = Mathf.Clamp(jumpPower, _jumpForce, 300);
             //jumpPower = jumpForce + (1 * jumpModifier);
             Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;
@@ -259,7 +295,7 @@ namespace Player
             {
                 _gravityOn = false;
             }
-            if (_submitted != null)
+            if (_submitted != null && _canLook)
             {
                 Look(_submitted[1]);
             }
@@ -283,5 +319,6 @@ namespace Player
             Vector3 newTarget = new Vector3(target.x, transform.position.y, target.z);
             _model.LookAt(newTarget);
         }
+
     }
 }

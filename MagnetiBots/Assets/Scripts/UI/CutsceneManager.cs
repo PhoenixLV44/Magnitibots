@@ -1,0 +1,79 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
+public class CutsceneManager : MonoBehaviour
+{
+    private int _index;
+    [SerializeField] private float cutsceneDuration;
+    private bool _skipping = false;
+    private void Start()
+    {
+        _index = SceneManager.GetActiveScene().buildIndex;
+        StartCoroutine(LoadNextScene());
+    }
+
+    IEnumerator LoadNextScene()
+    {
+        yield return new WaitForSecondsRealtime(cutsceneDuration);
+        if (_index == 1)
+        {
+            _index ++;
+            SceneManager.LoadScene(_index);
+        }
+        else if(_index == 2)
+        {
+            _index++;
+            Globals.Managers.Settings.FadeAway("Load");
+        }
+        else
+        {
+            Globals.Managers.Settings.FadeAway("Credits");
+        }
+    }
+
+    private void Update()
+    {
+        if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame() && !_skipping)
+        {
+            _skipping = true;
+            if (_index == 1)
+            {
+                _index ++;
+                if (Globals.Managers)
+                {
+                    Globals.Managers.Settings.FadeAway("Load", _index);
+                }
+                else
+                {
+                    SceneManager.LoadScene(_index);
+                }
+            }
+            else if(_index == 2)
+            {
+                _index++;
+                if (Globals.Managers)
+                {
+                    Globals.Managers.Settings.FadeAway("Load");
+                }
+                else
+                {
+                    SceneManager.LoadScene(_index);
+                }
+            }
+            else
+            {
+                if (Globals.Managers)
+                {
+                    Globals.Managers.Settings.FadeAway("Credits");
+                }
+                else
+                {
+                    SceneManager.LoadScene(0);
+                }
+            }
+        }
+    }
+}
