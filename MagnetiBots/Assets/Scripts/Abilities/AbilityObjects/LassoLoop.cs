@@ -62,6 +62,22 @@ namespace Ability.Object
             {
                 //_lassoAbility.PullMerblesBool = true;
                 //StartCoroutine(ReturnToStartPosition(startPos, speed));
+                PuzzleCube puzzleCube = null;
+                if (_lassoAbility.LoopedObject)
+                {
+                    if (LassoAbility.LoopedObject.CompareTag("LassoTarget"))
+                    {
+                        puzzleCube = LassoAbility.LoopedObject.GetComponent<PuzzleCube>();
+
+                    }
+                    else if (LassoAbility.LoopedObject.CompareTag("Lever"))
+                    {
+                        _lassoAbility.PullLever();
+                    }
+
+                    _lassoAbility.LoopedObject.transform.parent = null;
+                    _lassoAbility.LoopedObject = null;
+                }
                 StartCoroutine(_lassoAbility.UnhookLasso());
             }
         }

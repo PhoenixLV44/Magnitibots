@@ -55,7 +55,6 @@ namespace Player
         public IEnumerator Respawn()
         {
             Globals.Managers.Settings.FadeAway();
-            Globals.Managers.Audio.PlaySFX("waterSplash");
             foreach (var renderer in playerModel)
             {
                 renderer.enabled = false;
@@ -105,6 +104,7 @@ namespace Player
             if (Physics.SphereCast((transform.position), 0.5f, -Vector3.up, out hit, 1.5f, respawnMask))
             {
                 Debug.Log("Respawn Raycast");
+                Globals.Managers.Audio.PlaySFX("waterSplash");
                 StartCoroutine(Respawn());
             }
         }
