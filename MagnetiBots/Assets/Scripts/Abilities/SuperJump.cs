@@ -31,10 +31,13 @@ namespace Ability
         {
             controller.ChargingParticles.SetActive(true);
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
-            yield return new WaitForSecondsRealtime(2f);
-            while (merbleBoss.ChargedMerbleList.Count < 10)
+            int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
+            yield return new WaitForSecondsRealtime(0.5f);
+            merbleBoss.merbleList[0].StartCharge(transform.position);
+            yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count >= 1);
+            while (merbleBoss.ChargedMerbleList.Count < maxPower)
             {
-                if (merbleBoss.ChargedMerbleList.Count < 10 && merbleBoss.merbleList.Count > 0)
+                if (merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[0].StartCharge(transform.position);
                     Globals.Managers.Audio.PlaySFX("ChargeMerble");
@@ -49,7 +52,7 @@ namespace Ability
             
             controller.ChargingParticles.SetActive(false);
 
-            if (merbleBoss.ChargedMerbleList.Count > 0)
+            if (merbleBoss.ChargedMerbleList.Count > 1)
             {
                 StartCoroutine(_playerMovement.Jump(jumpPowerMult));
                 if (merbleBoss.ChargedMerbleList.Count > 5)
@@ -89,6 +92,8 @@ namespace Ability
         {
             Debug.Log("STOP Hovering");
             _playerMovement.Hovering = false;
+            _hoverParticles.SetActive(false);
+            _playerMovement.GravityOn = true;
             //_hoverParticles.SetActive(false);
         }
 

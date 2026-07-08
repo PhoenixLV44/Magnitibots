@@ -46,6 +46,7 @@ namespace Player
 
         #region Bools
             bool _gravityOn;
+            public bool GravityOn { get => _gravityOn; set => _gravityOn = value; }
             bool _isHovering;
             public bool Hovering { get => _isHovering; set => _isHovering = value; }
             bool _isGrounded;
@@ -171,7 +172,20 @@ namespace Player
             _jumpLock = true;
             _controller.Animator.Play("Jump");
             yield return new WaitForSecondsRealtime(0.1f);
-            float jumpPower = jumpModifier == 0? _jumpForce: _jumpForce  * ((jumpModifier) / (jumpModifier / 2f));
+            float jumpPower = _jumpForce /*= jumpModifier == 0? _jumpForce: _jumpForce  * ((jumpModifier) / (jumpModifier / 2f))*/;
+            if (jumpModifier == 0)
+            {
+                jumpPower = _jumpForce;
+            }
+            else if(jumpModifier is >= 1 and < 5)
+            {
+                jumpPower = _jumpForce * ((jumpModifier) / (jumpModifier / 1.5f));
+            }
+            else
+            {
+                jumpPower = _jumpForce * ((jumpModifier) / (jumpModifier / 2f));
+            }
+            jumpPower = Mathf.Clamp(jumpPower, _jumpForce, 300);
             //jumpPower = jumpForce + (1 * jumpModifier);
             Debug.Log("jumping with power " + jumpPower);
             _submittedJump = jumpPower;

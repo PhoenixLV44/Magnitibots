@@ -351,11 +351,11 @@ public class SettingsManager : MonoBehaviour
     {
         StartCoroutine(Fader("Credits"));
     }
-    public void FadeAway(string action = "")
+    public void FadeAway(string action = "", int index = 1)
     {
-        StartCoroutine(Fader());
+        StartCoroutine(Fader(action, index));
     }
-    private IEnumerator Fader(string action = "")
+    private IEnumerator Fader(string action = "", int index = 1)
     {
         sceneTransition.rootVisualElement.visible = true;
         sceneTransition.rootVisualElement.BringToFront();
@@ -364,7 +364,7 @@ public class SettingsManager : MonoBehaviour
         switch (action)
         {
             case "Load":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + index);
                 yield return new WaitForSecondsRealtime(2);
                 break;
             case "Credits":
