@@ -77,7 +77,6 @@ public class PauseMenu : MonoBehaviour
     {
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
-        Debug.Log("pause");
         Globals.Managers.paused = true;
         _blur.visible = true;
         _pauseContainer.visible = true;
@@ -88,7 +87,6 @@ public class PauseMenu : MonoBehaviour
         {
             if (InputSystem.actions.FindAction("MainMenu").IsPressed() && _pauseContainer.visible)
             {
-                Debug.Log("return");
                 _blur.visible = false;
                 _pauseContainer.visible = false;
                 _pauseContainer.SendToBack();
@@ -104,7 +102,6 @@ public class PauseMenu : MonoBehaviour
 
     private void OnClickReturn(ClickEvent click)
     {
-        Debug.Log("return");
         _blur.visible = false;
         _pauseContainer.visible = false;
         _pauseContainer.SendToBack();
