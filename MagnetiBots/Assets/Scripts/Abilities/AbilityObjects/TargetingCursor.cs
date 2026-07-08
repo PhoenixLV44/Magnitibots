@@ -97,6 +97,7 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
+            cursorMovement = Globals.Managers.Settings.MouseSensitivity > 0 ?  cursorMovement * Globals.Managers.Settings.MouseSensitivity : cursorMovement;
             if(_canMoveCursor)
                 return cursorMovement;
             else
