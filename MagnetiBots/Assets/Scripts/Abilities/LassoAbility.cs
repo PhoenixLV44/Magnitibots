@@ -13,6 +13,7 @@ namespace Ability
         private GameObject _lassoLoop;
         public GameObject LassoLoop => _lassoLoop;
         private Object.LassoLoop _loopScript;
+        public LassoLoop  LoopScript => _loopScript;
 
         private GameObject _loopedObject;
         public GameObject LoopedObject {get => _loopedObject; set => _loopedObject = value;}

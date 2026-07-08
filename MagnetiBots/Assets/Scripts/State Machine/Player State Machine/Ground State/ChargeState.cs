@@ -47,6 +47,15 @@ public class ChargeState : GroundedState
             }
             else
             {
+                if (currentAbility == player.GetComponent<Lasso>())
+                {
+                    Lasso lasso = player.GetComponent<Lasso>();
+                    lasso.IsCharging = false;
+                    player.TargetCursor.CanMoveCursor = true;
+                    lasso.StopAllCoroutines();
+                    lasso.LoopScript.StopAllCoroutines();
+                    player.MerbleBoss.FireMerbles();
+                }
                 currentAbility.StopCharging();
                 player.MerbleBoss.FireMerbles();
             }
