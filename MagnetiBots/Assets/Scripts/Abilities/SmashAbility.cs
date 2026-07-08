@@ -112,7 +112,7 @@ namespace Ability
             Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1);
             newPosition = controller.Movement.adjustedMovement * newPosition;
             newPosition.y = transform.position.y + 5;
-            _smashBall.transform.position = newPosition;
+            _smashBall.transform.position = controller.ReturnPoint.position;
             _smashBall.transform.localScale = smashBallScript.BaseScale;
 
             Vector3 cursorPos = transform.position + GameObject.Find("PlayerModel").transform.forward;

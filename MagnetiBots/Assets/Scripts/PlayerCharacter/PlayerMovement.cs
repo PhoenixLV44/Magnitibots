@@ -126,17 +126,36 @@ namespace Player
 
             if (_controller.TargetCursor.Cursor.activeSelf)
             {
-                Vector3 lookTarget = _controller.TargetCursor.Cursor.transform.position;
-                lookTarget.y = transform.position.y;
-                if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                Vector3 lookTarget;
+                if (!_controller.TargetCursor.ObjectToMove)
                 {
-                    _model.LookAt(lookTarget);
+                    lookTarget = _controller.TargetCursor.Cursor.transform.position;
+                    lookTarget.y = transform.position.y;
+                    if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                    {
+                        _model.LookAt(lookTarget);
+                    }
+                    else
+                    {
+                        lookTarget.x *= 2;
+                        lookTarget.z *= 2;
+                        _model.LookAt(lookTarget);
+                    }
                 }
                 else
                 {
-                    lookTarget.x *= 2;
-                    lookTarget.z *= 2;
-                    _model.LookAt(lookTarget);
+                    lookTarget = _controller.TargetCursor.ObjectToMove.transform.position;
+                    lookTarget.y = transform.position.y;
+                    if (Vector3.Distance(transform.position, lookTarget) > 0.5f)
+                    {
+                        _model.LookAt(lookTarget);
+                    }
+                    else
+                    {
+                        lookTarget.x *= 2;
+                        lookTarget.z *= 2;
+                        _model.LookAt(lookTarget);
+                    }
                 }
             }
             else
@@ -286,5 +305,6 @@ namespace Player
             Vector3 newTarget = new Vector3(target.x, transform.position.y, target.z);
             _model.LookAt(newTarget);
         }
+
     }
 }

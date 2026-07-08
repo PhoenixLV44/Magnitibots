@@ -123,6 +123,7 @@ namespace Ability
         private IEnumerator CheckForGround()
         {
             yield return new WaitUntil((() => !_playerMovement.Grounded));
+            yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => _playerMovement.Grounded);
             if(_playerMovement.Hovering)
                 _playerMovement.Hovering = false;

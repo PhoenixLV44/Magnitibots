@@ -97,8 +97,10 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
-            
-            return cursorMovement;
+            if(_canMoveCursor)
+                return cursorMovement;
+            else
+                return Vector3.zero;
         }
 
         private Vector3 MoveCursor()
@@ -157,7 +159,7 @@ namespace Ability.Object
             }
             targetPosition.y = height;
             Vector3 currentPosition = _objectToMove.transform.position;
-            float distance = Vector3.Distance(targetPosition, currentPosition) > 1 ? Vector3.Distance(targetPosition, currentPosition) : 1;
+            float distance = Vector3.Distance(targetPosition, currentPosition) > 1 ? 1 :  Vector3.Distance(targetPosition, currentPosition);
             
             _objectToMove.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
         }
