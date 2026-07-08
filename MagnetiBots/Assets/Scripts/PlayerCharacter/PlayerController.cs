@@ -91,6 +91,8 @@ namespace Player
             {
                 SceneManager.LoadScene(0);
             }
+            Globals.Managers.Audio.UpdateBGM("BambooMarimba");
+
             _movement = gameObject.AddComponent<Player.Movement>();
             _animator = GetComponent<Animator>();
 

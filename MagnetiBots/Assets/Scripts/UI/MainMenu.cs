@@ -104,8 +104,6 @@ public class MainMenu : MonoBehaviour
 
     private void OnClickStart(ClickEvent click)
     {
-        Globals.Managers.Settings.EnableHUD();
-        Globals.Managers.Settings.EnablePause();
         Globals.Managers.Settings.SettingsMenuUnregister();
         Globals.Managers.Settings.TransitionScene();
     }

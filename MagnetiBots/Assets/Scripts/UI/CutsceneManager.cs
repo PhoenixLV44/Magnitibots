@@ -11,6 +11,9 @@ public class CutsceneManager : MonoBehaviour
     private bool _skipping = false;
     private void Start()
     {
+        Globals.Managers.Settings.DisableHUD();
+        Globals.Managers.Settings.DisablePause();
+        Globals.Managers.Audio.StopBGM();
         _index = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(LoadNextScene());
     }

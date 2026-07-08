@@ -359,6 +359,8 @@ public class SettingsManager : MonoBehaviour
         switch (action)
         {
             case "Load":
+                EnableHUD();
+                EnablePause();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + index);
                 yield return new WaitForSecondsRealtime(2);
                 break;
