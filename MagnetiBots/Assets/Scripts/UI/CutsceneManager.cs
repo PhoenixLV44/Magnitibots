@@ -131,6 +131,7 @@ public class CutsceneManager : MonoBehaviour
                     }
                 }
             }
+            yield return null;
         }
     }
 }
