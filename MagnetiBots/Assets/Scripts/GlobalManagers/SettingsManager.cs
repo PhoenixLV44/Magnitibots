@@ -386,5 +386,6 @@ public class SettingsManager : MonoBehaviour
 
         sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
+        Globals.Managers.paused = false;
     }
 }
