@@ -54,7 +54,10 @@ namespace Player
 
         public IEnumerator Respawn()
         {
+            _playerController.Respawning = true;
+            _playerController.LassoHooked = false;
             Globals.Managers.Settings.FadeAway();
+            _playerController.AbilityStateManager.CurrentAbility.Respawn();
             foreach (var renderer in playerModel)
             {
                 renderer.enabled = false;
@@ -68,9 +71,9 @@ namespace Player
             _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
             
-            _playerController.AbilityStateManager.CurrentAbility.StopCharging();
+            /*_playerController.AbilityStateManager.CurrentAbility.StopCharging();
             _playerController.AbilityStateManager.CurrentAbility.StopAllCoroutines();
-            _playerController.MerbleBoss.FireMerbles();
+            _playerController.MerbleBoss.FireMerbles();*/
             _playerController.PlayerStateManager.StateMachine.ChangeState(_playerController.PlayerStateManager.IdleState);
             
             foreach (var merble in _boss.MasterList)
@@ -88,7 +91,7 @@ namespace Player
                 item.Respawn();
             }
             _movement.CharacterController.enabled = true;
-            
+            _playerController.Respawning = false;
         }
         private void OnTriggerEnter(Collider other)
         {

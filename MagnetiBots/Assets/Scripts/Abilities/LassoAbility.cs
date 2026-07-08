@@ -387,5 +387,15 @@ namespace Ability
                 yield return null;
             }
         }
+
+        public override void Respawn()
+        {
+            base.Respawn();
+            StartCoroutine(UnhookLasso());
+            targetCursor.ObjectToMove = null;
+            rangeIndicator.DisableRangeIndicator();
+            lassoLaunched = false;
+            _loopScript.StopAllCoroutines();
+        }
     }
 }

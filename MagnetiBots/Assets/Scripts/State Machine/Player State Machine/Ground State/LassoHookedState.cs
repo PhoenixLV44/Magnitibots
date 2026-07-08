@@ -78,9 +78,14 @@ public class LassoHooked : GroundedState
     }
     public override void TransitionChecks()
     {
-        if (!player.LassoHooked)
+        if (!player.LassoHooked || !player.TargetCursor.ObjectToMove || player.Respawning)
         {
             stateMachine.ChangeState(stateManager.IdleState);
+        }
+
+        if (!player.TargetCursor.ObjectToMove)
+        {
+            
         }
     }
 }
