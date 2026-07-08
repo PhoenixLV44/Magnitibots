@@ -85,6 +85,7 @@ namespace Ability.Object
         private void OnTriggerEnter(Collider other)
         {
             StopCoroutine(_moveForwardCoroutine);
+            StopAllCoroutines();
             if (!_lassoAbility.Controller.LassoHooked)
             {
                 if (other.CompareTag("LassoTarget"))
