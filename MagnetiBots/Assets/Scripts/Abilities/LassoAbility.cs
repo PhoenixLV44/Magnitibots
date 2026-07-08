@@ -165,29 +165,19 @@ namespace Ability
 
         public IEnumerator UnhookLasso()
         {
-            GameObject model = transform.Find("PlayerModel").gameObject;
             targetCursor.ObjectToMove = null;
             targetCursor.CanMoveCursor = false;
             targetCursor.SetRayCastPosition(_returnPoint.position);
             targetCursor.DeactivateCursor();
-            //StartCoroutine(controller.Movement.FreezeRotation());
-            //_lassoLoop.transform.parent = transform;
+            
             _loopScript.BoxCollider.enabled = false;
-            _loopScript.enabled = false;
-            targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
             PuzzleCube puzzleCube = null;
-            //Vector3 pos = _lassoLoop.transform.position;
-            //Quaternion rotation = controller.Movement.Model.rotation;
             if (_loopedObject)
             {
                 if (_loopedObject.CompareTag("LassoTarget"))
                 {
                     puzzleCube = _loopedObject.GetComponent<PuzzleCube>();
-                    /*if (puzzleCube)
-                    {
-                        Debug.Log("Dropping Puzzle Cube");
-                        puzzleCube.ChangeGravity(true);
-                    }*/
+
                 }
                 else if (_loopedObject.CompareTag("Lever"))
                 {
@@ -197,62 +187,21 @@ namespace Ability
                 _loopedObject.transform.parent = null;
                 _loopedObject = null;
             }
-            //_lassoLoop.SetActive(false);
             controller.Animator.Play("Pull");
             yield return new WaitForSeconds(controller.AnimController.PullAnimLength / 2);
             
-            //_lassoLoop.transform.position = _returnPoint.position;
             if (puzzleCube)
             {
-                Debug.Log("Dropping Puzzle Cube");
+                //Debug.Log("Dropping Puzzle Cube");
                 puzzleCube.ChangeGravity(true);
             }
-            //targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
-            //_returnToPlayer = true;
+ 
             lassoLaunched = false;
-
             yield return new WaitUntil(() => Vector3.Distance(_lassoLoop.transform.position, _returnPoint.position) < 1);
             Debug.Log("WAHOO");
-            List<Merble> chargedMerbles;
-                /*
-            while (_returnToPlayer)
-            {
-                //Debug.Log("Distance needed to travel: " + Vector3.Distance(_lassoLoop.transform.position, controller.ReturnPoint.transform.position));
-                 _lassoLoop.transform.position = transform.position + model.transform.forward * distance;
-                _lassoLoop.transform.position = Vector3.MoveTowards(_lassoLoop.transform.position,controller.ReturnPoint.transform.position, 10 * Time.deltaTime);
-                targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
-                if (Vector3.Distance(_lassoLoop.transform.position, controller.ReturnPoint.transform.position) <= 0.1f)
-                {
-                    Debug.Log("RETURN TO PLAYER IS FALSE");
-                    StopCoroutine(MerbleLine());
-                    returnToPlayer = false;
-                }
-                distance = Vector3.Distance(_returnPoint.position, _lassoLoop.transform.position);
-                chargedMerbles = merbleBoss.ChargedMerbleList;
-                foreach (var merble in chargedMerbles)
-                {
-                    if (Vector3.Distance(merble.transform.position, transform.position) < 1)
-                    {
-                        merble.StopCharging();
-                    }
-                    else
-                    {
-                        merble.transform.position = Vector3.MoveTowards(merble.transform.position, _returnPoint.position, 10 * Time.deltaTime);
-                    }
-                }
-                chargedMerbles = merbleBoss.ChargedMerbleList;
-                if (chargedMerbles.Count == 0)
-                {
-                    Debug.Log("Ending the line");
-                    StopCoroutine(MerbleLine());
-                    merbleBoss.FireMerbles();
-                    returnToPlayer = false;
-                }
-                yield return null;
-            }
-                */
+               
             _lassoLoop.transform.position = _returnPoint.position;
-            //_lassoLoop.transform.parent = transform;
+
 
             if (puzzleCube)
             {
@@ -265,17 +214,12 @@ namespace Ability
             
             controller.LassoHooked = false;
             
-            /*StopCoroutine(MerbleLine());*/
             merbleBoss.FireMerbles();
-            //StopCharging();
             StopCoroutine(Charge());
             controller.Movement.CanLook = true;
-            //targetCursor.CanMoveCursor = true;
             targetCursor.ActivateCursor();
             lassoLaunched = false;
             StopAllCoroutines();
-            /*yield return new WaitForSecondsRealtime(2);
-            merbleBoss.FireMerbles();*/
         }
         
 
@@ -383,7 +327,6 @@ namespace Ability
                 
                 yield return null;
             }
-
             _returnToPlayer = true;
             while (_returnToPlayer)
             {
@@ -418,14 +361,12 @@ namespace Ability
                         merble.StopCharging();
                     }
                 }
-
                 if (merbleBoss.ChargedMerbleList.Count < 0)
                 {
                     merbleBoss.FireMerbles();
                     _returnToPlayer = false;
                 }
                 yield return null;
-                
             }
         }
     }

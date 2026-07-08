@@ -15,7 +15,7 @@ namespace Ability.Object
         private LayerMask _groundLayers;
         private RangeIndicator _rangeIndicator;
         [SerializeField] private float cursorSpeed = 0.75f;
-        [SerializeField] private float objectSpeed = 5;
+        [SerializeField] private float objectSpeed = 7.5f;
         public float ObjectSpeed => objectSpeed;
 
         private GameObject _objectToMove;
@@ -97,6 +97,7 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
+            cursorMovement = Globals.Managers.Settings.MouseSensitivity > 0 ?  cursorMovement * Globals.Managers.Settings.MouseSensitivity : cursorMovement;
             if(_canMoveCursor)
                 return cursorMovement;
             else
