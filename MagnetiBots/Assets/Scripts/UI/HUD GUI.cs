@@ -41,6 +41,11 @@ public class HUDGUI : MonoBehaviour
     }
     public void Startup()
     {
+        string name = SceneManager.GetActiveScene().name;
+        if (name == "TutorialLevel" || name == "SecondLevelFix")
+        {
+            controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
+        }
         ui = GetComponent<UIDocument>();
         unlockContainer = ui.rootVisualElement.Q("Unlocks");
         HUDContainer = ui.rootVisualElement.Q("MainHUD");
@@ -63,16 +68,9 @@ public class HUDGUI : MonoBehaviour
         merbleCount = HUDContainer.Q("MerbleCounter") as Label;
         merbleUI = HUDContainer.Q("Merbles");
         HUDContainer.visible = true;
+
         UpdateGUI();
-    }
-    private void OnLevelWasLoaded(int level)
-    {
-        string name = SceneManager.GetSceneByBuildIndex(level).name;
-        if (name == "TutorialLevel"||name == "SecondLevelFix")
-        {
-            controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
-            Startup();
-        }
+
     }
     public void UnlockPopup(string ability)
     {
