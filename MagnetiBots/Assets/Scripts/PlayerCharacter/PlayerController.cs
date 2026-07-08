@@ -85,7 +85,7 @@ namespace Player
         private bool _interacting;
         public bool Interacting { get => _interacting; set => _interacting = value; }
 
-        private bool _respawning;
+        private bool _respawning = false;
         public bool  Respawning { get => _respawning; set => _respawning = value; }
 
         void Start()
