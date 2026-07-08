@@ -403,6 +403,7 @@ namespace Ability
                     float divisor = i / count;
                     Vector3 pos = _lassoLoop.transform.position;
                     if (i < merblesNeeded)
+                    {
                         /*if (i == 0)
                             pos += _lassoLoop.transform.forward * (distanceBetweenMerbles);
                         else
