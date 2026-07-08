@@ -16,11 +16,9 @@ public class ControlsCarousel : MonoBehaviour
     public void Startup()
     {
         VisualElement dangit = container.Children().ToArray()[0];
-        Debug.Log(dangit.name);
         List<VisualElement>carouselList = dangit.Children().ToArray().Take(5).ToList();
         carouselList.RemoveAt(0);
         controlsCarousel = carouselList.ToArray();
-        Debug.Log(controlsCarousel.Length);
         buttonLeft = container.Q("ControlsButtonLeft") as Button;
         buttonRight = container.Q("ControlsButtonRight") as Button;
         buttonLeft.RegisterCallback<ClickEvent>(OnClickLeftButton);
@@ -61,7 +59,6 @@ public class ControlsCarousel : MonoBehaviour
 
         int realindex = index % controlsCarousel.Length;
         if (realindex < 0) { realindex += controlsCarousel.Length; }
-        Debug.Log(realindex);
 
         int previousindex = (index - 1) % controlsCarousel.Length;
         if (previousindex < 0) { previousindex += controlsCarousel.Length; }
@@ -110,7 +107,6 @@ public class ControlsCarousel : MonoBehaviour
         index--;
         int realindex = index % controlsCarousel.Length;
         if (realindex < 0) { realindex += controlsCarousel.Length; }
-        Debug.Log(realindex);
 
         int previousindex = (index + 1) % controlsCarousel.Length;
         if (previousindex < 0) { previousindex += controlsCarousel.Length; }

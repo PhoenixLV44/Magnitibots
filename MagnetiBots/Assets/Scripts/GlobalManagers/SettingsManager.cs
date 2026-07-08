@@ -199,7 +199,6 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
-            Debug.Log("dang");
             BGMVolume = volumeHolder;
             pause_BGMVolumeSlider.value = BGMVolume;
         }

@@ -117,7 +117,6 @@ public class AudioManager : MonoBehaviour
     }
     public void FullVolumeUpdate()
     {
-        Debug.Log(Globals.Managers.Settings.MasterVolume);
         UpdateVolumes(AudioSettings.Destination.BGM, Globals.Managers.Settings.BGMVolume);
         UpdateVolumes(AudioSettings.Destination.Master, Globals.Managers.Settings.MasterVolume);
         UpdateVolumes(AudioSettings.Destination.SFX, Globals.Managers.Settings.SFXVolume);
