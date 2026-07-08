@@ -41,7 +41,15 @@ public class ChargeState : GroundedState
         if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
             //Debug.Log("AFHUFADSHJF");
-            currentAbility.Fire();
+            if (player.MerbleBoss.ChargedMerbleList.Count > 0)
+            {
+                currentAbility.Fire();
+            }
+            else
+            {
+                currentAbility.StopCharging();
+                player.MerbleBoss.FireMerbles();
+            }
             stateMachine.ChangeState(stateManager.IdleState);
 
             /*switch (abilityManager.CurrentAbility)

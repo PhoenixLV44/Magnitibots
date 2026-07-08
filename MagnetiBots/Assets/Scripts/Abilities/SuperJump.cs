@@ -36,6 +36,13 @@ namespace Ability
             WaitForSecondsRealtime wait = new WaitForSecondsRealtime(chargeTimer);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            if (!chargeInput.IsPressed())
+            {
+                isCharging = false;
+                targetCursor.CanMoveCursor = true;
+                merbleBoss.FireMerbles();
+                yield break;
+            }
             //Debug.Log("MAX POWER: " + maxPower);
             yield return wait;
             for (int i = 0; i < 5; i++)
@@ -131,6 +138,7 @@ namespace Ability
             _moveMerblesCoroutine = MoveMerbles();
             _hoverParticles = _superJumpPoint.HoverParticles;
             _hoverParticles.SetActive(false);
+            chargeInput = InputSystem.actions.FindAction("Charge");
         }
 
         private IEnumerator MoveMerbles()

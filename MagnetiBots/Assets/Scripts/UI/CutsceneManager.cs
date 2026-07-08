@@ -14,6 +14,7 @@ public class CutsceneManager : MonoBehaviour
         Globals.Managers.Settings.DisableHUD();
         Globals.Managers.Settings.DisablePause();
         Globals.Managers.Audio.StopBGM();
+        Globals.Managers.paused = false;
         _index = SceneManager.GetActiveScene().buildIndex;
         StartCoroutine(LoadNextScene());
     }

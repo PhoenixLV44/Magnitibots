@@ -127,7 +127,7 @@ namespace Ability.Object
                 }
                 else
                 {
-                    StopCoroutine(_moveForwardCoroutine);
+                    StopAllCoroutines();
                     StartCoroutine(_lassoAbility.UnhookLasso());
                 }
             }

@@ -92,7 +92,7 @@ namespace Player
                 SceneManager.LoadScene(0);
             }
             Globals.Managers.Audio.UpdateBGM("BambooMarimba");
-
+            Globals.Managers.paused = false;
             _movement = gameObject.AddComponent<Player.Movement>();
             _animator = GetComponent<Animator>();
 

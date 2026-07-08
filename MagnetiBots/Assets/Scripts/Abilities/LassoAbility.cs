@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Merbles;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Ability
 {
@@ -56,6 +57,7 @@ namespace Ability
             _returnPoint = GameObject.Find("ReturnPoint").transform;
             _chargePoint = transform.GetComponentInChildren<SuperJumpPoint>();
             _merblePoints = _chargePoint.MerblePoints;
+            chargeInput = InputSystem.actions.FindAction("Charge");
         }
 
         public override void StartCharging()
@@ -96,6 +98,15 @@ namespace Ability
                     .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             yield return new WaitForSecondsRealtime(chargeTimer);
             //Debug.Log("MAX POWER: " + maxPower);
+            if (!chargeInput.IsPressed())
+            {
+                isCharging = false;
+                targetCursor.CanMoveCursor = true;
+                StopAllCoroutines();
+                _loopScript.StopAllCoroutines();
+                merbleBoss.FireMerbles();
+                yield break;
+            }
             for (int i = 0; i < 5; i++)
             {
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) &&
@@ -150,6 +161,12 @@ namespace Ability
                 _loopScript.StartMovement(_returnPoint.position, target);
                 controller.Animator.Play("Throw");
                 //StartCoroutine(merbleLineCoroutine);
+            }
+            else
+            {
+                merbleBoss.FireMerbles();
+                StopAllCoroutines();
+                _loopScript.StopAllCoroutines();
             }
             //StopCharging();
             StopCoroutine(Charge());
