@@ -42,6 +42,14 @@ namespace Ability
             WaitForSecondsRealtime wait = new WaitForSecondsRealtime(chargeTimer);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            if (!chargeInput.IsPressed())
+            {
+                isCharging = false;
+                targetCursor.CanMoveCursor = true;
+                merbleBoss.FireMerbles();
+                yield break;
+            }
+            ActivateBall();
             //Debug.Log("MAX POWER: " + maxPower);
             yield return wait;
             for (int i = 0; i < 5; i++)
@@ -76,7 +84,7 @@ namespace Ability
         public override void StartCharging()
         {
             base.StartCharging();
-            ActivateBall();
+
             //StartCoroutine(moveCursorRoutine);
             _dropMerbles = false;
             controller.Animator.Play("Arm_Up");
@@ -99,6 +107,7 @@ namespace Ability
             
             _defaultReturnPoint = GameObject.Find("ReturnPoint").transform;
             DeactivateBall();
+            chargeInput = InputSystem.actions.FindAction("Charge");
         }
         
         private void ActivateBall()

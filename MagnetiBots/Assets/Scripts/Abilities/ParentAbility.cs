@@ -111,5 +111,12 @@ namespace Ability
 
             merbleBoss = GetComponent<Merbles.Boss>();
         }
+
+        public virtual void Respawn()
+        {
+            merbleBoss.FireMerbles();
+            StopAllCoroutines();
+            StopCharging();
+        }
     }
 }

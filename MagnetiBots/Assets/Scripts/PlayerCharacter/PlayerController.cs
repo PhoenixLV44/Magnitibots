@@ -85,6 +85,9 @@ namespace Player
         private bool _interacting;
         public bool Interacting { get => _interacting; set => _interacting = value; }
 
+        private bool _respawning = false;
+        public bool  Respawning { get => _respawning; set => _respawning = value; }
+
         void Start()
         {
             if (!Globals.Managers)
@@ -92,7 +95,7 @@ namespace Player
                 SceneManager.LoadScene(0);
             }
             Globals.Managers.Audio.UpdateBGM("BambooMarimba");
-
+            Globals.Managers.paused = false;
             _movement = gameObject.AddComponent<Player.Movement>();
             _animator = GetComponent<Animator>();
 
@@ -224,6 +227,7 @@ namespace Player
                     Globals.Managers.Settings.UnlockPopup("Lasso");
                 }
                 canUseLasso = true;
+                _abilityStateManager.StateMachine.ChangeState(_abilityStateManager.LassoState);
             }
             else if (abilityType == UnlockAbilityPackage.AbilityType.Smash)
             {
@@ -231,7 +235,9 @@ namespace Player
                 if (FindFirstObjectByType<Globals>() != null)
                 {
                     Globals.Managers.Settings.UnlockPopup("Smash");
-                }                canUseSmash = true;
+                }                
+                canUseSmash = true;
+                _abilityStateManager.StateMachine.ChangeState(_abilityStateManager.SmashState);
             }
             else if (abilityType == UnlockAbilityPackage.AbilityType.SuperJump)
             {
@@ -239,7 +245,9 @@ namespace Player
                 if (FindFirstObjectByType<Globals>() != null)
                 {
                     Globals.Managers.Settings.UnlockPopup("SuperJump");
-                }                canUseSuperJump = true;
+                }     
+                canUseSuperJump = true;
+                _abilityStateManager.StateMachine.ChangeState(_abilityStateManager.LassoState);
             }
             _animator.Play("Collect");
         }
