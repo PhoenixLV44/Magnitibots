@@ -370,9 +370,8 @@ public class SettingsManager : MonoBehaviour
     {
         sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
-        
+
         sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
     }
-    bool wait = true;
 }

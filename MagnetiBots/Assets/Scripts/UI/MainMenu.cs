@@ -28,9 +28,9 @@ public class MainMenu : MonoBehaviour
     private VisualElement _creditsContainer;
     private Button _creditsReturnButton;
 
-    private void Awake()
+    private void Start()
     {
-        
+
         _mainDocument = GetComponent<UIDocument>();
 
         #region MainMenu Container and Buttons
@@ -79,14 +79,12 @@ public class MainMenu : MonoBehaviour
         _creditsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnCredits);
         #endregion
 
-        
-        if(Globals.Managers.Settings.waitMenu)
+
+        if (Globals.Managers.Settings.waitMenu)
         {
             _mainContainer.visible = false;
         }
-    }
-    private void Start()
-    {
+
         _controlsContainer.visible = false;
         Globals.Managers.Settings.DisableHUD();
         Globals.Managers.Settings.DisablePause();
