@@ -54,7 +54,7 @@ namespace Ability.Object
                 _objectToMove = null;
             }
 
-            if (_canMoveCursor && !Globals.Managers.paused)
+            if (_canMoveCursor || Globals.Managers.paused)
             {
                 if (!_objectToMove)
                 {
@@ -70,7 +70,7 @@ namespace Ability.Object
         public void ChangeCursorPosition(Vector3 position)
         {
             _cursor.transform.position = new Vector3(position.x, transform.position.y - 1, position.z);
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             if (!_cursor.activeSelf)
             {
                 _cursor.SetActive(true);
@@ -103,7 +103,7 @@ namespace Ability.Object
 
         private Vector3 MoveCursor()
         {
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            //UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             Vector3 cursorMovement = GetCursorDelta();
             
             Quaternion cameraRotation = GetComponent<Player.Movement>().adjustedMovement;

@@ -16,7 +16,7 @@ public class ChargeState : GroundedState
         {
             currentAbility.StartCharging();
         }
-        Cursor.lockState = CursorLockMode.None;
+        //Cursor.lockState = CursorLockMode.None;
         player.AnimController.Charging = true;
         animator.Play("Arm_Up");
         /*player.Movement.CharacterController*/

@@ -84,7 +84,7 @@ namespace Ability
 
         public override void Fire()
         {
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.lockState = CursorLockMode.None;
             DropBall();
         }
 

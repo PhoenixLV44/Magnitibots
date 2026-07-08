@@ -162,11 +162,11 @@ namespace Ability
 
         public IEnumerator UnhookLasso()
         {
+            targetCursor.CanMoveCursor = false;
             controller.Movement.CanLook =  false;
             _loopScript.BoxCollider.enabled = false;
-            targetCursor.CanMoveCursor = false;
-            targetCursor.DeactivateCursor();
-            //targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
+            //targetCursor.DeactivateCursor();
+            targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
             PuzzleCube puzzleCube = null;
             Vector3 pos = _lassoLoop.transform.position;
             if (_loopedObject)
@@ -200,7 +200,7 @@ namespace Ability
             bool returnToPlayer = true;
             while (returnToPlayer)
             {
-                Debug.Log("Distance needed to travel: " + Vector3.Distance(_lassoLoop.transform.position, controller.ReturnPoint.transform.position));
+                //Debug.Log("Distance needed to travel: " + Vector3.Distance(_lassoLoop.transform.position, controller.ReturnPoint.transform.position));
                 _lassoLoop.transform.position = Vector3.MoveTowards(_lassoLoop.transform.position,controller.ReturnPoint.transform.position, 10 * Time.deltaTime);
                 targetCursor.SetRayCastPosition(_lassoLoop.transform.position);
                 if (Vector3.Distance(_lassoLoop.transform.position, controller.ReturnPoint.transform.position) <= 0.1f)

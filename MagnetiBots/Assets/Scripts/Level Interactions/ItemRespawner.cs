@@ -20,15 +20,17 @@ namespace Interactable
         }
         public void Respawn()
         {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
             transform.position = _initialPosition;
             transform.rotation = Quaternion.Euler(_initialRotation);
-            _rb.linearVelocity = Vector3.zero;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "RespawnPlane")
+            if (other.CompareTag("RespawnPlane"))
             {
+                Globals.Managers.Audio.PlaySFX("waterSplash");
                 Respawn();
             }
         }

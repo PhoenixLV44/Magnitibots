@@ -24,7 +24,7 @@ namespace Player
         
         List<Interactable.ItemRespawner> _itemRespawners = new List<Interactable.ItemRespawner>();
         public List<Interactable.ItemRespawner> ItemRespawners{get => _itemRespawners; set => _itemRespawners = value; }
-
+        [SerializeField] private SkinnedMeshRenderer[] playerModel;
         private void Start()
         {
             _respawnInput = InputSystem.actions.FindAction("Respawn");
@@ -55,7 +55,16 @@ namespace Player
         public IEnumerator Respawn()
         {
             Globals.Managers.Settings.FadeAway();
+            Globals.Managers.Audio.PlaySFX("waterSplash");
+            foreach (var renderer in playerModel)
+            {
+                renderer.enabled = false;
+            }
             yield return new WaitForSecondsRealtime(1);
+            foreach (var renderer in playerModel)
+            {
+                renderer.enabled = true;
+            }
             Debug.Log("Respawn");
             _movement.CharacterController.enabled = false;
             _playerController.transform.position = _respawnPosition;
@@ -95,7 +104,7 @@ namespace Player
             RaycastHit hit;
             if (Physics.SphereCast((transform.position), 0.5f, -Vector3.up, out hit, 1.5f, respawnMask))
             {
-                //Debug.Log("Respawn Raycast");
+                Debug.Log("Respawn Raycast");
                 StartCoroutine(Respawn());
             }
         }

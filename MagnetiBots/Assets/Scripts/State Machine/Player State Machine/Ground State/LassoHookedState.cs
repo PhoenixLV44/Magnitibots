@@ -64,7 +64,9 @@ public class LassoHooked : GroundedState
             {
             }
             */
-            
+            player.Movement.CanLook = false;
+            _lassoAbility.TargetCursor.CanMoveCursor = false;
+            //_lassoAbility.TargetCursor.DeactivateCursor();
             _lassoAbility.StartCoroutine(_lassoAbility.UnhookLasso());
         }
 
