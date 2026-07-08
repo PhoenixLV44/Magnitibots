@@ -76,6 +76,15 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
+                if (merbleBoss.ChargedMerbleList.Count < 1)
+                {
+                    isCharging = false;
+                    targetCursor.CanMoveCursor = true;
+                    rangeIndicator.DisableRangeIndicator();
+                    StopAllCoroutines();
+                    LoopScript.StopAllCoroutines();
+                    MerbleBoss.FireMerbles();
+                }
                 //Debug.Log("Stopping charging");
                 //aimingGuide.SetActive(false);
                 //currentPowerLevel = basePowerLevel;
