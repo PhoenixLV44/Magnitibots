@@ -115,6 +115,7 @@ namespace Ability
         public virtual void Respawn()
         {
             merbleBoss.FireMerbles();
+            isCharging = false;
             StopAllCoroutines();
             StopCharging();
         }

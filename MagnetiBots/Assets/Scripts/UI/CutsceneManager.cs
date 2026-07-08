@@ -88,7 +88,7 @@ public class CutsceneManager : MonoBehaviour
 
     IEnumerator SkipCutscene()
     {
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(3);
         skipText.gameObject.SetActive(true);
         while (true)
         {
