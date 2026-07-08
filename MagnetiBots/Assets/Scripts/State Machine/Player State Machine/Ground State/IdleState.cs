@@ -11,8 +11,11 @@ public class IdleState : GroundedState
         //Debug.Log("Entering Idle State");
         base.EnterState();
         animator.Play("IdleWalk");
-        player.MerbleBoss.FireMerbles();
-        currentAbility.StopCharging();
+        if (currentAbility == player.GetComponent<Lasso>())
+        {
+            player.MerbleBoss.FireMerbles();
+            currentAbility.StopCharging();
+        }
         //Cursor.lockState = CursorLockMode.None;
     }
 
