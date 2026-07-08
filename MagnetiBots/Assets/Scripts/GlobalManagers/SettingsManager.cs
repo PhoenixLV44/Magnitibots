@@ -316,7 +316,6 @@ public class SettingsManager : MonoBehaviour
     {
         _hud.SetActive(true);
         _hud.GetComponent<HUDGUI>().Startup();
-        _hudblur.visible = false;
     }
     public void UpdateHUD(string ability = "nada")
     {
@@ -325,7 +324,6 @@ public class SettingsManager : MonoBehaviour
     public void DisableHUD()
     {
         _hud.SetActive(false);
-        _hudblur.visible = false;
     }
     public void EnablePause()
     {

@@ -16,7 +16,7 @@ public class CheatCodes : MonoBehaviour
 
         if (InputSystem.actions.FindAction("Load Level Two").IsPressed())
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(4);
         }
 
         if (InputSystem.actions.FindAction("LoadFinalCutscene").IsPressed())

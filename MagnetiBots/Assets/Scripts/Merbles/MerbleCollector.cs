@@ -18,7 +18,7 @@ namespace Merbles
                 hitMerble.GetComponent<NavMeshAgent>().avoidancePriority = 10+boss.MasterList.Count;
                 if (FindFirstObjectByType<Globals>() != null)
                 {
-                    Globals.Managers.Settings.UpdateHUD();
+                    Globals.Managers.Settings.UpdateHUD("pickup");
                 }
             }
         }
