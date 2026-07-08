@@ -88,7 +88,10 @@ namespace Player
 
             foreach (var item in _itemRespawners)
             {
-                item.Respawn();
+                if (item.CanRespawn)
+                {
+                    item.Respawn();
+                }
             }
             _movement.CharacterController.enabled = true;
             _playerController.Respawning = false;
