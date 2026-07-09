@@ -67,11 +67,14 @@ public class PauseMenu : MonoBehaviour
     }
     private void OnDisable()
     {
+        Time.timeScale = 1;
+        Globals.Managers.paused = false;
+        InputSystem.actions.actionMaps[0].Enable();
+        InputSystem.actions.actionMaps[2].Enable();
         _menu.UnregisterCallback<ClickEvent>(OnClickMain);
         _settings.UnregisterCallback<ClickEvent>(OnClickSettings);
         _return.UnregisterCallback<ClickEvent>(OnClickReturn);
         _settingsReturn.UnregisterCallback<ClickEvent>(OnClickSettingsReturn);
-
     }
     IEnumerator PausedMenu()
     {
