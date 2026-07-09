@@ -104,9 +104,10 @@ public class HUDGUI : MonoBehaviour
         HUDContainer.visible = true;
         unlockContainer.visible = true;
         unlockContainer.BringToFront();
+        
         Globals.Managers.Settings.DisablePause();
-        InputSystem.actions.actionMaps[0].Disable();
-        InputSystem.actions.actionMaps[2].Disable();
+        InputSystem.actions.FindActionMap("Player").Disable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Disable();
         Time.timeScale = 0.001f;
         Debug.Log("pause");
         Globals.Managers.paused = true;
@@ -123,8 +124,8 @@ public class HUDGUI : MonoBehaviour
         {
             ve.visible = false;
         }
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
         Time.timeScale = 1;
         Debug.Log("pause");
         unlockContainer.SendToBack();

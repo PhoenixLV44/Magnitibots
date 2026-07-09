@@ -101,6 +101,8 @@ public class SettingsManager : MonoBehaviour
     }
     public void PauseMenuSetup()
     {
+        _pauseMenu = GameObject.Find("PauseMenu");
+
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
         pause_settingsMenu = pause_root.Q("SettingsMenu");
         pause_blur = pause_root.Q<VisualElement>("Blur");
@@ -121,41 +123,35 @@ public class SettingsManager : MonoBehaviour
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
         pause_MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveSensitivityCallback);
         UpdatePauseSliders();
-    }
-    private void Awake()
-    {
-        
-        #region pause settings menu
-        //find UI References
-
-        #endregion
-
-        _hud = GameObject.Find("HUD");
-
-        _hudRoot = _hud.GetComponent<UIDocument>().rootVisualElement;
-        _hudblur = _hudRoot.Q<VisualElement>("Unlocks").Q<VisualElement>("Blur");
-
-        _pauseMenu = GameObject.Find("PauseMenu");
-
-        sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
-        
+        InputSystem.actions.FindActionMap("UI").Enable();
+        InputSystem.actions.FindAction("515eac8f-7c17-469f-bc7f-f0bc6e8506a6").Reset();
     }
     private void Update()
     {
-        if (_pauseMenu != null)
+        if (_pauseMenu != null && this == Globals.Managers.Settings)
         {
-            if (InputSystem.actions.FindAction("MainMenu").triggered && SceneManager.GetActiveScene().buildIndex != 0)
+            if (InputSystem.actions.FindAction("515eac8f-7c17-469f-bc7f-f0bc6e8506a6").triggered && SceneManager.GetActiveScene().buildIndex != 0)
             {
+                Debug.Log("PauseBUtton");
                 if (!Globals.Managers.paused)
                 {
                     Globals.Managers.Settings.DisableHUD();
                     _pauseMenu.GetComponent<PauseMenu>().PauseMe();
                 }
             }
+            Debug.Log("is this null?");
         }
     }
     public void LateAwake()
     {
+        _hud = GameObject.Find("HUD");
+
+        _hudRoot = _hud.GetComponent<UIDocument>().rootVisualElement;
+        _hudblur = _hudRoot.Q<VisualElement>("Unlocks").Q<VisualElement>("Blur");
+
+
+
+        sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
         sceneTransition.rootVisualElement.visible = false;
         SettingsMenuSetup();
         PauseMenuSetup();

@@ -75,8 +75,8 @@ public class PauseMenu : MonoBehaviour
     private void OnDisable()
     {
         Time.timeScale = 1;
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
         if (Globals.Managers.paused)
         {
             _menu.UnregisterCallback<ClickEvent>(OnClickMain);
@@ -88,10 +88,11 @@ public class PauseMenu : MonoBehaviour
     }
     IEnumerator PausedMenu()
     {
+        Debug.Log("pause");
         UnityEngine.Cursor.visible = true;
         Globals.Managers.Settings.DisableHUD();
-        InputSystem.actions.actionMaps[0].Disable();
-        InputSystem.actions.actionMaps[2].Disable();
+        InputSystem.actions.FindActionMap("Player").Disable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Disable();
         Globals.Managers.paused = true;
         _blur.visible = true;
         _pauseContainer.visible = true;
@@ -108,8 +109,8 @@ public class PauseMenu : MonoBehaviour
                 Globals.Managers.Settings.EnableHUD();
                 Time.timeScale = 1;
                 Globals.Managers.paused = false;
-                InputSystem.actions.actionMaps[0].Enable();
-                InputSystem.actions.actionMaps[2].Enable();
+                InputSystem.actions.FindActionMap("Player").Enable();
+                InputSystem.actions.FindActionMap("Ability Inputs").Enable();
                 UnityEngine.Cursor.visible = false;
             }
             yield return new WaitForSecondsRealtime(0.1f);
@@ -124,8 +125,8 @@ public class PauseMenu : MonoBehaviour
         Globals.Managers.Settings.EnableHUD();
         Time.timeScale = 1;
         Globals.Managers.paused = false;
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
         UnityEngine.Cursor.visible = false;
     }
     private void OnClickSettings(ClickEvent click)
@@ -147,8 +148,8 @@ public class PauseMenu : MonoBehaviour
         _blur.visible = false;
         Time.timeScale = 1;
         Globals.Managers.paused = false;
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
         SceneManager.LoadScene(0);
     }
     private void OnClickSettingsReturn(ClickEvent click)
