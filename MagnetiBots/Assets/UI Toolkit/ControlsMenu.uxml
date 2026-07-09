@@ -85,7 +85,7 @@
                 <ui:Image source="project://database/Assets/Art%20Assets/UI/Controls/Panel%20(Smash).png?fileID=2800000&amp;guid=6c6875084fcf04045a71c4c5bd6ce715&amp;type=3#Panel (Smash)" scale-mode="StretchToFill" class="abilityPanel"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="Ability4" class="carouselBox" style="visibility: visible;">
+        <ui:VisualElement name="Ability4" class="carouselBox">
             <ui:VisualElement name="UpperBorder" class="abilityHeader">
                 <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Menu%20Title%20(1).png?fileID=2800000&amp;guid=cef425d5a685ee049b2c57fcebfe0a47&amp;type=3#Menu Title (1)&quot;); -unity-text-align: middle-center; justify-content: center; align-content: center;">
                     <ui:Label text="Super Jump" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 84px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216); -unity-text-align: middle-center; -unity-font-style: normal;"/>
