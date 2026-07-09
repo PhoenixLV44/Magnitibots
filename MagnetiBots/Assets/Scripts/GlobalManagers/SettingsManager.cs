@@ -132,14 +132,12 @@ public class SettingsManager : MonoBehaviour
         {
             if (InputSystem.actions.FindAction("515eac8f-7c17-469f-bc7f-f0bc6e8506a6").triggered && SceneManager.GetActiveScene().buildIndex != 0)
             {
-                Debug.Log("PauseBUtton");
                 if (!Globals.Managers.paused)
                 {
                     Globals.Managers.Settings.DisableHUD();
                     _pauseMenu.GetComponent<PauseMenu>().PauseMe();
                 }
             }
-            Debug.Log("is this null?");
         }
     }
     public void LateAwake()
