@@ -42,7 +42,11 @@ public class PauseMenu : MonoBehaviour
         _controls = ui.rootVisualElement.Q("ControlsButton") as Button;
         _controls.RegisterCallback<ClickEvent>(OnClickControls);
 
-        _controlsCarousel = gameObject.AddComponent<ControlsCarousel>();
+
+        if (!gameObject.TryGetComponent<ControlsCarousel>(out _controlsCarousel))
+        {
+            _controlsCarousel = gameObject.AddComponent<ControlsCarousel>();
+        }
         _controlsCarousel.container = _controlsContainer;
         _controlsCarousel.Startup();
 
@@ -63,21 +67,32 @@ public class PauseMenu : MonoBehaviour
 
         _pauseContainer.visible = false;
 
-        Globals.Managers.Settings.PauseMenuSetup();
+        if (Globals.Managers != null)
+        {
+            Globals.Managers.Settings.PauseMenuSetup();
+        }
     }
     private void OnDisable()
     {
-        _menu.UnregisterCallback<ClickEvent>(OnClickMain);
-        _settings.UnregisterCallback<ClickEvent>(OnClickSettings);
-        _return.UnregisterCallback<ClickEvent>(OnClickReturn);
-        _settingsReturn.UnregisterCallback<ClickEvent>(OnClickSettingsReturn);
-
+        Time.timeScale = 1;
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
+        if (Globals.Managers.paused)
+        {
+            _menu.UnregisterCallback<ClickEvent>(OnClickMain);
+            _settings.UnregisterCallback<ClickEvent>(OnClickSettings);
+            _return.UnregisterCallback<ClickEvent>(OnClickReturn);
+            _settingsReturn.UnregisterCallback<ClickEvent>(OnClickSettingsReturn);
+        }
+        Globals.Managers.paused = false;
     }
     IEnumerator PausedMenu()
     {
-        InputSystem.actions.actionMaps[0].Disable();
-        InputSystem.actions.actionMaps[2].Disable();
         Debug.Log("pause");
+        UnityEngine.Cursor.visible = true;
+        Globals.Managers.Settings.DisableHUD();
+        InputSystem.actions.FindActionMap("Player").Disable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Disable();
         Globals.Managers.paused = true;
         _blur.visible = true;
         _pauseContainer.visible = true;
@@ -88,15 +103,15 @@ public class PauseMenu : MonoBehaviour
         {
             if (InputSystem.actions.FindAction("MainMenu").IsPressed() && _pauseContainer.visible)
             {
-                Debug.Log("return");
                 _blur.visible = false;
                 _pauseContainer.visible = false;
                 _pauseContainer.SendToBack();
                 Globals.Managers.Settings.EnableHUD();
                 Time.timeScale = 1;
                 Globals.Managers.paused = false;
-                InputSystem.actions.actionMaps[0].Enable();
-                InputSystem.actions.actionMaps[2].Enable();
+                InputSystem.actions.FindActionMap("Player").Enable();
+                InputSystem.actions.FindActionMap("Ability Inputs").Enable();
+                UnityEngine.Cursor.visible = false;
             }
             yield return new WaitForSecondsRealtime(0.1f);
         }
@@ -104,15 +119,15 @@ public class PauseMenu : MonoBehaviour
 
     private void OnClickReturn(ClickEvent click)
     {
-        Debug.Log("return");
         _blur.visible = false;
         _pauseContainer.visible = false;
         _pauseContainer.SendToBack();
         Globals.Managers.Settings.EnableHUD();
         Time.timeScale = 1;
         Globals.Managers.paused = false;
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
+        UnityEngine.Cursor.visible = false;
     }
     private void OnClickSettings(ClickEvent click)
     {
@@ -133,9 +148,9 @@ public class PauseMenu : MonoBehaviour
         _blur.visible = false;
         Time.timeScale = 1;
         Globals.Managers.paused = false;
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
-        SceneManager.LoadScene(0);
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
+        Globals.Managers.Settings.TransitionMenu();
     }
     private void OnClickSettingsReturn(ClickEvent click)
     {

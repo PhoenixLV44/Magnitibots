@@ -46,7 +46,7 @@ public class AudioManager : MonoBehaviour
         AudioClip[] SFXLoad = Resources.LoadAll<AudioClip>("Audio/SFX");
         AudioClip[] BGMLoad = Resources.LoadAll<AudioClip>("Audio/BGM");
 
-        Debug.Log(BGMLoad[0].name);
+        //Debug.Log(BGMLoad[0].name);
 
         data = new AudioDataObject();
 
@@ -101,13 +101,8 @@ public class AudioManager : MonoBehaviour
         switch (destination)
         {
             case AudioSettings.Destination.Master:
-                Debug.Log(volume);
                 Globals.Managers.Settings.MasterVolume = value;
-                if (audioMixer.SetFloat("Master_Volume", volume))
-                {
-                    Debug.Log("yippee!");
-                }
-                ;
+                audioMixer.SetFloat("Master_Volume", volume);
                 break;
             case AudioSettings.Destination.SFX:
                 Globals.Managers.Settings.SFXVolume = value;
@@ -122,7 +117,6 @@ public class AudioManager : MonoBehaviour
     }
     public void FullVolumeUpdate()
     {
-        Debug.Log(Globals.Managers.Settings.MasterVolume);
         UpdateVolumes(AudioSettings.Destination.BGM, Globals.Managers.Settings.BGMVolume);
         UpdateVolumes(AudioSettings.Destination.Master, Globals.Managers.Settings.MasterVolume);
         UpdateVolumes(AudioSettings.Destination.SFX, Globals.Managers.Settings.SFXVolume);
@@ -131,6 +125,10 @@ public class AudioManager : MonoBehaviour
     {
         bgmSource.clip = data.bgm[clipName];
         bgmSource.Play();
+    }
+    public void StopBGM()
+    {
+        bgmSource.Stop();
     }
     public void PlaySFX(string clipName)
     {

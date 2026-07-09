@@ -29,20 +29,57 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            controller.ChargingParticles.SetActive(true);
-            merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            Debug.Log("Super Jump Start Charge");
+            currentPowerLevel = 0;
+            float chargeTimer = 0.5f;
+            rangeIndicator.DisableRangeIndicator();
+            WaitForSecondsRealtime wait = new WaitForSecondsRealtime(chargeTimer);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
-            yield return new WaitForSecondsRealtime(0.5f);
-            merbleBoss.merbleList[0].StartCharge(transform.position);
-            yield return new WaitUntil(() => merbleBoss.ChargedMerbleList.Count >= 1);
-            while (merbleBoss.ChargedMerbleList.Count < maxPower)
+            merbleBoss.merbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+            //Debug.Log("MAX POWER: " + maxPower);
+            yield return wait;
+            for (int i = 0; i < 5; i++)
             {
-                if (merbleBoss.merbleList.Count > 0)
+                
+                Debug.Log("Super Jump Merble Charge");
+                if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
-                    merbleBoss.merbleList[0].StartCharge(transform.position);
+                    merbleBoss.merbleList[i].StartCharge(transform.position);
                     Globals.Managers.Audio.PlaySFX("ChargeMerble");
                 }
-                yield return new WaitForSeconds(0.5f);
+
+                if (merbleBoss.ChargedMerbleList.Count == 0 && !chargeInput.IsPressed())
+                {
+                    merbleBoss.FireMerbles();
+                    foreach (var merble in merbleBoss.MasterList)
+                    {
+                        if (merble.Charging)
+                        {
+                            merble.StopCharging();
+                        }
+                    }
+                    StopAllCoroutines();
+                    yield break;
+                }
+            }
+
+            int j = 0;
+            while (true)
+            {
+                Debug.Log("Super Jump While Loop");
+                currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
+                //Debug.Log("Current PowerLevel: " + currentPowerLevel);
+                merbleBoss.merbleList.Sort((a, b) =>
+                    Vector3.Distance(a.transform.position, transform.position)
+                        .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
+                Merble[] merbleArray = merbleBoss.merbleList.ToArray();
+
+                if (merbleArray.Length > 0)
+                {
+                    merbleArray[j].StartCharge(transform.position);
+                }
+
+                yield return wait;
             }
         }
 
@@ -52,7 +89,7 @@ namespace Ability
             
             controller.ChargingParticles.SetActive(false);
 
-            if (merbleBoss.ChargedMerbleList.Count > 1)
+            if (merbleBoss.ChargedMerbleList.Count > 0)
             {
                 StartCoroutine(_playerMovement.Jump(jumpPowerMult));
                 if (merbleBoss.ChargedMerbleList.Count > 5)
@@ -72,7 +109,7 @@ namespace Ability
             {
                 if (merbleBoss.MasterList.Count >= 1)
                 {
-                    StartCoroutine(chargeCoroutine);
+                    StartCoroutine(Charge());
                     StartCoroutine(_moveMerblesCoroutine);
                     StartCoroutine(CheckForGround());
                     controller.ChargingParticles.SetActive(true);
@@ -80,11 +117,13 @@ namespace Ability
             }
             else
             {
-                chargeCoroutine = Charge();
-                StartCoroutine(chargeCoroutine);
-                StartCoroutine(_moveMerblesCoroutine);
-                StartCoroutine(CheckForGround());
-                controller.ChargingParticles.SetActive(true);
+                if (merbleBoss.MasterList.Count >= 1)
+                {
+                    StartCoroutine(Charge());
+                    StartCoroutine(_moveMerblesCoroutine);
+                    StartCoroutine(CheckForGround());
+                    controller.ChargingParticles.SetActive(true);
+                }
             }
         }
 
@@ -99,7 +138,11 @@ namespace Ability
 
         public override void StopCharging()
         {
-            base.StopCharging();
+            /*base.StopCharging();*/
+            currentPowerLevel = basePowerLevel;
+            rangeIndicator.DisableRangeIndicator();
+            controller.ChargingParticles.SetActive(false);
+            StopCoroutine(Charge());
         }
         protected override void InitializeAbility()
         {
@@ -133,6 +176,7 @@ namespace Ability
             if(_playerMovement.Hovering)
                 _playerMovement.Hovering = false;
             StopCoroutine(_moveMerblesCoroutine);
+            StopAllCoroutines();
             merbleBoss.FireMerbles();
         }
     }

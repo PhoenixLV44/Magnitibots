@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class CheatCodes : MonoBehaviour
 {
+    private void Start()
+    {
+        InputSystem.actions.FindActionMap("Cheats").Enable();
+    }
     private void Update()
     {
         if (InputSystem.actions.FindAction("Unlock Abilities").IsPressed())
@@ -16,12 +20,16 @@ public class CheatCodes : MonoBehaviour
 
         if (InputSystem.actions.FindAction("Load Level Two").IsPressed())
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(4);
         }
 
         if (InputSystem.actions.FindAction("LoadFinalCutscene").IsPressed())
         {
             SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
+        }
+        if (InputSystem.actions.FindAction("LoadNextSceneSafe").triggered)
+        {
+            Globals.Managers.Settings.TransitionScene();
         }
     }
 }

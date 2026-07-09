@@ -1221,6 +1221,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LoadNextSceneSafe",
+                    "type": "Button",
+                    "id": "5245bb36-038b-4e54-92c1-13f0afcfbeb6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1254,6 +1263,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LoadFinalCutscene",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb2191f4-c573-42a5-b89e-58809f250f84",
+                    "path": "<Keyboard>/numpad8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LoadNextSceneSafe",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

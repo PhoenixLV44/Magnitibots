@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -26,6 +27,7 @@ public class MainMenu : MonoBehaviour
     private Button _controlsReturnButton;
 
     private VisualElement _creditsContainer;
+    private ListView _sources;
     private Button _creditsReturnButton;
 
     private void Start()
@@ -76,6 +78,21 @@ public class MainMenu : MonoBehaviour
         #region Credits Container and Buttons
         _creditsContainer = _mainDocument.rootVisualElement.Q("CreditsMenu");
         _creditsReturnButton = _mainDocument.rootVisualElement.Q("CreditsReturnButton") as Button;
+        _sources = _creditsContainer.Q("SourcesList") as ListView;
+        VisualElement content = _sources.Q("unity-content-container");
+        _sources.Q<ScrollView>().RegisterCallback<WheelEvent>(evt => {
+            evt.StopPropagation();
+        }, TrickleDown.TrickleDown);
+
+        // Intercept touch / pointer drag scrolling
+        _sources.Q<ScrollView>().RegisterCallback<PointerMoveEvent>(evt => {
+            // Check if the user is attempting to drag-scroll
+            if (evt.pressedButtons == 1)
+            {
+                evt.StopPropagation();
+            }
+        }, TrickleDown.TrickleDown);
+        AnimateSources();
         _creditsReturnButton.RegisterCallback<ClickEvent>(OnClickReturnCredits);
         #endregion
 
@@ -104,8 +121,6 @@ public class MainMenu : MonoBehaviour
 
     private void OnClickStart(ClickEvent click)
     {
-        Globals.Managers.Settings.EnableHUD();
-        Globals.Managers.Settings.EnablePause();
         Globals.Managers.Settings.SettingsMenuUnregister();
         Globals.Managers.Settings.TransitionScene();
     }
@@ -164,5 +179,30 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadScene(2);
         }
+    }
+    private void AnimateSources(int index = 0)
+    {
+        //Debug.Log(index);
+        if (_sources.itemsSource is System.Collections.IList listData)
+        {
+            int itemCount = listData.Count;
+            //Debug.Log(itemCount);
+            if (index >= itemCount) { index = 0; Debug.Log("what?"); }
+        }
+        
+        _sources.schedule.Execute(() =>
+        {
+            if (_sources.resolvedStyle.height == 0) return;
+
+            //scroll offset
+            float itemHeight = _sources.fixedItemHeight;
+            float targetOffset = (index * itemHeight) - (_sources.resolvedStyle.height / 2f) + (itemHeight / 2f);
+            ScrollView scrollView = _sources.Q<ScrollView>();
+            targetOffset = Mathf.Clamp(targetOffset, 0, scrollView.contentViewport.resolvedStyle.height);
+            scrollView.scrollOffset = new Vector2(0, targetOffset);
+
+            _sources.ScrollToItem(index);
+            AnimateSources(index+1);
+        }).ExecuteLater(3000);
     }
 }

@@ -19,6 +19,8 @@ public class ChargeState : GroundedState
         //Cursor.lockState = CursorLockMode.None;
         player.AnimController.Charging = true;
         animator.Play("Arm_Up");
+        Debug.Log("NOW CHARGING");
+        player.ChargingParticles.SetActive(true);
         /*player.Movement.CharacterController*/
     }
 
@@ -40,7 +42,26 @@ public class ChargeState : GroundedState
         if (InputSystem.actions.FindAction("Charge").WasReleasedThisFrame())
         {
             //Debug.Log("AFHUFADSHJF");
-            currentAbility.Fire();
+            if (player.MerbleBoss.ChargedMerbleList.Count > 0)
+            {
+                currentAbility.Fire();
+            }
+            else
+            {
+                /*if (currentAbility == player.GetComponent<Lasso>() && player.MerbleBoss.ChargedMerbleList.Count < 1)
+                {
+                    Debug.Log("NO CHARGE");
+                    Lasso lasso = player.GetComponent<Lasso>();
+                    lasso.IsCharging = false;
+                    player.TargetCursor.CanMoveCursor = true;
+                    player.RangeIndicator.DisableRangeIndicator();
+                    lasso.StopAllCoroutines();
+                    lasso.LoopScript.StopAllCoroutines();
+                    player.MerbleBoss.FireMerbles();
+                }*/
+                currentAbility.StopCharging();
+                player.MerbleBoss.FireMerbles();
+            }
             stateMachine.ChangeState(stateManager.IdleState);
 
             /*switch (abilityManager.CurrentAbility)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Merbles;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Ability
 {
@@ -12,6 +13,7 @@ namespace Ability
         private GameObject _lassoLoop;
         public GameObject LassoLoop => _lassoLoop;
         private Object.LassoLoop _loopScript;
+        public LassoLoop LoopScript => _loopScript;
 
         private GameObject _loopedObject;
         public GameObject LoopedObject {get => _loopedObject; set => _loopedObject = value;}
@@ -35,7 +37,7 @@ namespace Ability
 
         private SuperJumpPoint _chargePoint;
         private Transform[] _merblePoints;
-        private bool _returnToPlayer = false;
+        public bool _returnToPlayer = false;
 
         private void Start()
         {
@@ -56,6 +58,7 @@ namespace Ability
             _returnPoint = GameObject.Find("ReturnPoint").transform;
             _chargePoint = transform.GetComponentInChildren<SuperJumpPoint>();
             _merblePoints = _chargePoint.MerblePoints;
+            chargeInput = InputSystem.actions.FindAction("Charge");
         }
 
         public override void StartCharging()
@@ -64,8 +67,8 @@ namespace Ability
             if (merbleBoss.MasterList.Count >= 1)
             {
                 StartCoroutine(Charge());
-                controller.ChargingParticles.SetActive(true);
             }
+            controller.ChargingParticles.SetActive(true);
             StartCoroutine(MerbleLine());
         }
 
@@ -73,6 +76,15 @@ namespace Ability
         {
             if (chargeCoroutine != null)
             {
+                /*if (merbleBoss.ChargedMerbleList.Count < 1)
+                {
+                    isCharging = false;
+                    targetCursor.CanMoveCursor = true;
+                    rangeIndicator.DisableRangeIndicator();
+                    StopAllCoroutines();
+                    LoopScript.StopAllCoroutines();
+                    MerbleBoss.FireMerbles();
+                }*/
                 //Debug.Log("Stopping charging");
                 //aimingGuide.SetActive(false);
                 //currentPowerLevel = basePowerLevel;
@@ -89,12 +101,22 @@ namespace Ability
             rangeIndicator.DisableRangeIndicator();
             //lassoLaunched = false;
             isCharging = true;
+            controller.ChargingParticles.SetActive(true);
             int maxPower = maxPowerLevel >= merbleBoss.merbleList.Count ? merbleBoss.merbleList.Count : maxPowerLevel;
             merbleBoss.merbleList.Sort((a, b) =>
                 Vector3.Distance(a.transform.position, transform.position)
                     .CompareTo(Vector3.Distance(b.transform.position, transform.position)));
             yield return new WaitForSecondsRealtime(chargeTimer);
             //Debug.Log("MAX POWER: " + maxPower);
+            if (!chargeInput.IsPressed())
+            {
+                isCharging = false;
+                targetCursor.CanMoveCursor = true;
+                StopAllCoroutines();
+                _loopScript.StopAllCoroutines();
+                merbleBoss.FireMerbles();
+                yield break;
+            }
             for (int i = 0; i < 5; i++)
             {
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) &&
@@ -130,9 +152,10 @@ namespace Ability
         public override void Fire()
         {
             isCharging = false;
-            
+            Debug.Log("Throw");
             if (merbleBoss.ChargedMerbleList.Count >= 1)
             {
+                controller.Animator.SetTrigger("Throw");
                 if (FindFirstObjectByType<Globals>() != null)
                 {
                     Globals.Managers.Audio.PlaySFX("ThrowLasso");
@@ -147,8 +170,13 @@ namespace Ability
                 _loopScript.enabled = true;
                 _lassoLoop.SetActive(true);
                 _loopScript.StartMovement(_returnPoint.position, target);
-                controller.Animator.Play("Throw");
                 //StartCoroutine(merbleLineCoroutine);
+            }
+            else
+            {
+                merbleBoss.FireMerbles();
+                StopAllCoroutines();
+                _loopScript.StopAllCoroutines();
             }
             //StopCharging();
             StopCoroutine(Charge());
@@ -368,6 +396,16 @@ namespace Ability
                 }
                 yield return null;
             }
+        }
+        
+        public override void Respawn()
+        {
+            base.Respawn();
+            StartCoroutine(UnhookLasso());
+            targetCursor.ObjectToMove = null;
+            rangeIndicator.DisableRangeIndicator();
+            lassoLaunched = false;
+            _loopScript.StopAllCoroutines();
         }
     }
 }

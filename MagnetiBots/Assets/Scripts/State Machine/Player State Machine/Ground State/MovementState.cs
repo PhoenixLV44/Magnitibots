@@ -51,7 +51,7 @@ public class MovementState : GroundedState
 
         if (!player.Movement.Hovering && player.MerbleBoss.ChargedMerbleList.Count > 0)
         {
-            player.MerbleBoss.FireMerbles();
+            //player.MerbleBoss.FireMerbles();
         }
     }
 

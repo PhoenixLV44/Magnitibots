@@ -15,7 +15,7 @@ namespace Ability.Object
         private LayerMask _groundLayers;
         private RangeIndicator _rangeIndicator;
         [SerializeField] private float cursorSpeed = 0.75f;
-        [SerializeField] private float objectSpeed = 7.5f;
+        [SerializeField] private float objectSpeed = 5f;
         public float ObjectSpeed => objectSpeed;
 
         private GameObject _objectToMove;
@@ -62,6 +62,7 @@ namespace Ability.Object
                 }
                 else if(_objectToMove)
                 {
+                    Debug.Log("WEE WOO");
                     MoveObjectToCursor();
                 }
             }
@@ -97,7 +98,7 @@ namespace Ability.Object
 
             cursorMovement.z = cursorMovement.y;
             cursorMovement.y = 0;
-            cursorMovement = Globals.Managers.Settings.MouseSensitivity > 0 ?  cursorMovement * Globals.Managers.Settings.MouseSensitivity : cursorMovement;
+            cursorMovement = Globals.Managers.Settings.MouseSensitivity > 0 ?  cursorMovement * ( 1 + (Globals.Managers.Settings.MouseSensitivity / 100)) : cursorMovement;
             if(_canMoveCursor)
                 return cursorMovement;
             else
@@ -149,7 +150,6 @@ namespace Ability.Object
         {
             Vector3 targetPosition = MoveCursor();
             float height = transform.position.y;
-            //Debug.Log("Cursor Target Position: " + targetPosition);
             if (_cursor.transform.position.y < transform.position.y)
             {
                 height =  _currentAbility == GetComponent<Lasso>()? transform.position.y + 1.5f: transform.position.y + 6;
@@ -163,6 +163,7 @@ namespace Ability.Object
             float distance = Vector3.Distance(targetPosition, currentPosition) > 1 ? 1 :  Vector3.Distance(targetPosition, currentPosition);
             
             _objectToMove.transform.position = Vector3.MoveTowards(currentPosition, targetPosition, Time.deltaTime * objectSpeed * distance);
+            //Debug.Log("I LOVE COMMUNISM "+ Time.deltaTime * objectSpeed * distance);
         }
         
 

@@ -1,6 +1,8 @@
+using Ability;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class HUDGUI : MonoBehaviour
@@ -40,6 +42,11 @@ public class HUDGUI : MonoBehaviour
     }
     public void Startup()
     {
+        string name = SceneManager.GetActiveScene().name;
+        if (name == "TutorialLevel" || name == "SecondLevelFix")
+        {
+            controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
+        }
         ui = GetComponent<UIDocument>();
         unlockContainer = ui.rootVisualElement.Q("Unlocks");
         HUDContainer = ui.rootVisualElement.Q("MainHUD");
@@ -61,14 +68,10 @@ public class HUDGUI : MonoBehaviour
 
         merbleCount = HUDContainer.Q("MerbleCounter") as Label;
         merbleUI = HUDContainer.Q("Merbles");
-    }
-    private void OnLevelWasLoaded(int level)
-    {
-        if (level != 0)
-        {
-            controller = GameObject.Find("PlayerPrefab").GetComponent<Player.Controller>();
-            Startup();
-        }
+        HUDContainer.visible = true;
+
+        UpdateGUI();
+
     }
     public void UnlockPopup(string ability)
     {
@@ -101,14 +104,16 @@ public class HUDGUI : MonoBehaviour
         HUDContainer.visible = true;
         unlockContainer.visible = true;
         unlockContainer.BringToFront();
+        
         Globals.Managers.Settings.DisablePause();
-        InputSystem.actions.actionMaps[0].Disable();
-        InputSystem.actions.actionMaps[2].Disable();
+        InputSystem.actions.FindActionMap("Player").Disable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Disable();
         Time.timeScale = 0.001f;
         Debug.Log("pause");
         Globals.Managers.paused = true;
         blur.visible = true;
         unlockReturn.visible = true;
+        UnityEngine.Cursor.visible = true;
     }
     private void UnPauseGame()
     {
@@ -119,61 +124,89 @@ public class HUDGUI : MonoBehaviour
         {
             ve.visible = false;
         }
-        InputSystem.actions.actionMaps[0].Enable();
-        InputSystem.actions.actionMaps[2].Enable();
+        InputSystem.actions.FindActionMap("Player").Enable();
+        InputSystem.actions.FindActionMap("Ability Inputs").Enable();
         Time.timeScale = 1;
         Debug.Log("pause");
         unlockContainer.SendToBack();
         Globals.Managers.Settings.EnablePause();
         Globals.Managers.paused = false;
+        UnityEngine.Cursor.visible = false;
     }
     private void OnCLickUnlockReturn(ClickEvent click)
     {
         UnPauseGame();
     }
-    public void UpdateGUI(string ability = "nada")
+    public void UpdateGUI(string call = "nada")
     {
+        //Debug.Log("this is gui "+call);
         if (controller != null)
         {
-            if (controller.MerbleBoss.MasterList != null && ability == "nada")
+            if (controller.MerbleBoss.MasterList != null)
             {
-                if (controller.MerbleBoss.MasterList.Count+1 != 0)
+                if (call == "pickup")
                 {
+                    Debug.Log("this is pickup");
                     merbleUI.visible = true;
                     int realcount = controller.MerbleBoss.MasterList.Count + 1;
                     merbleCount.text = "x" + realcount.ToString();
                 }
+                else if (call == "nada" && controller.MerbleBoss.MasterList.Count>1)
+                {
+                    merbleUI.visible = true;
+                    merbleCount.text = "x" + controller.MerbleBoss.MasterList.Count.ToString();
+                }
+            }
+            else
+            {
+                Debug.Log("oops");
+            }
+            if (controller.CanUseLasso)
+            {
+                lassoPower.visible = true;
+            }
+            if (controller.CanUseSmash)
+            {
+                smashPower.visible = true;
+            }
+            if (controller.CanUseSuperJump)
+            {
+                jumpPower.visible = true;
             }
         }
         Image img;
-        switch (ability)
+        if (GameObject.FindFirstObjectByType<StateManager>() != null)
         {
-            case "Smash":
-                img = lassoPower.Q("LassoImage") as Image;
-                img.image = lassoInactive;
-                img = smashPower.Q("SmashImage") as Image;
-                img.image = smashActive;
-                img = jumpPower.Q("SuperJumpImage") as Image;
-                img.image = hoverInactive;
-                break;
-            case "Lasso":
-                img = lassoPower.Q("LassoImage") as Image;
-                img.image = lassoActive;
-                img = smashPower.Q("SmashImage") as Image;
-                img.image = smashInactive;
-                img = jumpPower.Q("SuperJumpImage") as Image;
-                img.image = hoverInactive;
-                break;
-            case "SuperJump":
-                img = lassoPower.Q("LassoImage") as Image;
-                img.image = lassoInactive;
-                img = smashPower.Q("SmashImage") as Image;
-                img.image = smashInactive;
-                img = jumpPower.Q("SuperJumpImage") as Image;
-                img.image = hoverActive;
-                break;
-            default:
-                break;
+            var ability = GameObject.FindFirstObjectByType<StateManager>().CurrentAbility;
+            switch (ability)
+            {
+                case Smash:
+                    img = lassoPower.Q("LassoImage") as Image;
+                    img.image = lassoInactive;
+                    img = smashPower.Q("SmashImage") as Image;
+                    img.image = smashActive;
+                    img = jumpPower.Q("SuperJumpImage") as Image;
+                    img.image = hoverInactive;
+                    break;
+                case Lasso:
+                    img = lassoPower.Q("LassoImage") as Image;
+                    img.image = lassoActive;
+                    img = smashPower.Q("SmashImage") as Image;
+                    img.image = smashInactive;
+                    img = jumpPower.Q("SuperJumpImage") as Image;
+                    img.image = hoverInactive;
+                    break;
+                case SuperJump:
+                    img = lassoPower.Q("LassoImage") as Image;
+                    img.image = lassoInactive;
+                    img = smashPower.Q("SmashImage") as Image;
+                    img.image = smashInactive;
+                    img = jumpPower.Q("SuperJumpImage") as Image;
+                    img.image = hoverActive;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

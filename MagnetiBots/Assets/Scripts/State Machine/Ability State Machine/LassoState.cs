@@ -19,6 +19,7 @@ namespace Ability
         {
             base.ExitState();
             ability.StopAllCoroutines();
+            ability.MerbleBoss.FireMerbles();
             ability.enabled = false;
             //Debug.Log("Exited Lasso State");
         }
@@ -26,19 +27,30 @@ namespace Ability
         public override void TransitionChecks()
         {
             base.TransitionChecks();
-            if (InputSystem.actions.FindAction("Activate Smash").IsPressed() && player.CanUseSmash && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
+            if (player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState || player.MerbleBoss.ChargedMerbleList.Count > 0)
             {
-                stateMachine.ChangeState(stateManager.SmashState);
-                /*
-                Globals.Managers.Settings.UpdateHUD();
-            */
-            }
-            if (InputSystem.actions.FindAction("Activate Super Jump").IsPressed() && player.CanUseSuperJump && player.PlayerStateManager.StateMachine.CurrentState != player.PlayerStateManager.ChargeState )
-            {
-                stateMachine.ChangeState(stateManager.SuperJumpState);
-                /*
-                Globals.Managers.Settings.UpdateHUD();
-            */
+                if (!player.LassoHooked )
+                {
+                    if (InputSystem.actions.FindAction("Activate Smash").IsPressed() && player.CanUseSmash)
+                    {
+                        /*
+                         Lasso lasso = player.GetComponent<Lasso>();
+                        lasso.StartCoroutine(lasso.UnhookLasso());*/
+                        stateMachine.ChangeState(stateManager.SmashState);
+                        /*
+                        Globals.Managers.Settings.UpdateHUD();
+                    */
+                    }
+                    if (InputSystem.actions.FindAction("Activate Super Jump").IsPressed() && player.CanUseSuperJump)
+                    {
+                        /*Lasso lasso = player.GetComponent<Lasso>();
+                        lasso.StartCoroutine(lasso.UnhookLasso());*/
+                        stateMachine.ChangeState(stateManager.SuperJumpState);
+                        /*
+                        Globals.Managers.Settings.UpdateHUD();
+                    */
+                    }
+                }
             }
         }
     }

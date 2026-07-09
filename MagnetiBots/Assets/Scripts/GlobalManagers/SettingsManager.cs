@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static AudioManager.AudioSettings;
+using Cursor = UnityEngine.Cursor;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -100,6 +101,8 @@ public class SettingsManager : MonoBehaviour
     }
     public void PauseMenuSetup()
     {
+        _pauseMenu = GameObject.Find("PauseMenu");
+
         pause_root = GameObject.Find("PauseMenu").GetComponent<UIDocument>().rootVisualElement;
         pause_settingsMenu = pause_root.Q("SettingsMenu");
         pause_blur = pause_root.Q<VisualElement>("Blur");
@@ -120,30 +123,14 @@ public class SettingsManager : MonoBehaviour
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
         pause_MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveSensitivityCallback);
         UpdatePauseSliders();
-    }
-    private void Awake()
-    {
-        
-        #region pause settings menu
-        //find UI References
-
-        #endregion
-
-        _hud = GameObject.Find("HUD");
-
-        _hudRoot = _hud.GetComponent<UIDocument>().rootVisualElement;
-        _hudblur = _hudRoot.Q<VisualElement>("Unlocks").Q<VisualElement>("Blur");
-
-        _pauseMenu = GameObject.Find("PauseMenu");
-
-        sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
-        
+        InputSystem.actions.FindActionMap("UI").Enable();
+        InputSystem.actions.FindAction("515eac8f-7c17-469f-bc7f-f0bc6e8506a6").Reset();
     }
     private void Update()
     {
-        if (_pauseMenu != null)
+        if (_pauseMenu != null && this == Globals.Managers.Settings)
         {
-            if (InputSystem.actions.FindAction("MainMenu").triggered && SceneManager.GetActiveScene().buildIndex != 0)
+            if (InputSystem.actions.FindAction("515eac8f-7c17-469f-bc7f-f0bc6e8506a6").triggered && SceneManager.GetActiveScene().buildIndex != 0)
             {
                 if (!Globals.Managers.paused)
                 {
@@ -155,6 +142,14 @@ public class SettingsManager : MonoBehaviour
     }
     public void LateAwake()
     {
+        _hud = GameObject.Find("HUD");
+
+        _hudRoot = _hud.GetComponent<UIDocument>().rootVisualElement;
+        _hudblur = _hudRoot.Q<VisualElement>("Unlocks").Q<VisualElement>("Blur");
+
+
+
+        sceneTransition = GameObject.Find("SceneTransition").GetComponent<UIDocument>();
         sceneTransition.rootVisualElement.visible = false;
         SettingsMenuSetup();
         PauseMenuSetup();
@@ -165,7 +160,6 @@ public class SettingsManager : MonoBehaviour
     }
     public void ChangeVolumeCallback(ChangeEvent<float> evt, Destination destination)
     {
-        Debug.Log("grahh");
         Globals.Managers.Audio.UpdateVolumes(destination, evt.newValue);
     }
     public void SensitivityCallback(ChangeEvent<float> evt)
@@ -182,7 +176,6 @@ public class SettingsManager : MonoBehaviour
         {
             case Destination.Master:
                 Globals.Managers.Saves.AddData<float>("MasterVolume", MasterVolume);
-                Debug.Log("ding");
                 break;
             case Destination.SFX:
                 Globals.Managers.Saves.AddData<float>("SFXVolume", SFXVolume);
@@ -201,7 +194,6 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
-            Debug.Log("dang");
             BGMVolume = volumeHolder;
             pause_BGMVolumeSlider.value = BGMVolume;
         }
@@ -262,7 +254,6 @@ public class SettingsManager : MonoBehaviour
         //BGMVolume
         if (Globals.Managers.Saves.GetData<float>("BGMVolume", out volumeHolder))
         {
-            Debug.Log("dong");
             BGMVolume = volumeHolder;
             BGMVolumeSlider.value = BGMVolume;
         }
@@ -319,7 +310,6 @@ public class SettingsManager : MonoBehaviour
     {
         _hud.SetActive(true);
         _hud.GetComponent<HUDGUI>().Startup();
-        _hudblur.visible = false;
     }
     public void UpdateHUD(string ability = "nada")
     {
@@ -328,7 +318,6 @@ public class SettingsManager : MonoBehaviour
     public void DisableHUD()
     {
         _hud.SetActive(false);
-        _hudblur.visible = false;
     }
     public void EnablePause()
     {
@@ -337,6 +326,7 @@ public class SettingsManager : MonoBehaviour
     }
     public void DisablePause()
     {
+        Globals.Managers.paused = false;
         _pauseMenu.SetActive(false);
     }
     public void UnlockPopup(string ability)
@@ -346,10 +336,15 @@ public class SettingsManager : MonoBehaviour
     public void TransitionScene()
     {
         StartCoroutine(Fader("Load"));
+        Debug.Log("Trying");
     }
     public void TransitionCredits()
     {
         StartCoroutine(Fader("Credits"));
+    }
+    public void TransitionMenu()
+    {
+        StartCoroutine(Fader("Menu"));
     }
     public void FadeAway(string action = "", int index = 1)
     {
@@ -366,6 +361,8 @@ public class SettingsManager : MonoBehaviour
             case "Load":
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + index);
                 yield return new WaitForSecondsRealtime(2);
+                EnableHUD();
+                EnablePause();
                 break;
             case "Credits":
                 Globals.Managers.Settings.DisableHUD();
@@ -378,6 +375,21 @@ public class SettingsManager : MonoBehaviour
                 SettingsMenuSetup();
                 root.Q("MainMenu").visible = true;
                 GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                break;
+            case "Menu":
+                Globals.Managers.Settings.DisableHUD();
+                Globals.Managers.Settings.DisablePause();
+                waitMenu = true;
+                SceneManager.LoadScene(0);
+                sceneTransition.rootVisualElement.BringToFront();
+                yield return new WaitForSecondsRealtime(2);
+                sceneTransition.rootVisualElement.BringToFront();
+                SettingsMenuSetup();
+                root.Q("MainMenu").visible = true;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 break;
             default:
                 break;
@@ -386,10 +398,12 @@ public class SettingsManager : MonoBehaviour
     }
     private IEnumerator FadeIn()
     {
+
         sceneTransition.rootVisualElement.Q("Blackout").RemoveFromClassList("transitionOn");
         yield return new WaitForSecondsRealtime(1);
 
         sceneTransition.rootVisualElement.SendToBack();
         sceneTransition.rootVisualElement.visible = false;
+        Globals.Managers.paused = false;
     }
 }

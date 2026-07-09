@@ -10,6 +10,9 @@ namespace Interactable
         Vector3 _initialPosition;
         Vector3 _initialRotation;
         Rigidbody _rb;
+        [SerializeField]
+        private bool _canRespawn;
+        public bool CanRespawn {get => _canRespawn; set => _canRespawn = value;}
 
         private void Start()
         {
