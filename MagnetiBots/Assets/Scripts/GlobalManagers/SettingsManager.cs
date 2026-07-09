@@ -342,6 +342,7 @@ public class SettingsManager : MonoBehaviour
     public void TransitionScene()
     {
         StartCoroutine(Fader("Load"));
+        Debug.Log("Trying");
     }
     public void TransitionCredits()
     {

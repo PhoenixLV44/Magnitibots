@@ -150,7 +150,6 @@ namespace Ability.Object
         {
             Vector3 targetPosition = MoveCursor();
             float height = transform.position.y;
-            Debug.Log("Cursor Target Position: " + targetPosition);
             if (_cursor.transform.position.y < transform.position.y)
             {
                 height =  _currentAbility == GetComponent<Lasso>()? transform.position.y + 1.5f: transform.position.y + 6;
