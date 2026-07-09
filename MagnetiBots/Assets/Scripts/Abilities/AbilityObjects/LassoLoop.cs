@@ -86,7 +86,7 @@ namespace Ability.Object
         {
             StopCoroutine(_moveForwardCoroutine);
             StopAllCoroutines();
-            if (!_lassoAbility.Controller.LassoHooked)
+            if (!_lassoAbility.Controller.LassoHooked && !_lassoAbility._returnToPlayer)
             {
                 if (other.CompareTag("LassoTarget"))
                 {
