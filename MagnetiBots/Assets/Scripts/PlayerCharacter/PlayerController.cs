@@ -88,6 +88,9 @@ namespace Player
         private bool _respawning = false;
         public bool  Respawning { get => _respawning; set => _respawning = value; }
 
+
+        private bool _canCharge = false;
+        public bool CanCharge => _canCharge;
         void Start()
         {
             if (!Globals.Managers)
@@ -227,6 +230,7 @@ namespace Player
                     Globals.Managers.Settings.UnlockPopup("Lasso");
                 }
                 canUseLasso = true;
+                _canCharge = true;
                 _abilityStateManager.StateMachine.ChangeState(_abilityStateManager.LassoState);
             }
             else if (abilityType == UnlockAbilityPackage.AbilityType.Smash)
@@ -250,6 +254,17 @@ namespace Player
                 _abilityStateManager.StateMachine.ChangeState(_abilityStateManager.LassoState);
             }
             _animator.Play("Collect");
+        }
+        private IEnumerator ChargeLockOut()
+        {
+            _canCharge = false;
+            yield return new WaitForSecondsRealtime(1);
+            _canCharge = true;
+            Debug.Log("Can Charge now");
+        }
+        public void StartChargeLockout()
+        {
+            StartCoroutine(ChargeLockOut());
         }
     }
 } 

@@ -23,17 +23,27 @@ public class MovementState : GroundedState
     public override void TransitionChecks()
     {
         base.TransitionChecks();
-        
-        if(InputSystem.actions.FindAction("Charge").IsPressed())
-            stateMachine.ChangeState(stateManager.ChargeState);
 
-        if(moveInput == Vector2.zero)
-            stateMachine.ChangeState(stateManager.IdleState);
+        if (InputSystem.actions.FindAction("Charge").IsPressed())
+        {
+            if (player.CanCharge)
+            {
+                stateMachine.ChangeState(stateManager.ChargeState);
+            }
+            else
+            {
+                Debug.Log("Move State: Cant charge rn");
+            }
+        }
 
         if (InputSystem.actions.FindAction("Jump").IsPressed() && !player.Movement.JumpLock)
         {
             stateMachine.ChangeState(stateManager.JumpState);
         }
+
+        if(moveInput == Vector2.zero)
+            stateMachine.ChangeState(stateManager.IdleState);
+
 
         if (!player.Movement.Grounded)
         {
