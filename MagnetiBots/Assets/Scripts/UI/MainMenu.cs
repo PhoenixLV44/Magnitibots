@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 using Cursor = UnityEngine.Cursor;
 
 public class MainMenu : MonoBehaviour
