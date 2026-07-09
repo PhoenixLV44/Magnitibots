@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static AudioManager.AudioSettings;
+using Cursor = UnityEngine.Cursor;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -375,6 +376,8 @@ public class SettingsManager : MonoBehaviour
                 SettingsMenuSetup();
                 root.Q("MainMenu").visible = true;
                 GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 break;
             default:
                 break;
