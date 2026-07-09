@@ -92,6 +92,8 @@ public class CutsceneManager : MonoBehaviour
         skipText.gameObject.SetActive(true);
         while (true)
         {
+            //Globals.Managers.Settings.DisableHUD();
+            Globals.Managers.Settings.DisablePause();
             if (InputSystem.actions.FindAction("Jump").WasReleasedThisFrame() && !_skipping)
             {
                 _skipping = true;
