@@ -22,6 +22,7 @@ public class Globals : MonoBehaviour
             Saves.LateAwake();
             Settings.LateAwake();
             Audio.LateAwake();
+            paused = false;
         }
         #endregion
     }
@@ -41,5 +42,5 @@ public class Globals : MonoBehaviour
     public SettingsManager Settings { get { return _setInstance; } }
     #endregion
 
-    public bool paused = false;
+    public bool paused;
 }

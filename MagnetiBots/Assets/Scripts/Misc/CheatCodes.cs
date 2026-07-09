@@ -23,5 +23,9 @@ public class CheatCodes : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - 1);
         }
+        if (InputSystem.actions.FindAction("LoadNextSceneSafe").triggered)
+        {
+            Globals.Managers.Settings.TransitionScene();
+        }
     }
 }
