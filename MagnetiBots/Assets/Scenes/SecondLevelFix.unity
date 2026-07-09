@@ -24372,6 +24372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
       value: 
@@ -24775,6 +24779,10 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
@@ -34581,6 +34589,10 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
@@ -48283,6 +48295,14 @@ PrefabInstance:
     - target: {fileID: 1976889676775861096, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Size.y
+      value: 7.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Center.y
+      value: 3.125
       objectReference: {fileID: 0}
     - target: {fileID: 5781917795164000330, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
       propertyPath: m_LocalScale.x
@@ -63938,8 +63958,8 @@ Transform:
   m_GameObject: {fileID: 678292299}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -86.7971, y: 32.71758, z: -51.26898}
-  m_LocalScale: {x: 2.25, y: 0.1, z: 13.749599}
+  m_LocalPosition: {x: -87.7971, y: 32.71758, z: -51.26898}
+  m_LocalScale: {x: 4.2500253, y: 0.1, z: 13.749599}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1290300912}
@@ -85641,6 +85661,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 30b26fbc094b3064fbc184ea5d3e063f, type: 3}
       propertyPath: m_Name
       value: Tree_A (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 30b26fbc094b3064fbc184ea5d3e063f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -114074,8 +114098,8 @@ Transform:
   m_GameObject: {fileID: 1276942378}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -89.9221, y: 32.71758, z: -57.08148}
-  m_LocalScale: {x: 6.9996133, y: 0.1, z: 2.40625}
+  m_LocalPosition: {x: -90.7346, y: 32.71758, z: -57.58148}
+  m_LocalScale: {x: 8.624924, y: 0.1, z: 6.656302}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1290300912}
@@ -152595,6 +152619,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6721562245415711657, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      propertyPath: m_CostModifier
+      value: 8.44
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -155493,6 +155521,14 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7263490170275974780, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
@@ -172055,6 +172091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
       value: 
@@ -182352,7 +182392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2892316348038001238, guid: d15f1df51ef606e4b96a012cdb960b1a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.315594
+      value: -19.690594
       objectReference: {fileID: 0}
     - target: {fileID: 2892316348038001238, guid: d15f1df51ef606e4b96a012cdb960b1a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -182527,6 +182567,22 @@ PrefabInstance:
     - target: {fileID: 1976889676775861096, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Size.y
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Size.z
+      value: 1.1938998
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Center.y
+      value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Center.z
+      value: 0.09694983
       objectReference: {fileID: 0}
     - target: {fileID: 5781917795164000330, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
       propertyPath: m_LocalScale.x
@@ -188984,6 +189040,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleCube x3 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
       value: 
@@ -194798,6 +194858,22 @@ PrefabInstance:
     - target: {fileID: 1976889676775861096, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Size.y
+      value: 7.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Size.z
+      value: 1.9210254
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Center.y
+      value: 3.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 3300060755719634651, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
+      propertyPath: m_Center.z
+      value: 0.4605122
       objectReference: {fileID: 0}
     - target: {fileID: 5781917795164000330, guid: 75b1a6bba0c36bc4293f1d64ffbe713f, type: 3}
       propertyPath: m_LocalPosition.x
