@@ -344,6 +344,10 @@ public class SettingsManager : MonoBehaviour
     {
         StartCoroutine(Fader("Credits"));
     }
+    public void TransitionMenu()
+    {
+        StartCoroutine(Fader("Menu"));
+    }
     public void FadeAway(string action = "", int index = 1)
     {
         StartCoroutine(Fader(action, index));
@@ -373,6 +377,19 @@ public class SettingsManager : MonoBehaviour
                 SettingsMenuSetup();
                 root.Q("MainMenu").visible = true;
                 GameObject.Find("MainMenu").GetComponent<MainMenu>().GoToCredits();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                break;
+            case "Menu":
+                Globals.Managers.Settings.DisableHUD();
+                Globals.Managers.Settings.DisablePause();
+                waitMenu = true;
+                SceneManager.LoadScene(0);
+                sceneTransition.rootVisualElement.BringToFront();
+                yield return new WaitForSecondsRealtime(2);
+                sceneTransition.rootVisualElement.BringToFront();
+                SettingsMenuSetup();
+                root.Q("MainMenu").visible = true;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 break;

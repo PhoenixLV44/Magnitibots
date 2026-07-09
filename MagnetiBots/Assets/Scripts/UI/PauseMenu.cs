@@ -150,7 +150,7 @@ public class PauseMenu : MonoBehaviour
         Globals.Managers.paused = false;
         InputSystem.actions.FindActionMap("Player").Enable();
         InputSystem.actions.FindActionMap("Ability Inputs").Enable();
-        SceneManager.LoadScene(0);
+        Globals.Managers.Settings.TransitionMenu();
     }
     private void OnClickSettingsReturn(ClickEvent click)
     {
