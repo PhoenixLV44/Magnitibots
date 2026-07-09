@@ -42,7 +42,11 @@ public class PauseMenu : MonoBehaviour
         _controls = ui.rootVisualElement.Q("ControlsButton") as Button;
         _controls.RegisterCallback<ClickEvent>(OnClickControls);
 
-        _controlsCarousel = gameObject.AddComponent<ControlsCarousel>();
+
+        if (!gameObject.TryGetComponent<ControlsCarousel>(out _controlsCarousel))
+        {
+            _controlsCarousel = gameObject.AddComponent<ControlsCarousel>();
+        }
         _controlsCarousel.container = _controlsContainer;
         _controlsCarousel.Startup();
 
