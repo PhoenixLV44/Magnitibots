@@ -1,3 +1,4 @@
+using Ability;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -135,21 +136,21 @@ public class HUDGUI : MonoBehaviour
     {
         UnPauseGame();
     }
-    public void UpdateGUI(string ability = "nada")
+    public void UpdateGUI(string call = "nada")
     {
-        Debug.Log("this is gui "+ability);
+        Debug.Log("this is gui "+call);
         if (controller != null)
         {
             if (controller.MerbleBoss.MasterList != null)
             {
-                if (ability == "pickup")
+                if (call == "pickup")
                 {
                     Debug.Log("this is pickup");
                     merbleUI.visible = true;
                     int realcount = controller.MerbleBoss.MasterList.Count + 1;
                     merbleCount.text = "x" + realcount.ToString();
                 }
-                else if (ability == "nada" && controller.MerbleBoss.MasterList.Count>1)
+                else if (call == "nada" && controller.MerbleBoss.MasterList.Count>1)
                 {
                     merbleUI.visible = true;
                     merbleCount.text = "x" + controller.MerbleBoss.MasterList.Count.ToString();
@@ -173,34 +174,38 @@ public class HUDGUI : MonoBehaviour
             }
         }
         Image img;
-        switch (ability)
+        if (GameObject.FindFirstObjectByType<StateManager>() != null)
         {
-            case "Smash":
-                img = lassoPower.Q("LassoImage") as Image;
-                img.image = lassoInactive;
-                img = smashPower.Q("SmashImage") as Image;
-                img.image = smashActive;
-                img = jumpPower.Q("SuperJumpImage") as Image;
-                img.image = hoverInactive;
-                break;
-            case "Lasso":
-                img = lassoPower.Q("LassoImage") as Image;
-                img.image = lassoActive;
-                img = smashPower.Q("SmashImage") as Image;
-                img.image = smashInactive;
-                img = jumpPower.Q("SuperJumpImage") as Image;
-                img.image = hoverInactive;
-                break;
-            case "SuperJump":
-                img = lassoPower.Q("LassoImage") as Image;
-                img.image = lassoInactive;
-                img = smashPower.Q("SmashImage") as Image;
-                img.image = smashInactive;
-                img = jumpPower.Q("SuperJumpImage") as Image;
-                img.image = hoverActive;
-                break;
-            default:
-                break;
+            var ability = GameObject.FindFirstObjectByType<StateManager>().CurrentAbility;
+            switch (ability)
+            {
+                case Smash:
+                    img = lassoPower.Q("LassoImage") as Image;
+                    img.image = lassoInactive;
+                    img = smashPower.Q("SmashImage") as Image;
+                    img.image = smashActive;
+                    img = jumpPower.Q("SuperJumpImage") as Image;
+                    img.image = hoverInactive;
+                    break;
+                case Lasso:
+                    img = lassoPower.Q("LassoImage") as Image;
+                    img.image = lassoActive;
+                    img = smashPower.Q("SmashImage") as Image;
+                    img.image = smashInactive;
+                    img = jumpPower.Q("SuperJumpImage") as Image;
+                    img.image = hoverInactive;
+                    break;
+                case SuperJump:
+                    img = lassoPower.Q("LassoImage") as Image;
+                    img.image = lassoInactive;
+                    img = smashPower.Q("SmashImage") as Image;
+                    img.image = smashInactive;
+                    img = jumpPower.Q("SuperJumpImage") as Image;
+                    img.image = hoverActive;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
