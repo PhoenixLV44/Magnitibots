@@ -331,6 +331,7 @@ public class SettingsManager : MonoBehaviour
     }
     public void DisablePause()
     {
+        Globals.Managers.paused = false;
         _pauseMenu.SetActive(false);
     }
     public void UnlockPopup(string ability)
