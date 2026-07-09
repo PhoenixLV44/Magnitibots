@@ -57,5 +57,9 @@ public class PuzzleCube : MonoBehaviour
             ChangeGravity(true);
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.collider.gameObject);
+    }
 }
 
