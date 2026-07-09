@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class CheatCodes : MonoBehaviour
 {
+    private void Start()
+    {
+        InputSystem.actions.FindActionMap("Cheats").Enable();
+    }
     private void Update()
     {
         if (InputSystem.actions.FindAction("Unlock Abilities").IsPressed())
