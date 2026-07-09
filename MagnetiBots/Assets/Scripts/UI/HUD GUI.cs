@@ -111,6 +111,7 @@ public class HUDGUI : MonoBehaviour
         Globals.Managers.paused = true;
         blur.visible = true;
         unlockReturn.visible = true;
+        UnityEngine.Cursor.visible = true;
     }
     private void UnPauseGame()
     {
@@ -128,6 +129,7 @@ public class HUDGUI : MonoBehaviour
         unlockContainer.SendToBack();
         Globals.Managers.Settings.EnablePause();
         Globals.Managers.paused = false;
+        UnityEngine.Cursor.visible = false;
     }
     private void OnCLickUnlockReturn(ClickEvent click)
     {

@@ -75,6 +75,7 @@ public class PauseMenu : MonoBehaviour
     }
     IEnumerator PausedMenu()
     {
+        UnityEngine.Cursor.visible = true;
         Globals.Managers.Settings.DisableHUD();
         InputSystem.actions.actionMaps[0].Disable();
         InputSystem.actions.actionMaps[2].Disable();
@@ -96,6 +97,7 @@ public class PauseMenu : MonoBehaviour
                 Globals.Managers.paused = false;
                 InputSystem.actions.actionMaps[0].Enable();
                 InputSystem.actions.actionMaps[2].Enable();
+                UnityEngine.Cursor.visible = false;
             }
             yield return new WaitForSecondsRealtime(0.1f);
         }
@@ -111,6 +113,7 @@ public class PauseMenu : MonoBehaviour
         Globals.Managers.paused = false;
         InputSystem.actions.actionMaps[0].Enable();
         InputSystem.actions.actionMaps[2].Enable();
+        UnityEngine.Cursor.visible = false;
     }
     private void OnClickSettings(ClickEvent click)
     {
