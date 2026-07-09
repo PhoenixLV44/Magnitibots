@@ -24372,6 +24372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
       value: 
@@ -24775,6 +24779,10 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
@@ -34581,6 +34589,10 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
@@ -85673,6 +85685,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 30b26fbc094b3064fbc184ea5d3e063f, type: 3}
       propertyPath: m_Name
       value: Tree_A (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 30b26fbc094b3064fbc184ea5d3e063f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -152627,6 +152643,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6721562245415711657, guid: a8057f2a918843a4fbdc6e3edf148f33, type: 3}
+      propertyPath: m_CostModifier
+      value: 8.44
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -155525,6 +155545,14 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7263490170275974780, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
@@ -172087,6 +172115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleCube x3 Variant (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
       value: 
@@ -182384,7 +182416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2892316348038001238, guid: d15f1df51ef606e4b96a012cdb960b1a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.315594
+      value: -19.690594
       objectReference: {fileID: 0}
     - target: {fileID: 2892316348038001238, guid: d15f1df51ef606e4b96a012cdb960b1a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -189015,6 +189047,10 @@ PrefabInstance:
     - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_Name
       value: PuzzleCube x3 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6579856772455108875, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085853495356344080, guid: 0eb92a52adfa73d43884982f24fc7551, type: 3}
       propertyPath: m_EndTransform
