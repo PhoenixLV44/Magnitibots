@@ -28,8 +28,8 @@ namespace Merbles
 
         public bool Sentience { get { return _isAlive; } set { _isAlive = value; } }
         private bool _isAlive = false;
-        public bool Charging { get { return _isCharging; } set { _isCharging = value; } }
         private bool _isCharging = false;
+        public bool Charging { get { return _isCharging; } set { _isCharging = value; } }
 
         [SerializeField] private float _defaultAcceleration;
         private bool _floating;

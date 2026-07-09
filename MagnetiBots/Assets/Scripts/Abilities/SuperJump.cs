@@ -29,7 +29,7 @@ namespace Ability
 
         public override IEnumerator Charge()
         {
-            Debug.Log("I WANT TO GO TO SLEEP");
+            Debug.Log("Super Jump Start Charge");
             currentPowerLevel = 0;
             float chargeTimer = 0.5f;
             rangeIndicator.DisableRangeIndicator();
@@ -40,17 +40,33 @@ namespace Ability
             yield return wait;
             for (int i = 0; i < 5; i++)
             {
+                
+                Debug.Log("Super Jump Merble Charge");
                 if (!merbleBoss.ChargedMerbleList.Contains(merbleBoss.merbleList[i]) && !merbleBoss.merbleList[i].Charging && merbleBoss.merbleList.Count > 0)
                 {
                     merbleBoss.merbleList[i].StartCharge(transform.position);
                     Globals.Managers.Audio.PlaySFX("ChargeMerble");
+                }
+
+                if (merbleBoss.ChargedMerbleList.Count == 0 && !chargeInput.IsPressed())
+                {
+                    merbleBoss.FireMerbles();
+                    foreach (var merble in merbleBoss.MasterList)
+                    {
+                        if (merble.Charging)
+                        {
+                            merble.StopCharging();
+                        }
+                    }
+                    StopAllCoroutines();
+                    yield break;
                 }
             }
 
             int j = 0;
             while (true)
             {
-                
+                Debug.Log("Super Jump While Loop");
                 currentPowerLevel = merbleBoss.ChargedMerbleList.Count;
                 //Debug.Log("Current PowerLevel: " + currentPowerLevel);
                 merbleBoss.merbleList.Sort((a, b) =>
@@ -93,7 +109,7 @@ namespace Ability
             {
                 if (merbleBoss.MasterList.Count >= 1)
                 {
-                    StartCoroutine(chargeCoroutine);
+                    StartCoroutine(Charge());
                     StartCoroutine(_moveMerblesCoroutine);
                     StartCoroutine(CheckForGround());
                     controller.ChargingParticles.SetActive(true);
@@ -101,11 +117,13 @@ namespace Ability
             }
             else
             {
-                chargeCoroutine = Charge();
-                StartCoroutine(chargeCoroutine);
-                StartCoroutine(_moveMerblesCoroutine);
-                StartCoroutine(CheckForGround());
-                controller.ChargingParticles.SetActive(true);
+                if (merbleBoss.MasterList.Count >= 1)
+                {
+                    StartCoroutine(Charge());
+                    StartCoroutine(_moveMerblesCoroutine);
+                    StartCoroutine(CheckForGround());
+                    controller.ChargingParticles.SetActive(true);
+                }
             }
         }
 
@@ -120,7 +138,11 @@ namespace Ability
 
         public override void StopCharging()
         {
-            base.StopCharging();
+            /*base.StopCharging();*/
+            currentPowerLevel = basePowerLevel;
+            rangeIndicator.DisableRangeIndicator();
+            controller.ChargingParticles.SetActive(false);
+            StopCoroutine(Charge());
         }
         protected override void InitializeAbility()
         {
