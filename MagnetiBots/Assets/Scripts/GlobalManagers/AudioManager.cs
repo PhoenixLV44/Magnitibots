@@ -46,7 +46,7 @@ public class AudioManager : MonoBehaviour
         AudioClip[] SFXLoad = Resources.LoadAll<AudioClip>("Audio/SFX");
         AudioClip[] BGMLoad = Resources.LoadAll<AudioClip>("Audio/BGM");
 
-        Debug.Log(BGMLoad[0].name);
+        //Debug.Log(BGMLoad[0].name);
 
         data = new AudioDataObject();
 

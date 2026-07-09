@@ -139,7 +139,7 @@ public class HUDGUI : MonoBehaviour
     }
     public void UpdateGUI(string call = "nada")
     {
-        Debug.Log("this is gui "+call);
+        //Debug.Log("this is gui "+call);
         if (controller != null)
         {
             if (controller.MerbleBoss.MasterList != null)

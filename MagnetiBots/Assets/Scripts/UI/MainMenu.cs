@@ -182,11 +182,11 @@ public class MainMenu : MonoBehaviour
     }
     private void AnimateSources(int index = 0)
     {
-        Debug.Log(index);
+        //Debug.Log(index);
         if (_sources.itemsSource is System.Collections.IList listData)
         {
             int itemCount = listData.Count;
-            Debug.Log(itemCount);
+            //Debug.Log(itemCount);
             if (index >= itemCount) { index = 0; Debug.Log("what?"); }
         }
         
