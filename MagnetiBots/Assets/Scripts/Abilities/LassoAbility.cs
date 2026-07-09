@@ -37,7 +37,7 @@ namespace Ability
 
         private SuperJumpPoint _chargePoint;
         private Transform[] _merblePoints;
-        private bool _returnToPlayer = false;
+        public bool _returnToPlayer = false;
 
         private void Start()
         {
