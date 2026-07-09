@@ -152,6 +152,7 @@ namespace Ability
         public override void Fire()
         {
             isCharging = false;
+            _returnToPlayer = false;
             Debug.Log("Throw");
             if (merbleBoss.ChargedMerbleList.Count >= 1)
             {
@@ -198,7 +199,6 @@ namespace Ability
             targetCursor.SetRayCastPosition(_returnPoint.position);
             targetCursor.DeactivateCursor();
             
-            _loopScript.BoxCollider.enabled = false;
             PuzzleCube puzzleCube = null;
             if (_loopedObject)
             {
@@ -225,16 +225,18 @@ namespace Ability
             }
  
             lassoLaunched = false;
+            _returnToPlayer = true;
             yield return new WaitUntil(() => Vector3.Distance(_lassoLoop.transform.position, _returnPoint.position) < 1);
             Debug.Log("WAHOO");
                
             _lassoLoop.transform.position = _returnPoint.position;
-
+            
 
             if (puzzleCube)
             {
                 puzzleCube.UnfreezeConstraints();
             }
+            Debug.Log("disabling range");
             rangeIndicator.DisableRangeIndicator();
             
             _lassoLoop.transform.parent = transform;
@@ -355,7 +357,6 @@ namespace Ability
                 
                 yield return null;
             }
-            _returnToPlayer = true;
             while (_returnToPlayer)
             {
                 Debug.Log("returning to player");

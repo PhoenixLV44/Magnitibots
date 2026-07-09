@@ -19,8 +19,6 @@ namespace Ability.Object
         private void Start()
         {
             _lassoMask = LayerMask.GetMask("LassoTarget");
-            _boxCollider = GetComponent<BoxCollider>();
-            _boxCollider.enabled = false;
         }
 
         public void StartMovement(Vector3 startPos,Vector3 target, float speed = 10)
@@ -84,10 +82,12 @@ namespace Ability.Object
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log(_lassoAbility._returnToPlayer);
             StopCoroutine(_moveForwardCoroutine);
             StopAllCoroutines();
             if (!_lassoAbility.Controller.LassoHooked && !_lassoAbility._returnToPlayer)
             {
+                Debug.Log("lasso try hit");
                 if (other.CompareTag("LassoTarget"))
                 {
                     Debug.Log("LassoTarget");
@@ -112,8 +112,6 @@ namespace Ability.Object
 
                     float rangeMult = _lassoAbility.MerbleBoss.MasterList.Count >= _lassoAbility.MaxPowerLevel ? _lassoAbility.MaxPowerLevel : _lassoAbility.MerbleBoss.MasterList.Count;
                     _lassoAbility.Controller.RangeIndicator.ChangeRangeSize((_lassoAbility.BaseRange * rangeMult) * 2);
-
-                    _boxCollider.enabled = true;
 
                     _lassoAbility.LoopedObject = other.gameObject;
                 }

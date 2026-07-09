@@ -61,5 +61,9 @@ public class PuzzleCube : MonoBehaviour
     {
         Debug.Log(collision.collider.gameObject);
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject);
+    }
 }
 
