@@ -132,6 +132,7 @@ namespace Ability
 
         public void DeactivateBall()
         {
+            controller.StartChargeLockout();
             _smashBallRb.linearVelocity = Vector3.zero;
             Merble[] merbleArray = MerbleBoss.ChargedMerbleList.ToArray();
             _smashBall.SetActive(false);

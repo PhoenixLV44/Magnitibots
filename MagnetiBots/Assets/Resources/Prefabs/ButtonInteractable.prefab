@@ -73,6 +73,10 @@ PrefabInstance:
       value: ButtonInteractable
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b44e8eed29a9e77458b208efba6bc9f6, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b44e8eed29a9e77458b208efba6bc9f6, type: 3}
       propertyPath: m_TagString
       value: Button
       objectReference: {fileID: 0}
@@ -206,6 +210,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b79d233d33ff1814fa9064852edff333, type: 3}
       propertyPath: m_Name
       value: PuzzleSwitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b79d233d33ff1814fa9064852edff333, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

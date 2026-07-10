@@ -28,6 +28,7 @@ public class ChargeState : GroundedState
     {
         currentAbility.StopCharging();
         currentAbility.IsCharging = false;
+        player.StartChargeLockout();
     }
 
     public override void TransitionChecks()

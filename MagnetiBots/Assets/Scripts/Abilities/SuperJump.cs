@@ -85,6 +85,7 @@ namespace Ability
 
         public override void Fire()
         {
+            controller.StartChargeLockout();
             int jumpPowerMult = merbleBoss.ChargedMerbleList.Count;
             
             controller.ChargingParticles.SetActive(false);
@@ -173,6 +174,10 @@ namespace Ability
             yield return new WaitUntil((() => !_playerMovement.Grounded));
             yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => _playerMovement.Grounded);
+            if (controller.CanCharge)
+            {
+                controller.StartChargeLockout();
+            }
             if(_playerMovement.Hovering)
                 _playerMovement.Hovering = false;
             StopCoroutine(_moveMerblesCoroutine);
