@@ -60,8 +60,13 @@ public class SettingsManager : MonoBehaviour
 
     #endregion
 
-    float _mouseSens;
+    private float _mouseSens;
     public float MouseSensitivity { get { return _mouseSens; } set { _mouseSens = value; } }
+
+    private float _tooltipTime = 45;
+    public float TooltipTime { get { return _tooltipTime; } set { } }
+
+    public bool tipOn = false;
 
     public void SettingsMenuSetup()
     {
@@ -166,6 +171,7 @@ public class SettingsManager : MonoBehaviour
     {
         MouseSensitivity = evt.newValue;
     }
+    #region Save Callbacks
     public void SaveSensitivityCallback(FocusOutEvent evt)
     {
         Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
@@ -186,6 +192,7 @@ public class SettingsManager : MonoBehaviour
             default: break;
         }
     }
+    #endregion
     public void UpdatePauseSliders()
     {
         float volumeHolder;
@@ -306,6 +313,16 @@ public class SettingsManager : MonoBehaviour
             MouseSensitivitySlider.value = MouseSensitivity;
         }
     }
+    public void TooltipOn()
+    {
+        tipOn = true;
+        _hud.GetComponent<HUDGUI>().tooltip.visible = true;
+    }
+    public void TooltipOff()
+    {
+        tipOn = false;
+        _hud.GetComponent<HUDGUI>().tooltip.visible = false;
+    }
     public void EnableHUD()
     {
         _hud.SetActive(true);
@@ -333,6 +350,7 @@ public class SettingsManager : MonoBehaviour
     {
         _hud.GetComponent<HUDGUI>().UnlockPopup(ability);
     }
+    #region Transitions
     public void TransitionScene()
     {
         StartCoroutine(Fader("Load"));
@@ -406,4 +424,5 @@ public class SettingsManager : MonoBehaviour
         sceneTransition.rootVisualElement.visible = false;
         Globals.Managers.paused = false;
     }
+    #endregion
 }

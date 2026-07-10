@@ -1,4 +1,5 @@
 
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,8 +12,9 @@ namespace Player
     public class Respawner : MonoBehaviour
     {
         private InputAction _respawnInput;
+        private float timeSinceNewCheckpoint;
         [SerializeField] Vector3 _respawnPosition;
-        public Vector3 RespawnPosition { get { return _respawnPosition; } set { _respawnPosition = value; } }
+        public Vector3 RespawnPosition { get { return _respawnPosition; } set { _respawnPosition = value; timeSinceNewCheckpoint = 0; } }
         Controller _playerController;
         Movement _movement;
         public Movement Movement { get => _movement;
@@ -45,6 +47,14 @@ namespace Player
             {
                 StartCoroutine(Respawn());
             }
+            if(timeSinceNewCheckpoint > Globals.Managers.Settings.TooltipTime && !Globals.Managers.Settings.tipOn)
+            {
+                Globals.Managers.Settings.TooltipOn();
+            }
+            else
+            {
+                timeSinceNewCheckpoint += Time.deltaTime;
+            }
         }
 
         private void FixedUpdate()
@@ -54,6 +64,8 @@ namespace Player
 
         public IEnumerator Respawn()
         {
+            timeSinceNewCheckpoint = 0;
+            Globals.Managers.Settings.TooltipOff();
             _playerController.Respawning = true;
             _playerController.LassoHooked = false;
             Globals.Managers.Settings.FadeAway();

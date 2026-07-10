@@ -36,6 +36,8 @@ public class HUDGUI : MonoBehaviour
     private Label merbleCount;
     private VisualElement merbleUI;
 
+    public Label tooltip;
+
     private void Start()
     {
         Startup();
@@ -68,6 +70,9 @@ public class HUDGUI : MonoBehaviour
 
         merbleCount = HUDContainer.Q("MerbleCounter") as Label;
         merbleUI = HUDContainer.Q("Merbles");
+
+        tooltip = HUDContainer.Q("Tooltip") as Label;
+
         HUDContainer.visible = true;
 
         UpdateGUI();
@@ -208,5 +213,6 @@ public class HUDGUI : MonoBehaviour
                     break;
             }
         }
+        tooltip.visible = Globals.Managers.Settings.tipOn;
     }
 }
