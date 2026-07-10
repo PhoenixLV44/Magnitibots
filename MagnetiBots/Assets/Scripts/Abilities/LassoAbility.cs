@@ -249,6 +249,7 @@ namespace Ability
             controller.Movement.CanLook = true;
             targetCursor.ActivateCursor();
             lassoLaunched = false;
+            Debug.Log("reached the end");
             StopAllCoroutines();
         }
         
@@ -390,7 +391,7 @@ namespace Ability
                         merble.StopCharging();
                     }
                 }
-                if (merbleBoss.ChargedMerbleList.Count < 0)
+                if (merbleBoss.ChargedMerbleList.Count <= 0)
                 {
                     merbleBoss.FireMerbles();
                     _returnToPlayer = false;

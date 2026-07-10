@@ -20,6 +20,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Globals.Managers.Settings.TooltipOff();
             Player.Respawner respawner = other.GetComponent<Player.Respawner>();
             respawner.RespawnPosition = transform.position;
             //respawner.Respawn();
