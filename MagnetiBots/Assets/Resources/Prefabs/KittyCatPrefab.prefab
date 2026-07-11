@@ -170,6 +170,18 @@ PrefabInstance:
       propertyPath: InitialModule.startRotation.scalar
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6798034522610484041, guid: 8342f76aa9a25b8489a0e5ee2bcb0906, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.81568635
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798034522610484041, guid: 8342f76aa9a25b8489a0e5ee2bcb0906, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.81568635
+      objectReference: {fileID: 0}
+    - target: {fileID: 6798034522610484041, guid: 8342f76aa9a25b8489a0e5ee2bcb0906, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.10588236
+      objectReference: {fileID: 0}
     - target: {fileID: 7831376055955691690, guid: 8342f76aa9a25b8489a0e5ee2bcb0906, type: 3}
       propertyPath: m_Name
       value: CatSmoke
