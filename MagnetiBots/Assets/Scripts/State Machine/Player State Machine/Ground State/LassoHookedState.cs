@@ -24,8 +24,9 @@ public class LassoHooked : GroundedState
         base.ExitState();
         _lassoAbility.MerbleBoss.FireMerbles();
         _lassoAbility.StopCoroutine(_lassoAbility.ChargeCoroutine);
+        player.StartChargeLockout();
     }
-    
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();

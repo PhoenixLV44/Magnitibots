@@ -30,17 +30,25 @@ public class IdleState : GroundedState
 
         if (InputSystem.actions.FindAction("Charge").IsPressed() && player.AbilityStateManager.StateMachine.CurrentState != player.AbilityStateManager.NoAbilityState)
         {
-            stateMachine.ChangeState(stateManager.ChargeState);
-        }
-        
-        if (moveInput != Vector2.zero)
-        {
-            stateMachine.ChangeState(stateManager.MovementState);
+            if (player.CanCharge)
+            {
+                stateMachine.ChangeState(stateManager.ChargeState);
+            }
+            else
+            {
+                Debug.Log("Idle State: Cant charge rn");
+            }
         }
 
         if (InputSystem.actions.FindAction("Jump").WasPerformedThisFrame() && !player.Movement.JumpLock)
         {
             stateMachine.ChangeState(stateManager.JumpState);
+        }
+
+        
+        if (moveInput != Vector2.zero)
+        {
+            stateMachine.ChangeState(stateManager.MovementState);
         }
 
         if (!player.Movement.Grounded)
