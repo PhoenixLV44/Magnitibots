@@ -5,6 +5,8 @@ namespace Interactable
     public class InteractableObject : MonoBehaviour
     {
         protected bool activated = false;
+        protected TriggerObject triggerObject;
+        public TriggerObject TriggerObject {get => triggerObject; set => triggerObject = value;}
         public bool Activated {get => activated;
             set => activated = value;
         }

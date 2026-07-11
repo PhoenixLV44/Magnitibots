@@ -24,6 +24,15 @@ namespace Interactable
         private void Start()
         {
             delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);
+            if (cat)
+            {
+                cat.IncreaseTriggersNeeded();
+            }
+
+            foreach (var obj in interactionObjects)
+            {
+                obj.TriggerObject = this;
+            }
             _canvas = GetComponentInChildren<Canvas>();
             _canvas.worldCamera = Camera.main;
             _canvas.gameObject.SetActive(false);

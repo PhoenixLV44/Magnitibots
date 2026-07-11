@@ -7,6 +7,7 @@ namespace Cat
     public class Cat : MonoBehaviour
     {
         Animator _animator;
+        public Animator Animator => _animator;
         ParticleSystem _smokeParticles;
         [SerializeField] private bool reactToCube;
         public bool  ReactToCube => reactToCube;
@@ -23,6 +24,11 @@ namespace Cat
         
         private CatManager _catManager;
 
+        [SerializeField] private int triggersNeeded;
+        public int  TriggersNeeded => triggersNeeded;
+        private int _triggers;
+        private int Triggers { get => triggersNeeded; set => triggersNeeded = value; }
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
@@ -38,12 +44,16 @@ namespace Cat
             _catManager = GetComponentInParent<CatManager>();
         }
 
+        private void OnEnable()
+        {
+            _smokeParticles.Play(true);
+            _animator.Play("SitIdle");
+        }
+
         private void FixedUpdate()
         {
-            /*Vector3 direction = _player.transform.position - transform.position;
-            transform.localEulerAngles.y = direction.y;*/
             head.rotation = Quaternion.LookRotation(head.position - _player.transform.position);
-            head.localEulerAngles = new Vector3(head.localEulerAngles.x, head.localEulerAngles.y, 0);
+            head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
         }
 
         private void OnTriggerEnter(Collider other)
@@ -64,6 +74,19 @@ namespace Cat
             }
         }
 
+        public void IncreaseTriggersNeeded()
+        {
+            Debug.Log("IncreaseTriggersNeeded");
+            triggersNeeded++;
+        }
+        public void IncreaseTriggers()
+        {
+            _triggers++;
+            if (_triggers == triggersNeeded)
+            {
+                StartCoroutine(Disappear());
+            }
+        }
         public IEnumerator Disappear()
         {
             for (int i = 1; i < triggerSphereColliders.Length; i++)

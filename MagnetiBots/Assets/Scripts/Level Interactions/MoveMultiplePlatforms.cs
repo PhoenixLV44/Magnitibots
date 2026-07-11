@@ -53,8 +53,12 @@ namespace Interactable
                 platform.ActivateObject();
                 yield return new WaitForSecondsRealtime(delay);
             }
-            yield return new WaitForSecondsRealtime(1);
-            
+            yield return new WaitForSecondsRealtime(0.5f);
+            if (triggerObject.Cat)
+            {
+                triggerObject.Cat.IncreaseTriggers();
+            }
+            yield return new WaitForSecondsRealtime(0.5f);
             mainCamera.SetActive(true);
             cutsceneCamera.SetActive(false);
             player.Interacting = false;

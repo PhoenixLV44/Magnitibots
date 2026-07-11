@@ -41,7 +41,7 @@ public class MovementState : GroundedState
             stateMachine.ChangeState(stateManager.JumpState);
         }
 
-        if(moveInput == Vector2.zero)
+        if(moveInput == Vector2.zero || player.Interacting)
             stateMachine.ChangeState(stateManager.IdleState);
 
 
