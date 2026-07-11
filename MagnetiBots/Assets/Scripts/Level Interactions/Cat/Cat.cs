@@ -42,6 +42,8 @@ namespace Cat
         {
             /*Vector3 direction = _player.transform.position - transform.position;
             transform.localEulerAngles.y = direction.y;*/
+            head.rotation = Quaternion.LookRotation(head.position - _player.transform.position);
+            head.localEulerAngles = new Vector3(head.localEulerAngles.x, head.localEulerAngles.y, 0);
         }
 
         private void OnTriggerEnter(Collider other)
