@@ -36,6 +36,10 @@ namespace Ability.Object
                 
                 if (target.Health <= 0)
                 {
+                    if (target.Cat)
+                    {
+                        StartCoroutine(target.Cat.Disappear());
+                    }
                     target.Rock.SetActive(false);
                     foreach (var boxCollider in target.Colliders)
                     {

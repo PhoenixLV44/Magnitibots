@@ -437,8 +437,24 @@ PrefabInstance:
       value: 0.017570384
       objectReference: {fileID: 0}
     - target: {fileID: -1100828506089697691, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -1100828506089697691, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1100828506089697691, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000037252897
+      objectReference: {fileID: 0}
+    - target: {fileID: -1100828506089697691, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0.029475696
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1100828506089697691, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1073666662098233578, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -587,7 +603,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 381756600094700307}
+    - targetCorrespondingSourceObject: {fileID: -1090087697628616659, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3142187272548253496}
   m_SourcePrefab: {fileID: 100100000, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+--- !u!4 &710098995417139045 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6316356108857993333, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+  m_PrefabInstance: {fileID: 6805769359201021712}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &2350373996575555820 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 9145904424791158780, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
@@ -598,6 +622,33 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -898961331560157277, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
   m_PrefabInstance: {fileID: 6805769359201021712}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3363564604372846397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1090087697628616659, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
+  m_PrefabInstance: {fileID: 6805769359201021712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &3142187272548253496
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363564604372846397}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!137 &5401593221212224396 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1478486098826564764, guid: c20eb23328e3cdb47877da63809778f2, type: 3}
@@ -643,11 +694,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cat
   reactToCube: 0
+  reactToPlayer: 1
   renderers:
   - {fileID: 5401593221212224396}
   - {fileID: 3311496214089908403}
   - {fileID: 2350373996575555820}
-  triggerSphereCollider: {fileID: 0}
+  triggerSphereColliders:
+  - {fileID: 381756600094700307}
+  - {fileID: 2200571730915901819}
+  head: {fileID: 710098995417139045}
 --- !u!135 &381756600094700307
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -665,10 +720,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: -0.3, z: 0}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &6483013375500962043 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c20eb23328e3cdb47877da63809778f2, type: 3}

@@ -14,7 +14,7 @@ namespace Cat
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player") || (_cat.ReactToCube && other.CompareTag("LassoTarget")))
+            if ((_cat.ReactToPlayer  && other.CompareTag("Player")) || (_cat.ReactToCube && other.CompareTag("LassoTarget")))
             {
                 Debug.Log("MEow");
                 StartCoroutine(_cat.Disappear());

@@ -11,6 +11,11 @@ namespace Interactable
         [Tooltip("Delay between objects that will be activated.")]
         [SerializeField] protected float delayBetweenObjects = 0;
         public bool canBeDeactivated;
+
+        [SerializeField] protected Cat.Cat cat;
+        public Cat.Cat Cat;
+        [SerializeField] protected bool catMeow;
+        [SerializeField] protected bool catDisappear;
         private void Start()
         {
             delayBetweenObjects = Mathf.Clamp(delayBetweenObjects, 0, Mathf.Infinity);

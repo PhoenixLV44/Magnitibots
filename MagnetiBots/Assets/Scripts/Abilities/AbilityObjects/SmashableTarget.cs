@@ -24,6 +24,9 @@ namespace Ability.Object
         
         [SerializeField] BoxCollider[] colliders;
         public BoxCollider[] Colliders => colliders;
+
+        [SerializeField] private Cat.Cat cat;
+        public Cat.Cat Cat => cat;
         private void Start()
         {
             switch (healthLevel)

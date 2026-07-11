@@ -10,8 +10,18 @@ namespace Cat
         ParticleSystem _smokeParticles;
         [SerializeField] private bool reactToCube;
         public bool  ReactToCube => reactToCube;
+        [SerializeField] private bool reactToPlayer = true;
+        public bool  ReactToPlayer => reactToPlayer;
         [SerializeField] private SkinnedMeshRenderer[] renderers;
-        [SerializeField] SphereCollider triggerSphereCollider;
+        [SerializeField] SphereCollider[] triggerSphereColliders ;
+        public SphereCollider[] TriggerSphereColliders {get => triggerSphereColliders; set => triggerSphereColliders = value;}
+        private bool _inDanger;
+        public bool InDanger => _inDanger;
+        [Tooltip("Looking for J_head")]
+        [SerializeField] private Transform head;
+        Player.Controller _player;
+        
+        private CatManager _catManager;
 
         private void Start()
         {
@@ -23,22 +33,40 @@ namespace Cat
                 //_smokeParticles.SetActive(false);
 
             }
+            _player = FindFirstObjectByType<Player.Controller>();
+            _catManager = GetComponentInParent<CatManager>();
+        }
 
-            ;
-            if (!triggerSphereCollider)
-            {
-                triggerSphereCollider = GetComponentInChildren<SphereCollider>();
-            }
+        private void FixedUpdate()
+        {
+            /*Vector3 direction = _player.transform.position - transform.position;
+            transform.localEulerAngles.y = direction.y;*/
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            
+            if (other.CompareTag("LassoTarget") || other.CompareTag("SmashBall"))
+            {
+                Debug.Log("MEow");
+                //triggerSphereColliders = GetComponent<SphereCollider>();
+                StartCoroutine(AvoidThreat());
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("LassoTarget") || other.CompareTag("SmashBall"))
+            {
+                _inDanger = false;
+            }
         }
 
         public IEnumerator Disappear()
         {
-            triggerSphereCollider.enabled = false;
+            for (int i = 1; i < triggerSphereColliders.Length; i++)
+            {
+                triggerSphereColliders[i].enabled = false;
+            }
             if (_smokeParticles)
             {
                 _smokeParticles.Play(true);
@@ -51,7 +79,43 @@ namespace Cat
             }
 
             yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying);
+            _catManager.ChangeCat(this);
             gameObject.SetActive(false);
+        }
+
+        private IEnumerator AvoidThreat()
+        {
+            for (int i = 1; i < triggerSphereColliders.Length; i++)
+            {
+                triggerSphereColliders[i].enabled = false;
+            }
+            _inDanger = true;
+            triggerSphereColliders[1].enabled = false;
+            if (_smokeParticles)
+            {
+                _smokeParticles.Play(true);
+            }
+
+            Globals.Managers.Audio.PlaySFXHere("Meow4", transform);
+            foreach (var model in renderers)
+            {
+                model.enabled = false;
+            }
+
+            yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying && !_inDanger);
+            
+            if (_smokeParticles)
+            {
+                _smokeParticles.Play(true);
+            }
+
+            Globals.Managers.Audio.PlaySFXHere("Meow4", transform);
+            foreach (var model in renderers)
+            {
+                model.enabled = true;
+            }
+            triggerSphereColliders[1].enabled = true;
+            //gameObject.SetActive(false);
         }
     }
 
