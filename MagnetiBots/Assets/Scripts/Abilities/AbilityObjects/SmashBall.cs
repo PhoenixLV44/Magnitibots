@@ -38,7 +38,7 @@ namespace Ability.Object
                 {
                     if (target.Cat)
                     {
-                        StartCoroutine(target.Cat.Disappear());
+                        target.Cat.IncreaseTriggers();
                     }
                     target.Rock.SetActive(false);
                     foreach (var boxCollider in target.Colliders)

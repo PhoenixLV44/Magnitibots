@@ -32,6 +32,7 @@ namespace Cat
         {
             int index = catList.IndexOf(cat);
             catList[index + 1].gameObject.SetActive(true);
+            cat.Animator.Play("SitIdle");
         }
     }
 }

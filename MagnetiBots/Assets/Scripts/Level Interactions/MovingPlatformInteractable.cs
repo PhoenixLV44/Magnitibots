@@ -14,7 +14,6 @@ namespace Interactable
         public Vector3 EndPosition => endPosition;
         
         [SerializeField] protected float moveSpeed = 5;
-        
         GameObject _cutsceneCamera;
         GameObject _mainCamera;
 
@@ -66,8 +65,13 @@ namespace Interactable
                 time = Mathf.Clamp(time, 0, 1);
                 yield return null;
             }
+            yield return new WaitForSeconds(0.5f);
+            if (triggerObject.Cat)
+            {
+                triggerObject.Cat.IncreaseTriggers();
+            }
+            yield return new WaitForSeconds(0.5f);
             platform.transform.localPosition = secondPos;
-            yield return new WaitForSeconds(1f);
             _mainCamera.SetActive(true);
             _cutsceneCamera.SetActive(false);
             player.Interacting = false;
