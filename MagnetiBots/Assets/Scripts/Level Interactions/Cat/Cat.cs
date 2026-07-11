@@ -26,6 +26,7 @@ namespace Cat
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            _animator.Play("SitIdle");
             _smokeParticles = GetComponentInChildren<ParticleSystem>();
             if (_smokeParticles)
             {
