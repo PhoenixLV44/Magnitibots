@@ -59,7 +59,7 @@ public class PuzzleCube : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.gameObject);
+        //Debug.Log(collision.collider.gameObject);
     }
     private void OnTriggerEnter(Collider other)
     {
