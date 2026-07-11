@@ -70,12 +70,12 @@ namespace Cat
             {
                 triggerSphereColliders[i].enabled = false;
             }
-            if (_smokeParticles)
+            if (!_smokeParticles.isPlaying)
             {
                 _smokeParticles.Play(true);
+                Globals.Managers.Audio.PlaySFXHere("Meow4", transform);
             }
 
-            Globals.Managers.Audio.PlaySFXHere("Meow4", transform);
             foreach (var model in renderers)
             {
                 model.enabled = false;
