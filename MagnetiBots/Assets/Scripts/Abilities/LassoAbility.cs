@@ -151,42 +151,44 @@ namespace Ability
 
         public override void Fire()
         {
-            isCharging = false;
-            _returnToPlayer = false;
-            Debug.Log("Throw");
             if (merbleBoss.ChargedMerbleList.Count >= 1)
             {
-                controller.Animator.SetTrigger("Throw");
-                if (FindFirstObjectByType<Globals>() != null)
-                {
-                    Globals.Managers.Audio.PlaySFX("ThrowLasso");
-                }
-                GameObject playerModel = transform.Find("PlayerModel").gameObject;
-                Vector3 target = transform.position;
-                target += playerModel.transform.forward * (baseRange * merbleBoss.ChargedMerbleList.Count);
-                //Debug.Log("Target: " + target);
-                target.y = transform.position.y + 0.5f;
-                _lassoLoop.transform.rotation = playerModel.transform.rotation;
-                _lassoLoop.transform.parent = null;
-                _loopScript.enabled = true;
-                _lassoLoop.SetActive(true);
-                _loopScript.StartMovement(_returnPoint.position, target);
-                //StartCoroutine(merbleLineCoroutine);
+                StartCoroutine(ThrowLasso());
             }
             else
             {
+                isCharging = false;
+                _returnToPlayer = false;
                 merbleBoss.FireMerbles();
                 StopAllCoroutines();
                 _loopScript.StopAllCoroutines();
+                StopCoroutine(Charge());
             }
-            //StopCharging();
-            StopCoroutine(Charge());
-            lassoLaunched = true;
-            //StopCoroutine(Charge());
-            //merbleBoss.FireMerbles();
-            //currentPowerLevel = 0;
         }
 
+        IEnumerator ThrowLasso()
+        {
+            Debug.Log("Throw");
+            if (FindFirstObjectByType<Globals>() != null)
+            {
+                Globals.Managers.Audio.PlaySFX("ThrowLasso");
+            }
+            //yield return new WaitForSeconds(controller.AnimController.ThrowAnimation.length / 8);
+            controller.Animator.SetBool("Throw", false);
+
+            GameObject playerModel = transform.Find("PlayerModel").gameObject;
+            Vector3 target = transform.position;
+            target += playerModel.transform.forward * (baseRange * merbleBoss.ChargedMerbleList.Count);
+            target.y = transform.position.y + 0.5f;
+            _lassoLoop.transform.rotation = playerModel.transform.rotation;
+            _lassoLoop.transform.parent = null;
+            _loopScript.enabled = true;
+            _lassoLoop.SetActive(true);
+            _loopScript.StartMovement(_returnPoint.position, target);
+
+            lassoLaunched = true;
+            yield return null;
+        }
         public void MoveLassoTarget()
         {
             targetCursor.ObjectToMove = _lassoLoop;
@@ -247,6 +249,7 @@ namespace Ability
             merbleBoss.FireMerbles();
             StopCoroutine(Charge());
             controller.Movement.CanLook = true;
+            controller.Interacting = false;
             targetCursor.ActivateCursor();
             lassoLaunched = false;
             Debug.Log("reached the end");

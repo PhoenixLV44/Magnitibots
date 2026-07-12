@@ -164,24 +164,8 @@ namespace Cat
 
         void Look()
         {
-            if (!_player.GetComponent<Ability.Lasso>().LoopedObject || !_player.GetComponent<Ability.Smash>().SmashBall.activeSelf)
-            {
-                head.rotation = Quaternion.LookRotation(head.position - _player.transform.position);
-                head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
-            }
-            else
-            {
-                if (_player.GetComponent<Ability.Lasso>().LoopedObject)
-                {
-                    head.rotation = Quaternion.LookRotation(head.position - _player.GetComponent<Ability.Lasso>().LoopedObject.transform.position);
-                    head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
-                }
-                else
-                {
-                    head.rotation = Quaternion.LookRotation(head.position - _player.GetComponent<Ability.Smash>().SmashBall.transform.position);
-                    head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
-                }
-            }
+            head.rotation = Quaternion.LookRotation(head.position - _player.transform.position);
+            head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
         }   
     }
 }

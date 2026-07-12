@@ -39,6 +39,9 @@ namespace Player
         [Tooltip("Animation called 'Pull_Mid'")]
         [SerializeField] private AnimationClip pullLeverAnimation; //Player_Pull_Mid
         public AnimationClip PullLeverAnimation => pullLeverAnimation;
+        
+        [SerializeField] private AnimationClip throwAnimation;
+        public AnimationClip ThrowAnimation => throwAnimation;
 
         private bool _charging;
         public bool Charging {get => _charging; set => _charging = value;}

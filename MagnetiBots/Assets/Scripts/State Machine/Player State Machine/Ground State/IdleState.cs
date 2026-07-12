@@ -10,7 +10,14 @@ public class IdleState : GroundedState
     {
         //Debug.Log("Entering Idle State");
         base.EnterState();
-        animator.Play("IdleWalk");
+        if (player.AbilityStateManager.CurrentAbility == player.GetComponent<Lasso>() && player.MerbleBoss.ChargedMerbleList.Count > 0)
+        {
+            player.Animator.SetTrigger("Throw");
+        }
+        else
+        {
+            animator.Play("IdleWalk");
+        }
         if (currentAbility == player.GetComponent<Lasso>())
         {
             player.MerbleBoss.FireMerbles();
@@ -46,7 +53,7 @@ public class IdleState : GroundedState
         }
 
         
-        if (moveInput != Vector2.zero || player.Interacting)
+        if (moveInput != Vector2.zero && !player.Interacting)
         {
             stateMachine.ChangeState(stateManager.MovementState);
         }
