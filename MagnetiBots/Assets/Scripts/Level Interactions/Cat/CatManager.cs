@@ -38,6 +38,7 @@ namespace Cat
                     if (catList[i].gameObject.activeSelf)
                     {
                         highestIndex = i;
+                        catList[i].gameObject.SetActive(false);
                     }
                 }
             }

@@ -42,6 +42,8 @@ namespace Player
             public HoverState HoverState => _hoverState;
 
             #endregion
+
+            [SerializeField] private string currentState;
             
         private void Start()
         {
@@ -60,6 +62,7 @@ namespace Player
 
         private void Update()
         {
+            currentState =  _stateMachine.CurrentState.ToString();
             _stateMachine.CurrentState.LogicUpdate();
         }
 
