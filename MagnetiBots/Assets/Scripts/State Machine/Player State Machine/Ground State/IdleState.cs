@@ -12,7 +12,7 @@ public class IdleState : GroundedState
         base.EnterState();
         if (player.AbilityStateManager.CurrentAbility == player.GetComponent<Lasso>() && player.MerbleBoss.ChargedMerbleList.Count > 0)
         {
-            player.Animator.SetTrigger("Throw");
+            player.StartCoroutine(player.AnimController.ThrowAnim());
         }
         else
         {

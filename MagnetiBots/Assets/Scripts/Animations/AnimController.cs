@@ -8,8 +8,8 @@ namespace Player
 {
     public class AnimController : MonoBehaviour
     {
-        private Controller _playerController;
-        private Movement _playerMovement;
+        private Controller _player;
+        private Movement _movement;
         
         private Player.StateManager _playerStateManager;
         private Ability.StateManager _abilityStateManager;
@@ -50,8 +50,8 @@ namespace Player
         public void SetUpController(Controller playerController, Movement playerMovement, Player.StateManager playerStateManager, Ability.StateManager abilityStateManager, Lasso lasso, Smash smash,
             SuperJump superJump,  Animator animator)
         {
-            _playerController = playerController;
-            _playerMovement = playerMovement;
+            _player = playerController;
+            _movement = playerMovement;
             _playerStateManager = playerStateManager;
             _lasso = lasso;
             _smash = smash;
@@ -64,7 +64,7 @@ namespace Player
         
         private void Update()
         {
-            if (_playerMovement.Grounded)
+            if (_movement.Grounded)
             {
                 ChangeWalkBlendTree();
             }
@@ -73,7 +73,7 @@ namespace Player
                 //
             }
             
-            _animator.SetBool("Hovering", _playerMovement.Hovering);
+            _animator.SetBool("Hovering", _movement.Hovering);
 
             switch (_abilityStateManager.CurrentAbility)
             {
@@ -91,8 +91,8 @@ namespace Player
                     _animator.SetBool("SuperJump", true);
                     _animator.SetBool("Lasso", false);
                     _animator.SetBool("Smash", false);
-                    if(_playerController.MerbleBoss.ChargedMerbleList.Count >= 5)
-                        _playerMovement.Hovering = true;
+                    if(_player.MerbleBoss.ChargedMerbleList.Count >= 5)
+                        _movement.Hovering = true;
                     break;
                 default:
                     _animator.SetBool("Lasso", false);
@@ -101,7 +101,7 @@ namespace Player
                     break;
             }
 
-            if (_playerController.LassoHooked)
+            if (_player.LassoHooked)
             {
                 _animator.SetBool("LassoHooked", true);
             }
@@ -114,7 +114,7 @@ namespace Player
 
         private void ChangeWalkBlendTree()
         {
-            if (_move.IsPressed())
+            if (_move.IsPressed() && !_player.Interacting)
             {
                 if (_walkBlendTree < 1)
                 {
@@ -142,15 +142,23 @@ namespace Player
 
         public IEnumerator PullingLeverAnim()
         {
-            Debug.Log("Pulling lever");
-            _animator.SetBool("PullingLever", _playerController.Interacting);
-            yield return new WaitForSeconds(1);
-            _playerController.Interacting = false;
-            _animator.SetBool("PullingLever", _playerController.Interacting);
+            //Debug.Log("Pulling lever");
+            _animator.SetTrigger("PullingLever");
+            yield return null;
+            //yield return new WaitUntil(() => !_playerController.Interacting);
+            //_playerController.Interacting = false;
+        }
+
+        public IEnumerator ThrowAnim()
+        {
+            _animator.SetBool("Throw", true);
+            yield return new WaitForSeconds(throwAnimation.length);
+            _animator.SetBool("Throw", false);
         }
         public void PlayCollectAnimation()
         {
             _animator.SetTrigger("Collect");
         }
+        
     }
 }

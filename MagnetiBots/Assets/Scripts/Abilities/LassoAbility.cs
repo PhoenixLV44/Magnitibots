@@ -162,7 +162,7 @@ namespace Ability
                     Globals.Managers.Audio.PlaySFX("ThrowLasso");
                 }
                 //yield return new WaitForSeconds(controller.AnimController.ThrowAnimation.length / 8);
-                controller.Animator.SetBool("Throw", false);
+                //controller.Animator.SetBool("Throw", false);
 
                 GameObject playerModel = transform.Find("PlayerModel").gameObject;
                 Vector3 target = transform.position;
