@@ -8,7 +8,7 @@ namespace Ability.Object
 {
     public class SmashBall : MonoBehaviour
     {
-        [SerializeField] private float _powerLevel = 1;
+        [SerializeField] private float _powerLevel = 0;
         public float PowerLevel { get => _powerLevel; set => _powerLevel = value; }
         private Ability.Smash _smashAbility;
         public Ability.Smash SmashAbility { get => _smashAbility; set => _smashAbility = value; }
@@ -20,9 +20,13 @@ namespace Ability.Object
 
         private List<Merbles.Merble> _merbleList;
         public List<Merbles.Merble> MerbleList { get => _merbleList; set => _merbleList = value; }
+        [SerializeField]private Transform[] merblePoints;
+        public Transform[] MerblePoints => merblePoints;
         
-        private Rigidbody rb;
+        private Rigidbody _rb;
         [SerializeField] private LayerMask groundLayer;
+
+        
         private void OnTriggerEnter(Collider other)
         {
             triggerCollider.enabled = false;
@@ -52,14 +56,14 @@ namespace Ability.Object
                 }
 
             }
-            else if (other.CompareTag("Ground") && rb.linearVelocity.y < 0)
+            else if (other.CompareTag("Ground") && _rb.linearVelocity.y < 0)
             {
                 //Globals.Managers.Audio.PlaySFXHere("ThrowRock", transform);
                 Debug.Log("Ground");
                 _smashAbility.DeactivateBall();
                 //_smashAbility.MerbleBoss.FireMerbles();
             }
-            else if (!other.CompareTag("Ground") && !other.CompareTag("SmashTarget") && rb.linearVelocity.y < 0)
+            else if (!other.CompareTag("Ground") && !other.CompareTag("SmashTarget") && _rb.linearVelocity.y < 0)
             {   
                 Debug.Log(other.transform.name);
                 _smashAbility.DeactivateBall();
@@ -74,12 +78,13 @@ namespace Ability.Object
         }
         private void OnEnable()
         {
-            _powerLevel = 1;
+            //_powerLevel = 1;
             transform.localScale = _baseScale;
-            if (!rb)
+            if (!_rb)
             {
-                rb = GetComponent<Rigidbody>();
+                _rb = GetComponent<Rigidbody>();
             }
+            //Debug.Log("Activating Smash Ball");
             //triggerCollider.enabled = false;
         }
 
@@ -88,10 +93,20 @@ namespace Ability.Object
             //Cursor.lockState = CursorLockMode.None;
             StopAllCoroutines();
         }
-        
+
+        public IEnumerator DropBall()
+        {
+            while (true)
+            {
+                _rb.AddForce(Physics.gravity * 1.5f, ForceMode.Acceleration);
+                yield return null;
+            }
+        }
 
         private void Update()
         {
+            _powerLevel = Mathf.FloorToInt(_smashAbility.CurrentPowerLevel / 5);
+            Debug.Log("PowerLevel: " + _powerLevel);
             RaycastHit hitInfo;
             if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 1, groundLayer))
             {
@@ -105,6 +120,7 @@ namespace Ability.Object
                     //_smashAbility.MerbleBoss.FireMerbles();
                 }
             }
+            transform.Rotate(0, 1.5f, 0 * Time.deltaTime);
         }
     }
 }

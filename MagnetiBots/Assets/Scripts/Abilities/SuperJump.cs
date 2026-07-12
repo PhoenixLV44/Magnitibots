@@ -163,7 +163,7 @@ namespace Ability
             {
                 for(int i = 0; i < merbleBoss.ChargedMerbleList.Count; i++)
                 {
-                    merbleBoss.ChargedMerbleList[i].FloatTowardsObject(_superJumpPoint.MerblePoints[i].transform.position, i, Merble.AbilityEnum.SuperJump, _superJumpPoint.RotationSpeed);
+                    merbleBoss.ChargedMerbleList[i].FloatTowardsObject(_superJumpPoint.MerblePoints[i].transform.position, i, _superJumpPoint.RotationSpeed);
                 }
                 yield return null;
             }

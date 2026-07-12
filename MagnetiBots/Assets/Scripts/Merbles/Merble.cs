@@ -21,10 +21,10 @@ namespace Merbles
         public enum FollowTypes { Loose, Snake, Coalition }
         private FollowTypes _followType;
         
-        public enum AbilityEnum{ None, Lasso, Smash, SuperJump}
+        /*public enum AbilityEnum{ None, Lasso, Smash, SuperJump}
 
         private AbilityEnum _currentAbilityEnum = AbilityEnum.None;
-        public AbilityEnum CurrentAbilityEnum { get => _currentAbilityEnum; set => _currentAbilityEnum = value; }
+        public AbilityEnum CurrentAbilityEnum { get => _currentAbilityEnum; set => _currentAbilityEnum = value; }*/
 
         public bool Sentience { get { return _isAlive; } set { _isAlive = value; } }
         private bool _isAlive = false;
@@ -42,6 +42,7 @@ namespace Merbles
         public GameObject CollectParticles => collectParticles;
 
         [SerializeField] private Transform parent;
+        public Transform Parent => parent;
 
         Coroutine charge;
         Coroutine beep;
@@ -172,10 +173,10 @@ namespace Merbles
             transform.parent = parent;
             _isCharging = false;
             _floating = false;
-            if (_currentAbilityEnum == AbilityEnum.Smash)
+            /*if (_currentAbilityEnum == AbilityEnum.Smash)
             {
                 transform.position = myBoss.transform.position;
-            }
+            }*/
             _agent.enabled = true;
             _agent.destination = myBoss.transform.position;
             _agent.ResetPath();
@@ -196,7 +197,9 @@ namespace Merbles
                 myBoss.merbleList.Add(this);
             }
             myBoss.CheckForDuplicates(myBoss.merbleList);
+            /*
             _currentAbilityEnum = AbilityEnum.None;
+            */
             StopCoroutine(charge);
         }
 
@@ -257,38 +260,9 @@ namespace Merbles
             }
         }
 
-        public void FloatTowardsObject(Vector3 vectorPos, float index, AbilityEnum currentAbility, float speed = 2.5f)
+        public void FloatTowardsObject(Vector3 vectorPos, float index, float speed = 2.5f)
         {
-            Vector2 rngMinMax;
-            Vector3 targetPos;
-            switch (currentAbility)
-            {
-                case AbilityEnum.Lasso:
-                    rngMinMax = new Vector2(-0.5f, 0.5f);
-                    targetPos = new Vector3(vectorPos.x + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.y + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
-                    transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * speed);
-                    break;
-                
-                case AbilityEnum.Smash:
-                    rngMinMax = new Vector2(-1.5f, 1.5f);
-                    if (index > 1)
-                    {
-                        rngMinMax.x -= (index / 10);
-                        rngMinMax.y += (index / 10);
-                    }
-            
-                    targetPos = new Vector3(vectorPos.x + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.y + (Random.Range(rngMinMax.x, rngMinMax.y)), vectorPos.z + (Random.Range(rngMinMax.x, rngMinMax.y)));
-                    //Debug.Log("FLOATING");
-                    transform.position = Vector3.Slerp(transform.position, targetPos, Time.deltaTime * speed);
-                    break;
-                case AbilityEnum.SuperJump:
-                    transform.position = Vector3.Slerp(transform.position, vectorPos, Time.deltaTime * speed);
-                    break;
-                default:
-                    Debug.LogError("Unknown AbilityEnum");
-                    break;
-                    
-            }
+            transform.position = Vector3.Slerp(transform.position, vectorPos, Time.deltaTime * speed);
         }
         
 

@@ -227,7 +227,7 @@ namespace Ability
             lassoLaunched = false;
             _returnToPlayer = true;
             yield return new WaitUntil(() => Vector3.Distance(_lassoLoop.transform.position, _returnPoint.position) < 1);
-            Debug.Log("WAHOO");
+            //Debug.Log("WAHOO");
                
             _lassoLoop.transform.position = _returnPoint.position;
             
@@ -236,7 +236,7 @@ namespace Ability
             {
                 puzzleCube.UnfreezeConstraints();
             }
-            Debug.Log("disabling range");
+            //Debug.Log("disabling range");
             rangeIndicator.DisableRangeIndicator();
             
             _lassoLoop.transform.parent = transform;
@@ -292,7 +292,7 @@ namespace Ability
                 {
                     for (int i = 0; i < chargedMerbleList.Count; i++)
                     {
-                        chargedMerbleList[i].FloatTowardsObject(_merblePoints[i].transform.position, i, Merble.AbilityEnum.Lasso);
+                        chargedMerbleList[i].FloatTowardsObject(_merblePoints[i].transform.position, i);
                     }
                 }
                 yield return null;
@@ -353,7 +353,7 @@ namespace Ability
                         int j = i - merblesNeeded;
                         pos = _merblePoints[j].transform.position;
                     }
-                    merble.FloatTowardsObject(pos, i, Merble.AbilityEnum.Lasso, speed);
+                    merble.FloatTowardsObject(pos, i, speed);
                 }
                 
                 yield return null;
@@ -384,7 +384,7 @@ namespace Ability
 
                         pos.y = _lassoLoop.transform.position.y -
                                 (verticalDistance * (divisor));*/
-                        merble.FloatTowardsObject(_returnPoint.position, i, Merble.AbilityEnum.Lasso, speed);
+                        merble.FloatTowardsObject(_returnPoint.position, i, speed);
                     }
                     else
                     {
