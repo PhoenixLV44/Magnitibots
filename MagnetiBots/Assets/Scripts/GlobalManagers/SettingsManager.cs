@@ -41,6 +41,7 @@ public class SettingsManager : MonoBehaviour
     Slider SFXVolumeSlider;
     Slider MasterVolumeSlider;
     Slider MouseSensitivitySlider;
+    Slider CameraSensitivitySlider;
     #endregion
 
     #region pause settings
@@ -51,6 +52,7 @@ public class SettingsManager : MonoBehaviour
     Slider pause_SFXVolumeSlider;
     Slider pause_MasterVolumeSlider;
     Slider pause_MouseSensitivitySlider;
+    Slider pause_CameraSensitivitySlider;
     #endregion
 
     #region Transitions
@@ -62,6 +64,8 @@ public class SettingsManager : MonoBehaviour
 
     private float _mouseSens;
     public float MouseSensitivity { get { return _mouseSens; } set { _mouseSens = value; } }
+    private float _camSens;
+    public float CameraSensitivity { get { return _camSens; } set { _camSens = value; }  }
 
     private float _tooltipTime = 45;
     public float TooltipTime { get { return _tooltipTime; } set { } }
@@ -78,17 +82,20 @@ public class SettingsManager : MonoBehaviour
         SFXVolumeSlider = root.Q<Slider>("SFXVolumeSlider");
         MasterVolumeSlider = root.Q<Slider>("MasterVolumeSlider");
         MouseSensitivitySlider = root.Q<Slider>("MouseSensitivitySlider");
+        CameraSensitivitySlider = root.Q<Slider>("CameraSensitivitySlider");
 
         //register callbacks
         BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
-        MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(SensitivityCallback);
+        MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(MouseSensitivityCallback);
+        MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(CameraSensitivityCallback);
 
         BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
-        MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveSensitivityCallback);
+        MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveMouseSensitivityCallback);
+        CameraSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveCameraSensitivityCallback);
         #endregion
         UpdateSettingsSliders();
     }
@@ -97,12 +104,14 @@ public class SettingsManager : MonoBehaviour
         BGMVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
         SFXVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
         MasterVolumeSlider.UnregisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback);
-        MouseSensitivitySlider.UnregisterCallback<ChangeEvent<float>>(SensitivityCallback);
+        MouseSensitivitySlider.UnregisterCallback<ChangeEvent<float>>(MouseSensitivityCallback);
+        MouseSensitivitySlider.UnregisterCallback<ChangeEvent<float>>(CameraSensitivityCallback);
 
         BGMVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
         SFXVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
         MasterVolumeSlider.UnregisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback);
-        MouseSensitivitySlider.UnregisterCallback<FocusOutEvent>(SaveSensitivityCallback);
+        MouseSensitivitySlider.UnregisterCallback<FocusOutEvent>(SaveMouseSensitivityCallback);
+        CameraSensitivitySlider.UnregisterCallback<FocusOutEvent>(SaveCameraSensitivityCallback);
     }
     public void PauseMenuSetup()
     {
@@ -116,17 +125,20 @@ public class SettingsManager : MonoBehaviour
         pause_SFXVolumeSlider = pause_settingsMenu.Q<Slider>("SFXVolumeSlider");
         pause_MasterVolumeSlider = pause_settingsMenu.Q<Slider>("MasterVolumeSlider");
         pause_MouseSensitivitySlider = pause_settingsMenu.Q<Slider>("MouseSensitivitySlider");
+        pause_CameraSensitivitySlider = pause_settingsMenu.Q<Slider>("CameraSensitivitySlider");
 
         //register callbacks
         pause_BGMVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<ChangeEvent<float>, Destination>(ChangeVolumeCallback, Destination.Master);
-        pause_MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(SensitivityCallback);
+        pause_MouseSensitivitySlider.RegisterCallback<ChangeEvent<float>>(MouseSensitivityCallback);
+        pause_CameraSensitivitySlider.RegisterCallback<ChangeEvent<float>>(CameraSensitivityCallback);
 
         pause_BGMVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.BGM);
         pause_SFXVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.SFX);
         pause_MasterVolumeSlider.RegisterCallback<FocusOutEvent, Destination>(SaveVolumeCallback, Destination.Master);
-        pause_MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveSensitivityCallback);
+        pause_MouseSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveMouseSensitivityCallback);
+        pause_CameraSensitivitySlider.RegisterCallback<FocusOutEvent>(SaveCameraSensitivityCallback);
         UpdatePauseSliders();
         InputSystem.actions.FindActionMap("UI").Enable();
         InputSystem.actions.FindAction("515eac8f-7c17-469f-bc7f-f0bc6e8506a6").Reset();
@@ -167,14 +179,22 @@ public class SettingsManager : MonoBehaviour
     {
         Globals.Managers.Audio.UpdateVolumes(destination, evt.newValue);
     }
-    public void SensitivityCallback(ChangeEvent<float> evt)
+    public void MouseSensitivityCallback(ChangeEvent<float> evt)
     {
         MouseSensitivity = evt.newValue;
     }
+    public void CameraSensitivityCallback(ChangeEvent<float> evt)
+    {
+        CameraSensitivity = evt.newValue;
+    }
     #region Save Callbacks
-    public void SaveSensitivityCallback(FocusOutEvent evt)
+    public void SaveMouseSensitivityCallback(FocusOutEvent evt)
     {
         Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
+    }
+    public void SaveCameraSensitivityCallback(FocusOutEvent evt)
+    {
+        Globals.Managers.Saves.AddData<float>("CameraSensitivity", CameraSensitivity);
     }
     public void SaveVolumeCallback(FocusOutEvent evt, AudioManager.AudioSettings.Destination dinger)
     {
@@ -248,9 +268,22 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            UIVolume = 1;
+            MouseSensitivity = 100;
             Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
             pause_MouseSensitivitySlider.value = MouseSensitivity;
+        }
+
+        //CameraSensitivity
+        if (Globals.Managers.Saves.GetData<float>("CameraSensitivity", out volumeHolder))
+        {
+            CameraSensitivity = volumeHolder;
+            pause_CameraSensitivitySlider.value = CameraSensitivity;
+        }
+        else
+        {
+            CameraSensitivity = 100;
+            Globals.Managers.Saves.AddData<float>("CameraSensitivity", CameraSensitivity);
+            pause_CameraSensitivitySlider.value = CameraSensitivity;
         }
     }
     private void UpdateSettingsSliders()
@@ -308,9 +341,23 @@ public class SettingsManager : MonoBehaviour
         }
         else
         {
-            MouseSensitivity = 1;
+            MouseSensitivity = 100;
             Globals.Managers.Saves.AddData<float>("MouseSensitivity", MouseSensitivity);
             MouseSensitivitySlider.value = MouseSensitivity;
+        }
+
+        //CameraSensitivity
+        //MouseSensitivity
+        if (Globals.Managers.Saves.GetData<float>("CameraSensitivity", out volumeHolder))
+        {
+            CameraSensitivity = volumeHolder;
+            CameraSensitivitySlider.value = CameraSensitivity;
+        }
+        else
+        {
+            CameraSensitivity = 100;
+            Globals.Managers.Saves.AddData<float>("CameraSensitivity", CameraSensitivity);
+            CameraSensitivitySlider.value = CameraSensitivity;
         }
     }
     public void TooltipOn()

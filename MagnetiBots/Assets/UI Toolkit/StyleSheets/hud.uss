@@ -214,3 +214,16 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+.merbleCounter {
+    -unity-text-align: middle-center;
+    margin-bottom: 15px;
+    font-size: 71px;
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&guid=344cd985bcb249a46a569eea7590cc62&type=3#Zyzol-Bold");
+    -unity-text-outline-width: 5px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    width: 144px;
+    height: 92px;
+}

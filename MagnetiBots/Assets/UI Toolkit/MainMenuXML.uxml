@@ -3,8 +3,8 @@
     <Style src="project://database/Assets/UI%20Toolkit/StyleSheets/MainMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=85751048f4a5be040b7dd4789b58fcf4&amp;type=3#MainMenuStyleSheet"/>
     <ui:VisualElement name="MainMenu" class="MainMenu" style="flex-direction: row; align-self: center; align-content: center; align-items: center; justify-content: center; position: absolute; margin-top: 0; flex-grow: 1; width: 1920px; height: 1080px; left: 0; right: 0; bottom: 0;">
         <ui:VisualElement name="VisualElement" style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); background-color: rgb(255, 255, 255);"/>
-        <ui:Image scale-mode="ScaleToFit" source="project://database/Assets/Art%20Assets/UI/Main%20Menu/Logo_Final2.png?fileID=2800000&amp;guid=2ba1af0bc62a6944e80fcc53d51e0c6a&amp;type=3#Logo_Final2" style="height: 808px; width: 520px; flex-grow: 1; margin-bottom: 209px; margin-left: 64px; margin-right: 43px;"/>
-        <ui:VisualElement name="Buttons" style="flex-grow: 0; justify-content: space-between; align-content: center; align-self: center; align-items: center; margin-top: 66px; margin-bottom: 131px; margin-right: 80px;">
+        <ui:Image scale-mode="ScaleToFit" source="project://database/Assets/Art%20Assets/UI/Main%20Menu/Logo_Final2.png?fileID=2800000&amp;guid=2ba1af0bc62a6944e80fcc53d51e0c6a&amp;type=3#Logo_Final2" style="height: 808px; width: 520px; flex-grow: 1; margin-bottom: 0; margin-left: 64px; margin-right: 43px;"/>
+        <ui:VisualElement name="Buttons" style="flex-grow: 0; justify-content: space-between; align-content: center; align-self: center; align-items: center; margin-top: 0; margin-bottom: 0; margin-right: 80px;">
             <ui:Button text="" name="StartButton" class="mainButton" style="background-color: rgba(188, 188, 188, 0);">
                 <ui:Image source="project://database/Assets/Art%20Assets/UI/Title%20Screen/Text/MainMenuText_01.png?fileID=2800000&amp;guid=8b38ff1205887c0488e8b0338e6eea95&amp;type=3#MainMenuText_01" picking-mode="Ignore" style="height: 82px; width: 163px; margin-top: 10px;"/>
             </ui:Button>
@@ -29,7 +29,7 @@
                 <ui:Label text="Settings" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216);"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 112px; margin-bottom: 257px;">
+        <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 63px; margin-bottom: 187px;">
             <ui:VisualElement name="MasterVolumeBox" class="SliderBin">
                 <ui:Label text="Master Volume"/>
                 <ui:Slider label="" value="100" high-value="1" name="MasterVolumeSlider" fill="true" show-input-field="false" class="settingSlider"/>
@@ -45,6 +45,10 @@
             <ui:VisualElement name="Cursor" class="SliderBin">
                 <ui:Label text="Cursor Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true"/>
                 <ui:Slider label="" value="100" high-value="100" name="MouseSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Cursor" class="SliderBin">
+                <ui:Label text="Camera Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true" style="font-size: 38px;"/>
+                <ui:Slider label="" value="100" high-value="100" name="CameraSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Lower%20Border.png?fileID=2800000&amp;guid=761b7bf0e469841429019df4244ba07b&amp;type=3#Lower Border&quot;); width: 1920px; position: absolute; bottom: 0; height: 83px;">

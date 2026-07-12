@@ -20,25 +20,28 @@
             </ui:Button>
         </ui:VisualElement>
         <ui:VisualElement picking-mode="Ignore" name="MainHUD" style="flex-grow: 1;">
-            <ui:VisualElement name="PowerSelectors" style="flex-grow: 0; top: 0; left: 0; flex-direction: row; width: 443px; height: 182px; align-items: flex-start; margin-left: 11px; margin-top: 10px;">
-                <ui:VisualElement name="LassoPower" class="power" style="visibility: hidden;">
-                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Lasso%20Indicator_Inactive.png?fileID=2800000&amp;guid=378a68e07684e6740bff907fb3fb729c&amp;type=3#Lasso Indicator_Inactive" enabled="true" name="LassoImage" style="flex-grow: 1; align-content: auto; align-items: auto; justify-content: flex-start; align-self: auto; text-shadow: 0 0 0 rgb(0, 0, 0);"/>
+            <ui:VisualElement name="PowerSelectors" picking-mode="Ignore" style="flex-grow: 0; top: 0; left: 0; flex-direction: row; width: 475px; height: 215px; align-items: flex-start; margin-left: 0; margin-top: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/HUD/HUD%20Panel.png?fileID=2800000&amp;guid=d14cddde212ab284ea8c94bf0c94416e&amp;type=3#HUD Panel&quot;); padding-right: 39px; padding-top: 12px; padding-left: 10px; visibility: hidden;">
+                <ui:VisualElement name="LassoPower" picking-mode="Ignore" class="power" style="visibility: hidden;">
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Lasso%20Indicator_Inactive.png?fileID=2800000&amp;guid=378a68e07684e6740bff907fb3fb729c&amp;type=3#Lasso Indicator_Inactive" enabled="true" name="LassoImage" scale-mode="StretchToFill" style="flex-grow: 0; align-content: auto; align-items: auto; justify-content: flex-start; align-self: auto; text-shadow: 0 0 0 rgb(0, 0, 0); aspect-ratio: 1;"/>
                     <ui:Label text="1" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; align-items: auto; align-content: auto; height: 40px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="SmashPower" class="power" style="visibility: hidden;">
-                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Smash%20Indicator_Inactive.png?fileID=2800000&amp;guid=2117627c11a1dc74cbb214273307ce32&amp;type=3#Smash Indicator_Inactive" name="SmashImage" style="flex-grow: 1;"/>
+                <ui:VisualElement name="SmashPower" picking-mode="Ignore" class="power" style="visibility: hidden;">
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Smash%20Indicator_Inactive.png?fileID=2800000&amp;guid=2117627c11a1dc74cbb214273307ce32&amp;type=3#Smash Indicator_Inactive" name="SmashImage" scale-mode="StretchToFill" style="flex-grow: 0; aspect-ratio: 1;"/>
                     <ui:Label text="2" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; height: 40px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="SuperJumpPower" class="power" style="visibility: hidden;">
-                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Super%20Jump%20Indicator_Inactive.png?fileID=2800000&amp;guid=fefe2bd0505651445a06dd009e5ea805&amp;type=3#Super Jump Indicator_Inactive" name="SuperJumpImage" style="flex-grow: 1;"/>
+                <ui:VisualElement name="SuperJumpPower" picking-mode="Ignore" class="power" style="visibility: hidden;">
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Super%20Jump%20Indicator_Inactive.png?fileID=2800000&amp;guid=fefe2bd0505651445a06dd009e5ea805&amp;type=3#Super Jump Indicator_Inactive" name="SuperJumpImage" scale-mode="StretchToFill" style="flex-grow: 0; aspect-ratio: 1;"/>
                     <ui:Label text="3&#10;" style="-unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); font-size: 26px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 10px; -unity-font-style: bold; height: 40px;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="Merbles" style="flex-grow: 1; align-items: flex-end; justify-content: flex-end; position: absolute; right: 25px; bottom: 25px; flex-direction: row; visibility: hidden;">
-                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble.png?fileID=2800000&amp;guid=9f6c4001c5587aa4b847614d268bebef&amp;type=3#Mrble" scale-mode="StretchToFill" style="width: 148px; height: 132px; aspect-ratio: auto;"/>
-                <ui:Label text="x12" name="MerbleCounter" style="-unity-text-align: middle-center; margin-bottom: 15px; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol-Bold.otf?fileID=12800000&amp;guid=344cd985bcb249a46a569eea7590cc62&amp;type=3#Zyzol-Bold&quot;); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); -unity-font-style: bold;"/>
+            <ui:VisualElement name="Merbles" style="flex-grow: 1; align-items: center; justify-content: flex-start; position: absolute; right: 26px; bottom: 9px; flex-direction: row; visibility: hidden; width: 234px;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Mrble(BIG).png?fileID=2800000&amp;guid=92b02abfb4f53ee408c2c60b1dbac544&amp;type=3#Mrble(BIG)" scale-mode="StretchToFill" style="width: 122px; height: 98px; aspect-ratio: auto;"/>
+                <ui:VisualElement class="merbleCounter" style="flex-grow: 1; flex-direction: row; margin-bottom: 0; align-items: center;">
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Text/Text/HudText_14.png?fileID=2800000&amp;guid=d9b434793aa9ee642aef79f37a2fa94f&amp;type=3#HudText_14" scale-mode="StretchToFill" style="width: 45px; height: 48px; margin-top: 0; margin-left: 0;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/HUD/Text/Text/HudText_13.png?fileID=2800000&amp;guid=b71b236f63f88d44397aa58d4e98ad93&amp;type=3#HudText_13" scale-mode="ScaleToFit" name="CounterText" style="margin-bottom: 0; padding-bottom: 0; margin-left: 0; flex-grow: 1;"/>
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:Label text="Press R to reset" name="Tooltip" style="font-size: 63px; bottom: 0; left: 0; position: absolute; visibility: hidden; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); letter-spacing: -7px;"/>
+            <ui:Label text="Press R to reset" name="Tooltip" style="font-size: 63px; bottom: 0; left: 0; position: absolute; visibility: hidden; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); letter-spacing: -7px; margin-bottom: 9px; margin-left: 11px; transition-duration: 2s;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
