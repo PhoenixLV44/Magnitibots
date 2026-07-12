@@ -43,6 +43,10 @@ namespace Ability.Object
             }
             _rock = transform.GetChild(0).gameObject;
             _dustParticles = transform.GetChild(1).GetComponent<ParticleSystem>();
+            if (cat)
+            {
+                cat.IncreaseTriggersNeeded();
+            }
         }
         public void DecreaseHealth(float damage)
         {

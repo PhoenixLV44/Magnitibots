@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cat
@@ -28,9 +29,18 @@ namespace Cat
         public int  TriggersNeeded => triggersNeeded;
         private int _triggers;
         private int Triggers { get => triggersNeeded; set => triggersNeeded = value; }
+        
+        [Tooltip("For if the cat is in a pair with another cat")]
+        [SerializeField] private Cat otherCat;
+        public Cat OtherCat => otherCat;
+        [Tooltip("Used for Cat that is in a pair and is the lower index in the CatManager catArray")]
+        [SerializeField] private int indexIncrease = 0;
+        
+        Quaternion _defaultRotation;
 
         private void Start()
         {
+            _defaultRotation = head.rotation;
             _animator = GetComponent<Animator>();
             _animator.Play("SitIdle");
             _smokeParticles = GetComponentInChildren<ParticleSystem>();
@@ -46,14 +56,14 @@ namespace Cat
 
         private void OnEnable()
         {
+            _smokeParticles = GetComponentInChildren<ParticleSystem>();
             _smokeParticles.Play(true);
             _animator.Play("SitIdle");
         }
 
         private void FixedUpdate()
         {
-            head.rotation = Quaternion.LookRotation(head.position - _player.transform.position);
-            head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
+            Look();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -105,7 +115,10 @@ namespace Cat
             }
 
             yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying);
-            _catManager.ChangeCat(this);
+            if (!otherCat || !otherCat.gameObject.activeSelf)
+            {
+                _catManager.ChangeCat(this, indexIncrease);
+            }
             gameObject.SetActive(false);
         }
 
@@ -143,6 +156,27 @@ namespace Cat
             triggerSphereColliders[1].enabled = true;
             //gameObject.SetActive(false);
         }
-    }
 
+        void Look()
+        {
+            if (!_player.GetComponent<Ability.Lasso>().LoopedObject || !_player.GetComponent<Ability.Smash>().SmashBall.activeSelf)
+            {
+                head.rotation = Quaternion.LookRotation(head.position - _player.transform.position);
+                head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
+            }
+            else
+            {
+                if (_player.GetComponent<Ability.Lasso>().LoopedObject)
+                {
+                    head.rotation = Quaternion.LookRotation(head.position - _player.GetComponent<Ability.Lasso>().LoopedObject.transform.position);
+                    head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
+                }
+                else
+                {
+                    head.rotation = Quaternion.LookRotation(head.position - _player.GetComponent<Ability.Smash>().SmashBall.transform.position);
+                    head.rotation = Quaternion.Euler(head.rotation.eulerAngles.x, head.eulerAngles.y, Mathf.Clamp(head.eulerAngles.y, 265f, 275f));
+                }
+            }
+        }   
+    }
 }

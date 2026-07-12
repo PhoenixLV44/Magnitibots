@@ -28,10 +28,14 @@ namespace Cat
             }
         }
 
-        public void ChangeCat(Cat cat)
+        public void ChangeCat(Cat cat, int indexIncrease)
         {
             int index = catList.IndexOf(cat);
-            catList[index + 1].gameObject.SetActive(true);
+            catList[index + 1 + indexIncrease].gameObject.SetActive(true);
+            if (catList[index + 1].OtherCat)
+            {
+                catList[index + 2].OtherCat.gameObject.SetActive(true);
+            }
             cat.Animator.Play("SitIdle");
         }
     }

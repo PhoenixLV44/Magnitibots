@@ -39,7 +39,8 @@ public class UnlockAbilityPackage : MonoBehaviour
 
     IEnumerator DeleteObject()
     {
-        yield return new WaitForSecondsRealtime(_clipLength);
+        //yield return new WaitForSecondsRealtime(_clipLength);
         gameObject.SetActive(false);
+        yield return null;
     }
 }

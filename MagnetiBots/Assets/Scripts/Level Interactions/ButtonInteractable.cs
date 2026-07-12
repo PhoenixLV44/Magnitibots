@@ -16,6 +16,10 @@ namespace Interactable
             {
                 cat.IncreaseTriggersNeeded();
             }
+            foreach (var obj in interactionObjects)
+            {
+                obj.TriggerObject = this;
+            }
         }
         public override void ActivateObject()
         {
