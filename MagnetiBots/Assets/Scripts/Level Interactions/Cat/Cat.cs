@@ -58,7 +58,12 @@ namespace Cat
         {
             _smokeParticles = GetComponentInChildren<ParticleSystem>();
             _smokeParticles.Play(true);
+            _animator = GetComponent<Animator>();
             _animator.Play("SitIdle");
+            if (otherCat)
+            {
+                otherCat.gameObject.SetActive(true);
+            }
         }
 
         private void FixedUpdate()

@@ -30,13 +30,18 @@ namespace Cat
 
         public void ChangeCat(Cat cat, int indexIncrease)
         {
-            int index = catList.IndexOf(cat);
-            catList[index + 1 + indexIncrease].gameObject.SetActive(true);
-            if (catList[index + 1].OtherCat)
+            int highestIndex = catList.IndexOf(cat);
+            if (highestIndex < catList.Count - 1)
             {
-                catList[index + 2].OtherCat.gameObject.SetActive(true);
+                for (int i = highestIndex + 1; i < catList.Count; i++)
+                {
+                    if (catList[i].gameObject.activeSelf)
+                    {
+                        highestIndex = i;
+                    }
+                }
             }
-            cat.Animator.Play("SitIdle");
+            catList[highestIndex + 1].gameObject.SetActive(true);
         }
     }
 }
