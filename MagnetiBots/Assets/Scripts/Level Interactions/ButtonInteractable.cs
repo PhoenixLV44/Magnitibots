@@ -10,6 +10,17 @@ namespace Interactable
             canBeDeactivated = false;
         }
 
+        void Start()
+        {
+            if (cat)
+            {
+                cat.IncreaseTriggersNeeded();
+            }
+            foreach (var obj in interactionObjects)
+            {
+                obj.TriggerObject = this;
+            }
+        }
         public override void ActivateObject()
         {
             base.ActivateObject();

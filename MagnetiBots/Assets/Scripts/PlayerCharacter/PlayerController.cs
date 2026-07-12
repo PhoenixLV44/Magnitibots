@@ -144,6 +144,7 @@ namespace Player
             shadow = transform.GetChild(transform.childCount - 1).gameObject;
             
             //_targetCursor.RaycastPoint.transform.position = new Vector3(transform.position.x, transform.position.y + 25, transform.position.z) + _movement.Model.transform.forward;
+            _canCharge = true;
         }
 
         // Update is called once per frame

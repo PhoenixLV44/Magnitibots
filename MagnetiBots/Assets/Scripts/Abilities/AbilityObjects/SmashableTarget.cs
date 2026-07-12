@@ -24,6 +24,9 @@ namespace Ability.Object
         
         [SerializeField] BoxCollider[] colliders;
         public BoxCollider[] Colliders => colliders;
+
+        [SerializeField] private Cat.Cat cat;
+        public Cat.Cat Cat => cat;
         private void Start()
         {
             switch (healthLevel)
@@ -40,6 +43,10 @@ namespace Ability.Object
             }
             _rock = transform.GetChild(0).gameObject;
             _dustParticles = transform.GetChild(1).GetComponent<ParticleSystem>();
+            if (cat)
+            {
+                cat.IncreaseTriggersNeeded();
+            }
         }
         public void DecreaseHealth(float damage)
         {

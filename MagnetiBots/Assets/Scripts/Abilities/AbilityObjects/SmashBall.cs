@@ -32,10 +32,14 @@ namespace Ability.Object
 
                 SmashableTarget target = other.GetComponent<SmashableTarget>();
                 target.DecreaseHealth(_powerLevel);
-                
+                Debug.Log("Boop;");
                 
                 if (target.Health <= 0)
                 {
+                    if (target.Cat)
+                    {
+                        target.Cat.IncreaseTriggers();
+                    }
                     target.Rock.SetActive(false);
                     foreach (var boxCollider in target.Colliders)
                     {
@@ -56,7 +60,8 @@ namespace Ability.Object
                 //_smashAbility.MerbleBoss.FireMerbles();
             }
             else if (!other.CompareTag("Ground") && !other.CompareTag("SmashTarget") && rb.linearVelocity.y < 0)
-            {                
+            {   
+                Debug.Log(other.transform.name);
                 _smashAbility.DeactivateBall();
             }
             Globals.Managers.Audio.PlaySFXHere("ThrowRock", transform);

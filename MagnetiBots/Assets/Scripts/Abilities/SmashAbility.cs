@@ -10,7 +10,7 @@ namespace Ability
     public class Smash : Parent
     {
         private GameObject _smashBall;
-        //public GameObject SmashBall => _smashBall;
+        public GameObject SmashBall => _smashBall;
         private Rigidbody _smashBallRb;
 
         private IEnumerator moveCursorRoutine;
