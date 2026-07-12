@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Cat
 {
@@ -30,12 +30,6 @@ namespace Cat
         private int _triggers;
         private int Triggers { get => triggersNeeded; set => triggersNeeded = value; }
         
-        [Tooltip("For if the cat is in a pair with another cat")]
-        [SerializeField] private Cat otherCat;
-        public Cat OtherCat => otherCat;
-        [Tooltip("Used for Cat that is in a pair and is the lower index in the CatManager catArray")]
-        [SerializeField] private int indexIncrease = 0;
-        
         Quaternion _defaultRotation;
 
         private void Start()
@@ -60,10 +54,6 @@ namespace Cat
             _smokeParticles.Play(true);
             _animator = GetComponent<Animator>();
             _animator.Play("SitIdle");
-            if (otherCat)
-            {
-                otherCat.gameObject.SetActive(true);
-            }
         }
 
         private void FixedUpdate()
@@ -78,6 +68,13 @@ namespace Cat
                 Debug.Log("MEow");
                 //triggerSphereColliders = GetComponent<SphereCollider>();
                 StartCoroutine(AvoidThreat());
+            }
+
+            if (other.CompareTag("Player"))
+            {
+                int rng = Random.Range(1, 4);
+                Globals.Managers.Audio.PlaySFXHere($"Meow{rng}", transform);
+
             }
         }
 
@@ -120,10 +117,7 @@ namespace Cat
             }
 
             yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying);
-            if (!otherCat || !otherCat.gameObject.activeSelf)
-            {
-                _catManager.ChangeCat(this, indexIncrease);
-            }
+            _catManager.ChangeCat(this);
             gameObject.SetActive(false);
         }
 

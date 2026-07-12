@@ -28,21 +28,11 @@ namespace Cat
             }
         }
 
-        public void ChangeCat(Cat cat, int indexIncrease)
+        public void ChangeCat(Cat cat)
         {
-            int highestIndex = catList.IndexOf(cat);
-            if (highestIndex < catList.Count - 1)
-            {
-                for (int i = highestIndex + 1; i < catList.Count; i++)
-                {
-                    if (catList[i].gameObject.activeSelf)
-                    {
-                        highestIndex = i;
-                        catList[i].gameObject.SetActive(false);
-                    }
-                }
-            }
-            catList[highestIndex + 1].gameObject.SetActive(true);
+            
+            int index = catList.IndexOf(cat);
+            catList[index + 1].gameObject.SetActive(true);
         }
     }
 }
