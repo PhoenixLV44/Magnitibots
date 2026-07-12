@@ -25,7 +25,7 @@
                     <ui:VisualElement style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Blue%20Dots.png?fileID=2800000&amp;guid=9c09afa930c320542b63f525f2717d8a&amp;type=3#Blue Dots&quot;); justify-content: center; min-height: 56px; min-width: 165px; margin-left: 185px; margin-right: 26px;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 72px; margin-bottom: 155px;">
+            <ui:VisualElement name="SettingsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 72px; margin-bottom: 93px;">
                 <ui:VisualElement name="MasterVolumeBox" class="SliderBin">
                     <ui:Label text="Master Volume"/>
                     <ui:Slider label="" value="100" high-value="1" name="MasterVolumeSlider" fill="true" show-input-field="false" class="text settingSlider"/>
@@ -41,6 +41,10 @@
                 <ui:VisualElement name="Cursor" class="SliderBin">
                     <ui:Label text="Cursor Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true"/>
                     <ui:Slider label="" value="100" high-value="100" name="MouseSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Cursor" class="SliderBin">
+                    <ui:Label text="Camera Sensitivity" name="" emoji-fallback-support="true" double-click-selects-word="true" style="font-size: 38px;"/>
+                    <ui:Slider label="" value="100" high-value="100" name="CameraSensitivitySlider" fill="true" class="settingSlider" style="flex-direction: row; align-items: auto;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Controls/Lower%20Border.png?fileID=2800000&amp;guid=1de941c68f387ee4e9fbcdbdfaa784d3&amp;type=3#Lower Border&quot;); flex-direction: row; min-width: 1920px; max-height: 96px;">
