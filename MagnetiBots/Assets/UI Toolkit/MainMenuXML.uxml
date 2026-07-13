@@ -59,47 +59,80 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="ControlsMenu" name="ControlsMenu" style="visibility: hidden;"/>
-    <ui:VisualElement name="CreditsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: hidden;">
+    <ui:VisualElement name="CreditsMenu" style="flex-grow: 1; justify-content: flex-start; transform-origin: left top; align-items: center; align-self: center; align-content: auto; position: absolute; top: 0; width: 1920px; height: 1080px; visibility: visible;">
         <ui:VisualElement style="flex-grow: 1; position: absolute; top: 0; left: 0; right: 0; bottom: 0; -unity-material: url(&quot;project://database/Assets/UI%20Toolkit/ScrollingTexture/UIScrollingMaterial.mat?fileID=2100000&amp;guid=d07ce5a78be671742999f33dc54c1403&amp;type=2#UIScrollingMaterial&quot;); background-color: rgb(255, 255, 255);"/>
         <ui:VisualElement name="UpperBorder" style="align-content: stretch; flex-grow: 1; flex-direction: row-reverse; justify-content: space-around; align-items: stretch; align-self: stretch; max-height: 196px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Upper%20Border.png?fileID=2800000&amp;guid=0210c0b24bb5f794cb539551372ac845&amp;type=3#Upper Border&quot;); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;">
             <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: center; max-height: 109px; max-width: 1045px; margin-top: 26px; flex-direction: row; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Menu%20Title%201.png?fileID=2800000&amp;guid=b2f813ba251c8454dbe8ad23bae158bb&amp;type=3#Menu Title 1&quot;); -unity-text-align: middle-center; justify-content: center;">
                 <ui:Label text="Credits" name="SettingsLabel" class="header" style="transform-origin: center; align-content: center; align-items: center; justify-content: center; align-self: center; font-size: 71px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(110, 187, 216);"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="CreditsContainers" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 30px; margin-bottom: 145px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-            <ui:VisualElement name="OurTeam" style="flex-grow: 1; min-width: 1007px;">
-                <ui:Label text="Our Team" class="text" style="font-size: 72px; -unity-text-align: middle-center; -unity-text-outline-width: 6px; -unity-font-style: bold; letter-spacing: -7px;"/>
-                <ui:VisualElement name="Kaiden" class="teamMember">
-                    <ui:Label text="Kaiden Davis"/>
+        <ui:VisualElement name="CreditsContainers" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; align-self: stretch; position: relative; align-items: stretch; align-content: auto; margin-top: 30px; margin-bottom: 73px; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+            <ui:VisualElement name="OurTeam" style="flex-grow: 1; min-width: 1007px; flex-direction: row; padding-left: 30px; padding-right: 30px; margin-bottom: -75px; margin-top: -36px;">
+                <ui:VisualElement name="Lexi" class="teamMember" style="flex-direction: column; align-items: center; justify-content: center; align-self: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_01.png?fileID=2800000&amp;guid=42322c2a7f44ef24ea4ce28df71f0bf3&amp;type=3#Panel_01&quot;); width: 278px; height: 271px; justify-content: center; align-items: center;">
+                        <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_03.png?fileID=2800000&amp;guid=d27ed12a43af73449976398648712f87&amp;type=3#CreditsText_03" scale-mode="StretchToFill" style="width: 93px; height: 101px;"/>
+                        <ui:Label text="Programmer" style="font-size: 38px;"/>
+                    </ui:VisualElement>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="margin-top: 5px; aspect-ratio: 1; width: 45px;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/mrblecredits_Lexi.png?fileID=2800000&amp;guid=9cb19dc7b1c527046b433514026abd4b&amp;type=3#mrblecredits_Lexi" scale-mode="StretchToFill" style="aspect-ratio: 0.9; height: 364px; margin-top: -79px; margin-bottom: -32px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="Vincent" class="teamMember">
-                    <ui:Label text="Vincent McCoy"/>
+                <ui:VisualElement name="Milo" class="teamMember" style="flex-direction: column-reverse; align-items: center; justify-content: center; align-self: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_01.png?fileID=2800000&amp;guid=42322c2a7f44ef24ea4ce28df71f0bf3&amp;type=3#Panel_01&quot;); width: 278px; height: 271px; justify-content: center; align-items: center;">
+                        <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_04.png?fileID=2800000&amp;guid=76ec93ba35aba66438e84ce89553a9b5&amp;type=3#CreditsText_04" scale-mode="StretchToFill" style="width: 175px; height: 100px;"/>
+                        <ui:Label text="Programmer" style="font-size: 38px;"/>
+                    </ui:VisualElement>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="margin-top: 0; aspect-ratio: 1; width: 45px; margin-bottom: 5px; scale: 1 -1;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/mrblecredits_Milo.png?fileID=2800000&amp;guid=941ffb9c51642944180f3231a4400d10&amp;type=3#mrblecredits_Milo" scale-mode="StretchToFill" style="aspect-ratio: 1.1; height: 291px; margin-top: -63px; margin-bottom: 6px; margin-left: 9px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="Gwen" class="teamMember">
-                    <ui:Label text="Gwendolyn North"/>
+                <ui:VisualElement name="Kaiden" class="teamMember" style="flex-direction: column; align-items: center; justify-content: center; align-self: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_01.png?fileID=2800000&amp;guid=42322c2a7f44ef24ea4ce28df71f0bf3&amp;type=3#Panel_01&quot;); width: 278px; height: 271px; justify-content: center; align-items: center;">
+                        <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_05.png?fileID=2800000&amp;guid=190b75df2eab60c4e9956cebe9815a8e&amp;type=3#CreditsText_05" scale-mode="StretchToFill" style="width: 151px; height: 90px;"/>
+                        <ui:Label text="Artist" style="font-size: 38px;"/>
+                    </ui:VisualElement>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="margin-top: 5px; aspect-ratio: 1; width: 45px;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/mrblecredits_Kaiden.png?fileID=2800000&amp;guid=5fa4e22ae0cd80f4cbb80e415767af7f&amp;type=3#mrblecredits_Kaiden" scale-mode="StretchToFill" style="aspect-ratio: 1.1; height: 250px; margin-top: -5px; margin-bottom: -3px; margin-right: -11px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="Milo" class="teamMember">
-                    <ui:Label text="Milo Rodgers"/>
+                <ui:VisualElement name="Vincent" class="teamMember" style="flex-direction: column-reverse; align-items: center; justify-content: center; align-self: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_01.png?fileID=2800000&amp;guid=42322c2a7f44ef24ea4ce28df71f0bf3&amp;type=3#Panel_01&quot;); width: 278px; height: 271px; justify-content: center; align-items: center;">
+                        <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_06.png?fileID=2800000&amp;guid=03a0c24166b25b349b1d2fe3e0c00f19&amp;type=3#CreditsText_06" scale-mode="StretchToFill" style="width: 172px; height: 101px;"/>
+                        <ui:Label text="Artist" style="font-size: 38px;"/>
+                    </ui:VisualElement>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="margin-top: 0; aspect-ratio: 1; width: 45px; margin-bottom: 5px; scale: 1 -1;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/mrblecredits_Vincent.png?fileID=2800000&amp;guid=c53cdb98a1694124ea2b1660f28100dc&amp;type=3#mrblecredits_Vincent" scale-mode="StretchToFill" style="aspect-ratio: 1.1; height: 267px; margin-top: -30px; margin-bottom: -1px; margin-right: -10px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="Nick" class="teamMember">
-                    <ui:Label text="Nicholas Smith"/>
+                <ui:VisualElement name="Gwen" class="teamMember" style="flex-direction: column; align-items: center; justify-content: center; align-self: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_01.png?fileID=2800000&amp;guid=42322c2a7f44ef24ea4ce28df71f0bf3&amp;type=3#Panel_01&quot;); width: 278px; height: 271px; justify-content: center; align-items: center;">
+                        <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_07.png?fileID=2800000&amp;guid=46f85143fc3ad554a94ab7bf95ec3d32&amp;type=3#CreditsText_07" scale-mode="StretchToFill" style="width: 241px; height: 91px;"/>
+                        <ui:Label text="Artist" style="font-size: 38px;"/>
+                    </ui:VisualElement>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="margin-top: 5px; aspect-ratio: 1; width: 45px;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/mrblecredits_Gwendolyn.png?fileID=2800000&amp;guid=2c591bf3e8b146e4a9c9aba6f1ebc2f1&amp;type=3#mrblecredits_Gwendolyn" scale-mode="StretchToFill" style="aspect-ratio: 1.1; height: 257px; margin-top: -3px; margin-bottom: -3px;"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="Lexi" class="teamMember">
-                    <ui:Label text="Lexi Vye"/>
+                <ui:VisualElement name="Nick" class="teamMember" style="flex-direction: column-reverse; align-items: center; justify-content: center; align-self: center;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_01.png?fileID=2800000&amp;guid=42322c2a7f44ef24ea4ce28df71f0bf3&amp;type=3#Panel_01&quot;); width: 278px; height: 271px; justify-content: center; align-items: center;">
+                        <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_08.png?fileID=2800000&amp;guid=a80b07fc6dcb3fe4a8901a5776cd8ccb&amp;type=3#CreditsText_08" scale-mode="StretchToFill" style="width: 191px; height: 90px;"/>
+                        <ui:Label text="Artist" style="font-size: 38px;"/>
+                    </ui:VisualElement>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="margin-top: 0; aspect-ratio: 1; width: 45px; margin-bottom: 5px; scale: 1 -1;"/>
+                    <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/mrblecredits_Nick.png?fileID=2800000&amp;guid=c5f48da5b2b2b95409342b3d3d9df092&amp;type=3#mrblecredits_Nick" scale-mode="StretchToFill" style="aspect-ratio: 0.9; height: 350px; margin-top: -102px; margin-bottom: -7px;"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="SourcedAssets" style="flex-grow: 1;">
-                <ui:Label text="With Help From.." name="Label" class="text" style="font-size: 72px; -unity-text-align: middle-center; -unity-text-outline-width: 6px; -unity-font-style: bold; letter-spacing: -7px;"/>
-                <ui:ListView name="SourcesList" binding-source-selection-mode="AutoAssign" data-source="project://database/Assets/Scripts/UI/SourcesList.asset?fileID=11400000&amp;guid=351a46c66b520c645bc42f09931069d6&amp;type=2#SourcesList" item-template="project://database/Assets/UI%20Toolkit/SourceTemplate.uxml?fileID=9197481963319205126&amp;guid=485d516f890dec343b03e7c8f4fcded6&amp;type=3#SourceTemplate" selection-type="None" focusable="false" virtualization-method="FixedHeight" show-border="false" horizontal-scrolling="false" reorderable="false" fixed-item-height="60" style="height: 71px;">
-                    <Bindings>
-                        <ui:DataBinding property="itemsSource" data-source-path="sourceList"/>
-                    </Bindings>
-                </ui:ListView>
+            <ui:VisualElement name="SourcedAssets" style="flex-grow: 0; flex-direction: row; justify-content: flex-end; height: 120px; align-items: center; margin-bottom: 15px;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Text/CreditsText_09.png?fileID=2800000&amp;guid=5da48401c4af6c8468c1e519b86b0b36&amp;type=3#CreditsText_09" scale-mode="StretchToFill" style="width: 223px; height: 90px; margin-right: 26px;"/>
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Credits/Arrow.png?fileID=2800000&amp;guid=b204afdc76a69744c9d3a0fd45ae8d4a&amp;type=3#Arrow" style="rotate: 90deg; margin-right: 17px;"/>
+                <ui:VisualElement style="flex-grow: 0; width: 1035px; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Credits/Panel_02.png?fileID=2800000&amp;guid=120143e1a7f92554ca8a822d9efbabda&amp;type=3#Panel_02&quot;); height: 106px; flex-direction: row; align-items: center;">
+                    <ui:ListView name="SourcesList" binding-source-selection-mode="AutoAssign" data-source="project://database/Assets/Scripts/UI/SourcesList.asset?fileID=11400000&amp;guid=351a46c66b520c645bc42f09931069d6&amp;type=2#SourcesList" item-template="project://database/Assets/UI%20Toolkit/SourceTemplate.uxml?fileID=9197481963319205126&amp;guid=485d516f890dec343b03e7c8f4fcded6&amp;type=3#SourceTemplate" selection-type="None" focusable="false" virtualization-method="FixedHeight" show-border="false" horizontal-scrolling="false" reorderable="false" fixed-item-height="60" style="height: 71px; margin-right: 0; margin-left: 18px; flex-grow: 1;">
+                        <Bindings>
+                            <ui:DataBinding property="itemsSource" data-source-path="sourceList"/>
+                        </Bindings>
+                    </ui:ListView>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art%20Assets/UI/Settings/Lower%20Border.png?fileID=2800000&amp;guid=761b7bf0e469841429019df4244ba07b&amp;type=3#Lower Border&quot;); width: 1920px; position: absolute; bottom: 0; height: 83px;">
-            <ui:Button text="Close" name="CreditsReturnButton" emoji-fallback-support="false" enable-rich-text="true" class="button closeButton" style="-unity-text-align: middle-center; white-space: nowrap; background-color: rgba(255, 255, 255, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-background-scale-mode: scale-to-fit; width: 429px; height: 115px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-generator: standard; -unity-text-auto-size: none; font-size: 71px; letter-spacing: 0; align-self: flex-start; align-content: flex-start; justify-content: flex-end; align-items: flex-start; position: absolute; bottom: 0; margin-left: 0; margin-right: 0; top: auto; left: 0; right: auto;"/>
-            <ui:Image source="project://database/Assets/Art%20Assets/UI/Settings/Mrble.png?fileID=2800000&amp;guid=447c319236f244445a18e5c57355201e&amp;type=3#Mrble" scale-mode="StretchToFill" style="position: absolute; right: 29px; bottom: 20px; flex-grow: 1; width: 147px; aspect-ratio: 1.25;"/>
+            <ui:Button text="&#10;" name="CreditsReturnButton" emoji-fallback-support="false" enable-rich-text="true" class="button closeButton" style="-unity-text-align: middle-center; white-space: nowrap; background-color: rgba(255, 255, 255, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-size: 100% 100%; -unity-background-scale-mode: scale-to-fit; width: 429px; height: 115px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&amp;guid=82db8662a4d71c74eaee21d3daa362c5&amp;type=3#Zyzol&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 5px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-generator: standard; -unity-text-auto-size: none; font-size: 71px; letter-spacing: 0; align-self: center; align-content: flex-start; justify-content: center; align-items: center; position: absolute; bottom: 0; margin-left: 0; margin-right: 0; top: auto; left: 0; right: auto;">
+                <ui:Image source="project://database/Assets/Art%20Assets/UI/Close.png?fileID=2800000&amp;guid=5ac41b61e37b2174d90f1463d111eadf&amp;type=3#Close" scale-mode="StretchToFill" style="width: 172px; height: 55px; margin-bottom: 9px;"/>
+            </ui:Button>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
