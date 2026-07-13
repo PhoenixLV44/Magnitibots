@@ -289,9 +289,9 @@ namespace Ability
                 unchargedMerbleList.Sort((a, b) => Vector3.Distance(a.transform.position, transform.position).CompareTo(Vector3.Distance(b.transform.position, transform.position)));
                 if (chargedMerbleList.Count > 0)
                 {
-                    for (int i = 0; i < chargedMerbleList.Count; i++)
+                    foreach (var merble in chargedMerbleList)
                     {
-                        chargedMerbleList[i].FloatTowardsObject(_merblePoints[i].transform.position, i);
+                        merble.FloatTowardsObject(_merblePoints[chargedMerbleList.IndexOf(merble)].transform.position);
                     }
                 }
                 yield return null;
@@ -352,7 +352,7 @@ namespace Ability
                         int j = i - merblesNeeded;
                         pos = _merblePoints[j].transform.position;
                     }
-                    merble.FloatTowardsObject(pos, i, speed);
+                    merble.FloatTowardsObject(pos, speed);
                 }
                 
                 yield return null;
