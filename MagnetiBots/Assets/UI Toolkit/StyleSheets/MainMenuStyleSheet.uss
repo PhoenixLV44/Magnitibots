@@ -486,6 +486,8 @@
     -unity-text-align: middle-center;
     -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Fonts/Zyzol.otf?fileID=12800000&guid=82db8662a4d71c74eaee21d3daa362c5&type=3#Zyzol");
     font-size: 47px;
+    width: 141px;
+    height: 513px;
 }
 
 .upperBorders {
@@ -607,4 +609,8 @@
 
 .unity-list-view__item:hover {
     background-color: rgba(0, 0, 0, 0);
+}
+
+.merbleIcon {
+    height: 277px;
 }
