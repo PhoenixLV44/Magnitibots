@@ -107,6 +107,7 @@ namespace Player
             }
             _movement.CharacterController.enabled = true;
             _playerController.Respawning = false;
+            _playerController.Interacting = false;
             _playerController.TargetCursor.ActivateCursor();
         }
         private void OnTriggerEnter(Collider other)
