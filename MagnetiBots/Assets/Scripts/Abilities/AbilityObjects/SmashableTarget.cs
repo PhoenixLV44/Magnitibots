@@ -61,6 +61,11 @@ namespace Ability.Object
                 _dustParticles.Play();
                 if (damageInt <= 0)
                 {
+                    if (cat)
+                    {
+                        Debug.Log("SmashTarget: Has a cat");
+                        cat.IncreaseTriggers();
+                    }
                     Debug.Log("Dead");
                     _rock.SetActive(false);
                     foreach (var boxCollider in colliders)

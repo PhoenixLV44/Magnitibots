@@ -36,12 +36,13 @@ namespace Ability.Object
 
                 SmashableTarget target = other.GetComponent<SmashableTarget>();
                 target.DecreaseHealth(_powerLevel);
-                Debug.Log("Boop;");
+                Debug.Log("SmashBall: Target Health: " + target.Health);
                 
-                if (target.Health <= 0)
+                if (_powerLevel >= target.Health)
                 {
                     if (target.Cat)
                     {
+                        Debug.Log("SmashBall: Target has a cat");
                         target.Cat.IncreaseTriggers();
                     }
                     target.Rock.SetActive(false);
@@ -52,6 +53,7 @@ namespace Ability.Object
                 }
                 else
                 {  
+                    Debug.Log("SmashBall: Disable Ball");
                     _smashAbility.DeactivateBall();
                 }
 
