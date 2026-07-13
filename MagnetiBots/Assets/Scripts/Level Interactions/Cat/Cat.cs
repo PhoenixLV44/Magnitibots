@@ -25,6 +25,8 @@ namespace Cat
         
         private CatManager _catManager;
 
+        private bool _disappeared;
+
         [SerializeField] private int triggersNeeded;
         public int  TriggersNeeded => triggersNeeded;
         private int _triggers;
@@ -101,28 +103,33 @@ namespace Cat
         }
         public IEnumerator Disappear()
         {
-            for (int i = 1; i < triggerSphereColliders.Length; i++)
+            if (!_disappeared)
             {
-                triggerSphereColliders[i].enabled = false;
-            }
-            if (!_smokeParticles.isPlaying)
-            {
-                _smokeParticles.Play(true);
-                Globals.Managers.Audio.PlaySFXHere("Meow4", transform);
-            }
+                for (int i = 1; i < triggerSphereColliders.Length; i++)
+                {
+                    triggerSphereColliders[i].enabled = false;
+                }
+                if (!_smokeParticles.isPlaying)
+                {
+                    _smokeParticles.Play(true);
+                    Globals.Managers.Audio.PlaySFXHere("Meow4", transform);
+                }
 
-            foreach (var model in renderers)
-            {
-                model.enabled = false;
-            }
+                foreach (var model in renderers)
+                {
+                    model.enabled = false;
+                }
 
-            yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying);
+                yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying);
+            }
             _catManager.ChangeCat(this);
             gameObject.SetActive(false);
+            yield return null;
         }
 
         private IEnumerator AvoidThreat()
         {
+            _disappeared = true;
             for (int i = 1; i < triggerSphereColliders.Length; i++)
             {
                 triggerSphereColliders[i].enabled = false;
@@ -141,7 +148,6 @@ namespace Cat
             }
 
             yield return new WaitUntil(() => !_smokeParticles.GetComponent<ParticleSystem>().isPlaying && !_inDanger);
-            
             if (_smokeParticles)
             {
                 _smokeParticles.Play(true);
@@ -153,6 +159,7 @@ namespace Cat
                 model.enabled = true;
             }
             triggerSphereColliders[1].enabled = true;
+            _disappeared = true;
             //gameObject.SetActive(false);
         }
 

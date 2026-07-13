@@ -383,7 +383,7 @@ namespace Ability
 
                         pos.y = _lassoLoop.transform.position.y -
                                 (verticalDistance * (divisor));*/
-                        merble.FloatTowardsObject(_returnPoint.position, i, speed);
+                        merble.FloatTowardsObject(_returnPoint.position, speed);
                     }
                     else
                     {

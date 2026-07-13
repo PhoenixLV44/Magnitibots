@@ -260,7 +260,7 @@ namespace Merbles
             }
         }
 
-        public void FloatTowardsObject(Vector3 vectorPos, float index, float speed = 2.5f)
+        public void FloatTowardsObject(Vector3 vectorPos, float speed = 2.5f)
         {
             transform.position = Vector3.Slerp(transform.position, vectorPos, Time.deltaTime * speed);
         }

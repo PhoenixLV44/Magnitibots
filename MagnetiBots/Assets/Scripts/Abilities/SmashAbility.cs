@@ -178,14 +178,16 @@ namespace Ability
                 float speed = 2f;
                 if (!_returnMerbles)
                 {
-                    List<Merble> merbleList = merbleBoss.ChargedMerbleList;
-                    for (int i = 0; i < merbleList.Count; i++)
+                    Merble[] merbleList = merbleBoss.ChargedMerbleList.ToArray();
+                    int limit = merbleList.Length;
+                    Debug.Log("SmashAbility PowerLevel: " + limit);
+                    for (int i = 0; i < currentPowerLevel; i++)
                     {
-                        if (merbleList[i].transform.parent != ballScript.MerblePoints[i])
+                        if (merbleBoss.ChargedMerbleList[i].transform.parent != ballScript.MerblePoints[i])
                         {
-                            merbleList[i].transform.parent = ballScript.MerblePoints[i];
+                            merbleBoss.ChargedMerbleList[i].transform.parent = ballScript.MerblePoints[i];
                         }
-                        merbleList[i].FloatTowardsObject(ballScript.MerblePoints[i].position, i, speed);
+                        merbleBoss.ChargedMerbleList[i].FloatTowardsObject(ballScript.MerblePoints[i].position, speed);
                     }
                 }
                 else
@@ -203,11 +205,11 @@ namespace Ability
                             Debug.Log("Ground check is false;");
                             if (_returnPoint == Vector3.zero)
                             {
-                                merble.FloatTowardsObject(_defaultReturnPoint.position, i, speed);
+                                merble.FloatTowardsObject(_defaultReturnPoint.position, speed);
                             }
                             else
                             {
-                                merble.FloatTowardsObject(_returnPoint, i, speed);
+                                merble.FloatTowardsObject(_returnPoint, speed);
                             }
 
                         }
